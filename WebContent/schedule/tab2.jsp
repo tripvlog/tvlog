@@ -6,9 +6,11 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 function add_col() 
 {
@@ -38,53 +40,77 @@ function add_col()
     	stock_td.appendChild(inp);
 }
 </script>
+<script>
+  $(function () {
+    $('#myTab a:last').tab('show');
+  })
+  
+  $('a[data-toggle="tab"]').on('shown', function (e) {
+  e.target // 새로 선택된 탭
+  e.relatedTarget // 이젠 탭
+})
+</script>
+<style type="text/css">
+	#tabtest{
+		width:565px;
+		height:65px;
+		font-size:30px;
+	}
+	.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+		color:#ffffff;
+    	background-color:#47C83E;
+    }
+</style>
 <title>트립블로그</title>
 </head>
 <body>
 <!-- 참고 사이트 : http://zzznara2.tistory.com/593 -->
 <div class="container">
-	<ul id="myTab" class="nav nav-tabs" role="tablist">
-	  <li role="presentation" class="active"><a data-target="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">스토리</a></li>
-	  <li role="presentation" class=""><a data-target="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">지도 / 일정표</a></li>
+&nbsp;
+	<form action="" method="post" class="plan-intro" align="left">
+				<div class="container-fluid" >
+					<div class="row" >
+						<input type="text" id="planMessage" class="form-control plan-brief" placeholder="일정에 대한 간단한 설명" maxlength="300" value="" />
+         				<textarea class="form-control"  id="planDetailMessage" placeholder="일정에 대한 자세한 설명"  maxlength="20000"></textarea>
+					</div>
+					&nbsp;
+					<div class="row" id="startschedule">
+						<div class="col-md-1" id="tripstart">여행시작일</div>
+						<div class="col-md-1">일</div>
+						<div class="col-md-1">명</div>
+						<div class="col-md-1">여행단계</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-1">여행테마</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-1"></div>
+						<div class="col-md-1"></div>
+						<div class="col-md-1"></div>
+						<div class="col-md-1"></div>
+					</div>
+					<div class="row" id="startschedule">
+						<div class="col-md-1" id="tripstart"><input id="tourStartDay" type="date" name="date" class="form-control hasDatepicker"  size="10" /></div>
+						<div class="col-md-1"><input id="maxDay" type="number" min="1" class="form-control" size="8" /></div>
+						<div class="col-md-1"><input type="number"  class="form-control" min="1" value="1" id="persons" /></div>
+						<div class="col-md-2"><input type="radio" name="step" />여행 전 <input type="radio" name="step" />여행 후</div>
+						<div class="col-md-6"><input type="checkbox" value="theme" /> 나홀로여행
+											  <input type="checkbox" value="theme" /> 친구와 함께 
+											  <input type="checkbox" value="theme" /> 가족과 함께
+											  <input type="checkbox" value="theme" /> 단체여행
+											  <input type="checkbox" value="theme" /> 패키지 여행 
+											  <input type="checkbox" value="theme" /> 커플 </div>
+					</div>
+				</div>
+	</form>
+	&nbsp;
+	<ul id="myTab" class="nav nav-pills" role="tablist">
+	  <li role="presentation" id="tabtest" class="active" align="center"><a data-target="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true" ><i class="fa fa-list" aria-hidden="true"></i><b> 스토리</b></a></li>
+	  <li role="presentation" id="tabtest" class="pause" align="center"><a data-target="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false"><i class="fa fa-calendar" aria-hidden="true"></i><b> 지도 / 일정표</b></a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 	  <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
 	    <p>탭1</p>
 	  </div>
-	  <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-	  <form class="plan-intro" >
-          <input type="text" id="planMessage" class="form-control plan-brief" placeholder="일정에 대한 간단한 설명" maxlength="300" value="" />
-          <textarea class="form-control"  id="planDetailMessage" placeholder="일정에 대한 자세한 설명"  maxlength="20000"></textarea>
-          <!-- 여행소개 -->
-          <div class="plan-edit-info">
-            <div class="day-step-theme">
-              <div class="days">
-                <h6>여행시작일 </h6>
-                <input id="tourStartDay" type="text" class="form-control date-start-picker" value="2016-05-07" style="width:75px; cursor: pointer;background-color: white;" readonly="true"/>
-                <h6>일</h6>
-                <input type="number" min="1" max="60" class="form-control" value="5" id="maxDay" style="width:50px;"/>
-                <h6>명</h6>
-                <input type="number"  class="form-control" min="1" value="1" id="persons" style="width:50px;"/>
-                <h6>여행단계</h6>
-                <div class="btn-group" data-toggle="buttons">
-                	<label class="btn active">
-                  		<input type="radio" name="isTourAfter" id="isTourAfter" value="false"> <span>여행 전</span>
-                	</label>
-                	<label class="btn ">
-                  		<input type="radio" name="isTourAfter" id="isTourAfter" value="true"> <span>여행 후</span>
-                	</label>
-              	</div>
-              	<h6>여행테마</h6>            
-                	<span class="selected" data-theme="0">나홀로 여행</span>            
-                	<span class="unselected" data-theme="1">친구와 함께</span>             
-                	<span class="unselected" data-theme="2">가족과 함께</span>         
-                	<span class="selected" data-theme="3">단체여행</span>         
-                	<span class="unselected" data-theme="4">패키지 여행</span>         
-                	<span class="selected" data-theme="26">커플</span>   
-              </div>
-          </div><!-- more-info-con -->
-        </form>
-	  
+	  <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">  
 	    <div class="container">
 			<form method=post action="">
 			<input type="number" name="count" id="count" value="1" onchange="add_col()"/>

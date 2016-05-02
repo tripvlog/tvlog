@@ -10,42 +10,69 @@
     	<script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"  ></script>
 		<script>
-	
-
-
-	function add_col() 
-	{
-		var colCount = document.getElementById('count').value;
-		var stock_table = document.getElementById('stock_table');
-		var stock_tbody = document.getElementById('stock_tbody');
-		var stock_tr = null;
-		var stock_td = null;
-		var stock_x = 0;
-		var stock_y = 0;
-		var msg = document.getElementById('msg');
+		var staticNum = 1;
+		function test(){
+			var colCount = document.getElementById('count').value;
+			if(staticNum < colCount){
+				add_col();
+				staticNum = colCount;
+			}else{
+				del_col();
+				staticNum = colCount;
+			}
+		}
+		function add_col() 
+		{
+			var colCount = document.getElementById('count').value;
+			var stock_table = document.getElementById('stock_table');
+			var stock_tbody = document.getElementById('stock_tbody');
+			var stock_tr = null;
+			var stock_td = null;
+			var stock_x = 0;
+			var stock_y = 0;
+			var msg = document.getElementById('msg');
+			
+		    var stock_tbody_tr = stock_table.getElementsByTagName('tr');
+			for (i=0; i<stock_tbody_tr.length; i++) {
+			    stock_td = document.createElement('td');
+			    stock_tbody_tr[i].appendChild(stock_td);
+			    stock_td.innerHTML='&nbsp;';
+			}
+		}
 		
-	    var stock_tbody_tr = stock_table.getElementsByTagName('tr');
-		    for (i=0; i<stock_tbody_tr.length; i++) {
-		        stock_td = document.createElement('td');
-		        stock_tbody_tr[i].appendChild(stock_td);
-		        stock_td.innerHTML='&nbsp;';
+		function del_col()
+		{
+			
+			var stock_table = document.getElementById('stock_table');
+		    var stock_thead_tr = stock_table.getElementsByTagName('tr');
+		    var stock_thead_td = stock_table.getElementsByTagName('td');
+		   
+		    if (stock_thead_td.length > 2) {
+	
+		        var stock_tbody_tr = stock_table.getElementsByTagName('tr');
+		        for (i=0; i<stock_tbody_tr.length; i++) {
+		            var tr_td = stock_tbody_tr[i].getElementsByTagName('td');
+		            stock_tbody_tr[i].deleteCell(tr_td.length-1);
+		        }
 		    }
-	    
-	}
-	function add_input(name)
-	{
-	    var inp = document.createElement('input');
-	    inp.setAttribute('type', 'text');
-	    inp.setAttribute('size', '10');
-	    inp.setAttribute('name', name);
-	    stock_td.appendChild(inp);
-	}
+		}
+		
+		function add_input(name)
+		{
+		    var inp = document.createElement('input');
+		    inp.setAttribute('type', 'text');
+		    inp.setAttribute('size', '10');
+		    inp.setAttribute('name', name);
+		    stock_td.appendChild(inp);
+		}
+		
 </script>
     </head>
 <body>
 <div class="container">
 	<form method=post action="">
-	<input type="number" name="count" id="count" value="1" onchange="add_col()"/>
+	<input type="number" name="count" id="count" value="1" onchange="test()" min="1"  />
+	
 	<p></p>
 	<table id='stock_table' class="table table-bordered" border=1>
 	   <tr><td width="100" rowspan="2">1시</td><td>&nbsp;</td></tr>
