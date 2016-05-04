@@ -5,5 +5,5 @@
 	<settings useStatementNamespaces="true" />
 	
 	<sqlMap resource="/sql/sampleSQL.xml"/>
-	
+	<sqlMap resource="/sql/LoginSQL.xml"/>
 </sqlMapConfig>

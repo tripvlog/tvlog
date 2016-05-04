@@ -14,6 +14,7 @@
 
 	<context:component-scan base-package="project.vlog.bean" />
 	<context:component-scan base-package="trip.Diary" />
+	<context:component-scan base-package="trip.member"/>
 	
 	<bean id="download" class="project.vlog.bean.DownloadView"/>
 	
@@ -42,7 +43,7 @@
 	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource"
 		destroy-method="close"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
-		p:url="jdbc:oracle:thin:khmaster.iptime.org:7000:orcl"
+		p:url="jdbc:oracle:thin:@khmaster.iptime.org:7000:orcl"
 		p:username="tblog" p:password="ttblog"
 	/>
 </beans>
