@@ -52,7 +52,7 @@
 	      <div class="modal-footer">
 	      	<a href="#" class="alert-link"><span class="glyphicon glyphicon-picture" aria-hidden="true">사진</span></a>&nbsp;
 	      	<a href="map.trip" class="alert-link" target="_blank"><span class="glyphicon glyphicon-globe" aria-hidden="true">지도</span></a>&nbsp;
-		<button type="submit" class="btn btn-primary">Send message</button>
+		<button type="submit" class="btn btn-primary">작성 완료</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
