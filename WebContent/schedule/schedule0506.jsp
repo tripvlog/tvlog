@@ -118,6 +118,13 @@ function scheduleSave() {
     	border : 0;
     	float: left;
 	}
+	#totalCost{
+		list-style:none; 
+	}
+	#checklist-tab{
+		list-style:none; 
+		font-size:20px;
+	}
 </style>
 <title>트립블로그</title>
 </head>
@@ -146,11 +153,11 @@ function scheduleSave() {
 	    	<div class="modal-content">
 	      		<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="budget">여행가계부</h4>
+					<h4 class="modal-title" id="budget">여행 가계부</h4>
 	      		</div>
 	      		<div class="modal-body">
 	      			<div class="budget">
-	     				<div class="tab-pane plantab de" id="tab4">
+	     				<div class="tab-pane plantab de" id="budget">
 	     					<div class="budget">
 	     						<!-- STR_START : 가계부 tab 목록 -->
 	     						<ul class="nav budget-tab" id="budget-tab">
@@ -168,31 +175,63 @@ function scheduleSave() {
 	     					</div>
 	     				</div>
 	     			</div>
-					<div class="tab-pane active" id="budget-tab1">
-	     				<ul class"tasks">
-	     					<li class="totalCost" id="totalCost_0" data-tabid="1" data-itemid="0">
+					<div class="tab-pane active" id="b-tab1">
+	     				<ul class"tasks" id="totalCost">
+	     					<li class="totalCost" id="totalCost1_0" data-tabid="1" data-itemid="0">
 	     						<i class="fa fa-plane" aria-hidden="true"></i>  항공료
 	     					</li>
-	     					<li class="totalCost" id="totalCost_1" data-tabid="1" data-itemid="1">
+	     					<li class="totalCost" id="totalCost1_1" data-tabid="1" data-itemid="1">
 	     						<i class="fa fa-bus" aria-hidden="true"></i>  교통
 	     					</li>
-	     					<li class="totalCost" id="totalCost_2" data-tabid="1" data-itemid="2">
+	     					<li class="totalCost" id="totalCost1_2" data-tabid="1" data-itemid="2">
 	     						<i class="fa fa-hospital-o" aria-hidden="true"></i>  숙박
 	     					</li>
-	     					<li class="totalCost" id="totalCost_3" data-tabid="1" data-itemid="3">
+	     					<li class="totalCost" id="totalCost1_3" data-tabid="1" data-itemid="3">
 	     						<i class="fa fa-ticket" aria-hidden="true"></i>  입장료
 	     					</li>
-	     					<li class="totalCost" id="totalCost_4" data-tabid="1" data-itemid="4">
+	     					<li class="totalCost" id="totalCost1_4" data-tabid="1" data-itemid="4">
 	     						<i class="fa fa-spoon" aria-hidden="true"></i>  음식
 	     					</li>
-	     					<li class="totalCost" id="totalCost_5" data-tabid="1" data-itemid="5">
+	     					<li class="totalCost" id="totalCost1_5" data-tabid="1" data-itemid="5">
 	     						<i class="fa fa-gamepad" aria-hidden="true"></i>  오락
 	     					</li>
-	     					<li class="totalCost" id="totalCost_6" data-tabid="1" data-itemid="6">
+	     					<li class="totalCost" id="totalCost1_6" data-tabid="1" data-itemid="6">
 	     						<i class="fa fa-shopping-cart" aria-hidden="true"></i>  쇼핑
 	     					</li>
-	     					<li class="totalCost" id="totalCost_7" data-tabid="1" data-itemid="7">
+	     					<li class="totalCost" id="totalCost1_7" data-tabid="1" data-itemid="7">
 	     						<i class="fa fa-map-marker" aria-hidden="true"></i>  기타
+	     					</li>
+	     				</ul>				
+	     			</div>
+	     			<div class="tab-pane" id="b-tab2">
+	     				<ul class"tasks" id="onedayBudget">
+	     					<li class="totalCost" id="totalCost1_0" data-tabid="1" data-itemid="0">
+	     						<i class="fa fa-calendar" aria-hidden="true"></i>  Day 1
+	     					</li>
+	     				</ul>				
+	     			</div>
+	     			<div class="tab-pane" id="b-tab3">
+	     				<ul class"tasks" id="famousPlace">
+	     					<li class="famousPlace" id="famousPlace1_0" data-tabid="1" data-itemid="0">
+	     						<i class="fa fa-camera" aria-hidden="true"></i>  관광지
+	     					</li>
+	     					<li class="famousPlace" id="famousPlace1_1" data-tabid="1" data-itemid="1">
+	     						<i class="fa fa-hospital-o" aria-hidden="true"></i>  숙박
+	     					</li>
+	     					<li class="famousPlace" id="famousPlace1_2" data-tabid="1" data-itemid="2">
+	     						<i class="fa fa-spoon" aria-hidden="true"></i>  음식점
+	     					</li>
+	     					<li class="famousPlace" id="famousPlace1_3" data-tabid="1" data-itemid="3">
+	     						<i class="fa fa-shopping-cart" aria-hidden="true"></i>  쇼핑
+	     					</li>
+	     					<li class="famousPlace" id="famousPlace1_4" data-tabid="1" data-itemid="4">
+	     						<i class="fa fa-gamepad" aria-hidden="true"></i>  오락
+	     					</li>
+	     					<li class="famousPlace" id="famousPlace1_5" data-tabid="1" data-itemid="5">
+	     						<i class="fa fa-futbol-o" aria-hidden="true"></i>  액티비티
+	     					</li>
+	     					<li class="famousPlace" id="famousPlace1_6" data-tabid="1" data-itemid="6">
+	     						<i class="fa fa-bus" aria-hidden="true"></i>  교통
 	     					</li>
 	     				</ul>				
 	     			</div>
@@ -217,7 +256,7 @@ function scheduleSave() {
 	      		<!-- 모달 안에 내용 넣기 -->
 	     		<div class="modal-body">
 	     			<div class="checklist">
-	     				<div class="tab-pane plantab de" id="tab4">
+	     				<div class="tab-pane plantab de" id="checklist">
 	     					<div class="checklist">
 	     						<!-- STR_START : checklist tab 목록 -->
 	     						<ul class="nav checklist-tab" id="checklist-tab">
@@ -252,9 +291,9 @@ function scheduleSave() {
 	     						</ul>
 	     						<!-- 여기에 모달 안에 내용 쓰는 곳 --><!-- 각 버튼마다 나타나는 화면 정의 -->
 	     						<div class="tab-content checklist-con" id="tab-content">
-	     							<!-- 출국 -->
+	     							<!-- My List -->
 	     							<div class="tab-pane" id="ch-tab1">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="exp1">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i>
@@ -269,9 +308,9 @@ function scheduleSave() {
 											</li>					     										
 	     								</ul>
 	     							</div>
-	     							<!-- 해변여행 -->
+	     							<!-- 출국 -->
 	     							<div class="tab-pane active" id="ch-tab2">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="exp1">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i>
@@ -280,68 +319,59 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all">
 	     										<div class="task" id="checkAll" data-tabid="2">
-	     											<input type="checkbox" id="checkAll_2"> 
-	     											<p><strong>ALL</strong></p>				
+	     											<input type="checkbox" id="checkAll2"><strong> ALL</strong><br />				
 	     										</div>
 	     									</li>
 	     									<li>
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="0">     
-	     											<input type="checkbox" id="todoItem2_0">
-	     											<p>여권(유효기간 확인)</p>
+	     											<input type="checkbox" id="todoItem2_0"> 여권(유효기간 확인)<br />
 	     										</div>	     											
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="1">     
-	     											<input type="checkbox" id="todoItem2_1">
-	     											<p>여권사본</p>  
+	     											<input type="checkbox" id="todoItem2_1"> 여권사본<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="2">
-	     									      	<input type="checkbox" id="todoItem2_2">
-	     									      	<p>여권용 사진2매</p>
+	     									      	<input type="checkbox" id="todoItem2_2"> 여권용 사진2매<br />
 	     									    </div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="3">     
-	     											<input type="checkbox" id="todoItem2_3">
-	     											<p>항공권</p>  
+	     											<input type="checkbox" id="todoItem2_3"> 항공권  <br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="4">
-	     										    <input type="checkbox" id="todoItem2_4">
-	     										    <p>현지화폐(환전)</p>  
+	     										    <input type="checkbox" id="todoItem2_4"> 현지화폐(환전)  <br />
 	     										</div>
 	     									</li>
 	     									<li>
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="5">
-	     										    <input type="checkbox" id="todoItem2_5">
-	     										    <p>비상금(원화,현지화폐)</p>
+	     										    <input type="checkbox" id="todoItem2_5"> 비상금(원화,현지화폐) <br />
 	     									    </div>
 	     									</li>
 	     									<li>
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="6">
-	     										    <input type="checkbox" id="todoItem2_6">
-	     										    <p>현지 비상연락처</p>  
+	     										    <input type="checkbox" id="todoItem2_6"> 현지 비상연락처<br />
 	     										</div>
 	     									</li>
 	     									<li>
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="7">
-	     										    <input type="checkbox" id="todoItem2_7">
-	     										    <p>숙박/투어 바우처</p>  
+	     										    <input type="checkbox" id="todoItem2_7"> 숙박/투어 바우처<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="2" data-itemid="8">     
-	     											<input type="checkbox" id="todoItem2_8">
-	     											<p>여행자보험</p>  
+	     											<input type="checkbox" id="todoItem2_8"> 여행자보험<br />
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 해변여행 -->
 	     							<div class="tab-pane" id="ch-tab3">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i>
@@ -350,62 +380,54 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="3">   
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem3"><strong> ALL</strong><br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>자외선 차단제</p>  
+	     											<input type="checkbox" id="todoItem3_0"> 자외선 차단제<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>수영복</p>  
+	     											<input type="checkbox" id="todoItem3_1"> 수영복<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="2">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>선글라스</p>  
+	     											<input type="checkbox" id="todoItem3_2"> 선글라스<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="3"> 
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>모자</p>  
+	     											<input type="checkbox" id="todoItem3_3"> 모자<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="4">   
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>샌들 또는 아쿠아샌들</p>  
+	     											<input type="checkbox" id="todoItem3_4"> 샌들 또는 아쿠아샌들<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="5">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>얇은 긴 소매 옷</p>  
+	     											<input type="checkbox" id="todoItem3_5"> 얇은 긴 소매 옷<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="6">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>비치타월/스포츠타월</p>  
+	     											<input type="checkbox" id="todoItem3_6"> 비치타월/스포츠타월<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="3" data-itemid="7"> 
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>방수팩</p>  
+	     										    <input type="checkbox" id="todoItem3_7"> 방수팩<br />  
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 배낭여행 -->
 	     							<div class="tab-pane" id="ch-tab4">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i>
@@ -414,134 +436,114 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="4">   
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem4"><strong> ALL</strong><br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>배낭</p>  
+	     											<input type="checkbox" id="todoItem4_0"> 배낭<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>운동화</p>  
+	     											<input type="checkbox" id="todoItem4_1"> 운동화<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="2">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>샌달</p>  
+	     											<input type="checkbox" id="todoItem4_2"> 샌달<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="3">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>물통</p>  
+	     											<input type="checkbox" id="todoItem4_3"> 물통<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="4">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>허리전대</p>  
+	     											<input type="checkbox" id="todoItem4_4"> 허리전대<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="5">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>휴대용 칼</p>  
+	     											<input type="checkbox" id="todoItem4_5"> 휴대용 칼<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="6">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>나침반</p>  
+	     											<input type="checkbox" id="todoItem4_6"> 나침반<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="7">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>실바늘</p>  
+	     											<input type="checkbox" id="todoItem4_7"> 실바늘<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="8">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>응급용품</p>  
+	     											<input type="checkbox" id="todoItem4_8"> 응급용품<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="9">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>손수건</p>  
+	     											<input type="checkbox" id="todoItem4_9"> 손수건<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="10">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>우비</p>  
+	     											<input type="checkbox" id="todoItem4_10"> 우비<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="11">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>손톱깍이</p>  
+	     											<input type="checkbox" id="todoItem4_11"> 손톱깍이<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="12">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>망원경</p>  
+	     											<input type="checkbox" id="todoItem4_12"> 망원경<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="13">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>다용도칼</p>  
+	     											<input type="checkbox" id="todoItem4_13"> 다용도칼<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="14">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>미니가위</p>  
+	     											<input type="checkbox" id="todoItem4_14"> 미니가위<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="15">  
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>우산</p>  
+	     											<input type="checkbox" id="todoItem4_15"> 우산<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="16"> 
-	     										    <div class="checkbox enabled">✓</div>
-	     										   <p>머그컵</p>  
+	     										   <input type="checkbox" id="todoItem4_16"> 머그컵<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="17">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>휴대용 버너</p>  
+	     											<input type="checkbox" id="todoItem4_17"> 휴대용 버너<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="18">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>코펠</p>  
+	     											<input type="checkbox" id="todoItem4_18"> 코펠<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="4" data-itemid="19">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>손거울</p>  
+	     											<input type="checkbox" id="todoItem4_19"> 손거울<br /> 
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 비상약 -->
 	     							<div class="tab-pane" id="ch-tab5">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i>
@@ -550,80 +552,69 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="5"> 
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem5"><strong> ALL</strong><br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>종합 감기약</p>  
+	     											<input type="checkbox" id="todoItem5_0"> 종합 감기약<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>복합 연고제</p>  
+	     											<input type="checkbox" id="todoItem5_1"> 복합 연고제<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="2">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>파스</p>  
+	     											<input type="checkbox" id="todoItem5_2"> 파스<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="3">  
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>일회용 밴드</p>  
+	     										    <input type="checkbox" id="todoItem5_3"> 일회용 밴드<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="4">  
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>소독약</p>  
+	     											<input type="checkbox" id="todoItem5_4"> 소독약<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="5">
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>두통약</p>  
+	     										    <input type="checkbox" id="todoItem5_5"> 두통약<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="6">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>소화제</p>  
+	     											<input type="checkbox" id="todoItem5_6"> 소화제<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="7"> 
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>지사제</p>  
+	     										    <input type="checkbox" id="todoItem5_7"> 지사제<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="8">  
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>여성용품</p>  
+	     										    <input type="checkbox" id="todoItem5_8"> 여성용품<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="9">
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>복용중인 약(처방)</p>  
+	     										    <input type="checkbox" id="todoItem5_9"> 복용중인 약(처방)<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="5" data-itemid="10">
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>아스피린</p>  
+	     										    <input type="checkbox" id="todoItem5_10"> 아스피린<br />  
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 전자제품 -->
 	     							<div class="tab-pane" id="ch-tab6">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i> 
@@ -632,50 +623,44 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="6">   
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem6"><strong> ALL</strong><br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="6" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>카메라</p>  
+	     											<input type="checkbox" id="todoItem6_0"> 카메라<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="6" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>배터리/충전기/메모리</p>  
+	     											<input type="checkbox" id="todoItem6_1"> 배터리/충전기/메모리<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="6" data-itemid="2">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>리더기</p>  
+	     											<input type="checkbox" id="todoItem6_2"> 리더기<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="6" data-itemid="3">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>고용량 USB(백업용)</p>  
+	     											<input type="checkbox" id="todoItem6_3"> 고용량 USB(백업용)<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="6" data-itemid="4">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>노트북 또는 랩톱</p>  
+	     											<input type="checkbox" id="todoItem6_4"> 노트북 또는 랩톱<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="6" data-itemid="5">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>멀티어댑터</p>  
+	     											<input type="checkbox" id="todoItem6_5"> 멀티어댑터<br />  
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 세면도구 -->
 	     							<div class="tab-pane" id="ch-tab7">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i> 
@@ -684,56 +669,49 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="7">   
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem7"><strong> ALL</strong><br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>치약</p>  
+	     											<input type="checkbox" id="todoItem7_0"> 치약<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>칫솔</p>  
+	     											<input type="checkbox" id="todoItem7_1"> 칫솔<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="2">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>수건</p>  
+	     											<input type="checkbox" id="todoItem7_2"> 수건<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="3">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>샴푸</p>  
+	     											<input type="checkbox" id="todoItem7_3"> 샴푸<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="4">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>린스</p>  
+	     											<input type="checkbox" id="todoItem7_4"> 린스<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="5">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>면도기</p>  
+	     											<input type="checkbox" id="todoItem7_5"> 면도기<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="7" data-itemid="6">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>거품비누</p>  
+	     											<input type="checkbox" id="todoItem7_6"> 거품비누<br /> 
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 화장품 -->
 	     							<div class="tab-pane" id="ch-tab8">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i> 
@@ -742,68 +720,59 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="8">   
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem8"><strong> ALL</strong><br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>스킨로션</p>  
+	     											<input type="checkbox" id="todoItem8_0">스킨로션<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>헤어로션</p>  
+	     											<input type="checkbox" id="todoItem8_1">헤어로션<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="2">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>바디로션</p>  
+	     											<input type="checkbox" id="todoItem8_2">바디로션<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="3">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>화장솜</p>  
+	     											<input type="checkbox" id="todoItem8_3">화장솜<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="4">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>마스크팩</p>  
+	     											<input type="checkbox" id="todoItem8_4">마스크팩<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="5">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>빗</p>  
+	     											<input type="checkbox" id="todoItem8_5">빗<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="6">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>면봉</p>  
+	     											<input type="checkbox" id="todoItem8_6">면봉<br />
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="7">
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>화장클렌저</p>  
+	     										    <input type="checkbox" id="todoItem8_7">화장클렌저<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="8" data-itemid="8">  
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>클렌징 티슈</p>  
+	     											<input type="checkbox" id="todoItem8_8">클렌징 티슈<br />
 	     										</div>
 	     									</li>
 	     								</ul>
 	     							</div>
+	     							<!-- 스쿠버 장비 -->
 	     							<div class="tab-pane" id="ch-tab9">
-	     								<ul class="tasks">
+	     								<ul class="tasks"  id="checklist-tab">
 	     									<li class="expl">
 	     										<p>
 	     											<i class="fa fa-check" aria-hidden="true"></i> 
@@ -812,92 +781,77 @@ function scheduleSave() {
 	     									</li>
 	     									<li class="all" id="all"> 
 	     										<div class="task " id="checkAll" data-tabid="9">   
-	     											<div class="checkbox enabled">✓</div>   
-	     											<p><strong>ALL</strong></p> 
+	     											<input type="checkbox" id="todoItem9"><strong> ALL</strong><br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="0">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>마스크와 스노클</p>  
+	     											<input type="checkbox" id="todoItem9_0"> 마스크와 스노클<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="1">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>로그북</p>  
+	     											<input type="checkbox" id="todoItem9_1"> 로그북<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="2">    
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>감압표</p>  
+	     											<input type="checkbox" id="todoItem9_2"> 감압표<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="3">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>호흡기 셋트</p>  
+	     											<input type="checkbox" id="todoItem9_3"> 호흡기 셋트<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="4">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>부력자켓</p>  
+	     											<input type="checkbox" id="todoItem9_4"> 부력자켓<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="5">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>웻슈트</p>  
+	     											<input type="checkbox" id="todoItem9_5"> 웻슈트<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="6">  
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>드라이슈트</p>  
+	     										    <input type="checkbox" id="todoItem9_6"> 드라이슈트<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="7">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>다이빙 부츠</p>  
+	     											<input type="checkbox" id="todoItem9_7"> 다이빙 부츠<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="8">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>오리발</p>  
+	     											<input type="checkbox" id="todoItem9_8"> 오리발<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="9">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>다이빙 랜턴</p>  
+	     											<input type="checkbox" id="todoItem9_9"> 다이빙 랜턴<br />  
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="10">  
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>다이빙 칼</p>  
+	     											<input type="checkbox" id="todoItem9_10"> 다이빙 칼<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="11">  
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>다이빙 컴퓨터, 시계</p>  
+	     											<input type="checkbox" id="todoItem9_11"> 다이빙 컴퓨터, 시계<br /> 
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="12">     
-	     											<div class="checkbox enabled">✓</div>
-	     											<p>수중 카메라 하우징</p>  
+	     											<input type="checkbox" id="todoItem9_12"> 수중 카메라 하우징<br />   
 	     										</div>
 	     									</li>
 	     									<li>  
 	     										<div class="task " id="todoItem" data-tabid="9" data-itemid="13">
-	     										    <div class="checkbox enabled">✓</div>
-	     										    <p>액세서리(장갑, 후드,SMB,슬레이트,쉐이커, 포인터,릴,김서림 방지제)</p>  
+	     										    <input type="checkbox" id="todoItem9_13"> 액세서리(장갑, 후드,SMB,슬레이트,쉐이커, 포인터,릴,김서림 방지제)<br />  
 	     										</div>
 	     									</li>
 	     								</ul>
