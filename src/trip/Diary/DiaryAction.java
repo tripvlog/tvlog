@@ -23,9 +23,10 @@ public class DiaryAction {
 	@RequestMapping("diaryPro.trip")
 	public String diaryPro(HttpServletRequest request){
 		
-		System.out.println(" ====================================================== ");
+		System.out.println(" ==================== diaryPro start ======================= ");
 		System.out.println(request.getParameter("d_title") + " is title value");
 		System.out.println(request.getParameter("d_content") + " is content value");
+		System.out.println(" ==================== diaryPro end ======================= ");
 		return "redirect:diary.trip";
 	}
 	
