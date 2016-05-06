@@ -92,7 +92,7 @@ function scheduleSave() {
     	background-color:#EAEAEA;
     }
     #btn-group{    /* 왼쪽 버튼 그룹1 */
-    	width:185px;
+    	width:182px;
     	Border-radius:10px;
     }
     #btn-group2{   /* 왼쪽 버튼 그룹2 */
@@ -102,19 +102,17 @@ function scheduleSave() {
     	padding:0px 0px;
     }
     #checklist-tab {
-   		list-style:none;
+   		list-style-type:none;
    		margin:0;
     	padding:0;
 	}
-	#tab-li {
-		width:95px;
+	#tab-li {     /* 체크리스트 메뉴 */
     	margin: 0 0 0 0;
     	padding: 0 0 0 0;
     	border : 0;
     	float: left;
-	}	
-	#b-tab-li{
-		width:95px;
+	}	 
+	#b-tab-li{    /* 가계부 메뉴 */
 		margin: 0 0 0 0;
     	padding: 0 0 0 0;
     	border : 0;
@@ -131,16 +129,16 @@ function scheduleSave() {
 		<!-- 왼쪽 버튼 그룹 - 저장, 방문명소 -->
 		<div class="col-md-2" id="savecontainer">
 			<div id="btn-group" class="btn-group" role="group" aria-label="">
-				<button type="button" class="btn btn-default btn-lg" id="scheduleSave" style="WIDTH:81pt" onclick="scheduleSave()"><i class="fa fa-floppy-o" aria-hidden="true"></i>저장하기</button>
-				<button type="button" class="btn btn-default btn-lg" style="WIDTH:55pt"><i class="fa fa-times" aria-hidden="true"></i>취소</button>
+				<button type="button" class="btn btn-default btn-lg" id="scheduleSave" style="WIDTH:81pt" onclick="scheduleSave()"><i class="fa fa-floppy-o" aria-hidden="true"></i><br />저장하기</button>
+				<button type="button" class="btn btn-default btn-lg" style="WIDTH:55pt"><i class="fa fa-times" aria-hidden="true"></i><br />취소</button>
 			</div>
 			<p></p>
 			<div id="btn-group2" class="btn-group" role="group" aria-label="">
 				<button type="button" class="btn btn-default btn-lg btn-block"><i class="fa fa-map-marker" aria-hidden="true"></i>방문명소</button>
-				<button type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#money"><i class="fa fa-krw" aria-hidden="true"></i>여행가계부</button>
+				<button type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#budget"><i class="fa fa-krw" aria-hidden="true"></i>여행가계부</button>
 				<button type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#checklistmodal"><i class="fa fa-check-square-o" aria-hidden="true"></i>체크리스트</button>
 					<!-- 가계부 모달 팝업 -->
-					<div class="modal fade" id="money" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+					<div class="modal fade" id="budget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 	  					<div class="modal-dialog">
 	    				<div class="modal-content">
 	      				<div class="modal-header">
@@ -152,16 +150,16 @@ function scheduleSave() {
 	     						<div class="tab-pane plantab de" id="tab4">
 	     							<div class="checklist">
 	     								<!-- STR_START : checklist tab 목록 -->
-	     								<ul class="nav money-tab" id="money-tab">
+	     								<ul class="nav budget-tab" id="budget-tab">
 	     									<!-- 체크리스트 메뉴 -->
-	     									<li id="m-tab-li" class="active" style="margin-right:0;">
-	     										<a target="_self" href="#m-tab1" class="btn mylist" data-toggle="tab" aria-expanded="true">전체 비용</a>
+	     									<li id="b-tab-li" class="active" style="margin-right:0;">
+	     										<a target="_self" href="#b-tab1" class="btn mylist" data-toggle="tab" aria-expanded="true">전체 비용</a>
 	     									</li>
-	     									<li id="m-tab-li">
-	     										<a target="_self" href="#m-tab2" class="btn" data-toggle="tag">일일 지출</a>
+	     									<li id="b-tab-li">
+	     										<a target="_self" href="#b-tab2" class="btn" data-toggle="tag">일일 지출</a>
 	     									</li>
-	     									<li id="m-tab-li">
-	     										<a target="_self" href="#m-tab3" class="btn" data-toggle="tag">방문 명소</a>
+	     									<li id="b-tab-li">
+	     										<a target="_self" href="#b-tab3" class="btn" data-toggle="tag">방문 명소</a>
 	     									</li>
 	     								</ul>
 	     							</div>
@@ -169,29 +167,29 @@ function scheduleSave() {
 	     					</div>
 							<div class="tab-pane active" id="budget-tab1">
 	     						<ul class"tasks">
-	     							<li class="totalCost" id="totalCost_0">
-	     								<i class="fa fa-plane" aria-hidden="true"></i>항공료
+	     							<li class="totalCost" id="totalCost_0" data-tabid="1" data-itemid="0">
+	     								<i class="fa fa-plane" aria-hidden="true"></i>  항공료
 	     							</li>
-	     							<li class="totalCost" id="totalCost_1">
-	     								<i class="fa fa-bus" aria-hidden="true"></i>교통
+	     							<li class="totalCost" id="totalCost_1" data-tabid="1" data-itemid="1">
+	     								<i class="fa fa-bus" aria-hidden="true"></i>  교통
 	     							</li>
-	     							<li class="totalCost" id="totalCost_2">
-	     								<i class="fa fa-bed" aria-hidden="true"></i>숙박
+	     							<li class="totalCost" id="totalCost_2" data-tabid="1" data-itemid="2">
+	     								<i class="fa fa-hospital-o" aria-hidden="true"></i>  숙박
 	     							</li>
-	     							<li class="totalCost" id="totalCost_3">
-	     								<i class="fa fa-ticket" aria-hidden="true"></i>입장료
+	     							<li class="totalCost" id="totalCost_3" data-tabid="1" data-itemid="3">
+	     								<i class="fa fa-ticket" aria-hidden="true"></i>  입장료
 	     							</li>
-	     							<li class="totalCost" id="totalCost_4">
-	     								<i class="fa fa-spoon" aria-hidden="true"></i>음식
+	     							<li class="totalCost" id="totalCost_4" data-tabid="1" data-itemid="4">
+	     								<i class="fa fa-spoon" aria-hidden="true"></i>  음식
 	     							</li>
-	     							<li class="totalCost" id="totalCost_5">
-	     								<i class="fa fa-gamepad" aria-hidden="true"></i>오락
+	     							<li class="totalCost" id="totalCost_5" data-tabid="1" data-itemid="5">
+	     								<i class="fa fa-gamepad" aria-hidden="true"></i>  오락
 	     							</li>
-	     							<li class="totalCost" id="totalCost_6">
-	     								<i class="fa fa-shopping-bag" aria-hidden="true"></i>쇼핑
+	     							<li class="totalCost" id="totalCost_6" data-tabid="1" data-itemid="6">
+	     								<i class="fa fa-shopping-cart" aria-hidden="true"></i>  쇼핑
 	     							</li>
-	     							<li class="totalCost" id="totalCost_7">
-	     								<i class="fa fa-map-marker" aria-hidden="true"></i>기타
+	     							<li class="totalCost" id="totalCost_7" data-tabid="1" data-itemid="7">
+	     								<i class="fa fa-map-marker" aria-hidden="true"></i>  기타
 	     							</li>
 	     						</ul>				
 	     					</div>
