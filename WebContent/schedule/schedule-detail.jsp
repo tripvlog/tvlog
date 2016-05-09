@@ -120,14 +120,11 @@
 			</div>
 			&nbsp;
 			<div class="row" id="startschedule">
-				<div class="col-md-1" id="tripstart"><b>여행시작</b></div>
-				<div class="col-md-1"></div>
+				<div class="col-md-2" id="tripstart"><b>여행시작</b></div>
 				<div class="col-md-1"><b>일</b></div>
 				<div class="col-md-1"><b>명</b></div>
-				<div class="col-md-1"><b>여행단계</b></div>
-				<div class="col-md-1"></div>
-				<div class="col-md-1"><b>여행테마</b></div>
-				<div class="col-md-1"></div>
+				<div class="col-md-2"><b>여행단계</b></div>
+				<div class="col-md-6"><b>여행테마</b></div>
 				<div class="col-md-1"></div>
 				<div class="col-md-1"></div>
 				<div class="col-md-1"></div>
