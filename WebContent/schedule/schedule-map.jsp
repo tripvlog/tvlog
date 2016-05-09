@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <style>
       #schedule-map {
-      	width: 800px;
+      	width: 940px;
         height: 400px;
+        Border-radius:10px;
       }
     </style>
     <script>
