@@ -30,3 +30,40 @@ create table t_schedule_detail(
 
 create sequence t_schedule_detail_seq nocache;
 
+# 개인 체크리스트
+create table t_schedule_checklist (
+    sc_num number primary key,
+    s_num number,
+    ci_num number
+)
+
+create sequence t_schedule_checklist_seq nocache;
+
+
+
+# 체크 리스트(카테고리 리스트)
+create table t_checklist_category (
+    cl_num number primary key,
+    cl_name varchar2(1000)
+)
+
+create sequence t_checklist_category_seq nocache;
+
+
+# 체크리스트(아이템)
+create table t_checklist_item (
+    ci_num number primary key,
+    cl_num number,
+    ci_name varchar2(1000)
+)
+
+create sequence t_checklist_item_seq nocache;
+
+# 공개범위
+create table t_range (
+    r_num number primary key,
+    r_name varchar2(1000),
+    r_value varchar2(2000)
+)
+
+create sequence t_range_seq nocache;
