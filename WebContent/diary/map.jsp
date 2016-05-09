@@ -72,8 +72,8 @@
 
 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
-    zoom: 13,
+    center: {lat: -33.8688, lng: 151.2195}, // 처음 지도를 띄웠을 때 위치
+    zoom: 13, // 처음 지도를 띄웠을때 확대 수치
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
