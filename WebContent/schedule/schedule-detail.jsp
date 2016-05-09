@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/tvlog/schedule/schedule.css">
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
@@ -211,8 +212,8 @@
 				<tr><td width="100" >ALL</td><td>&nbsp;</td></tr>
 
 				<c:forEach var="i" begin="1" end="24" step="1" varStatus="k">
-					<tr><td rowspan="2">${i}시</td><td onclick="infowindow(event)" ></td></tr>
-	   				<tr><td onclick="infowindow(event)"></td></tr>
+					<tr><td rowspan="2">${i}시</td><td onclick="mymemo(event)" ></td></tr>
+	   				<tr><td onclick="mymemo(event)"></td></tr>
 				</c:forEach>
 			</table>
 			</form>

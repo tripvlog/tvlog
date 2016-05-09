@@ -25,7 +25,7 @@ function add_col()
 	    stock_td = document.createElement('td');
 	    stock_tbody_tr[i].appendChild(stock_td);
 	    stock_td.addEventListener('click', function(event){
-	    	infowindow(event);
+	    	mymemo(event);
 	    });
 	}
 }
@@ -50,11 +50,10 @@ function bb(idNum){
 	icon = document.getElementById("plus"+idNum);
 	icon.style.visibility = "hidden";
 }
-function infowindow(event){
+function mymemo(event){
 	my = document.getElementById("my");
-	profile = document.getElementById("profile");
 	my.style.display="block";
-	my.style.top=(parseInt(event.clientY)+200)+"px";
+	my.style.top=(parseInt(event.clientY)+500)+"px";
 	my.style.left=(parseInt(event.clientX)-380)+"px";
 }
 function scheduleSave() {
