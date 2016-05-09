@@ -205,7 +205,7 @@
 			<form method=post action="">
 			
 			<p></p>
-			<table id='stock_table' class="table table-bordered" border=1>
+			<table id='stock_table' class="table table-bordered" border="2">
 				<tr><td width="100" >ALL</td><td>&nbsp;</td></tr>
 
 				<c:forEach var="i" begin="1" end="24" step="1" varStatus="k">

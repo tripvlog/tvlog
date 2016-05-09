@@ -79,4 +79,16 @@
 	}
 	#stock_table{
 		padding: 10px;
+		border-style : solid;
+		border-width : 10px;
+		border-color: #000000;
 	}
+	#stock_table tr{
+	border : 3px solid #000000;
+	}
+	#stock_table td{
+	border : 3px solid #000000;
+	}
+	
+	
+	
