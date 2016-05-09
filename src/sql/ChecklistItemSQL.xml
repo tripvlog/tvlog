@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+	<select id="ch_item_select" resultClass="trip.schedule.ChecklistItemDTO">
+		select * from T_CHECKLIST_ITEM
+	</select>
+	<insert id="ch_item_insert" parameterClass="trip.schedule.ChecklistItemDTO">
+		insert into T_CHECKLIST_ITEM(ci_num,cl_num,ci_name) values(#ci_num#,#cl_num#,#ci_name#)
+	</insert>
+	<delete id="ch_item_delete" parameterClass="int">
+		delete * from T_CHECKLIST_ITEM where ci_num=#ci_num#
+	</delete>
+
+</sqlMap>

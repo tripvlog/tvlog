@@ -7,7 +7,8 @@ create table t_schedule(
     s_endday date,
     s_theme varchar2(1000),
     s_mainimg varchar2(1000),
-    s_range number
+    s_range number,
+    s_step number
 );
 
 create sequence t_schedule_seq nocache;
@@ -34,7 +35,8 @@ create sequence t_schedule_detail_seq nocache;
 create table t_schedule_checklist (
     sc_num number primary key,
     s_num number,
-    ci_num number
+    ci_num number,
+    sc_name varchar2(2000)
 )
 
 create sequence t_schedule_checklist_seq nocache;

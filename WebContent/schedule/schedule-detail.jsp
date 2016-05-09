@@ -132,7 +132,7 @@
 			</div>
 			<div class="row" id="startschedule">
 				<div class="col-md-2" id="tripstart"><input id="tourStartDay" type="date" name="date" class="form-control hasDatepicker"  size="10"/></div>
-				<div class="col-md-1"><input type="number" name="count" id="count" value="1" onchange="test()" min="1" size="8" class="form-control"/></div>
+				<div class="col-md-1"><input type="number" name="count" id="count" value="1" onchange="test()" min="1" class="form-control"/></div>
 				<div class="col-md-1"><input type="number"  class="form-control" min="1" value="1" id="persons" /></div>
 				<div class="col-md-2"><input type="radio" name="step" />여행 전 <input type="radio" name="step" />여행 후</div>
 				<div class="col-md-6"><input type="checkbox" value="theme" /> 나홀로여행
