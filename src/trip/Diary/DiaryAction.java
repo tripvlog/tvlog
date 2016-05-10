@@ -32,7 +32,6 @@ public class DiaryAction {
 		System.out.println(" ==================== diaryPro start ======================= ");
 		System.out.println(req.getParameter("d_title") + " is title value");
 		System.out.println(req.getParameter("d_content") + " is content value");
-		System.out.println(req.getRealPath("diary") + " is realPath about diary");
 		if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
 		} else {
 			for (int i = 0; i < mf.size(); i++) {
