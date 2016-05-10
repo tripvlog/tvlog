@@ -17,6 +17,44 @@ public class ChecklistBean {
 	@Autowired
 	private SqlMapClientTemplate sqlMap;
 
+	/* 체크리스트 관리자 페이지 */
+	@RequestMapping("/checklist.trip")
+	public String checklist() {
+			
+		return "/admin/checklist.jsp";
+	}
+	
+	/* 체크리스트 카테고리 관리 */
+	@RequestMapping("/checklistCategory.trip")
+	public ModelAndView checklistCategory() {
+			
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_category_select", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/checklistCategory.jsp");
+	
+		return mv;
+	}
+	
+	/* 체크리스트 항목 관리 */
+	@RequestMapping("/checklistItem.trip")
+	public ModelAndView checklistItem() {
+			
+		sqlMap.queryForObject("ch_item_select_innerJoin", null);
+		
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_item_select", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/checklistItem.jsp");
+				
+		return mv;
+	}
+	
+	/* 카테고리 검색 */
 	@RequestMapping("/checklistCateSel.trip")
 	public ModelAndView checklistCateSel() {
 		
@@ -25,45 +63,87 @@ public class ChecklistBean {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
-		mv.setViewName("/admin/check.trip");
+		mv.setViewName("/admin/checklistCategory.jsp");
 	
 		return mv;
 	}
-	
+
+	/* 카테고리 추가 */
 	@RequestMapping("/checklistCateAdd.trip")
-	public String checklistCateAdd(ChecklistCategoryDTO dto) {
+	public ModelAndView checklistCateAdd(ChecklistCategoryDTO dto) {
+		
 		sqlMap.insert("ch_category_insert", dto);
-		return "/admin/checklist.trip";
+		
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_category_select", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/checklistCategory.jsp");
+				
+		return mv;
 	}
 	
+	/* 카테고리 삭제 */
 	@RequestMapping("/checklistCateDel.trip")
-	public String checklistCateDel(ChecklistCategoryDTO dto, HttpServletRequest request){
-		sqlMap.delete("ch_category_delete", dto.getCl_num());
-		return "/admin/checklist.trip";
+	public ModelAndView checklistCateDel(String cl_name) {
+		
+		sqlMap.delete("ch_category_delete", cl_name);
+		
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_category_select", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/checklistCategory.jsp");
+				
+		return mv;
 	}
 	
+	/* 항목 검색*/
 	@RequestMapping("/checklistItemSel.trip")
-	public ModelAndView checklistItemSel() {
+	public ModelAndView checklistItemSel(ChecklistCategoryDTO dto) {
+				
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_item_select", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/checklistItem.jsp");
+				
+		return mv;
+	}
+	
+	/* 항목 추가 */
+	@RequestMapping("/checklistItemAdd.trip")
+	public ModelAndView checklistItemAdd(ChecklistCategoryDTO dto) {
+	
+		sqlMap.insert("ch_item_insert", dto);
 		
 		List list = new ArrayList();
 		list = sqlMap.queryForList("ch_item_select", null);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
-		mv.setViewName("/admin/checklist.trip");
-	
+		mv.setViewName("/admin/checklistItem.jsp");
+				
 		return mv;
 	}
 	
-	@RequestMapping("/checklistItemAdd.trip")
-	public String checklistItemAdd(ChecklistItemDTO dto) {
-		//sqlMap.insert("ch_item_insert", dto);
-		return "/admin/checklist.trip";
+	/* 항목 삭제 */
+	@RequestMapping("/checklistItemDel.trip")
+	public ModelAndView checklistItemDel(String ci_name) {
+		
+		sqlMap.delete("ch_item_delete", ci_name);
+		
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_item_select", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/checklistItem.jsp");
+				
+		return mv;
 	}
 	
-	@RequestMapping("/checklistItemDel.trip")
-	public String checklistItemDel(ChecklistItemDTO dto) {
-		sqlMap.delete("ch_item_delete", dto.getCi_num());
-		return "/admin/checklist.trip";
-	}
 }

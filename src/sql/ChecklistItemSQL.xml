@@ -2,14 +2,20 @@
 <!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
 <sqlMap>
 
-	<select id="ch_item_select" resultClass="trip.schedule.ChecklistItemDTO">
-		select * from T_CHECKLIST_ITEM
+	<select id="ch_item_select_innerJoin">
+		select c.cl_num, c.cl_name, i.ci_num, i.ci_name 
+			from T_CHECKLIST_CATEGORY c INNER JOIN T_CHECKLIST_ITEM i
+				ON c.cl_num = i.cl_num
 	</select>
-	<insert id="ch_item_insert" parameterClass="trip.schedule.ChecklistItemDTO">
-		insert into T_CHECKLIST_ITEM(ci_num,cl_num,ci_name) values(#ci_num#,#cl_num#,#ci_name#)
+	<select id="ch_item_select" resultClass="trip.admin.ChecklistItemDTO">
+		select * from T_CHECKLIST_ITEM order by cl_num ASC
+	</select>
+	<insert id="ch_item_insert" parameterClass="trip.admin.ChecklistItemDTO">
+		insert into t_checklist_item(ci_num,cl_num,ci_name) 
+    		values(t_checklist_item_seq.nextval,#cl_num#,#ci_name#) 
 	</insert>
-	<delete id="ch_item_delete" parameterClass="int">
-		delete * from T_CHECKLIST_ITEM where ci_num=#ci_num#
+	<delete id="ch_item_delete" parameterClass="String">
+		delete * from T_CHECKLIST_ITEM where ci_name=#ci_name#
 	</delete>
 
 </sqlMap>
