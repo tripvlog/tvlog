@@ -10,20 +10,22 @@
 
 <script>
 	function confirm() {
-
+/*
 		alert(document.getElementById('editor_panel').innerHTML);		
 		return false;
-		
+*/
 		var title = document.getElementById('d_title').value;
-		var content = document.getElementById('editor_panel').value;
-
+		var content = document.getElementById('editor_panel').innerHTML;
+		alert(content + " is editor_panel");
+		document.getElementById('d_content').value = content
+		alert(document.getElementById('d_content').value + " is d_content")
+		
 		if (title == "" && content == "") {
 			alert("제목 또는 내용을 입력해주세요");
 			return false;
 		}
-
 	}
-
+	
 	function previewImage(targetObj, View_area) {
 		var preview = document.getElementById(View_area); //div id
 		var ua = window.navigator.userAgent; // 브라우저 정보를 받아옴
@@ -86,6 +88,7 @@
 		<!-- Modal windows button open -->
 		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">일기작성</button>
 		<form class="form-group" action="diaryPro.trip" method="post" name="diary" onsubmit="return confirm();" enctype="multipart/form-data">
+			<input type="hidden" name="d_content" id="d_content">
 			<!-- Modal window -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
 				<div class="modal-dialog">
@@ -98,7 +101,7 @@
 						</div>
 						<div class="modal-body">
 							<input type="text" class="form-control" id="d_title" placeholder="제목" name="d_title"><br />
-							<div id="editor_panel" class="editable" style="min-height: 100px; width: 300px;" data-placeholder="내용을 적어주세요." ondragstart="return false;" ondrop="return false;" contenteditable="true" spellcheck="true" data-medium-editor-element="true" role="textbox" aria-multiline="true" medium-editor-index="0" data-medium-focused="true"></div>
+							<div id="editor_panel" class="editable" data-placeholder="내용을 적어주세요." ondragstart="return false;" ondrop="return false;" contenteditable="true" spellcheck="true" data-medium-editor-element="true" role="textbox" aria-multiline="true" medium-editor-index="0" data-medium-focused="true"></div>
 							<div id='View_area' style='position: relative; width: 100px; height: 100px; color: black; border: 0px solid black; dispaly: inline;'></div>
 						</div>
 						<div class="modal-footer">

@@ -24,6 +24,10 @@ public class DiaryAction {
 		return "/diary/form.jsp";
 	}
 	
+	@RequestMapping("s_editor.trip")
+	public String s_editorForm(){
+		return "/diary/s_editor.jsp";
+	}
 	
 	@RequestMapping("diaryPro.trip")
 	public String diaryPro(HttpServletRequest req, MultipartHttpServletRequest mtreq) throws Exception{
@@ -32,6 +36,7 @@ public class DiaryAction {
 		System.out.println(" ==================== diaryPro start ======================= ");
 		System.out.println(req.getParameter("d_title") + " is title value");
 		System.out.println(req.getParameter("d_content") + " is content value");
+
 		if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
 		} else {
 			for (int i = 0; i < mf.size(); i++) {
