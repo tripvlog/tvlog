@@ -41,7 +41,8 @@ create table t_schedule_checklist (
     sc_num number primary key,
     s_num number,
     ci_num number,
-    sc_name varchar2(2000)
+    sc_name varchar2(2000),
+    cl_num number
 )
 
 create sequence t_schedule_checklist_seq nocache;
