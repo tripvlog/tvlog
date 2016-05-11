@@ -6,6 +6,7 @@ public class ChecklistPersonalDTO {
 	private int s_num;
 	private int ci_num;
 	private String sc_name;
+	private int cl_num;
 	
 	public int getSc_num() {
 		return sc_num;
@@ -30,5 +31,11 @@ public class ChecklistPersonalDTO {
 	}
 	public void setSc_name(String sc_name) {
 		this.sc_name = sc_name;
+	}
+	public int getCl_num() {
+		return cl_num;
+	}
+	public void setCl_num(int cl_num) {
+		this.cl_num = cl_num;
 	}
 }
