@@ -21,11 +21,31 @@ function add_col()
 	var msg = document.getElementById('msg');
 	
     var stock_tbody_tr = stock_table.getElementsByTagName('tr');
+    var td_length = stock_tbody_tr[0].getElementsByTagName('td').length;
+
 	for (i=0; i<stock_tbody_tr.length; i++) {
 	    stock_td = document.createElement('td');
+	    var idvalue="";
+	    if(i % 2 == 0){
+	    	idvalue=td_length+"_"+(Math.floor(i/2))+"_30";
+	    	stock_td.innerHTML="<i class='fa fa-plus-circle' aria-hidden='true' style='visibility:hidden;' id='plus"+idvalue+"'>";
+	    	stock_td.setAttribute("id", td_length+"_"+(Math.floor(i/2))+"_30");
+	    }else{
+	    	idvalue = td_length+"_"+(Math.floor(i/2)+1);
+	    	stock_td.innerHTML="<i class='fa fa-plus-circle' aria-hidden='true' style='visibility:hidden;' id='plus"+idvalue+"'>";
+	    	stock_td.setAttribute("id", td_length+"_"+(Math.floor(i/2)+1));
+	    }
 	    stock_tbody_tr[i].appendChild(stock_td);
-	    stock_td.addEventListener('click', function(event){
-	    	mymemo(event);
+	    
+	    stock_td.addEventListener('mouseover', function(event){
+	    	a= this.getAttribute("id");
+	    	icon = document.getElementById("plus"+a);
+	    	icon.style.visibility = "visible";
+	    });
+	    stock_td.addEventListener('mouseout', function(event){
+	    	a= this.getAttribute("id");
+	    	icon = document.getElementById("plus"+a);
+	    	icon.style.visibility = "hidden";
 	    });
 	}
 }
@@ -50,12 +70,21 @@ function bb(idNum){
 	icon = document.getElementById("plus"+idNum);
 	icon.style.visibility = "hidden";
 }
-function mymemo(event){
+
+var tdObj;
+function mymemo(event,td){
 	my = document.getElementById("my");
+	tdObj = td;
 	my.style.display="block";
 	my.style.top=(parseInt(event.clientY)+500)+"px";
 	my.style.left=(parseInt(event.clientX)-380)+"px";
 }
+
+
+function detailSave(){
+	tdObj.innerHTML="test success";
+}
+
 function scheduleSave() {
 	//저장하기 버튼 누르면 보여줄 화면
 }

@@ -15,7 +15,6 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/tvlog/schedule/schedule.js"></script>
-
 <title>트립블로그</title>
 </head>
 <body>
@@ -163,44 +162,6 @@
 	<!-- 지도 끝 -->
 
 		<!-- 지도/일정표의 테이블 -->
-	    <div class="add-my"  id="my" style="display :none">
-			<div class="add-my-box" >
-				<table cellpadding="20" cellspacing="20" width="200" >
-					<tr>
-						<td>
-							<a href="naver.com">
-								<i class="fa fa-bus fa-2x" aria-hidden="true"></i>
-							</a>
-						</td>
-						<td>
-							<a href="naver.com">
-								<i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
-							</a>
-						</td>
-						<td>
-							<a href="naver.com">
-								<i class="fa fa-home fa-2x" aria-hidden="true"></i>
-							</a>
-						</td>
-						<td>
-							<a href="naver.com">
-								<i class="fa fa-file-o fa-2x" aria-hidden="true"></i>
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td>교통</td>
-						<td>장소</td>
-						<td>숙박</td>
-						<td>메모</td>
-					</tr>
-					<tr >
-						<td colspan="4"><i class="fa fa-circle" aria-hidden="true" ></i></td>
-					</tr>
-				</table>
-		</div>
-	</div>
-	    
 	    <div class="tableContainer">
 			<form method=post action="">
 			
@@ -209,8 +170,8 @@
 				<tr><td width="100" >ALL</td><td>&nbsp;</td></tr>
 
 				<c:forEach var="i" begin="1" end="24" step="1" varStatus="k">
-					<tr><td rowspan="2">${i}시</td><td onclick="mymemo(event)" ></td></tr>
-	   				<tr><td onclick="mymemo(event)"></td></tr>
+					<tr><td rowspan="2">${i}시</td><td  id="1_${i}" onmouseover="aa(${i});" onmouseout="bb(${i});"><i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}"></i></td></tr>
+	   				<tr><td onmouseover="aa(${i}${i});" onmouseout="bb(${i}${i});"  id="1_${i}_30"><i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}${i}"></i></td></tr>
 				</c:forEach>
 			</table>
 			</form>
@@ -221,5 +182,89 @@
 	<!-- 오른쪽 그룹 끝 -->
 	</div>
 </div>
+
+<!-- 세부일정 등록  -->
+	<div class="modal fade" id="detail-craete" tabindex="-1" role="dialog" aria-labelledby="detail-craete" aria-hidden="true">
+    		<div class="modal-dialog" >
+    		<div class="modal-content" id="modalSize">
+      		<div class="modal-header" >
+		    	<form action="/tvlog/schedule/schedule-detail.trip" method="post">
+				<div class="panel panel-success" >
+					<div class="trf-detail">
+						<div class="from-to">
+							<div class="from-to-fl transport-from-div">
+								<label for="from_0">출발지</label>
+								<input type="text" id="from_0" class="form-control transport-from-input" data-idx="0" value="">
+							</div>
+							<i class="fa fa-arrow-right"></i>
+							<div class="from-to-fl transport-to-div">
+								<label for="to_0" style="width:53px;">도착지</label>
+								<input type="text" id="to_0" class="form-control transport-to-input" data-idx="0" value="">
+							</div>
+						</div>
+						<div class="memo">
+							<label for="memo">메모</label>
+							<input type="text" id="memo_0" class="form-control transport-memo-input" value="">
+						</div>
+						<div class="detail-cost">
+							<label for="budget">비용</label>
+							<input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align: right;">
+							<select class="currency-select transport-currency-select form-control">
+								<option value="2">USD(미국)</option>
+								<option value="1" selected="selected">KRW(한국)</option>
+								<option value="0">EUR(유럽연합)</option>
+									<option value="3">JPY(일본)</option>
+									<option value="4">CNY(중국)</option>
+									<option value="5">HKD(홍콩)</option>
+									<option value="6">TWD(대만)</option>
+									<option value="7">GBP(영국)</option>
+									<option value="8">CAD(캐나다)</option>
+									<option value="9">CHF(스위스)</option>
+									<option value="10">SEK(스웨덴)</option>
+									<option value="11">AUD(호주)</option>
+									<option value="12">NZD(뉴질랜드)</option>
+									<option value="13">CZK(체코)</option>
+									<option value="14">TRY(터키)</option>
+									<option value="15">MNT(몽골)</option>
+									<option value="16">ILS(이스라엘)</option>
+									<option value="17">DKK(덴마크)</option>
+									<option value="18">NOK(노르웨이)</option>
+									<option value="19">SAR(사우디아라비아)</option>
+									<option value="20">KWD(쿠웨이트)</option>
+									<option value="21">BHD(바레인)</option>
+									<option value="22">AED(아랍에미리트)</option>
+									<option value="23">JOD(요르단)</option>
+									<option value="24">EGP(이집트)</option>
+									<option value="25">THB(태국)</option>
+									<option value="26">SGD(싱가포르)</option>
+									<option value="27">MYR(말레이시아)</option>
+									<option value="28">IDR(인도네시아)</option>
+									<option value="29">QAR(카타르)</option>
+									<option value="30">KZT(카자흐스탄)</option>
+									<option value="31">BND(브루나이)</option>
+									<option value="32">INR(인도)</option>
+									<option value="33">PKR(파키스탄)</option>
+									<option value="34">BDT(방글라데시)</option>
+									<option value="35">PHP(필리핀)</option>
+									<option value="36">MXN(멕시코)</option>
+									<option value="37">BRL(브라질)</option>
+									<option value="38">VND(베트남)</option>
+									<option value="39">ZAR(남아프리카 공화국)</option>
+									<option value="40">RUB(러시아)</option>
+									<option value="41">HUF(헝가리)</option>
+									<option value="42">PLN(폴란드)</option>
+								</select>
+							</div>
+							<div class="memo">
+								<input type="button" id="save" class="btn btn-success" data-dismiss="modal" value="저장하기" onclick="detailSave()">
+								<input type="button" id="cancle" class="btn btn-cancle" value="취소">
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			</div>
+			</div>
+		</div>
 </body>
 </html>
