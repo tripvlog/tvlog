@@ -28,7 +28,6 @@
 	<h2>체크리스트 관리자 모드</h2>
 	<br />
 	<input type="button" value="카테고리 관리" onclick="javascript:window.location='checklistCategory.trip'">
-	<input type="button" value="항목 관리" onclick="javascript:window.location='checklistItem.trip'">
 </div>
 </body>
 </html>

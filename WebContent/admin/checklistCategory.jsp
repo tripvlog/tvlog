@@ -15,6 +15,11 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/tvlog/schedule/schedule.js"></script>
+<script>
+	function itemlocation(cl_num) {
+		window.location="/tvlog/checklistItem.trip?cl_num="+cl_num;
+	}
+</script>
 <style>
 	#totalDiv{
 		padding:20px;
@@ -33,7 +38,7 @@
 		<c:forEach var="list" items="${list}">
 		<tr>
 			<td>${list.cl_num}</td>
-			<td>${list.cl_name}</td>
+			<td>${list.cl_name} <input type="button" value="항목추가" onClick="itemlocation('${list.cl_num}')"></td>
 		</tr>
 		</c:forEach>
 	</table>
@@ -56,7 +61,14 @@
 	<!-- 카테고리 삭제 -->
 	<h4>카테고리 삭제</h4>
 	<form action="checklistCateDel.trip" method="post">
-		삭제할 카테고리 이름 : <input type="text" name="cl_name">
+		삭제할 카테고리 이름 : 
+		<select name="cl_num">
+			<c:forEach var="list" items="${list}">
+				<option value="${list.cl_num}">${list.cl_name}</option>
+				
+			</c:forEach>
+		</select>
+		
 		<input type="submit" value="삭제" name="checklistCateDel">
 	</form>
 	<!-- 카테고리 삭제 끝 -->

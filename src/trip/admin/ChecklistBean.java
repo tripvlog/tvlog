@@ -40,15 +40,13 @@ public class ChecklistBean {
 	
 	/* 체크리스트 항목 관리 */
 	@RequestMapping("/checklistItem.trip")
-	public ModelAndView checklistItem() {
-			
-		sqlMap.queryForObject("ch_item_select_innerJoin", null);
+	public ModelAndView checklistItem(int cl_num) {
 		
-		List list = new ArrayList();
-		list = sqlMap.queryForList("ch_item_select", null);
+		List list = sqlMap.queryForList("ch_item_select", cl_num);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
+		mv.addObject("cl_num",cl_num);
 		mv.setViewName("/admin/checklistItem.jsp");
 				
 		return mv;
@@ -86,18 +84,11 @@ public class ChecklistBean {
 	
 	/* 카테고리 삭제 */
 	@RequestMapping("/checklistCateDel.trip")
-	public ModelAndView checklistCateDel(String cl_name) {
+	public String checklistCateDel(int cl_num) {
 		
-		sqlMap.delete("ch_category_delete", cl_name);
+		sqlMap.delete("ch_category_delete", cl_num);
 		
-		List list = new ArrayList();
-		list = sqlMap.queryForList("ch_category_select", null);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("list", list);
-		mv.setViewName("/admin/checklistCategory.jsp");
-				
-		return mv;
+		return "/checklistCategory.trip";
 	}
 	
 	/* 항목 검색*/
@@ -105,7 +96,7 @@ public class ChecklistBean {
 	public ModelAndView checklistItemSel(ChecklistCategoryDTO dto) {
 				
 		List list = new ArrayList();
-		list = sqlMap.queryForList("ch_item_select", null);
+		list = sqlMap.queryForList("ch_item_select_innerJoin", null);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
@@ -116,34 +107,21 @@ public class ChecklistBean {
 	
 	/* 항목 추가 */
 	@RequestMapping("/checklistItemAdd.trip")
-	public ModelAndView checklistItemAdd(ChecklistCategoryDTO dto) {
+	public String checklistItemAdd(ChecklistItemDTO dto) {
 	
 		sqlMap.insert("ch_item_insert", dto);
 		
-		List list = new ArrayList();
-		list = sqlMap.queryForList("ch_item_select", null);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("list", list);
-		mv.setViewName("/admin/checklistItem.jsp");
-				
-		return mv;
+		return "redirect:/checklistItem.trip?cl_num="+dto.getCl_num();
 	}
 	
 	/* 항목 삭제 */
 	@RequestMapping("/checklistItemDel.trip")
-	public ModelAndView checklistItemDel(String ci_name) {
+	public String checklistItemDel(ChecklistItemDTO dto) {
+		System.out.println(dto.getCl_num());
+		System.out.println(dto.getCi_num());
+		sqlMap.delete("ch_item_delete", dto);
 		
-		sqlMap.delete("ch_item_delete", ci_name);
-		
-		List list = new ArrayList();
-		list = sqlMap.queryForList("ch_item_select", null);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("list", list);
-		mv.setViewName("/admin/checklistItem.jsp");
-				
-		return mv;
+		return "redirect:/checklistItem.trip?cl_num="+dto.getCl_num();
 	}
 	
 }

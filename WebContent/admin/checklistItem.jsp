@@ -15,6 +15,11 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/tvlog/schedule/schedule.js"></script>
+<script>
+	function itemDellocation(ci_name, cl_num) {
+		window.location="/tvlog/checklistItem.trip?cl_num="+cl_num;
+	}
+</script>
 <style>
 	#totalDiv{
 		padding:20px;
@@ -24,17 +29,15 @@
 <body>
 <div id="totalDiv">
 	<!-- 항목 검색 -->
-	<h4>현재 카테고리 & 항목</h4>
+	<h4>카테고리 안에 있는 항목</h4>
 	<table width="600" border="1" cellspacing="0" cellpadding="2">
 		<tr>
 			<td>항목 번호</td>
-			<td>카테고리 번호</td>
 			<td>항목 이름</td>
 		</tr>
 		<c:forEach var="list" items="${list}">
 		<tr>
 			<td>${list.ci_num}</td>
-			<td>${list.cl_num}</td>
 			<td>${list.ci_name}</td>
 		</tr>
 		</c:forEach>
@@ -47,8 +50,8 @@
 	<!-- 항목 추가 -->
 	<h4>항목 추가</h4>
 	<form action="checklistItemAdd.trip" method="post">
-		추가할 카테고리 번호 : <input type="text" name="cl_num">
 		추가할 항목 이름 : <input type="text" name="ci_name">
+		<input type="hidden" name="cl_num" value="${cl_num }">
 		<input type="submit" value="추가" name="checklistItemAdd">
 	</form>
 	<!-- 항목 추가 끝 -->
@@ -59,7 +62,13 @@
 	<!-- 항목 삭제 -->
 	<h4>항목 삭제</h4>
 	<form action="checklistItemDel.trip" method="post">
-		삭제할 항목 이름 : <input type="text" name="ci_name">
+		삭제할 항목 이름 : 
+		<select name="ci_num">
+			<c:forEach var="list" items="${list}">
+				<option value="${list.ci_num}">${list.ci_name}</option>
+			</c:forEach>
+		</select>
+		<input type="hidden" name="cl_num" value="${cl_num }">
 		<input type="submit" value="삭제" name="checklistItemDel">
 	</form>
 	<!-- 항목 삭제 끝 -->
