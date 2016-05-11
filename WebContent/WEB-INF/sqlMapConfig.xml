@@ -8,5 +8,6 @@
 	<sqlMap resource="/sql/LoginSQL.xml"/>
 	<sqlMap resource="/sql/ChecklistCategorySQL.xml" />
 	<sqlMap resource="/sql/ChecklistItemSQL.xml" />
+	<sqlMap resource="/sql/ChecklistPersonalSQL.xml" />
 	
 </sqlMapConfig>

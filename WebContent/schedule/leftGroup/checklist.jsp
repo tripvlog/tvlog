@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,14 +11,9 @@
 <div class="checklist">
 	<ul id="checklist-tab" class="nav nav-pills" role="tablist">
 	  <li id="ch-tab-li" role="presentation" class="active"><a data-target="#ch-tab1" id="ch-tab1-tab" role="tab" data-toggle="tab" aria-controls="ch-tab1" aria-expanded="true">My List</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab2" role="tab" id="ch-tab2-tab" data-toggle="tab" aria-controls="ch-tab2" aria-expanded="false">출국</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab3" role="tab" id="ch-tab3-tab" data-toggle="tab" aria-controls="ch-tab3" aria-expanded="false">해변여행</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab4" role="tab" id="ch-tab4-tab" data-toggle="tab" aria-controls="ch-tab4" aria-expanded="false">배낭여행</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab5" role="tab" id="ch-tab5-tab" data-toggle="tab" aria-controls="ch-tab5" aria-expanded="false">비상약</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab6" role="tab" id="ch-tab6-tab" data-toggle="tab" aria-controls="ch-tab6" aria-expanded="false">전자제품</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab7" role="tab" id="ch-tab7-tab" data-toggle="tab" aria-controls="ch-tab7" aria-expanded="false">세면도구</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab8" role="tab" id="ch-tab8-tab" data-toggle="tab" aria-controls="ch-tab8" aria-expanded="false">화장품</a></li>
-	  <li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab9" role="tab" id="ch-tab9-tab" data-toggle="tab" aria-controls="ch-tab9" aria-expanded="false">스쿠버 장비</a></li>
+		<c:forEach items="${checklist}" varStatus="i" var="list">
+	  		<li id="ch-tab-li" role="presentation" class=""><a data-target="#ch-tab${i.count+1}" role="tab" id="ch-tab${i.count+1}-tab" data-toggle="tab" aria-controls="ch-tab${i.count+1}" aria-expanded="false">${list.cl_name}</a></li>
+		</c:forEach>
 	</ul>
 	<div id="checklistTab" class="tab-content">
 	  <!-- My List -->
