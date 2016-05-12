@@ -204,87 +204,158 @@ function detailSave(){
 
 
 <!-- 세부일정 등록  -->
-	<div class="modal fade" id="detail-create" tabindex="-1" role="dialog" aria-labelledby="detail-create" aria-hidden="true">
-    		<div class="modal-dialog" >
-    		<div class="modal-content" id="modalSize">
-      		<div class="modal-header" >
-		    	<form action="/tvlog/schedule/schedule-detail.trip" method="post">
-				<div class="panel panel-success" >
-					<div class="trf-detail">
-						<div class="from-to">
-							<div class="from-to-fl transport-from-div">
-								<label for="from_0">출발지</label>
-								<input type="text" id="test" class="form-control transport-from-input" data-idx="0" value="">
-							</div>
-							<i class="fa fa-arrow-right"></i>
-							<div class="from-to-fl transport-to-div">
-								<label for="to_0" style="width:53px;">도착지</label>
-								<input type="text" id="to_0" class="form-control transport-to-input" data-idx="0" value="">
-							</div>
-						</div>
-						<div class="memo">
-							<label for="memo">메모</label>
-							<input type="text" id="memo_0" class="form-control transport-memo-input" value="">
-						</div>
-						<div class="detail-cost">
-							<label for="budget">비용</label>
-							<input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align: right;">
-							<select class="currency-select transport-currency-select form-control">
-								<option value="2">USD(미국)</option>
-								<option value="1" selected="selected">KRW(한국)</option>
-								<option value="0">EUR(유럽연합)</option>
-									<option value="3">JPY(일본)</option>
-									<option value="4">CNY(중국)</option>
-									<option value="5">HKD(홍콩)</option>
-									<option value="6">TWD(대만)</option>
-									<option value="7">GBP(영국)</option>
-									<option value="8">CAD(캐나다)</option>
-									<option value="9">CHF(스위스)</option>
-									<option value="10">SEK(스웨덴)</option>
-									<option value="11">AUD(호주)</option>
-									<option value="12">NZD(뉴질랜드)</option>
-									<option value="13">CZK(체코)</option>
-									<option value="14">TRY(터키)</option>
-									<option value="15">MNT(몽골)</option>
-									<option value="16">ILS(이스라엘)</option>
-									<option value="17">DKK(덴마크)</option>
-									<option value="18">NOK(노르웨이)</option>
-									<option value="19">SAR(사우디아라비아)</option>
-									<option value="20">KWD(쿠웨이트)</option>
-									<option value="21">BHD(바레인)</option>
-									<option value="22">AED(아랍에미리트)</option>
-									<option value="23">JOD(요르단)</option>
-									<option value="24">EGP(이집트)</option>
-									<option value="25">THB(태국)</option>
-									<option value="26">SGD(싱가포르)</option>
-									<option value="27">MYR(말레이시아)</option>
-									<option value="28">IDR(인도네시아)</option>
-									<option value="29">QAR(카타르)</option>
-									<option value="30">KZT(카자흐스탄)</option>
-									<option value="31">BND(브루나이)</option>
-									<option value="32">INR(인도)</option>
-									<option value="33">PKR(파키스탄)</option>
-									<option value="34">BDT(방글라데시)</option>
-									<option value="35">PHP(필리핀)</option>
-									<option value="36">MXN(멕시코)</option>
-									<option value="37">BRL(브라질)</option>
-									<option value="38">VND(베트남)</option>
-									<option value="39">ZAR(남아프리카 공화국)</option>
-									<option value="40">RUB(러시아)</option>
-									<option value="41">HUF(헝가리)</option>
-									<option value="42">PLN(폴란드)</option>
-								</select>
-							</div>
-							<div class="memo">
-								<input type="button" id="save" class="btn btn-success" data-dismiss="modal" value="저장하기" onclick="detailSave()">
-								<input type="button" id="cancle" class="btn btn-cancle" value="취소">
-							</div>
-						</div>
+	<!-- 모달 팝업 -->
+		<div class="modal fade" id="detail-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<h class="modal-title" id="myModalLabel">Modal title</h6>
 					</div>
-				</form>
-			</div>
-			</div>
+					<!-- 모달 내용 -->
+					<div class="modal-body">
+						<!-- 탭 시작 -->
+						<div class="container2">
+							<ul id="myTab" class="nav nav-tabs" role="tablist">
+								<li role="presentation" class="active"><a
+									data-target="#transport" id="transport-tab" role="tab"
+									data-toggle="tab" aria-controls="home" aria-expanded="true">교통</a></li>
+								<li role="presentation" class=""><a data-target="#place"
+									role="tab" id="place-tab" data-toggle="tab"
+									aria-controls="profile" aria-expanded="false">장소</a></li>
+								<li role="presentation" class=""><a data-target="#memo"
+									role="tab" id="memo-tab" data-toggle="tab"
+									aria-controls="profile" aria-expanded="false">메모</a></li>
+							</ul>
+							
+							<div id="myTabContent" class="tab-content">
+								<!-- 교통 탭 시작 -->
+								<div role="tabpanel" class="tab-pane fade active in" id="transport" aria-labelledby="transport-tab">
+								<br />
+								<div id="row22">
+									<div class="col-md-20" >
+										<ul id="transportUl">
+											<li id="transportLi"><button><i class="fa fa-plane fa-2x" aria-hidden="true"></i><br/>비행기</button></li>
+											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>기차</button></li>
+											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>지하철</button></li>
+											<li id="transportLi"><button><i class="fa fa-bus fa-2x" aria-hidden="true"></i><br/>버스</button></li>
+											<li id="transportLi"><button><i class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도보</button></li>
+											<li id="transportLi"><button><i class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택시</button></li>
+											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>배</button></li>
+											<li id="transportLi"><button><i class="fa fa-car fa-2x" aria-hidden="true"></i><br/>자가용</button></li>
+											<li id="transportLi"><button><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기타</button></li>
+										</ul>
+									</div>
+								<div id="row33">
+									<div class="col-md-20">
+											<div class="trf-fields">
+												<fieldset id="transport-fieldset-0">
+													<div class="trf-detail">
+															<table width="500">
+																<tr colspan="2">
+																	<td>아이콘</td>
+																	<td>출발지 <input type="text" id="from_0" class="form-control transport-from-input" value="" style="width: 100%;">
+																		<center>
+																			<i class="fa fa-arrow-down" aria-hidden="true"></i>
+																		</center>
+																		도착지 <input type="text" id="to_0"
+																		class="form-control transport-to-input" value=""
+																		style="width: 100%;"></td>
+																</tr>
+																<tr>
+																	<td>메모</td>
+																	<td><input type="text" id="memo_0"
+																		class="form-control transport-memo-input" value=""></td>
+																</tr>
+																<tr>
+																	<td>비용</td>
+																	<td><input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align:right;width:150px"> 
+																		<select class="currency-select transport-currency-select form-control" style="width:190px">
+																			<option value="2">USD(미국)</option>
+																			<option value="1" selected="selected">KRW(한국)</option>
+																			<option value="0">EUR(유럽연합)</option>
+																			<option value="3">JPY(일본)</option>
+																			<option value="4">CNY(중국)</option>
+																			<option value="5">HKD(홍콩)</option>
+																			<option value="6">TWD(대만)</option>
+																			<option value="7">GBP(영국)</option>
+																			<option value="8">CAD(캐나다)</option>
+																			<option value="9">CHF(스위스)</option>
+																			<option value="10">SEK(스웨덴)</option>
+																			<option value="11">AUD(호주)</option>
+																			<option value="12">NZD(뉴질랜드)</option>
+																			<option value="13">CZK(체코)</option>
+																			<option value="14">TRY(터키)</option>
+																			<option value="15">MNT(몽골)</option>
+																			<option value="16">ILS(이스라엘)</option>
+																			<option value="17">DKK(덴마크)</option>
+																			<option value="18">NOK(노르웨이)</option>
+																			<option value="19">SAR(사우디아라비아)</option>
+																			<option value="20">KWD(쿠웨이트)</option>
+																			<option value="21">BHD(바레인)</option>
+																			<option value="22">AED(아랍에미리트)</option>
+																			<option value="23">JOD(요르단)</option>
+																			<option value="24">EGP(이집트)</option>
+																			<option value="25">THB(태국)</option>
+																			<option value="26">SGD(싱가포르)</option>
+																			<option value="27">MYR(말레이시아)</option>
+																			<option value="28">IDR(인도네시아)</option>
+																			<option value="29">QAR(카타르)</option>
+																			<option value="30">KZT(카자흐스탄)</option>
+																			<option value="31">BND(브루나이)</option>
+																			<option value="32">INR(인도)</option>
+																			<option value="33">PKR(파키스탄)</option>
+																			<option value="34">BDT(방글라데시)</option>
+																			<option value="35">PHP(필리핀)</option>
+																			<option value="36">MXN(멕시코)</option>
+																			<option value="37">BRL(브라질)</option>
+																			<option value="38">VND(베트남)</option>
+																			<option value="39">ZAR(남아프리카 공화국)</option>
+																			<option value="40">RUB(러시아)</option>
+																			<option value="41">HUF(헝가리)</option>
+																			<option value="42">PLN(폴란드)</option>
+																		</select>
+																	</td>
+																</tr>
+															</table>
+														</div>
+												</fieldset>
+											</div>
+										</div>
+								</div>
+							</div>
+							<br />
+								</div>
+								<!-- 교통 탭 끝 -->
+
+								<!-- 장소 탭 시작 -->
+								<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
+									<jsp:include page="schedule-map.jsp" />
+								</div>
+								<!-- 장소 탭 끝 -->
+
+								<!-- 메모 탭 시작 -->
+								<div role="tabpanel" class="tab-pane fade" id="memo" aria-labelledby="memo-tab">
+									<br />
+									<div class="row" id="row2">
+         								<textarea class="form-control"  id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
+         								<br />
+									</div>
+								</div>
+								<!-- 메모 탭 끝 -->
+							</div>
+							<!-- 탭 끝 -->
+						</div>
+						<!-- 모달 내용 끝 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary">저장</button>
+					</div>
+				</div>
 			</div>
 		</div>
+		<!-- 모달 끝 -->
 </body>
 </html>
