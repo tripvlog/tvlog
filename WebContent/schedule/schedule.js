@@ -28,11 +28,11 @@ function add_col()
 	    var idvalue="";
 	    if(i % 2 == 0){
 	    	idvalue=td_length+"_"+(Math.floor(i/2))+"_30";
-	    	stock_td.innerHTML="<i class='fa fa-plus-circle' aria-hidden='true' style='visibility:hidden;' id='plus"+idvalue+"'>";
+	    	stock_td.innerHTML="<i class='fa fa-plus-circle' aria-hidden='true' style='visibility:hidden;' id='plus"+idvalue+"' data-toggle='modal' data-target='#detail-create'>";
 	    	stock_td.setAttribute("id", td_length+"_"+(Math.floor(i/2))+"_30");
 	    }else{
 	    	idvalue = td_length+"_"+(Math.floor(i/2)+1);
-	    	stock_td.innerHTML="<i class='fa fa-plus-circle' aria-hidden='true' style='visibility:hidden;' id='plus"+idvalue+"'>";
+	    	stock_td.innerHTML="<i class='fa fa-plus-circle' aria-hidden='true' style='visibility:hidden;' id='plus"+idvalue+"' data-toggle='modal' data-target='#detail-create'>";
 	    	stock_td.setAttribute("id", td_length+"_"+(Math.floor(i/2)+1));
 	    }
 	    stock_tbody_tr[i].appendChild(stock_td);
@@ -67,6 +67,7 @@ function aa(idNum){
 	icon.style.visibility = "visible";
 }
 function bb(idNum){
+	
 	icon = document.getElementById("plus"+idNum);
 	icon.style.visibility = "hidden";
 }
@@ -81,9 +82,8 @@ function mymemo(event,td){
 }
 
 
-function detailSave(){
-	tdObj.innerHTML="test success";
-}
+
+
 
 function scheduleSave() {
 	//저장하기 버튼 누르면 보여줄 화면

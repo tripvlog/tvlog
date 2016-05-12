@@ -15,6 +15,7 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/tvlog/schedule/schedule.js"></script>
+
 <title>트립블로그</title>
 </head>
 <body>
@@ -160,6 +161,17 @@
 	<jsp:include page="schedule-map.jsp" /> 
 	<br />
 	<!-- 지도 끝 -->
+	
+<script>
+var objTd;
+function korea(id,icon){
+	objTd = icon.parentNode;		
+}
+function detailSave(){
+	objTd.innerHTML="test success";
+}
+
+</script>
 
 		<!-- 지도/일정표의 테이블 -->
 	    <div class="tableContainer">
@@ -170,8 +182,14 @@
 				<tr><td width="100" >ALL</td><td>&nbsp;</td></tr>
 
 				<c:forEach var="i" begin="1" end="24" step="1" varStatus="k">
-					<tr><td rowspan="2">${i}시</td><td  id="1_${i}" onmouseover="aa(${i});" onmouseout="bb(${i});"><i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}"></i></td></tr>
-	   				<tr><td onmouseover="aa(${i}${i});" onmouseout="bb(${i}${i});"  id="1_${i}_30"><i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}${i}"></i></td></tr>
+					<tr><td rowspan="2">${i}시</td><td  id="1_${i}" onmouseover="aa(${i});" onmouseout="bb(${i});">
+						<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}" whatever="1_${i}" data-toggle="modal" data-target="#detail-create"></i>
+						</td>
+					</tr>
+	   				<tr><td onmouseover="aa(${i}${i});" onmouseout="bb(${i}${i});"  id="1_${i}_30">
+	   						<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}${i}" whatever="1_${i}_30" data-toggle="modal" data-target="#detail-create" onclick="korea('1_${i}_30',this);"></i>
+	   					</td>
+	   				</tr>
 				</c:forEach>
 			</table>
 			</form>
@@ -183,8 +201,10 @@
 	</div>
 </div>
 
+
+
 <!-- 세부일정 등록  -->
-	<div class="modal fade" id="detail-craete" tabindex="-1" role="dialog" aria-labelledby="detail-craete" aria-hidden="true">
+	<div class="modal fade" id="detail-create" tabindex="-1" role="dialog" aria-labelledby="detail-create" aria-hidden="true">
     		<div class="modal-dialog" >
     		<div class="modal-content" id="modalSize">
       		<div class="modal-header" >
@@ -194,7 +214,7 @@
 						<div class="from-to">
 							<div class="from-to-fl transport-from-div">
 								<label for="from_0">출발지</label>
-								<input type="text" id="from_0" class="form-control transport-from-input" data-idx="0" value="">
+								<input type="text" id="test" class="form-control transport-from-input" data-idx="0" value="">
 							</div>
 							<i class="fa fa-arrow-right"></i>
 							<div class="from-to-fl transport-to-div">
