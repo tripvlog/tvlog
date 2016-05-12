@@ -1,8 +1,16 @@
-package trip.Diary;
+package trip.diary;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
@@ -10,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 @Controller
 public class DiaryAction {
@@ -23,10 +30,12 @@ public class DiaryAction {
 		
 		return "/diary/form.jsp";
 	}
-	
-	@RequestMapping("s_editor.trip")
-	public String s_editorForm(){
-		return "/diary/s_editor.jsp";
+	@RequestMapping("submit.trip")
+	public String submit(HttpServletRequest request){
+		System.out.println(" access submit ");
+		System.out.println("¿¡µðÅÍ ÄÁÅÙÃ÷ °ª : " + request.getParameter("d_content"));
+		
+		return "redirect:/diary/s_editor.jsp";
 	}
 	
 	@RequestMapping("diaryPro.trip")
