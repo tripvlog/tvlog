@@ -31,13 +31,21 @@ public class DiaryAction {
 		return "/diary/form.jsp";
 	}
 	@RequestMapping("submit.trip")
-	public String submit(HttpServletRequest request){
-		System.out.println(" access submit ");
-		System.out.println("에디터 컨텐츠 값 : " + request.getParameter("d_content"));
-		
-		return "redirect:/diary/s_editor.jsp";
+	public String submit(HttpServletRequest request, ImgVO vo){
+		String location = "/diary/s_editor.jsp";
+		System.out.println(" ==================== submit.trip Start ==================== ");
+		System.out.println("에디터 : " + request.getParameter("d_content"));
+		System.out.println(vo.getDiary_num() + " vo.getnum");
+		System.out.println(vo.getDiary_writer() + " vo.getwriter");
+		System.out.println(vo.getDiary_title() + " vo.gettitle");
+		System.out.println(vo.getDiary_content() + " vo.getcontent");
+		System.out.println(vo.getDiary_location() + " vo.getloaction");
+		System.out.println(vo.getDiary_range() + " vo.getrange");
+		System.out.println(vo.getDiary_reg() + " vo.getregdate");
+		sqlMap.insert("diary_insert", vo);
+		System.out.println(" ==================== submit.trip end ==================== ");
+		return "redirect:" + location;
 	}
-	
 	@RequestMapping("diaryPro.trip")
 	public String diaryPro(HttpServletRequest req, MultipartHttpServletRequest mtreq) throws Exception{
 		String originalfileName = "";
@@ -61,7 +69,7 @@ public class DiaryAction {
 	@RequestMapping("map.trip")
 	public String map(){ return "/diary/map.jsp"; }
 	
-	@RequestMapping("/diary/photoUpload.trip")
+	@RequestMapping("photoUpload.trip")
 	public String photoUpload(HttpServletRequest request, ImgVO dto){
 		
 		String callback = dto.getCallback();
@@ -98,15 +106,10 @@ public class DiaryAction {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println(" =============== photoUpload Start =============== ");
-		System.out.println(callback + " is callback");
-		System.out.println(callback_func + " is callback_func");
-		System.out.println(file_result + " is file_result");
-		System.out.println(" =============== photoUpload end =============== ");
 		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
 	}
 	
-	@RequestMapping("/diary/multiplePhotoUpload.trip")
+	@RequestMapping("multiplePhotoUpload.trip")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response){
 		
 		try{
@@ -151,7 +154,7 @@ public class DiaryAction {
 			sFileInfo += "&bNewLine=true";
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "diary_imgs" + realFileNm;
+			sFileInfo += "&sFileURL=" + "/tvlog/diary_imgs/" + realFileNm;
 			PrintWriter print = response.getWriter();
 			print.print(sFileInfo);
 			print.flush();

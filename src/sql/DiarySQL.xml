@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+	<insert id="diary_insert" parameterClass="trip.diary.ImgVO">
+		insert into t_diary values(t_diary_seq.nextval, #diary_writer#, #diary_title#, #diary_content#, #diary_location#, #diary_range#, sysdate)
+	</insert>
+	
+	<select id="diary_select" resultClass="trip.diary.ImgVO">
+		select * from t_diary order by diary_reg_date desc
+	</select>
+</sqlMap>
