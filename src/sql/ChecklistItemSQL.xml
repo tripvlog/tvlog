@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+	<select id="ch_item_select_innerJoin">
+		select c.cl_num, c.cl_name, i.ci_num, i.ci_name 
+			from T_CHECKLIST_CATEGORY c INNER JOIN T_CHECKLIST_ITEM i
+				ON c.cl_num = i.cl_num
+	</select>
+	<select id="ch_item_select" resultClass="trip.admin.ChecklistItemDTO" parameterClass="int">
+		select * from T_CHECKLIST_ITEM where cl_num=#cl_num# order by cl_num ASC
+	</select>
+	<insert id="ch_item_insert" parameterClass="trip.admin.ChecklistItemDTO">
+		insert into t_checklist_item(ci_num,cl_num,ci_name) 
+    		values(t_checklist_item_seq.nextval,#cl_num#,#ci_name#) 
+	</insert>
+	<delete id="ch_item_delete" parameterClass="trip.admin.ChecklistItemDTO">
+		delete from T_CHECKLIST_ITEM where ci_num=#ci_num# and cl_num=#cl_num#
+	</delete>
+
+</sqlMap>

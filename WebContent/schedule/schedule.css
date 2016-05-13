@@ -1,0 +1,101 @@
+@CHARSET "UTF-8";
+
+#tabtest{    /* 스토리, 지도/일정 탭 */
+		width:470px;
+		height:65px;
+		font-size:30px;
+	}
+	.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {   /* 스토리, 지도/일정 탭 - 마우스 오버 색상 지정 */
+		color:#ffffff;
+    	background-color:#47C83E;
+    }
+    #container-fluid{   /* 오른쪽 그룹 */
+        position:inherit;
+    	padding:15px 15px;
+    	Border-radius:10px;
+    	background-color:#FFFFFF;
+    }
+    #myTab{   /* 스토리, 지도/일정 탭 - 배경색 지정*/
+    	background-color:#FFFFFF;
+    	Border-radius:10px;
+    } 
+    #row1{    /* 일정에 대한 간단한 설명 */
+    	margin:0px;
+    	padding:0px 0px;
+    }
+    #row2{    /* 일정에 대한 자세한 설명  */
+    	margin:0px;
+    	padding:0px 0px;
+    }
+    body{    /* 전체 배경 색상 */
+    	background-color:#EAEAEA;
+    }
+    #btn-group{    /* 왼쪽 버튼 그룹1 */
+    	width:185px;
+    	Border-radius:10px;
+    }
+    #btn-group2{   /* 왼쪽 버튼 그룹2 */
+  	    width:190px;
+    	Border-radius:10px;
+    	margin:0px;
+    	padding:0px 0px;
+    }
+    #budget-tab{
+    	list-style-type:none;
+   		margin:0;
+    	padding:0;
+    }
+    #b-tab-li{    /* 가계부 메뉴 */
+		margin: 0 0 0 0;
+    	padding: 0 0 0 0;
+    	border : 0;
+    	float: left;
+	}
+	#ch-tab-li {     /* 체크리스트 메뉴 */
+    	margin: 0 0 0 0;
+    	padding: 0 0 0 0;
+    	border : 0;
+    	float: left;
+	}
+	#totalCost{
+		list-style:none; 
+	}
+	#checklist-tab{
+		list-style:none; 
+		font-size:20px;
+	}
+	td{
+    	text-align: center;
+    }
+    .add-my {
+    	position:absolute;
+		width: 210px;
+	}
+	.add-my-box {
+		width: 200px;
+	}
+	#colmd{
+		width: 60px;
+	}
+	#stock_table{
+		padding: 10px;
+		border-style : solid;
+		border-width : 10px;
+		border-color: #000000;
+	}
+	#stock_table tr{
+	border : 3px solid #000000;
+	}
+	#stock_table td{
+	border : 3px solid #000000;
+	}
+	ul{ 
+  	  list-style:none; 
+   	} 
+   	#transportLi {
+   		width:55px;
+   		height:50px;
+   	}
+	li {display: inline;}
+	
+	

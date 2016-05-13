@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+
+<sqlMap namespace="schedule">
+	<typeAlias alias="schedule" type="trip.schedule.ScheduleDTO"/>
+	<insert id="scheduleInsert" parameterClass="schedule">
+		insert into t_schedule(s_num,s_writer,s_title,s_startday,s_theme,s_step)  
+		values(t_schedule_seq.nextval,#s_writer#,#s_title#,to_date(#s_startday#,'yyyy/mm/dd'),#s_theme#,#s_step#)
+	</insert>
+</sqlMap>

@@ -1,0 +1,81 @@
+#개인 일정 테이블 
+create table t_schedule(
+    s_num number primary key, 
+    s_writer varchar2(1000),
+    s_title varchar2(1000),
+    s_startday date,
+    s_endday date,
+    s_theme varchar2(1000),
+    s_mainimg varchar2(1000),
+    s_range number,
+    s_step number,
+    s_info varchar2(1000),
+    s_content varchar2(4000)
+);
+
+create sequence t_schedule_seq nocache;
+
+
+
+#개일 일정 상세테이블
+create table t_schedule_detail(
+    sd_num number primary key,
+    s_num number,
+    sd_startpoint varchar2(1000),
+    sd_endpoint varchar2(1000),
+    sd_memo varchar2(2000),
+    sd_transport varchar2(1000),
+    sd_orgfile varchar2(1000),
+    sd_savfile varchar2(1000),
+    sd_budget number,
+    sd_map varchar2(2000),
+    sd_range number,
+    sd_status number
+);
+
+create sequence t_schedule_detail_seq nocache;
+
+
+
+# 개인 체크리스트
+create table t_schedule_checklist (
+    sc_num number primary key,
+    s_num number,
+    ci_num number,
+    sc_name varchar2(2000),
+    cl_num number
+)
+
+create sequence t_schedule_checklist_seq nocache;
+
+
+
+# 체크 리스트(카테고리 리스트)
+create table t_checklist_category (
+    cl_num number primary key,
+    cl_name varchar2(1000)
+)
+
+create sequence t_checklist_category_seq nocache;
+
+
+
+# 체크리스트(아이템)
+create table t_checklist_item (
+    ci_num number primary key,
+    cl_num number,
+    ci_name varchar2(1000)
+)
+
+create sequence t_checklist_item_seq nocache;
+
+
+
+# 공개범위
+create table t_range (
+    r_num number primary key,
+    r_name varchar2(1000),
+    r_value varchar2(2000)
+)
+
+create sequence t_range_seq nocache;
