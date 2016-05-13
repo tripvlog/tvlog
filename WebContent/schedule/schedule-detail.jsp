@@ -238,14 +238,14 @@ function detailSave(){
 									<div class="col-md-20" >
 										<ul id="transportUl">
 											<li id="transportLi"><button><i class="fa fa-plane fa-2x" aria-hidden="true"></i><br/>비행기</button></li>
-											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>기차</button></li>
+											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>기  차</button></li>
 											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>지하철</button></li>
-											<li id="transportLi"><button><i class="fa fa-bus fa-2x" aria-hidden="true"></i><br/>버스</button></li>
-											<li id="transportLi"><button><i class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도보</button></li>
-											<li id="transportLi"><button><i class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택시</button></li>
-											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>배</button></li>
+											<li id="transportLi"><button><i class="fa fa-bus fa-2x" aria-hidden="true"></i><br/>버  스</button></li>
+											<li id="transportLi"><button><i class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도  보</button></li>
+											<li id="transportLi"><button><i class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택  시</button></li>
+											<li id="transportLi"><button><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/> 배 </button></li>
 											<li id="transportLi"><button><i class="fa fa-car fa-2x" aria-hidden="true"></i><br/>자가용</button></li>
-											<li id="transportLi"><button><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기타</button></li>
+											<li id="transportLi"><button><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기  타</button></li>
 										</ul>
 									</div>
 								<div id="row33">
@@ -253,10 +253,10 @@ function detailSave(){
 											<div class="trf-fields">
 												<fieldset id="transport-fieldset-0">
 													<div class="trf-detail">
-															<table width="500">
-																<tr colspan="2">
+															<table width="550" height="280" align="center">
+																<tr>
 																	<td>아이콘</td>
-																	<td>출발지 <input type="text" id="from_0" class="form-control transport-from-input" value="" style="width: 100%;">
+																	<td colspan="2">출발지 <input type="text" id="from_0" class="form-control transport-from-input" value="" style="width: 100%;">
 																		<center>
 																			<i class="fa fa-arrow-down" aria-hidden="true"></i>
 																		</center>
@@ -266,13 +266,13 @@ function detailSave(){
 																</tr>
 																<tr>
 																	<td>메모</td>
-																	<td><input type="text" id="memo_0"
+																	<td colspan="2"><input type="text" id="memo_0"
 																		class="form-control transport-memo-input" value=""></td>
 																</tr>
 																<tr>
 																	<td>비용</td>
-																	<td><input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align:right;width:150px"> 
-																		<select class="currency-select transport-currency-select form-control" style="width:190px">
+																	<td><input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align:right;width:100%"></td>
+																	<td><select class="currency-select transport-currency-select form-control" style="width:100%">
 																			<option value="2">USD(미국)</option>
 																			<option value="1" selected="selected">KRW(한국)</option>
 																			<option value="0">EUR(유럽연합)</option>
