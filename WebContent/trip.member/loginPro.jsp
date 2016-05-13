@@ -1,24 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${sessionScope.memId !=null}">
-${sessionScope.memId}´Ô ·Î±×ÀÎ µÇ¼Ì½À´Ï´Ù!!!!!!!!!!!!!
+${sessionScope.memId}ë‹˜ ë¡œê·¸ì¸ ë˜ì…¨ìŠµë‹ˆë‹¤!!!!!!!!!!!!!
 <img src="${imgPath}" width="200" height="200">
 <form action="/tvlog/logout.trip">
-<input type="submit" value="·Î±×¾Æ¿ô">
+<input type="submit" value="ë¡œê·¸ì•„ì›ƒ">
 </form>
 </c:if>
 
 <form action="/tvlog/deleteForm.trip">
-<input type="submit" value="Å»Åğ">
+<input type="submit" value="íƒˆí‡´">
 </form>
 
 
 <c:if test="${sessionScope.memId==null}">
 <script>
-alert("id&pwÈ®ÀÎÇÏ¼¼¿ä");
+alert("id&pwí™•ì¸í•˜ì„¸ìš”");
 history.go(-1);
 </script>
 </c:if>
 
-<input type="button" value="È®ÀÎ " onclick="javascript:window.location='main.trip'"/>
+<input type="button" value="í™•ì¸ " onclick="javascript:window.location='main.trip'"/>

@@ -23,6 +23,9 @@ import javax.servlet.http.HttpSession;
 		public String loginForm(){
 			return "/trip.member/loginForm.jsp";
 		}
+		
+		
+		
 
 		@RequestMapping(value="/loginPro.trip",method=RequestMethod.POST)
 		public String Login(HttpSession session, LoginDTO dto,HttpServletRequest request){
@@ -40,6 +43,9 @@ import javax.servlet.http.HttpSession;
 				return "/trip.member/loginPro.jsp";
 					
 		}
+		
+		
+		
 		
 		@RequestMapping("/logout.trip")
 		public String logout(){
@@ -60,6 +66,45 @@ import javax.servlet.http.HttpSession;
 			return "/trip.member/joinPro.jsp";
 			
 		}
+		
+		
+		@RequestMapping("/ConfirmId.trip")
+		public String ConfirmId(HttpServletRequest request,String id){
+			id = request.getParameter("id");
+			int count = (Integer)sqlmap.queryForObject("idcheck",id);
+			request.setAttribute("id", id);
+			String view =null;
+			if(count==1){
+				
+				 view="/trip.member/ExistId.jsp";
+			}
+			else{
+				 view="/trip.member/IdCheck.jsp";
+			} 
+				
+			return view;	
+		}
+		
+		
+		
+		@RequestMapping("/ConfirmDomain.trip")
+		public String ConfirmDomain(HttpServletRequest request,String domain){
+			domain = request.getParameter("domain");
+			int count = (Integer)sqlmap.queryForObject("domaincheck",domain);
+			request.setAttribute("domain", domain);
+			String view =null;
+			if(count==1){
+				
+				 view="/trip.member/ExistDomain.jsp";
+			}
+			else{
+				 view="/trip.member/DomainCheck.jsp";
+			} 
+				
+			return view;	
+		}
+	
+		
 		@RequestMapping("/deleteForm.trip")
 		public String deleteForm(){
 			return "/trip.member/deleteForm.jsp";
@@ -80,7 +125,6 @@ import javax.servlet.http.HttpSession;
 			return "/trip.member/deletePro.jsp";
 			
 		}
-
-			
+	
 	}
 

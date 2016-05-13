@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <script type="text/javascript">
-	alert("�α׾ƿ� �Ǽ̽��ϴ�.");
+	alert("로그아웃 되셨습니다.");
 	window.location="/tvlog/loginForm.trip"
 </script>
