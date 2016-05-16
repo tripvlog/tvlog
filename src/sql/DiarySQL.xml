@@ -7,6 +7,10 @@
 	</insert>
 	
 	<select id="diary_select" resultClass="trip.diary.ImgVO">
-		select * from t_diary order by diary_reg_date desc
+		select * from t_diary order by diary_reg desc
+	</select>
+	
+	<select id="diary_my_select" resultClass="trip.diary.ImgVO">
+		select * from t_diary where diary_writer = #diary_writer# order by diary_reg desc
 	</select>
 </sqlMap>
