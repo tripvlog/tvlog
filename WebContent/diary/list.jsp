@@ -7,19 +7,15 @@
 <table board="1" width="300" height="300">
 <hr color="red">
 <tr><td>
+<a href="/tvlog/view.trip?num=${vo.diary_num}">
 ${vo.diary_num} is vo.diary_num<br />
 ${vo.diary_writer} is vo.diary_writer<br />
 ${vo.diary_title} is diary_title<br />
 ${vo.diary_content} is diary_content<br />
 ${vo.diary_location} is diary_location<br />
 ${vo.diary_range} is diary_range<br />
-${vo.diary_reg} is diary_reg 
+${vo.diary_reg} is diary_reg<br />
+</a>
 </td></tr>
 </table><br />
 </c:forEach>
-<input type="button" id="click" value="수정" />
-<script>
-	$("#click").click(function(){
-		alert("까꿍");
-	});
-</script>

@@ -114,6 +114,7 @@ function initAutocomplete() {
         title: place.name,
         position: place.geometry.location
       }));
+	    alert(place.geometry.location); // 검색 위치 좌표값으로 받기
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
