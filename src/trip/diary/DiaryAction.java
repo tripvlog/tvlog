@@ -26,10 +26,11 @@ public class DiaryAction {
 	private SqlMapClientTemplate sqlMap;
 	
 	@RequestMapping("diary.trip")
-	public String diaryForm(){
-		
-		return "/diary/form.jsp";
-	}
+	public String diaryForm(){ return "/diary/form.jsp"; }
+	
+	@RequestMapping("editor.trip")
+	public String s_editor(){ return "/diary/s_editor.jsp"; }
+	
 	@RequestMapping("submit.trip")
 	public String submit(HttpServletRequest request, ImgVO vo){
 		String location = "/diary/s_editor.jsp";
@@ -71,7 +72,7 @@ public class DiaryAction {
 	
 	@RequestMapping("photoUpload.trip")
 	public String photoUpload(HttpServletRequest request, ImgVO dto){
-		
+		// 단일 업로드. 현재는 되지 않음
 		String callback = dto.getCallback();
 		String callback_func = dto.getCallback_func();
 		String file_result = "";
@@ -111,7 +112,7 @@ public class DiaryAction {
 	
 	@RequestMapping("multiplePhotoUpload.trip")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response){
-		
+		// 크롬에서 이욯하는 드래그 앤 드롭 업로드 방식(또는 다중 업로드)
 		try{
 			// 파일정보
 			String sFileInfo = "";
@@ -162,5 +163,14 @@ public class DiaryAction {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	@RequestMapping("list.trip")
+	public String list(ImgVO vo, HttpServletRequest request){
+		
+		List list = sqlMap.queryForList("diary_select", null);
+		
+		request.setAttribute("list", list);
+		return "/diary/list.jsp";
+	}
 }
