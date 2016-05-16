@@ -367,29 +367,29 @@
 							</div>
 							<br />
 							<button type="submit" class="btn btn-success">저장</button>
-							</form>	
+							</form>
 								</div>
 								<!-- 교통 탭 끝 -->
 
 								<!-- 장소 탭 시작 -->
+								
 								<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
-								<form action="" method="post">	
-									<jsp:include page="map0516.jsp" />
+								<form action="" method="post">
+									<jsp:include page="schedule-map.jsp" />
 									<button type="submit" class="btn btn-success">저장</button>
-									<div id="mylocation"></div>
 								</form>
 								</div>
 								<!-- 장소 탭 끝 -->
 
 								<!-- 메모 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade" id="memo" aria-labelledby="memo-tab">
-								<form action="" method="post">	
+								<form action="" method="post">
 									<br />
 									<div class="row" id="row2">
          								<textarea class="form-control"  id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
          								<br />
 									</div>
-									<button type="submit" class="btn btn-success" onclick="">저장</button>
+									<button type="submit" class="btn btn-success">저장</button>
 								</form>
 								</div>
 								<!-- 메모 탭 끝 -->
