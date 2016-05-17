@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,7 +13,9 @@
         padding: 0;
       }
       #map {
-        height: 100%;
+      	width: 500px;
+        height: 400px;
+        Border-radius:10px;
       }
 .controls {
   margin-top: 10px;
