@@ -63,43 +63,44 @@ public class DiaryAction {
 	
 	@RequestMapping("list.trip")
 	public String list(ImgVO vo, HttpServletRequest request){
-		
 		List list = sqlMap.queryForList("diary_select", null);
-		
 		request.setAttribute("list", list);
+		System.out.println(" ========== list.trip ok ========== ");
 		return "/diary/list.jsp";
 	}
 	
 	@RequestMapping("view.trip")
 	public String list(HttpServletRequest request){
 		int diary_num = Integer.parseInt(request.getParameter("num"));
-		System.out.println(" =============================================================== ");
-		System.out.println(diary_num + " is diary_num by view.trip");
-		System.out.println(" =============================================================== ");
 		vo = (ImgVO)sqlMap.queryForObject("diary_view", diary_num);
 		request.setAttribute("vo", vo);
+		System.out.println(" ========== view.trip ok ========== ");
 		return "/diary/view.jsp";
 	}
 	
 	@RequestMapping("modify.trip")
 	public String modify(HttpServletRequest request){
+		
 		int diary_num = Integer.parseInt(request.getParameter("num"));
-		System.out.println(" =============================================================== ");
-		System.out.println(diary_num);
-		System.out.println(" =============================================================== ");
 		vo = (ImgVO)sqlMap.queryForObject("diary_view", diary_num);
 		request.setAttribute("vo", vo);
+		System.out.println(" ========== modify.trip ok ========== ");
 		return "/diary/modify.jsp";
-		
+	}
+	
+	@RequestMapping("modifyPro.trip")
+	public String modifyPro(HttpServletRequest request, ImgVO vo){
+		System.out.println(vo.getDiary_num() + " is vo.getdiarynum");
+		sqlMap.insert("diary_update", vo);
+		System.out.println(" ========== modifyPro.trip ok ========== ");
+		return "redirect:view.trip?num=" + vo.getDiary_num();
 	}
 	
 	@RequestMapping("delete.trip")
 	public String delete(HttpServletRequest request){
 		int diary_num = Integer.parseInt(request.getParameter("num"));
-		System.out.println(" =============================================================== ");
-		System.out.println("delete.trip 호출, " + diary_num);
 		sqlMap.delete("diary_delete", diary_num);
-		System.out.println(" =============================================================== ");
+		System.out.println(" ========== delete.trip ok ========== ");
 		return "redirect:list.trip";
 	}
 }

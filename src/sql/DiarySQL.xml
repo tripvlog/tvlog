@@ -19,7 +19,7 @@
 	</select>
 	
 	<update id="diary_update" parameterClass="trip.diary.ImgVO">
-		update t_diary set diary_title = #diary_title#, diary_content = #diary_content#, diary_location = #diary_location#, diary_range = #diary_range#, diary_reg = sysdate)
+		update t_diary set diary_title = #diary_title#, diary_content = #diary_content#, diary_location = #diary_location#, diary_range = #diary_range#, diary_reg = sysdate where diary_num = #diary_num#
 	</update>
 	
 	<delete id="diary_delete" parameterClass="int">

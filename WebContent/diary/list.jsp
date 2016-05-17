@@ -7,7 +7,7 @@
 <table board="1" width="300" height="300">
 <hr color="red">
 <tr><td>
-<a href="/tvlog/view.trip?num=${vo.diary_num}">
+<a href="view.trip?num=${vo.diary_num}">
 ${vo.diary_num} is vo.diary_num<br />
 ${vo.diary_writer} is vo.diary_writer<br />
 ${vo.diary_title} is diary_title<br />
