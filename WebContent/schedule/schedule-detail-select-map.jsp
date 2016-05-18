@@ -1,18 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <style>
       html, body {
-        width: 300px;
-        height: 400px;
-        Border-radius:10px;
+        height: 100%;
         margin: 0;
         padding: 0;
       }
       #map {
-        height: 100%;
+        width: 566px;
+        height: 400px;
       }
 .controls {
   margin-top: 10px;
@@ -57,7 +59,7 @@
 }
 
     </style>
-    <title>Places Searchbox</title>
+    <title>장소 검색</title>
     <style>
       #target {
         width: 345px;
@@ -93,6 +95,7 @@ function initAutocomplete() {
   // [START region_getplaces]
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
+  
   searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
 
@@ -124,6 +127,15 @@ function initAutocomplete() {
         title: place.name,
         position: place.geometry.location
       }));
+      
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -131,12 +143,27 @@ function initAutocomplete() {
       } else {
         bounds.extend(place.geometry.location);
       }
+      
+      alert(address);  //검색위치의 위도, 경도 구하는 거
+      var loc = document.getElementById('mylocation');
+      loc.innerHTML="<i class='fa fa-hand-o-right' aria-hidden='true'></i> 지명 : "+place.name+" <br /> <i class='fa fa-hand-o-right' aria-hidden='true'></i> 주소 : "+address+" <input type='hidden' value='"+place.geometry.location+"'><input type='hidden' value='"+place.name+"'>";      
     });
+    //검색된 다수개의 지점을 모두 보여줄 수 있는 크기로 지도를 맞춤
     map.fitBounds(bounds);
   });
+  
   // [END region_getplaces]
+  // Bias the SearchBox results towards places that are within the bounds of the
+  // current map's viewport.
+  //검색박스를 현재 보여지는 지도상에 보여지도록 다시 설정한다
+  google.maps.event.addListener(map, 'bounds_changed', function() {
+    var bounds = map.getBounds();
+    searchBox.setBounds(bounds);
+  });
 }
-
+ 
+//페이지 로드시 initialize()호출
+google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&libraries=places&callback=initAutocomplete"

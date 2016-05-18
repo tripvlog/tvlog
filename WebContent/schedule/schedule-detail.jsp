@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="/tvlog/schedule/schedule.css">
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -33,11 +33,11 @@
 	}
 	function btn2(){
 		var tdicon = document.getElementById('btnicon');
-		tdicon.innerHTML="<i class='fa fa-square' aria-hidden='true'></i><br/>기  차";
+		tdicon.innerHTML="<i class='fa fa-train' aria-hidden='true'></i><br/>기  차";
 	}
 	function btn3(){
 		var tdicon = document.getElementById('btnicon');
-		tdicon.innerHTML="<i class='fa fa-square' aria-hidden='true'></i><br/>지하철";
+		tdicon.innerHTML="<i class='fa fa-subway' aria-hidden='true'></i><br/>지하철";
 	}
 	function btn4(){
 		var tdicon = document.getElementById('btnicon');
@@ -53,7 +53,7 @@
 	}
 	function btn7(){
 		var tdicon = document.getElementById('btnicon');
-		tdicon.innerHTML="<i class='fa fa-square' aria-hidden='true'></i><br/> 배 ";
+		tdicon.innerHTML="<i class='fa fa-ship' aria-hidden='true'></i><br/> 배 ";
 	}
 	function btn8(){
 		var tdicon = document.getElementById('btnicon');
@@ -63,12 +63,13 @@
 		var tdicon = document.getElementById('btnicon');
 		tdicon.innerHTML="<i class='fa fa-bicycle' aria-hidden='true'></i><br/>기  타";
 	}
-
+	
+	
 </script>
 
 <title>트립블로그</title>
 </head>
-<body>
+<body onload="mapre();">
 <div class="container" id="container">
 <div>title</div>
 &nbsp;
@@ -208,14 +209,10 @@
 	<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
 	<!-- 지도 시작 -->
 	<br />
-	<jsp:include page="schedule-map.jsp" /> 
+	<iframe src="/tvlog/schedule/schedule-map.jsp" name="map" width="940" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 	<br />
 	<!-- 지도 끝 -->
 	
-<script>
-
-</script>
-
 		<!-- 지도/일정표의 테이블 -->
 	    <div class="tableContainer">
 			<form method=post action="">
@@ -282,12 +279,12 @@
 									<div class="col-md-20" >
 										<ul id="transportUl">
 											<li id="transportLi"><button id="btn1" onclick="btn1()"><i class="fa fa-plane fa-2x" aria-hidden="true"></i><br/>비행기</button></li>
-											<li id="transportLi"><button id="btn2" onclick="btn2()"><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>기  차</button></li>
-											<li id="transportLi"><button id="btn3" onclick="btn3()"><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/>지하철</button></li>
+											<li id="transportLi"><button id="btn2" onclick="btn2()"><i class="fa fa-subway fa-2x" aria-hidden="true"></i><br/>기  차</button></li>
+											<li id="transportLi"><button id="btn3" onclick="btn3()"><i class="fa fa-train fa-2x" aria-hidden="true"></i><br/>지하철</button></li>
 											<li id="transportLi"><button id="btn4" onclick="btn4()"><i class="fa fa-bus fa-2x" aria-hidden="true"></i><br/>버  스</button></li>
 											<li id="transportLi"><button id="btn5" onclick="btn5()"><i class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도  보</button></li>
 											<li id="transportLi"><button id="btn6" onclick="btn6()"><i class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택  시</button></li>
-											<li id="transportLi"><button id="btn7" onclick="btn7()"><i class="fa fa-square fa-2x" aria-hidden="true"></i><br/> 배 </button></li>
+											<li id="transportLi"><button id="btn7" onclick="btn7()"><i class="fa fa-ship fa-2x" aria-hidden="true"></i><br/> 배 </button></li>
 											<li id="transportLi"><button id="btn8" onclick="btn8()"><i class="fa fa-car fa-2x" aria-hidden="true"></i><br/>자가용</button></li>
 											<li id="transportLi"><button id="btn9" onclick="btn9()"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기  타</button></li>
 										</ul>
@@ -366,17 +363,18 @@
 								</div>
 							</div>
 							<br />
-							<button type="submit" class="btn btn-success">저장</button>
+							<input type="submit" class="btn btn-success" value="저장">
 							</form>	
 								</div>
 								<!-- 교통 탭 끝 -->
 
 								<!-- 장소 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
-								<form action="" method="post">	
-									<jsp:include page="map0516.jsp" />
-									<button type="submit" class="btn btn-success">저장</button>
+								<form action="" method="post">	<br />
+									<iframe src="/tvlog/schedule/schedule-detail-select-map.jsp" name="map" width="570" height="405" ALLOWTRANSPARENCY="false"></iframe> 
 									<div id="mylocation"></div>
+									<br />
+									<input type="submit" class="btn btn-success" value="저장">
 								</form>
 								</div>
 								<!-- 장소 탭 끝 -->
@@ -389,7 +387,7 @@
          								<textarea class="form-control"  id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
          								<br />
 									</div>
-									<button type="submit" class="btn btn-success" onclick="">저장</button>
+									<input type="submit" class="btn btn-success" value="저장">
 								</form>
 								</div>
 								<!-- 메모 탭 끝 -->
