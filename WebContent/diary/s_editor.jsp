@@ -13,6 +13,7 @@
 	<option value="1">친구와</option>
 	<option value="2">전체공개</option>
 </select>
+<a href="map.trip" class="alert-link" target="_blank"><span class="glyphicon glyphicon-globe" aria-hidden="true">지도</span></a>&nbsp;
 <br /><hr>
 <textarea name="diary_content" id="diary_content" rows="10" cols="100"></textarea>
 
