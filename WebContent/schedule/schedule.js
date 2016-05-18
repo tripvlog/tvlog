@@ -88,3 +88,43 @@ function mymemo(event,td){
 function scheduleSave() {
 	//저장하기 버튼 누르면 보여줄 화면
 }
+
+
+
+
+function btnicon1(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-plane' aria-hidden='true'></i><br/>비행기";
+}
+function btnicon2(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-train' aria-hidden='true'></i><br/>기  차";
+}
+function btnicon3(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-subway' aria-hidden='true'></i><br/>지하철";
+}
+function btnicon4(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-bus' aria-hidden='true'></i><br/>버  스";
+}
+function btnicon5(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-road' aria-hidden='true'></i><br/>도  보";
+}
+function btnicon6(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-taxi' aria-hidden='true'></i><br/>택  시";
+}
+function btnicon7(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-ship' aria-hidden='true'></i><br/> 배 ";
+}
+function btnicon8(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-car' aria-hidden='true'></i><br/>자가용";
+}
+function btnicon9(){
+	var tdicon = document.getElementById('btnicon');
+	tdicon.innerHTML="<i class='fa fa-bicycle' aria-hidden='true'></i><br/>기  타";
+}
