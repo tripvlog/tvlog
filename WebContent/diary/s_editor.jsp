@@ -13,7 +13,7 @@
 	<option value="1">친구와</option>
 	<option value="2">전체공개</option>
 </select>
-<a href="map.trip" class="alert-link" target="_blank"><span class="glyphicon glyphicon-globe" aria-hidden="true">지도</span></a>&nbsp;
+<button type="button" onclick="popup()">지도</button>
 <br /><hr>
 <textarea name="diary_content" id="diary_content" rows="10" cols="100"></textarea>
 
@@ -38,7 +38,12 @@ $(document).ready(function() {
 		})
 	
 })
+var winObject = null;
+function popup(){
+	var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,height=500,width=900,left=0,top=0';
+	winObject = window.open("map.trip", "지도", settings);
+	}
+	function submitToWindow(){
+	winObject.document.all.text2.value = document.all.text1.value;
+	}
 </script>
-
-
-

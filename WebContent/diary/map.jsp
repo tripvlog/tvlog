@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Place Autocomplete</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -55,85 +57,119 @@
 }
 
     </style>
-    <title>Places Searchbox</title>
-    <style>
-      #target {
-        width: 345px;
-      }
-    </style>
   </head>
   <body>
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
+    <div id="type-selector" class="controls">
+      <input type="radio" name="type" id="changetype-all" checked="checked">
+      <label for="changetype-all">All</label>
+
+      <input type="radio" name="type" id="changetype-establishment">
+      <label for="changetype-establishment">Establishments</label>
+
+      <input type="radio" name="type" id="changetype-address">
+      <label for="changetype-address">Addresses</label>
+
+      <input type="radio" name="type" id="changetype-geocode">
+      <label for="changetype-geocode">Geocodes</label>
+    </div>
     <div id="map"></div>
+
     <script>
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
-var marker = [];
-function initAutocomplete() {
+
+
+
+function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 36, lng: 127}, // 처음 지도를 띄웠을 때 위치
-    zoom: 3, // 처음 지도를 띄웠을때 확대 수치
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13
   });
- 
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
+  var input = /** @type {!HTMLInputElement} */(
+      document.getElementById('pac-input'));
+
+  var types = document.getElementById('type-selector');
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function() {
-    searchBox.setBounds(map.getBounds());
-  });
-  
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  var location = null;
   var infowindow = new google.maps.InfoWindow();
-	
-	google.maps.event.addListener(marker, 'click', function() { 
-			infowindow.setContent("afasdfasdf");
-			infowindow.open(map, this);
-	});
 
-  searchBox.addListener('places_changed', function() {
-    var places = searchBox.getPlaces();
-	var info = new google.maps.InfoWindow();
-	info.setContent("12345");
-	
-    if (places.length == 0) {
+
+  autocomplete.addListener('place_changed', function() {
+    infowindow.close();
+    var marker = [];
+    
+    marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
       return;
     }
-    marker.forEach(function(marker) {
-      marker.setMap(null);
-    });
-    marker = [];
 
-    // For each place, get the icon, name and location.
-    var bounds = new google.maps.LatLngBounds();
-    places.forEach(function(place) {
-      // Create a marker for each place.
-     	marker.push(new google.maps.Marker({
-        map: map,
-        title: place.name,
-        position: place.geometry.location
-      }));
-      
-		alert(place.name + " : " + place.geometry.location); // 검색 위치 좌표값으로 받기
-		
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);  // Why 17? Because it looks good.
+    }
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+    }
+
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + '<br>' + "클릭해주세요");
+    infowindow.open(map, marker);
+   	alert(place.geometry.location + " is place.geometry.location value")
+  	location = place.geometry.location;    
+   	alert(location + " is location value");
+
+    google.maps.event.addListener(marker, 'click', function() {
+    	var chk = confirm("이 위치로 지정하시겠습니까?");
+      	if(chk == true){
+      		opener.document.all.diary_location.value = location;
+      	}
+      	var confm = confirm("창을 닫으시겠습니까?");
+      	if(confm == true){
+      		self.close();
+      	}
+    	infowindow.open(map, this);
+	});
+
   });
-  // [END region_getplaces]
+
+  // Sets a listener on a radio button to change the filter type on Places
+  // Autocomplete.
+  function setupClickListener(id, types) {
+    var radioButton = document.getElementById(id);
+    radioButton.addEventListener('click', function() {
+      autocomplete.setTypes(types);
+    });
+  }
+
+  setupClickListener('changetype-all', []);
+  setupClickListener('changetype-address', ['address']);
+  setupClickListener('changetype-establishment', ['establishment']);
+  setupClickListener('changetype-geocode', ['geocode']);
+  	
 }
 
-
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&libraries=places&callback=initAutocomplete"
-         async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&libraries=places&callback=initMap"
+        async defer></script>
   </body>
 </html>
