@@ -36,7 +36,7 @@ public class DiaryAction {
 		System.out.println(vo.getDiary_range() + " vo.getrange");
 		sqlMap.insert("diary_insert", vo);
 		System.out.println(" ==================== submit.trip end ==================== ");
-		return "redirect:editor.trip";
+		return "redirect:list.trip";
 	}
 	@RequestMapping("diaryPro.trip")
 	public String diaryPro(HttpServletRequest req, MultipartHttpServletRequest mtreq) throws Exception{

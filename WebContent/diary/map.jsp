@@ -97,16 +97,14 @@ function initMap() {
 
   var location = null;
   var infowindow = new google.maps.InfoWindow();
-
-
+  
+  var marker = new google.maps.Marker();
+  
   autocomplete.addListener('place_changed', function() {
     infowindow.close();
-    var marker = [];
-    
-    marker = new google.maps.Marker({
-    map: map,
-    anchorPoint: new google.maps.Point(0, -29)
-  });
+    marker.setMap(null);
+    marker = new google.maps.Marker();
+    marker.setMap(map);
     var place = autocomplete.getPlace();
     if (!place.geometry) {
       window.alert("Autocomplete's returned place contains no geometry");
@@ -134,18 +132,16 @@ function initMap() {
 
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + '<br>' + "클릭해주세요");
     infowindow.open(map, marker);
-   	alert(place.geometry.location + " is place.geometry.location value")
   	location = place.geometry.location;    
-   	alert(location + " is location value");
 
     google.maps.event.addListener(marker, 'click', function() {
-    	var chk = confirm("이 위치로 지정하시겠습니까?");
+    	var chk = confirm(location + ", " + place.name + " : 이 위치로 지정하시겠습니까?");
       	if(chk == true){
       		opener.document.all.diary_location.value = location;
-      	}
-      	var confm = confirm("창을 닫으시겠습니까?");
-      	if(confm == true){
-      		self.close();
+	      	var confm = confirm("창을 닫으시겠습니까?");
+	      	if(confm == true){
+	      		self.close();
+	      	}
       	}
     	infowindow.open(map, this);
 	});
