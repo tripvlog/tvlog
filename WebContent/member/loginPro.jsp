@@ -63,7 +63,7 @@ function logout(){
 <input type="submit" value="탈퇴">
 </form>
 <form action="/tvlog/member/modifyForm.trip" method="post">
-<input type="button" value="수정">
+<input type="submit" value="수정">
 </form>
 
 

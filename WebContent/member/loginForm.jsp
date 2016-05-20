@@ -114,7 +114,7 @@ function facebooklogin(){
 	<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()">	
 		<i id ="facebookfont" class="fa fa-facebook-square"></i>facebook
 	</button>
-<form name="myform" action="/member/loginPro.trip" method="post" onSubmit="return checkIt()">
+<form name="myform" action="/tvlog/member/loginPro.trip" method="post" onSubmit="return checkIt()">
 
       ID: <INPUT type="text" name="id" size="15" maxlength="12"><br/>
       PW: <INPUT type=password name="pw"  size="15" maxlength="12"><br/>
