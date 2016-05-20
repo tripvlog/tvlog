@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		@Autowired
 		SqlMapClientTemplate sqlmap;
 		
-		@RequestMapping("/loginForm.trip")
+		@RequestMapping("/member/loginForm.trip")
 		public String loginForm(){
 			return "/member/loginForm.jsp";
 		}
@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		
 		
 
-		@RequestMapping(value="/loginPro.trip",method=RequestMethod.POST)
+		@RequestMapping(value="/member/loginPro.trip",method=RequestMethod.POST)
 		public String Login(HttpSession session, LoginDTO dto,HttpServletRequest request){
 			
 				int count = (Integer)sqlmap.queryForObject("loginCheck",dto);
@@ -47,7 +47,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 					
 		}
 		
-		@RequestMapping("/loginfbPro.trip")
+		@RequestMapping("/member/loginfbPro.trip")
 		public String Loginfb(HttpSession session, LoginDTO dto,HttpServletRequest request){
 			
 			int count = (Integer)sqlmap.queryForObject("idcheck",dto.getId());
@@ -71,7 +71,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		
 		
 		
-		@RequestMapping("/logout.trip")
+		@RequestMapping("/member/logout.trip")
 		public String logout(HttpSession session){
 			session.invalidate();
 			return "/member/logout.jsp";
@@ -84,7 +84,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 					     
 		}
 		
-		@RequestMapping("/joinPro.trip")
+		@RequestMapping("/member/joinPro.trip")
 		public String joinPro(MultipartHttpServletRequest request,LoginDTO dto)throws Exception{
 			
 			MultipartFile mf = request.getFile("save");
@@ -104,7 +104,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		}
 		
 		
-		@RequestMapping("/ConfirmId.trip")
+		@RequestMapping("/member/ConfirmId.trip")
 		public String ConfirmId(HttpServletRequest request,String id){
 			id = request.getParameter("id");
 			int count = (Integer)sqlmap.queryForObject("idcheck",id);
@@ -124,7 +124,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		
 		
 		
-		@RequestMapping("/ConfirmDomain.trip")
+		@RequestMapping("/member/ConfirmDomain.trip")
 		public String ConfirmDomain(HttpServletRequest request,String domain){
 			domain = request.getParameter("domain");
 			int count = (Integer)sqlmap.queryForObject("domaincheck",domain);
@@ -142,13 +142,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		}
 	
 		
-		@RequestMapping("/deleteForm.trip")
+		@RequestMapping("/member/deleteForm.trip")
 		public String deleteForm(){
 			return "/member/deleteForm.jsp";
 			
 		}
 		
-		@RequestMapping("/deletePro.trip")
+		@RequestMapping("/member/deletePro.trip")
 		public String facebooklogin(HttpSession session,HttpServletRequest request , String pw){
 			
 			String dbid = (String) session.getAttribute("memId");
@@ -162,14 +162,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			return "/member/deletePro.jsp";
 			
 		}
-		@RequestMapping("/modifyForm.trip")
+		@RequestMapping("/member/modifyForm.trip")
 		public String modifyForm(HttpSession session, LoginDTO dto, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
 			dto = (LoginDTO)sqlmap.queryForObject("modify",id);
 			request.setAttribute("dto",dto);
 			return"/member/modifyForm.jsp";
 		}
-		@RequestMapping("/modifyPro.trip")
+		@RequestMapping("/member/modifyPro.trip")
 		public String modifyPro(HttpSession session, LoginDTO dto){
 			String id = (String)session.getAttribute("memId");
 			dto.setId(id);

@@ -13,7 +13,7 @@
 ${sessionScope.memId}님 로그인 되셨습니다!!!!!!!!!!!!!
 </c:if>
 <img src="/tvlog/img/member/${imgPath}" width="200" height="200">
-<form action="/tvlog/logout.trip">
+<form action="/tvlog/member/logout.trip">
 <script>
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -39,7 +39,7 @@ function facebooklogout() {
         if (response.status === 'connected') 
         {
         	FB.logout(function(response) {
-        		window.location="/tvlog/logout.trip";
+        		window.location="/tvlog/member/logout.trip";
         		console.log(response.status);
         	});
         } else if (response.status === 'not_authorized') {
@@ -48,7 +48,7 @@ function facebooklogout() {
     });
 }
 function logout(){
-	window.location="/tvlog/logout.trip";
+	window.location="/tvlog/member/logout.trip";
 }
 </script>
 <c:if test="${sessionScope.fb == 1 }">
@@ -59,10 +59,10 @@ function logout(){
 </c:if>
 </form>
 
-<form action="/tvlog/deleteForm.trip">
+<form action="/tvlog/member/deleteForm.trip">
 <input type="submit" value="탈퇴">
 </form>
-<form action="/tvlog/modifyForm.trip" method="post">
+<form action="/tvlog/member/modifyForm.trip" method="post">
 <input type="button" value="수정">
 </form>
 
