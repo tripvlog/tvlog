@@ -4,24 +4,6 @@
     	<head>
     		<meta charset="UTF-8">
     		<title>bootstrap test</title>
-    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    		<script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
-    		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"  ></script>
-    		<style type="text/css">
-    			#navlink:hover{
-    				color : #6B9900;
-    				font-weight : bold;
-    				font-size : 120%;
-    			}
-    			#date{
-					width : 200px;
-				}		
-				#modalSize{
-					width : 450px;
-				}
-			
-    		</style>
     	</head>
     	<body> 
     	<nav class="navbar navbar-default" role="navigation">
@@ -40,6 +22,7 @@
     					<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
     					<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
     					<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">일정 만들기</a></li>
+    					<li class="#about"><a href="#"></a>
     				</ul>
     			</div>
     		</div>
@@ -89,13 +72,3 @@
 		
     	</body>
     </html>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

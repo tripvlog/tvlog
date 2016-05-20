@@ -98,4 +98,44 @@
    	}
 	li {display: inline;}
 	
+	#navlink:hover{
+    	color : #6B9900;
+    	font-weight : bold;
+    	font-size : 120%;
+    }
+   #date{
+		width : 200px;
+	}		
+	#modalSize{
+		width : 450px;
+	}
+	#top-banner-body {
+	padding-top: 150px;
+	}
+
+#masthead {
+	min-height: 270px;
+	background-color: #000044;
+	color: #aaaacc;
+}
+
+#masthead h1 {
+	font-size: 55px;
+	line-height: 1;
+}
+
+#masthead .well {
+	margin-top: 20%;
+	background-color: #EAEAEA;
+	border-color: #EAEAEA;
+}
+
+@media screen and (min-width: 768px) {
+	#masthead h1 {
+		font-size: 100px;
+	}
+}
+#top-banner{
+	background-color: #FFFFFF;
+}
 	
