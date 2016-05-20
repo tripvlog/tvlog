@@ -18,13 +18,13 @@ public class DiaryAction {
 	private SqlMapClientTemplate sqlMap;
 	ImgVO vo;
 	
-	@RequestMapping("diary.trip")
+	@RequestMapping("/diary/diary.trip")
 	public String diaryForm(){ return "/diary/form.jsp"; }
 	
-	@RequestMapping("editor.trip")
+	@RequestMapping("/diary/editor.trip")
 	public String s_editor(){ return "/diary/s_editor.jsp"; }
 	
-	@RequestMapping("submit.trip")
+	@RequestMapping("/diary/submit.trip")
 	public String submit(HttpServletRequest request, ImgVO vo){
 		System.out.println(" ==================== submit.trip Start ==================== ");
 		System.out.println("에디터 : " + request.getParameter("d_content"));
@@ -38,7 +38,7 @@ public class DiaryAction {
 		System.out.println(" ==================== submit.trip end ==================== ");
 		return "redirect:list.trip";
 	}
-	@RequestMapping("diaryPro.trip")
+	@RequestMapping("/diary/diaryPro.trip")
 	public String diaryPro(HttpServletRequest req, MultipartHttpServletRequest mtreq) throws Exception{
 		String originalfileName = "";
 		List<MultipartFile> mf = mtreq.getFiles("profile_pt");
@@ -58,10 +58,10 @@ public class DiaryAction {
 		return "redirect:diary.trip";
 	}
 	
-	@RequestMapping("map.trip")
+	@RequestMapping("/diary/map.trip")
 	public String map(){ return "/diary/map.jsp"; }
 	
-	@RequestMapping("list.trip")
+	@RequestMapping("/diary/list.trip")
 	public String list(ImgVO vo, HttpServletRequest request){
 		List list = sqlMap.queryForList("diary_select", null);
 		request.setAttribute("list", list);
@@ -69,7 +69,7 @@ public class DiaryAction {
 		return "/diary/list.jsp";
 	}
 	
-	@RequestMapping("view.trip")
+	@RequestMapping("/diary/view.trip")
 	public String list(HttpServletRequest request){
 		int diary_num = Integer.parseInt(request.getParameter("num"));
 		vo = (ImgVO)sqlMap.queryForObject("diary_view", diary_num);
@@ -78,7 +78,7 @@ public class DiaryAction {
 		return "/diary/view.jsp";
 	}
 	
-	@RequestMapping("modify.trip")
+	@RequestMapping("/diary/modify.trip")
 	public String modify(HttpServletRequest request){
 		
 		int diary_num = Integer.parseInt(request.getParameter("num"));
@@ -88,7 +88,7 @@ public class DiaryAction {
 		return "/diary/modify.jsp";
 	}
 	
-	@RequestMapping("modifyPro.trip")
+	@RequestMapping("/diary/modifyPro.trip")
 	public String modifyPro(HttpServletRequest request, ImgVO vo){
 		System.out.println(vo.getDiary_num() + " is vo.getdiarynum");
 		sqlMap.insert("diary_update", vo);
@@ -96,7 +96,7 @@ public class DiaryAction {
 		return "redirect:view.trip?num=" + vo.getDiary_num();
 	}
 	
-	@RequestMapping("delete.trip")
+	@RequestMapping("/diarydelete.trip")
 	public String delete(HttpServletRequest request){
 		int diary_num = Integer.parseInt(request.getParameter("num"));
 		sqlMap.delete("diary_delete", diary_num);

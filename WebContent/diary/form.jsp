@@ -87,7 +87,7 @@
 	
 		<!-- Modal windows button open -->
 		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">일기작성</button>
-		<form class="form-group" action="diaryPro.trip" method="post" name="diary" onsubmit="return confirm();" enctype="multipart/form-data">
+		<form class="form-group" action="/diary/diaryPro.trip" method="post" name="diary" onsubmit="return confirm();" enctype="multipart/form-data">
 			<input type="hidden" name="d_content" id="d_content">
 			<!-- Modal window -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
@@ -107,7 +107,7 @@
 						<div class="modal-footer">
 							<input type="file" name="profile_pt" id="profile_pt" onchange="previewImage(this,'editor_panel')" multiple>
 							<a href="#" class="alert-link" target="_blank"><span class="glyphicon glyphicon-picture" aria-hidden="true">사진</span></a>&nbsp;
-							<a href="map.trip" class="alert-link" target="_blank"><span class="glyphicon glyphicon-globe" aria-hidden="true">지도</span></a>&nbsp;
+							<a href="/diary/map.trip" class="alert-link" target="_blank"><span class="glyphicon glyphicon-globe" aria-hidden="true">지도</span></a>&nbsp;
 							<button type="submit" class="btn btn-primary">작성 완료</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
