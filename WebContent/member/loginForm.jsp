@@ -33,7 +33,7 @@ function facebooklogin(){
 				  
 			      document.getElementById('status').innerHTML =
 			        'Thanks for logging in, ' + response.name + '!'+response.id+'!!!'+response.picture;
-			      window.location="/tvlog/loginfbPro.trip?id="+response.id;
+			      window.location="/tvlog/member/loginfbPro.trip?id="+response.id;
 			    });
 		  } else {
 			  console.log('User cancelled login or did not fully authorize.');

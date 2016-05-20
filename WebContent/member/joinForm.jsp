@@ -41,7 +41,7 @@ function fsubmit(){
 </script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">    
 
-<form method="post" action="/tvlog/joinPro.trip" name="userinput" onSubmit="return fsubmit()" enctype="multipart/form-data">
+<form method="post" action="/tvlog/member/joinPro.trip" name="userinput" onSubmit="return fsubmit()" enctype="multipart/form-data">
   <table width="600" border="1" cellspacing="0" cellpadding="3" align="center" >
     <tr> 
     <td colspan="2" height="39" align="center" >

@@ -7,7 +7,7 @@
 
 <body>
 <center><h1>회원 정보 수정</h1></center>
-<form method="post" action="modifyPro.trip" name="userinput" onsubmit="return checkIt()">
+<form method="post" action="/member/modifyPro.trip" name="userinput" onsubmit="return checkIt()">
 <table align = "center" border = "2" width ="750">
 		<tr>
 			<td>아이디</td>

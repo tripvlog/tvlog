@@ -22,7 +22,7 @@
    </script>
 </head>
 <BODY onload="begin()">
-<form name="myform" action="deletePro.trip" method="post" onSubmit="return checkIt()">
+<form name="myform" action="/member/deletePro.trip" method="post" onSubmit="return checkIt()">
 <TABLE cellSpacing=1 cellPadding=1 width="260" border=1 align="center" >
   
   <TR height="30">

@@ -3,6 +3,6 @@
 <script type="text/javascript">
 
 	alert("회원 정보가 수정되었습니다.");
-	window.location="/tvlog/loginPro.trip"
+	window.location="/tvlog/member/loginPro.trip"
 	
 </script>

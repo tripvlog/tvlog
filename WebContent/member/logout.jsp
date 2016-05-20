@@ -3,6 +3,6 @@
 <script type="text/javascript">
 
 	alert("로그아웃 되셨습니다.");
-	window.location="/tvlog/loginForm.trip"
+	window.location="/tvlog/member/loginForm.trip"
 	
 </script>
