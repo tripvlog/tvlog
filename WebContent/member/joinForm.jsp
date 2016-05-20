@@ -41,7 +41,7 @@ function fsubmit(){
 </script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">    
 
-<form method="post" action="/tvlog/joinPro.trip" name="userinput" onSubmit="return fsubmit()">
+<form method="post" action="/tvlog/joinPro.trip" name="userinput" onSubmit="return fsubmit()" enctype="multipart/form-data">
   <table width="600" border="1" cellspacing="0" cellpadding="3" align="center" >
     <tr> 
     <td colspan="2" height="39" align="center" >
@@ -83,7 +83,7 @@ function fsubmit(){
     <tr>
      <td width="200">프로필 사진 등록</td>
      <td width="400"> 
-    <input type="file" name="path">
+    <input type="file" name="save">
     </td>
     </tr>
       

@@ -6,6 +6,7 @@
 <script src="/jsmusic/webapp/user/mun/js/facebook.js" type="text/javascript"></script>
 <script src="/jsmusic/webapp/user/mun/js/google.js" type="text/javascript"></script>
 <script src="/jsmusic/webapp/user/mun/js/login.js" type="text/javascript"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -29,8 +30,10 @@ function facebooklogin(){
 	  FB.login(function(response) {
 		  if (response.authResponse) {
 			  FB.api('/me',  function(response) {
+				  
 			      document.getElementById('status').innerHTML =
 			        'Thanks for logging in, ' + response.name + '!'+response.id+'!!!'+response.picture;
+			      window.location="/tvlog/loginfbPro.trip?id="+response.id;
 			    });
 		  } else {
 			  console.log('User cancelled login or did not fully authorize.');
@@ -38,19 +41,7 @@ function facebooklogin(){
 	  }, {scope: "user_about_me,email"} );
 
 }
-function facebooklogout() {
-    FB.getLoginStatus( function(response) {
-        if (response.status === 'connected') 
-        {
-        	FB.logout(function(response) {
-        		console.log(response.status);
-        	});
-        } else if (response.status === 'not_authorized') {
-        } else {
-        }
-    });
-    
-}
+
 </script>
 
 
@@ -118,11 +109,6 @@ function facebooklogout() {
 <script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
 
 <form id ="fbform" action="#" method="post">
-
-				<div id="social" class="form-group">
-					<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogout()">	
-					<i id ="facebookfont" class="fa fa-facebook-square"></i>logout</button>
-				</div>
 				
 </form>
 	<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()">	
@@ -137,12 +123,14 @@ function facebooklogout() {
 
 
 
+
   </div>
 	     <div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	     <input type="submit" class="btn btn-primary" value="Login">
 		<input type=button value="Join" class="btn btn-primary" onclick="javascript:window.location='joinForm.trip'">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		
-		<input type="submit" class="btn btn-primary" value="Login">
+	
 	
 	    </div>
 </form>

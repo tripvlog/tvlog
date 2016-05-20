@@ -6,17 +6,26 @@
 select count(*) from t_member where id=#id# and pw=#pw#
 </select>
 <select id="idcheck" resultClass="int" parameterClass="String">
-select count(*) from t_member where id=#id# 
+	select count(*) from t_member where id=#id# 
 </select>
 
 <select id="domaincheck" resultClass="int" parameterClass="String">
 select count(*) from t_member where domain=#domain# 
 </select>
+<select id="modify" resultClass="trip.member.LoginDTO" parameterClass="String">
+select * from t_member where id=#id#
+</select>
 
+<insert id="fbInsert" parameterClass="trip.member.LoginDTO">
+insert into t_member (id,fb_login) values(#id#,1)
+</insert>
 
 <insert id="joinInsert" parameterClass="trip.member.LoginDTO">
 insert into t_member (id,pw,name,domain,path) values(#id#,#pw#,#name#,#domain#,#path#)
 </insert>
+<update id="modifyUpdate" parameterClass="trip.member.LoginDTO">
+update t_member set pw=#pw#,name=#name#,domain=#domain#,path=#path# where id=#id#
+</update>
 
 <select id="path" resultClass="trip.member.LoginDTO" parameterClass="trip.member.LoginDTO">
 select * from t_member where id=#id#
@@ -29,6 +38,5 @@ select pw from t_member where id=#id#
 <delete id="delete" parameterClass="String">
 delete from t_member where id=#dbid#
 </delete>
-
 
 </sqlMap>

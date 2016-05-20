@@ -2,7 +2,8 @@ package trip.member;
 
 
 
-	import java.nio.file.Path;
+	import java.io.File;
+import java.nio.file.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpSession;
 	import org.springframework.stereotype.Controller;
 	import org.springframework.web.bind.annotation.RequestMapping;
 	import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 	@Controller
 	public class LoginController {
@@ -21,7 +24,7 @@ import javax.servlet.http.HttpSession;
 		
 		@RequestMapping("/loginForm.trip")
 		public String loginForm(){
-			return "/trip.member/loginForm.jsp";
+			return "/member/loginForm.jsp";
 		}
 		
 		
@@ -34,13 +37,34 @@ import javax.servlet.http.HttpSession;
 				if(count==1){			
 				
 					session.setAttribute("memId",dto.getId());
+					session.setAttribute("fb",new Integer(0));
+					dto=(LoginDTO)sqlmap.queryForObject("path", dto);
+					request.setAttribute("imgPath",  dto.getPath());
+					request.setAttribute("dto",dto);
+									
+				}				
+				return "/member/loginPro.jsp";
+					
+		}
+		
+		@RequestMapping("/loginfbPro.trip")
+		public String Loginfb(HttpSession session, LoginDTO dto,HttpServletRequest request){
+			
+			int count = (Integer)sqlmap.queryForObject("idcheck",dto.getId());
+			
+			session.setAttribute("memId",dto.getId());
+			session.setAttribute("fb",new Integer(1));
+			if(count==1){			
+					
 					dto=(LoginDTO)sqlmap.queryForObject("path", dto);
 					String imgPath = "D:\\save\\" + dto.getPath();
 					request.setAttribute("imgPath", imgPath);
 					request.setAttribute("dto",dto);
 									
-				}				
-				return "/trip.member/loginPro.jsp";
+			}else{
+				sqlmap.insert("fbInsert",dto);
+			}
+			return "/member/loginPro.jsp";
 					
 		}
 		
@@ -48,22 +72,34 @@ import javax.servlet.http.HttpSession;
 		
 		
 		@RequestMapping("/logout.trip")
-		public String logout(){
-			return "/trip.member/logout.jsp";
+		public String logout(HttpSession session){
+			session.invalidate();
+			return "/member/logout.jsp";
 		}
 
 		@RequestMapping("/joinForm.trip")
 		public String join(){
 				
-				return "/trip.member/joinForm.jsp";
-					
+				return "/member/joinForm.jsp";
+					     
 		}
 		
 		@RequestMapping("/joinPro.trip")
-		public String joinPro(LoginDTO dto){
+		public String joinPro(MultipartHttpServletRequest request,LoginDTO dto)throws Exception{
 			
+			MultipartFile mf = request.getFile("save");
+			System.out.println(mf);
+			String rp = request.getRealPath("//img//member//");
+			String orgName = mf.getOriginalFilename();
+			String ext = orgName.substring(orgName.lastIndexOf("."));
+			String savName = dto.getId()+ext;
+			System.out.println(savName);
+			File sf = new File(rp+"//"+savName);
+			mf.transferTo(sf);
+			
+			dto.setPath(savName);
 			sqlmap.insert("joinInsert", dto);
-			return "/trip.member/joinPro.jsp";
+			return "/member/joinPro.jsp";
 			
 		}
 		
@@ -76,10 +112,10 @@ import javax.servlet.http.HttpSession;
 			String view =null;
 			if(count==1){
 				
-				 view="/trip.member/ExistId.jsp";
+				 view="/member/ExistId.jsp";
 			}
 			else{
-				 view="/trip.member/IdCheck.jsp";
+				 view="/member/IdCheck.jsp";
 			} 
 				
 			return view;	
@@ -96,10 +132,10 @@ import javax.servlet.http.HttpSession;
 			String view =null;
 			if(count==1){
 				
-				 view="/trip.member/ExistDomain.jsp";
+				 view="/member/ExistDomain.jsp";
 			}
 			else{
-				 view="/trip.member/DomainCheck.jsp";
+				 view="/member/DomainCheck.jsp";
 			} 
 				
 			return view;	
@@ -108,23 +144,38 @@ import javax.servlet.http.HttpSession;
 		
 		@RequestMapping("/deleteForm.trip")
 		public String deleteForm(){
-			return "/trip.member/deleteForm.jsp";
+			return "/member/deleteForm.jsp";
 			
 		}
+		
 		@RequestMapping("/deletePro.trip")
-		public String deletePro(HttpSession session,LoginDTO dto, HttpServletRequest request){
+		public String facebooklogin(HttpSession session,HttpServletRequest request , String pw){
 			
 			String dbid = (String) session.getAttribute("memId");
+		
 			String dbpw = (String) sqlmap.queryForObject("pw", dbid);
-			String pw = request.getParameter("pw");
-			
-			if(dbpw.equals(pw)){			
-			                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-				dto=(LoginDTO)sqlmap.queryForObject("delete",dbid);
-				
+		
+			if(dbpw.equals(pw)){		
+				sqlmap.delete("delete", dbid);
+				session.invalidate();
 			}
-			return "/trip.member/deletePro.jsp";
+			return "/member/deletePro.jsp";
 			
+		}
+		@RequestMapping("/modifyForm.trip")
+		public String modifyForm(HttpSession session, LoginDTO dto, HttpServletRequest request){
+			String id = (String)session.getAttribute("memId");
+			dto = (LoginDTO)sqlmap.queryForObject("modify",id);
+			request.setAttribute("dto",dto);
+			return"/member/modifyForm.jsp";
+		}
+		@RequestMapping("/modifyPro.trip")
+		public String modifyPro(HttpSession session, LoginDTO dto){
+			String id = (String)session.getAttribute("memId");
+			dto.setId(id);
+			sqlmap.update("modifyUpdate", dto);
+			
+			return"/member/modifyPro.jsp";
 		}
 	
 	}

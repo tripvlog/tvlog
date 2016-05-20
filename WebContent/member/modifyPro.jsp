@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 
-	alert("로그아웃 되셨습니다.");
-	window.location="/tvlog/loginForm.trip"
+	alert("회원 정보가 수정되었습니다.");
+	window.location="/tvlog/loginPro.trip"
 	
 </script>
