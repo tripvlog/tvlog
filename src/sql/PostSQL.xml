@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap namespace="post">
+
+<typeAlias alias="dto" type="trip.post.boardVO"/>
+
+<select id="All" resultClass="dto">         
+         SELECT * FROM t_post  ORDER BY no DESC
+</select>
+
+<insert id="insertPost" parameterClass="dto">
+      
+            INSERT INTO t_post (NO,
+                         	  SUBJECT,
+                           	 CONTENT,
+                               REGDATE
+                         )
+                    VALUES (t_post_seq.NEXTVAL,
+                          	#subject#,
+             			    #content#,
+                            #regdate#
+                         )
+</insert>
+
+
+
+ <update id="updateReadHit" parameterClass="dto">
+       UPDATE t_post SET READHIT = readHit + 1 WHERE no = #no#
+</update>
+
+<select id="search" resultClass="dto" >         
+         SELECT * FROM t_post  where no=#no#
+</select>
+
+<select id="uploadAll" parameterClass="int" resultClass="dto">   
+   SELECT * FROM uploadboard where no=#no#
+</select>
+
+<select id="selectComment" parameterClass="int" resultClass="dto">
+    select * from commentboard where no=#no# order by regdate asc
+</select>
+
+<delete id="deletePro" parameterClass="dto">
+    delete from t_post where no=#no#
+</delete>
+
+<update id="update" parameterClass="dto">
+   UPDATE t_post SET SUBJECT = #subject#,
+                      CONTENT = #content#                        
+                     WHERE no = #no#
+</update>
+         
+<insert id="insertComment" parameterClass="dto">
+	insert into t_postcomment(no, co_no, id, content, regdate) 
+					values(#no#, comment_no_seq.nextval, #id#, #content#, #regdate#)
+</insert>   
+
+
+
+</sqlMap>
