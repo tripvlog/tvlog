@@ -52,7 +52,7 @@
 </head>
 <body>
 <div class="container" id="container">
-<header class="navbar navbar-bright navbar-fixed-top" role="banner" id="top-banner">
+	<header class="navbar navbar-bright navbar-fixed-top" role="banner" id="top-banner">
 		<div class="container">
 			<div class="navbar-header">
 				<!-- 상단 메뉴 시작 -->

@@ -60,6 +60,9 @@ body {
 #top-banner{
 	background-color: #FFFFFF;
 }
+#content{
+	width: 1139px;
+}
 
 </style>
 
@@ -92,6 +95,7 @@ body {
 <!-- HTML code from Bootply.com editor -->
 
 <body>
+<div class="container">
 	<header class="navbar navbar-bright navbar-fixed-top" role="banner" id="top-banner">
 		<div class="container">
 			<div class="navbar-header">
@@ -110,6 +114,7 @@ body {
 			</div>
 		</div>
 	</header>
+	<div id="content">
 	<!-- 여행 일정 제목 들어갈 곳 -->
 	<div id="masthead">
 		<div class="container">
@@ -136,7 +141,7 @@ body {
 			</div>
 		</div>
 	</div>
-	
+
 	
 	
 	
@@ -188,5 +193,7 @@ body {
 						</div>
 					</div>
 				</div>
+	</div>
+</div>	
 </body>
 </html>

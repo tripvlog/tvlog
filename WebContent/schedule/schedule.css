@@ -114,6 +114,7 @@
 	}
 
 #masthead {
+	margin-top: 50px;
 	min-height: 270px;
 	background-color: #000044;
 	color: #aaaacc;
@@ -125,7 +126,7 @@
 }
 
 #masthead .well {
-	margin-top: 20%;
+	margin-top: 50px;
 	background-color: #EAEAEA;
 	border-color: #EAEAEA;
 }
