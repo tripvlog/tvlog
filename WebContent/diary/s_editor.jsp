@@ -4,7 +4,7 @@
 <script type="text/javascript" src="/tvlog/diary/diary_editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
-<form action="/diary/submit.trip" method="post" enctype="multipart/form-data" id="frm">
+<form action="/tvlog/diary/submit.trip" method="post" enctype="multipart/form-data" id="frm">
 <input type="text" name="diary_title" placeholder="제목">
 <input type="text" name="diary_writer" placeholder="작성자" />
 <input type="text" name="diary_location" placeholder="위치" />
@@ -41,7 +41,7 @@ $(document).ready(function() {
 var winObject = null;
 function popup(){
 	var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,height=500,width=900,left=0,top=0';
-	winObject = window.open("/diary/map.trip", "지도", settings);
+	winObject = window.open("/tvlog/diary/map.trip", "지도", settings);
 	}
 	function submitToWindow(){
 	winObject.document.all.text2.value = document.all.text1.value;

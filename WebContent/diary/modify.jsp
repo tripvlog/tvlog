@@ -7,7 +7,7 @@
 
 <c:set var="vo" value="${vo}" />
 
-<form action="/diary/modifyPro.trip" method="post" enctype="multipart/form-data" id="frm">
+<form action="/tvlog/diary/modifyPro.trip" method="post" enctype="multipart/form-data" id="frm">
 <input type="hidden" name="diary_num" value="${vo.diary_num}" />
 <input type="text" name="diary_title" placeholder="제목" value="${vo.diary_title}" />
 <input type="text" name="diary_location" placeholder="위치" value="${vo.diary_location}" />

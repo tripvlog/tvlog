@@ -45,7 +45,6 @@
 				    animation: google.maps.Animation.DROP,
 				    title: 'Hello World!'
 				});
-				markers.push(marker);
 				
 				var infowindow = new google.maps.InfoWindow();
 		

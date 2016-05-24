@@ -15,7 +15,7 @@
 		var delConfirm = confirm("삭제하시겠습니까?");
 		
 		if(delConfirm == true){
-			document.location.href="/diary/delete.trip?num=${vo.diary_num}";
+			document.location.href="/tvlog/diary/delete.trip?num=${vo.diary_num}";
 			alert("삭제되었습니다");
 		}else{
 			alert("삭제가 되지 않았습니다")
@@ -31,9 +31,9 @@
 위치 : ${vo.diary_location}<br />
 공개범위 : ${vo.diary_range}<br />
 등록(수정)날짜 : ${vo.diary_reg}<br />
-<input type="button" value="수정" onclick="javascript:location.href='/diary/modify.trip?num=${vo.diary_num}'" />&nbsp;
+<input type="button" value="수정" onclick="javascript:location.href='/tvlog/diary/modify.trip?num=${vo.diary_num}'" />&nbsp;
 <input type="button" value="삭제" onclick="checkDelete()" />
-<input type="button" id="cancle" value="목록보기" onclick="javascript:location.href='/diary/list.trip'" />
-<input type="button" value="페이스북 공유" onclick="javascript:location.href='https://www.facebook.com/sharer.php?u=http://192.168.50.26:8080/tvlog/diary/view.trip?num=${vo.diary_num}'" />
+<input type="button" id="cancle" value="목록보기" onclick="javascript:location.href='/tvlog/diary/list.trip'" />
+<input type="button" value="페이스북 공유" onclick="javascript:location.href='https://www.facebook.com/sharer.php?u=http://192.168.50.26:8080/tvlog/diary/view.trip?num=${vo.diary_num}&og:title=${vo.diary_title}'"/>
 </body>
 </html>

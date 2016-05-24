@@ -96,11 +96,20 @@ public class DiaryAction {
 		return "redirect:view.trip?num=" + vo.getDiary_num();
 	}
 	
-	@RequestMapping("/diarydelete.trip")
+	@RequestMapping("/diary/delete.trip")
 	public String delete(HttpServletRequest request){
 		int diary_num = Integer.parseInt(request.getParameter("num"));
 		sqlMap.delete("diary_delete", diary_num);
 		System.out.println(" ========== delete.trip ok ========== ");
 		return "redirect:list.trip";
+	}
+	
+	@RequestMapping("/diary/cluster.trip")
+	public String cluster(HttpServletRequest request){
+		List location = sqlMap.queryForList("diary_cluster", null);
+		System.out.println(location.size() + " is locatioin value");
+		request.setAttribute("location", location);
+		System.out.println(" ========== cluster.trip ok ========== ");
+		return "/diary/cluster.jsp";
 	}
 }
