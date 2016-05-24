@@ -77,7 +77,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			return "/member/logout.jsp";
 		}
 
-		@RequestMapping("/joinForm.trip")
+		@RequestMapping("/member/joinForm.trip")
 		public String join(){
 				
 				return "/member/joinForm.jsp";

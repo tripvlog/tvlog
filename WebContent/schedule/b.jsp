@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <html>
     	<head>
     		<meta charset="UTF-8">
@@ -159,35 +160,45 @@
 	    		<div class="modal-content">
 	      			<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="myModalLabel">로그인</h4>
+						<h4 class="modal-title" id="myModalLabel" align="center">로그인</h4>
 		
 	     			</div>
 	      			<div class="modal-body">
 							<div id="status">
-								<div id="fblogin">
+								<div id="fblogin" align="center"> 
 									<form id ="fbform" action="#" method="post">
-										<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()" style=width:270;align:center;>	
-										<i id ="facebookfont" class="fa fa-facebook-square"></i>facebook
+										<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()" style="width:250;">	
+										<i id ="facebookfont" class="fa fa-facebook-square"></i>facebook으로 로그인
 										</button>
 									</form>
 								</div>
 								<hr>
-								<div id="normallogin">
+								<div id="normallogin" align="center">
 									<form name="myform" action="/tvlog/member/loginPro.trip" method="post" onSubmit="return checkIt()">
-										ID : <INPUT type="text" name="id" size="33" maxlength="12"><br/>
-      									PW : <INPUT type=password name="pw"  size="33" maxlength="12"><br/>
-      								</form>
+										<INPUT type="text" name="id" size="31" maxlength="12" placeholder="아이디"><br/>
+      									<INPUT type=password name="pw"  size="31" maxlength="12" placeholder="비밀번호"><br/>
+								</div>
+								<div align="right">
+									<input type="button" value="아이디/비밀번호 찾기" class="btn btn-primary" style="margin-right:10" onclick="">
 								</div>
 							</div>
-							<hr>
-	    					<div class="modal-footer">
-	     						<input type="submit" class="btn btn-primary" value="Login">
-								<input type="button" value="Join" class="btn btn-primary" onclick="javascript:window.location='joinForm.trip'">
-								<input type="button" value="아이디/비밀번호 찾기" class="btn btn-primary" onclick="">
+							<br />
+	    					<div class="modal-footer" align="center">
+	     						<input type="submit" class="btn btn-primary" value="로그인">
+								<input type="button" class="btn btn-primary" value="회원가입" onclick="javascript:window.location='/tvlog/member/joinForm.trip'">
 							</div>
+							</form>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		
+		<c:if test="${sessionScope.memId != null}"></c:if>
+		
+		
+		
+		
+		
     	</body>
     </html>
