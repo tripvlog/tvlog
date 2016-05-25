@@ -19,24 +19,42 @@ html, body {
 }
 </style>
 </head>
-	<script>
-      var script = '<script type="text/javascript" src="../src/markerclusterer';
-      if (document.location.search.indexOf('compiled') !== -1) {
-        script += '_compiled';
-      }
-      script += '.js"><' + '/script>';
-      document.write(script);
-    </script>
-	<script>
-		var mks = new Array();
-	</script>
+<script type="text/javascript" src="/tvlog/diary/src/markerclusterer_compiled.js"></script>
 
+	<!-- db에서 위치값을 가져와 배열에 저장 -->
+	<script>
+		var dbloc = new Array();
+		var styles = [{
+	        url: '/tvlog/diary/images/people35.png',
+	        height: 35,
+	        width: 35,
+	        anchor: [16, 0],
+	        textColor: '#ff00ff',
+	        textSize: 10
+	      }, {
+	        url: '/tvlog/diary/images/people45.png',
+	        height: 45,
+	        width: 45,
+	        anchor: [24, 0],
+	        textColor: '#ff0000',
+	        textSize: 11
+	      }, {
+	        url: '/tvlog/diary/images/people55.png',
+	        height: 55,
+	        width: 55,
+	        anchor: [32, 0],
+	        textColor: '#ffffff',
+	        textSize: 12
+	      }]
+	</script>
 	<c:forEach var="loc" items="${location}">
 		<script>
 			loc = "${loc.diary_location}".substring(1, "${loc.diary_location}".length - 1);
-			mks.push(loc);
+			dbloc.push(loc);
 		</script>
 	</c:forEach>
+	
+	<!-- 가져온 위치값을 지도에 띄워줌 -->
 	<script>
 		function initMap() {
 			var center = new google.maps.LatLng(34, 132);
@@ -48,17 +66,20 @@ html, body {
 			var map = new google.maps.Map(document.getElementById("map"),
 					options);
 			var marker = [];
-			var aaaaa = [];
-			for (var i = 0; i < mks.length; i++) {
-				var mk = mks[i];
+			var markers = [];
+			for (var i = 0; i < dbloc.length; i++) {
+				var mk = dbloc[i];
 				mk = mk.split(",");
 				marker = new google.maps.Marker({
 					position : { lat : parseInt(mk[0]), lng : parseInt(mk[1]) },
 					map: map
 				});
-				aaaaa.push(marker);
+				markers.push(marker);
 			}
-			var markerCluster = new MarkerClusterer(map, aaaaa);
+			var markerCluster = new MarkerClusterer(map, markers, {
+				gridSize: 30,
+				styles: styles
+			});
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
@@ -70,5 +91,3 @@ html, body {
 	<div id="map"></div>
 </body>
 </html>
-
-<!-- http://werty.co.kr/blog/3061 -->
