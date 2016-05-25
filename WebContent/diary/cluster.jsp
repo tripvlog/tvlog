@@ -77,7 +77,7 @@ html, body {
 				markers.push(marker);
 			}
 			var markerCluster = new MarkerClusterer(map, markers, {
-				gridSize: 30,
+				gridSize: 50,
 				styles: styles
 			});
 		}

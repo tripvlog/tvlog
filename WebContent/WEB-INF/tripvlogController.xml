@@ -17,6 +17,7 @@
 	<context:component-scan base-package="trip.member"/>
 	<context:component-scan base-package="trip.admin" />
 	<context:component-scan base-package="trip.schedule" />
+	<context:component-scan base-package="trip.band" />
 	
 	<bean id="download" class="project.vlog.bean.DownloadView"/>
 	
