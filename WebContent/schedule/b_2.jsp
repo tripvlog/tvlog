@@ -85,6 +85,41 @@
           return false;
         }
 	
+	//중복확인 버튼 클릭시 이벤트 
+	function confirmClick(userinput){ 
+	        if (userinput.id.value==""){
+	            alert("아이디를 입력하세요");
+	            return;
+	        }
+	        // url과 사용자 입력 id를 조합하여 confirmId.jsp로 전달 
+	        url = "ConfirmId.trip?id=" + userinput.id.value ;   
+	        // 새로운 윈도우를 엽니다.
+	        open(url, "confirm","toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500, height=200");
+	}
+
+
+	function confirmDomainClick(userinput){ 
+	    if (userinput.domain.value==""){
+	        alert("도메인을 입력하세요");
+	        return;
+	    }
+	    // url과 사용자 입력 id를 조합하여 confirmId.jsp로 전달 
+	    url = "ConfirmDomain.trip?domain=" + userinput.domain.value ;   
+	    // 새로운 윈도우를 엽니다.
+	    open(url, "confirm","toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500, height=200");
+	}
+
+
+
+	//필수값(id, pw, pwchk)확인  
+	function fsubmit(){
+		if(document.userinput.id.value==""||document.userinput.pw.value==""||document.userinput.pw_chk.value==""||document.userinput.member_nm.value==""){
+			alert("아이디, 패스워드는  필수 입력사항입니다.");
+			return false;
+		}else{
+	    	return true;  // 정상적인 submit 진행                
+		}
+	}
 	
 	
 	
@@ -166,7 +201,7 @@
 							<br />
 	    					<div class="modal-footer" align="center">
 	     						<input type="submit" class="btn btn-primary" value="로그인">
-								<input type="button" class="btn btn-primary" value="회원가입" onclick="javascript:window.location='/tvlog/member/joinForm.trip'">
+								<input type="button" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#joinmodal" value="회원가입">
 							</div>
 							</form>
 					</div>
@@ -174,7 +209,51 @@
 			</div>
 		</div>
 		
-		</c:if>
+		<!-- 회원가입 모달 -->
+		<div class="modal fade" id="joinmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel" align="center">회원가입</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" action="/tvlog/member/joinPro.trip" name="userinput" onSubmit="return fsubmit()" enctype="multipart/form-data">
+							<table align="center">
+								<tr>
+									<td width="130" height="35">사용자 ID</td>
+									<td width="400"><input type="text" name="id" size="25" maxlength="12" placeholder="아이디">&nbsp;<input type = "button" value ="아이디 중복확인" onClick="confirmClick(this.form)"/></td>	</td>
+								</tr>
+								<tr>
+									<td width="130" height="35"> 비밀번호</td>
+									<td width="400"><input type="password" name="pw" size="25" maxlength="12"placeholder="비밀번호"></td>
+								</tr>
+								<tr>
+									<td width="130" height="35">닉네임</td>
+									<td width="400"><input type="text" name="name" size="25" maxlength="12" placeholder="닉네임"></td>
+								</tr>
+								<tr>
+									<td width="130" height="35">도메인</td>
+									<td width="400"><input type="text" name="domain" size="25" maxlength="12" placeholder="도메인">&nbsp;<input type = "button" value ="도메인 중복확인" onClick="confirmDomainClick(this.form)"/></td>		
+								</tr>
+								<tr>
+									<td width="130" height="35">프로필 사진 등록</td>
+									<td width="400"><input type="file" name="save"></td>
+								</tr>
+							</table>		
+					</div>
+					<div class="modal-footer">
+						<button type="submit" name="confirm" class="btn btn-primary" >가입하기</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</c:if>
     	
     	<!-- 로그인 후 -->
     	<c:if test="${sessionScope.memId != null}">

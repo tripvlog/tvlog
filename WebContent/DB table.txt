@@ -30,7 +30,7 @@ create table t_schedule_detail(
     sd_budget number,
     sd_map varchar2(2000),
     sd_range number,
-    sd_status number,
+    sd_status number,	/* 메모, 교통, 위치 카테고리 구분하려고 쓰는 것 */
     sd_tdid varchar2(1000)
 );
 

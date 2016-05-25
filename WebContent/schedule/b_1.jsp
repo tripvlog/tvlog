@@ -27,7 +27,6 @@
 		js.src = "//connect.facebook.net/en_US/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
-
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId : '276172122723346',
@@ -35,7 +34,6 @@
 			xfbml : true, // 소셜 플러그인이 있으면 처리
 			version : 'v2.4' // 버전
 		});
-
 	};
 	function facebooklogin() {
 		FB
@@ -46,7 +44,6 @@
 										.api(
 												'/me',
 												function(response) {
-
 													document
 															.getElementById('status').innerHTML = 'Thanks for logging in, '
 															+ response.name
@@ -64,34 +61,7 @@
 						}, {
 							scope : "user_about_me,email"
 						});
-
 	}
-	
-	function loginPlease(){
-		alter("로그인 후에 이용하세요!");
-	}
-	
-	//로그인할 때 아이디, 비밀번호 입력안한 경우 
-	function checkIt(){
-        if(!document.myform.id.value){
-    
-          alert("아이디를 입력하지 않으셨습니다.");
-          document.myform.id.focus();
-          return false;
-        }
-        if(!document.myform.passwd.value){
-          alert("비밀번호를 입력하지 않으셨습니다.");
-          document.myform.passwd.focus();
-          return false;
-        }
-	
-	
-	
-	
-	
-	
-	
-	
 </script>
 <style type="text/css">
     			#navlink:hover{
@@ -108,76 +78,7 @@
 			
     		</style>
     	</head>
-    	
     	<body> 
-    	<!-- 로그인 전 -->
-    	<c:if test="${sessionScope.memId == null}">
-    	<nav class="navbar navbar-default" role="navigation">
-    		<div class="container-fluid">
-    			<div class="navbar-header" style="float: left;">
-    				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-    				</button>
-    				<a class="navbar-brand" href="#">Trip Blog</a>
-    			</div>
-    			<div class="collapse navbar-collapse"  style="float:left;">
-    				<ul class="nav navbar-nav">
-    					<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
-    					<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
-    					<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
-    					<li class="#about"><a href="javascript:loginPlease();" id="navlink">일정 만들기</a></li>  						
-    				</ul>
-    			</div>
-    			<div class="collapse navbar-collapse"  style="float:right;">
-    				<ul class="nav navbar-nav">
-    					<li class="#about"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" >로그인</button></li>
-    				</ul>
-    			</div>
-    		</div>
-    	</nav>	
-    	
-    	<!-- 로그인 모달 -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-	  		<div class="modal-dialog modal-sm">
-	    		<div class="modal-content">
-	      			<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="myModalLabel" align="center">로그인</h4>
-		
-	     			</div>
-	      			<div class="modal-body">
-							<div id="status">
-								<div id="fblogin" align="center"> 
-									<form id ="fbform" action="#" method="post">
-										<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()" style="width:250;">	
-										<i id ="facebookfont" class="fa fa-facebook-square"></i>facebook으로 로그인
-										</button>
-									</form>
-								</div>
-								<hr>
-								<div id="normallogin" align="center">
-									<form name="myform" action="/tvlog/member/loginPro.trip" method="post" onSubmit="return checkIt()">
-										<INPUT type="text" name="id" size="31" maxlength="12" placeholder="아이디"><br/>
-      									<INPUT type=password name="pw"  size="31" maxlength="12" placeholder="비밀번호"><br/>
-								</div>
-								<div align="right">
-									<input type="button" value="아이디/비밀번호 찾기" class="btn btn-primary" style="margin-right:10" onclick="">
-								</div>
-							</div>
-							<br />
-	    					<div class="modal-footer" align="center">
-	     						<input type="submit" class="btn btn-primary" value="로그인">
-								<input type="button" class="btn btn-primary" value="회원가입" onclick="javascript:window.location='/tvlog/member/joinForm.trip'">
-							</div>
-							</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		</c:if>
-    	
-    	<!-- 로그인 후 -->
-    	<c:if test="${sessionScope.memId != null}">
     	<nav class="navbar navbar-default" role="navigation">
     		<div class="container-fluid">
     			<div class="navbar-header" style="float: left;">
@@ -195,26 +96,13 @@
     			</div>
     			<div class="collapse navbar-collapse"  style="float:right;">
     				<ul class="nav navbar-nav">
-    					<li class="#about">
-    						<div class="dropdown">
-    							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-    								${sessionScope.memId} <span class="caret"></span>
-    							</button>
-    							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">마이페이지</a></li>
-									<li class="divider"></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일정</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">포스트</a></li>
-									<li class="divider"></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.jsp">로그아웃</a></li>
-								</ul>
-    						</li>
-    					</div>
-    				</div>
-    			</ul>
+    					<li class="#about"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" >로그인</button></li>
+    				</ul>
+    			</div>
     		</div>
     	</nav>	
+    	
+    	
     	
     	
     	
@@ -260,7 +148,53 @@
 			</div>
 			</div>
 		</div>
-		</c:if>
+		
+		
+		<!-- 로그인 모달 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  		<div class="modal-dialog modal-sm">
+	    		<div class="modal-content">
+	      			<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="myModalLabel" align="center">로그인</h4>
+		
+	     			</div>
+	      			<div class="modal-body">
+							<div id="status">
+								<div id="fblogin" align="center"> 
+									<form id ="fbform" action="#" method="post">
+										<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()" style="width:250;">	
+										<i id ="facebookfont" class="fa fa-facebook-square"></i>facebook으로 로그인
+										</button>
+									</form>
+								</div>
+								<hr>
+								<div id="normallogin" align="center">
+									<form name="myform" action="/tvlog/member/loginPro.trip" method="post" onSubmit="return checkIt()">
+										<INPUT type="text" name="id" size="31" maxlength="12" placeholder="아이디"><br/>
+      									<INPUT type=password name="pw"  size="31" maxlength="12" placeholder="비밀번호"><br/>
+								</div>
+								<div align="right">
+									<input type="button" value="아이디/비밀번호 찾기" class="btn btn-primary" style="margin-right:10" onclick="">
+								</div>
+							</div>
+							<br />
+	    					<div class="modal-footer" align="center">
+	     						<input type="submit" class="btn btn-primary" value="로그인">
+								<input type="button" class="btn btn-primary" value="회원가입" onclick="javascript:window.location='/tvlog/member/joinForm.trip'">
+							</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<c:if test="${sessionScope.memId != null}"></c:if>
+		
+		
+		
+		
 		
     	</body>
     </html>
