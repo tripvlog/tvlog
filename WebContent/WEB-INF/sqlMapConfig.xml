@@ -10,5 +10,6 @@
 	<sqlMap resource="/sql/ChecklistItemSQL.xml" />
 	<sqlMap resource="/sql/ChecklistPersonalSQL.xml" />
 	<sqlMap resource="/sql/DiarySQL.xml" />
+	<sqlMap resource="/sql/bandSQL.xml" />
 	
 </sqlMapConfig>

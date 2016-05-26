@@ -33,7 +33,7 @@ public class ImgAction {
 				// 기본 경로
 				String defaultPath = request.getSession().getServletContext().getRealPath("/");
 				// 상세 경로
-				String path = defaultPath + "diary_imgs" + File.separator;
+				String path = defaultPath + "img" + File.separator + "diary" + File.separator;
 				File file = new File("path:" + path);
 				
 				// 디렉토리가 없을경우 생성
@@ -46,7 +46,7 @@ public class ImgAction {
 				
 				// 서버에 파일 쓰기, transferTo() : MultipartFile의 주요 메서드이며, 업로드한 파일 데이터를 지정한 파일에 저장하는 기능
 				dto.getFiledata().transferTo(new File(path + realname));
-				file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/diary_imgs" + realname;
+				file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/tvlog/img/diary/" + realname;
 				
 			}else{
 				file_result += "&errstr=error";
@@ -72,7 +72,7 @@ public class ImgAction {
 			// 파일 기본 경로
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			// 상세 경로
-			String filePath =  dftFilePath + "diary_imgs" + File.separator;
+			String filePath =  dftFilePath + "img" + File.separator + "diary" + File.separator;
 			File file = new File(filePath);
 			
 			if(!file.exists()){
@@ -102,7 +102,7 @@ public class ImgAction {
 			sFileInfo += "&bNewLine=true";
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "/tvlog/diary_imgs/" + realFileNm;
+			sFileInfo += "&sFileURL=" + "/tvlog/img/diary/" + realFileNm;
 			PrintWriter print = response.getWriter();
 			print.print(sFileInfo);
 			print.flush();

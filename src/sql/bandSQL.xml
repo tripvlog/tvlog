@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+	<select id="band_selectLastId" resultClass="int">
+		select max(band_id) from t_band
+	</select>
+	
+	<select id="band_select" resultClass="trip.band.BandDTO">
+		select * from t_band
+	</select>
+	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
+		update t_band set band_img = #band_img# where band_id = #band_id#
+	</update>
+	<insert id="band_create" parameterClass="trip.band.BandDTO">
+		insert into t_band(band_id, band_name, band_intro, band_range, band_reg) values(t_band_seq.NEXTVAL, #band_name#, #band_intro#, #band_range#, sysdate)
+	</insert>
+	
+</sqlMap>

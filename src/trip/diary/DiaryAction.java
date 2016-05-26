@@ -26,35 +26,20 @@ public class DiaryAction {
 	
 	@RequestMapping("/diary/submit.trip")
 	public String submit(HttpServletRequest request, ImgVO vo){
-		System.out.println(" ==================== submit.trip Start ==================== ");
-		System.out.println("에디터 : " + request.getParameter("d_content"));
-		System.out.println(vo.getDiary_num() + " vo.getnum");
-		System.out.println(vo.getDiary_writer() + " vo.getwriter");
-		System.out.println(vo.getDiary_title() + " vo.gettitle");
-		System.out.println(vo.getDiary_content() + " vo.getcontent");
-		System.out.println(vo.getDiary_location() + " vo.getloaction");
-		System.out.println(vo.getDiary_range() + " vo.getrange");
 		sqlMap.insert("diary_insert", vo);
-		System.out.println(" ==================== submit.trip end ==================== ");
 		return "redirect:list.trip";
 	}
 	@RequestMapping("/diary/diaryPro.trip")
 	public String diaryPro(HttpServletRequest req, MultipartHttpServletRequest mtreq) throws Exception{
 		String originalfileName = "";
 		List<MultipartFile> mf = mtreq.getFiles("profile_pt");
-		System.out.println(" ==================== diaryPro start ======================= ");
-		System.out.println(req.getParameter("d_title") + " is title value");
-		System.out.println(req.getParameter("d_content") + " is content value");
 
 		if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
 		} else {
 			for (int i = 0; i < mf.size(); i++) {
 				originalfileName = mf.get(i).getOriginalFilename();
-				System.out.println(originalfileName  + " is profile_pt value");
 			}
 		}
-		System.out.println(mf.size() + " is mf.size() value");
-		System.out.println(" ==================== diaryPro end ======================= ");
 		return "redirect:diary.trip";
 	}
 	
@@ -65,7 +50,6 @@ public class DiaryAction {
 	public String list(ImgVO vo, HttpServletRequest request){
 		List list = sqlMap.queryForList("diary_select", null);
 		request.setAttribute("list", list);
-		System.out.println(" ========== list.trip ok ========== ");
 		return "/diary/list.jsp";
 	}
 	
@@ -74,7 +58,6 @@ public class DiaryAction {
 		int diary_num = Integer.parseInt(request.getParameter("num"));
 		vo = (ImgVO)sqlMap.queryForObject("diary_view", diary_num);
 		request.setAttribute("vo", vo);
-		System.out.println(" ========== view.trip ok ========== ");
 		return "/diary/view.jsp";
 	}
 	
@@ -84,15 +67,12 @@ public class DiaryAction {
 		int diary_num = Integer.parseInt(request.getParameter("num"));
 		vo = (ImgVO)sqlMap.queryForObject("diary_view", diary_num);
 		request.setAttribute("vo", vo);
-		System.out.println(" ========== modify.trip ok ========== ");
 		return "/diary/modify.jsp";
 	}
 	
 	@RequestMapping("/diary/modifyPro.trip")
 	public String modifyPro(HttpServletRequest request, ImgVO vo){
-		System.out.println(vo.getDiary_num() + " is vo.getdiarynum");
 		sqlMap.insert("diary_update", vo);
-		System.out.println(" ========== modifyPro.trip ok ========== ");
 		return "redirect:view.trip?num=" + vo.getDiary_num();
 	}
 	
@@ -100,16 +80,13 @@ public class DiaryAction {
 	public String delete(HttpServletRequest request){
 		int diary_num = Integer.parseInt(request.getParameter("num"));
 		sqlMap.delete("diary_delete", diary_num);
-		System.out.println(" ========== delete.trip ok ========== ");
 		return "redirect:list.trip";
 	}
 	
 	@RequestMapping("/diary/cluster.trip")
 	public String cluster(HttpServletRequest request){
 		List location = sqlMap.queryForList("diary_cluster", null);
-		System.out.println(location.size() + " is locatioin value");
 		request.setAttribute("location", location);
-		System.out.println(" ========== cluster.trip ok ========== ");
 		return "/diary/cluster.jsp";
 	}
 }
