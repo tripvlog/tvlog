@@ -5,7 +5,7 @@
     	<head>
     		<meta charset="UTF-8">
     		<title>bootstrap test</title>
-    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     		<link rel="stylesheet" type="text/css" href="/jsmusic/webapp/user/mun/css/login.css"/> 
 			<script src="/jsmusic/webapp/user/mun/js/facebook.js" type="text/javascript"></script>
@@ -17,6 +17,9 @@
 			<script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
 			<script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
 <script>
+
+
+
 	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id))
@@ -37,16 +40,33 @@
 
 	};
 	function facebooklogin() {
-		FB.login(function(response) {
-			if (response.authResponse) {
-				FB.api('/me',function(response) {
-					document.getElementById('status').innerHTML = 'Thanks for logging in, '+ response.name+ '!'+ response.id+ '!!!'+ response.picture;
-					window.location = "/tvlog/member/loginfbPro.trip?id="+ response.id;
-				});
-			} else {
-				console.log('User cancelled login or did not fully authorize.');
-			}
-		},{scope : "user_about_me,email"});
+		FB
+				.login(
+						function(response) {
+							if (response.authResponse) {
+								FB
+										.api(
+												'/me',
+												function(response) {
+
+													document
+															.getElementById('status').innerHTML = 'Thanks for logging in, '
+															+ response.name
+															+ '!'
+															+ response.id
+															+ '!!!'
+															+ response.picture;
+													window.location = "/tvlog/member/loginfbPro.trip?id="
+															+ response.id;
+												});
+							} else {
+								console
+										.log('User cancelled login or did not fully authorize.');
+							}
+						}, {
+							scope : "user_about_me,email"
+						});
+
 	}
 	
 	function loginPlease(){
@@ -56,7 +76,7 @@
 	//로그인할 때 아이디, 비밀번호 입력안한 경우 
 	function begin(){
          document.myform.id.focus();
-      }
+       }
 	function checkIt(){
         if(!document.myform.id.value){
     
@@ -69,28 +89,27 @@
           document.myform.passwd.focus();
           return false;
         }
-	}
 	
-	//아이디 중복확인 버튼 클릭시 이벤트 
+	//중복확인 버튼 클릭시 이벤트 
 	function confirmClick(userinput){ 
 	        if (userinput.id.value==""){
 	            alert("아이디를 입력하세요");
 	            return;
 	        }
 	        // url과 사용자 입력 id를 조합하여 confirmId.jsp로 전달 
-	        url = "/tvlog/member/ConfirmId.trip?id=" + userinput.id.value ;   
+	        url = "ConfirmId.trip?id=" + userinput.id.value ;   
 	        // 새로운 윈도우를 엽니다.
 	        open(url, "confirm","toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500, height=200");
 	}
 
-	//도메인 중복확인 버튼 클릭시 이벤트
+
 	function confirmDomainClick(userinput){ 
 	    if (userinput.domain.value==""){
 	        alert("도메인을 입력하세요");
 	        return;
 	    }
 	    // url과 사용자 입력 id를 조합하여 confirmId.jsp로 전달 
-	    url = "/tvlog/member/ConfirmDomain.trip?domain=" + userinput.domain.value ;   
+	    url = "ConfirmDomain.trip?domain=" + userinput.domain.value ;   
 	    // 새로운 윈도우를 엽니다.
 	    open(url, "confirm","toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500, height=200");
 	}
@@ -107,8 +126,7 @@
 		}
 	}
 	
-	// 로그인 ajax
-	function loginSubmit(){
+	function loginTest(){
 	    $.ajax({
 	        type: "post",
 	        url : "/tvlog/member/loginPro.trip",
@@ -120,7 +138,8 @@
 	        error: loginError	//페이지요청 실패시 실행함수
 	 	});
 	}
-	function loginSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다.
+	function loginSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
+		alert("49689465");
 	    $("#loginSpace").html(aaa);
 	}
 	function loginError(){
@@ -147,10 +166,29 @@
 <body> 
     	<!-- 로그인 전 -->
     	<c:if test="${sessionScope.memId == null}">
-    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-top:7">로그인</button>
-
-
-	
+    	<nav class="navbar navbar-default" role="navigation">
+    		<div class="container-fluid">
+    			<div class="navbar-header" style="float: left;">
+    				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+    				</button>
+    				<a class="navbar-brand" href="#">Trip Blog</a>
+    			</div>
+    			<div class="collapse navbar-collapse"  style="float:left;">
+    				<ul class="nav navbar-nav">
+    					<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
+    					<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
+    					<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
+    					<li class="#about"><a href="javascript:loginPlease();" id="navlink">일정 만들기</a></li>  						
+    				</ul>
+    			</div>
+    			<div class="collapse navbar-collapse"  style="float:right;">
+    				<ul class="nav navbar-nav">
+    					<li class="#about"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-top:7">로그인</button></li>
+    				</ul>
+    			</div>
+    		</div>
+    	</nav>	
+    	
     	<!-- 로그인 모달 -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="loginSpace">
 	  		<div class="modal-dialog modal-sm">
@@ -171,8 +209,9 @@
 								</div>
 								<hr>
 								<div id="normallogin" align="center">
-									<INPUT type="text" name="id" id="loginId" size="31" maxlength="12" placeholder="아이디" style="margin-bottom: 7"><br/>
-      								<INPUT type=password name="pw" id="loginPw" size="31" maxlength="12" placeholder="비밀번호"><br/>
+									<form name="myform" action="/tvlog/member/loginPro.trip" method="post" onSubmit="return checkIt()">
+										<INPUT type="text" name="id" id="loginId" size="31" maxlength="12" placeholder="아이디" style="margin-bottom: 7"><br/>
+      									<INPUT type=password name="pw" id="loginPw" size="31" maxlength="12" placeholder="비밀번호" ><br/>
 								</div>
 								<div align="right">
 									<input type="button" value="비밀번호 찾기" class="btn btn-primary" style="margin-right:10" onclick="">
@@ -180,9 +219,10 @@
 							</div>
 							<br />
 	    					<div class="modal-footer" align="center">
-	     						<input type="button" class="btn btn-primary" value="로그인" onclick="loginSubmit()" data-dismiss="modal">
+	     						<input type="button" class="btn btn-primary" value="로그인" onclick="loginTest()" data-dismiss="modal">
 								<input type="button" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#joinmodal" value="회원가입">
 							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -198,8 +238,8 @@
 						</button>
 						<h4 class="modal-title" id="myModalLabel" align="center">회원가입</h4>
 					</div>
-					<form method="post" action="/tvlog/member/joinPro.trip" name="userinput" onSubmit="return fsubmit()" enctype="multipart/form-data">
 					<div class="modal-body">
+						<form method="post" action="/tvlog/member/joinPro.trip" name="userinput" onSubmit="return fsubmit()" enctype="multipart/form-data">
 							<table style="align:center">
 								<tr>
 									<td width="130" height="35">사용자 ID</td>
@@ -221,11 +261,12 @@
 									<td width="130" height="35">프로필 사진 등록</td>
 									<td width="400"><input type="file" name="save"></td>
 								</tr>
-							</table>
-							<hr>
-							<button type="submit" name="confirm" class="btn btn-primary" align="center">가입하기</button>		
+							</table>		
 					</div>
-					</form>
+					<div class="modal-footer">
+						<button type="submit" name="confirm" class="btn btn-primary" >가입하기</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -235,21 +276,43 @@
     	
     	<!-- 로그인 후 -->
     	<c:if test="${sessionScope.memId != null}">
-    	
-    	<div class="dropdown">
-    		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-    			${sessionScope.memId} <span class="caret"></span>
-    		</button>
-    		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">마이페이지</a></li>
-				<li class="divider"></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일정</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">포스트</a></li>
-				<li class="divider"></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
-			</ul>
-		</div>
+    	<nav class="navbar navbar-default" role="navigation">
+    		<div class="container-fluid">
+    			<div class="navbar-header" style="float: left;">
+    				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+    				</button>
+    				<a class="navbar-brand" href="#">Trip Blog</a>
+    			</div>
+    			<div class="collapse navbar-collapse"  style="float:left;">
+    				<ul class="nav navbar-nav">
+    					<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
+    					<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
+    					<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
+    					<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">일정 만들기</a></li>  						
+    				</ul>
+    			</div>
+    			<div class="collapse navbar-collapse"  style="float:right;">
+    				<ul class="nav navbar-nav">
+    					<li class="#about">
+    						<div class="dropdown">
+    							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    								${sessionScope.memId} <span class="caret"></span>
+    							</button>
+    							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">마이페이지</a></li>
+									<li class="divider"></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일정</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">포스트</a></li>
+									<li class="divider"></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
+								</ul>
+							</div>
+    					</li>
+    				</ul>
+    			</div>
+    		</div>
+    	</nav>	
     	
     	
     	
@@ -299,3 +362,4 @@
 		
     	</body>
     </html>
+   

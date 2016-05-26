@@ -3,5 +3,6 @@
     
 <script type="text/javascript">
 	alert("회원가입 되셨습니다.");
-	window.location="/tvlog/member/loginForm.trip"
+	/*window.location="/tvlog/member/loginForm.trip"*/
+	history.go(-1);
 </script>
