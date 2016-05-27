@@ -163,7 +163,7 @@
 	      			<div class="modal-body">
 							<div id="status">
 								<div id="fblogin" align="center"> 
-									<form id ="fbform" action="#" method="post">
+									<form id ="fbform" action="/tvlog/member/loginPro.trip" method="post">
 										<button id ="facebtn"  type="button" class="btn btn-primary" onclick="facebooklogin()" style="width:250;">	
 										<i id ="facebookfont" class="fa fa-facebook-square"></i>facebook으로 로그인
 										</button>

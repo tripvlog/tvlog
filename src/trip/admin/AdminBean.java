@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import trip.member.LoginDTO;
+
 @Controller
 public class AdminBean {
 
@@ -130,7 +132,18 @@ public class AdminBean {
 	
 	
 	/* 회원 관리자 페이지 시작 */
-
+	@RequestMapping("/admin/checklistItemSel.trip")
+	public ModelAndView memberSel(LoginDTO dto) {
+				
+		List list = new ArrayList();
+		list = sqlMap.queryForList("ch_item_select_innerJoin", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.setViewName("");
+				
+		return mv;
+	}
 
 	/* 회원 관리자 페이지 끝 */
 }

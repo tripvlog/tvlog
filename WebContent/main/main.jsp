@@ -93,7 +93,7 @@
     				<li class="#about"><a href="javascript:loginPlease();" id="navlink">일정 만들기</a></li>  						
     			</ul>
     		</div>
-    		<div class="collapse navbar-collapse"  style="float:right;align:center-right" id="loginSpace">
+    		<div class="collapse navbar-collapse"  style="float:right;margin-top:20" id="loginSpace">
     		</div>
     	</div>
     </nav>
