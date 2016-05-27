@@ -2,6 +2,7 @@ package trip.band;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,10 +27,14 @@ public class BandAction {
 		
 		MultipartFile b_img = request.getFile("b_img");
 		sqlMap.insert("band_create", dto);
+		dto.setBand_id((int)sqlMap.queryForObject("band_selectLastId", null));
+		sqlMap.insert("band_create_table_board", dto.getBand_id());
+		sqlMap.insert("band_create_table_comment", dto.getBand_id());
+		sqlMap.insert("band_create_table_member", dto.getBand_id());
+		
 		String band_img = request.getFile("b_img").getOriginalFilename();
 		
 		if(!band_img.equals("")){
-			dto.setBand_id((int)sqlMap.queryForObject("band_selectLastId", null));
 			
 			String img_path = request.getSession().getServletContext().getRealPath("/");
 			String img_name = "bI_" + dto.getBand_id();
@@ -49,9 +54,17 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_list.trip")
-	public String bandList(HttpServletRequest request, BandDTO dto){
-		dto = (BandDTO)sqlMap.queryForObject("band_select", null);
-		request.setAttribute("dto", dto);
+	public String bandList(HttpServletRequest request){
+		List list = sqlMap.queryForList("band_select", null);
+		request.setAttribute("b_list", list);
 		return "/band/list_band.jsp";
+	}
+	
+	@RequestMapping("/band/b_view.trip")
+	public String bandView(HttpServletRequest request, BandDTO dto){
+		System.out.println(dto.getBand_id() + "============== getband_id ============");
+		dto = (BandDTO)sqlMap.queryForObject("band_view", dto);
+		request.setAttribute("dto", dto);
+		return "/band/view_band.jsp";
 	}
 }
