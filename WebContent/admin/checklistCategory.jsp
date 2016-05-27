@@ -17,7 +17,7 @@
 <script src="/tvlog/schedule/schedule.js"></script>
 <script>
 	function itemlocation(cl_num) {
-		window.location="/tvlog/checklistItem.trip?cl_num="+cl_num;
+		window.location="/tvlog/admin/checklistItem.trip?cl_num="+cl_num;
 	}
 </script>
 <style>
@@ -49,7 +49,7 @@
 	
 	<!-- 카테고리 추가 -->
 	<h4>카테고리 추가</h4>
-	<form action="checklistCateAdd.trip" method="post">
+	<form action="/tvlog/admin/checklistCateAdd.trip" method="post">
 		추가할 카테고리 이름 : <input type="text" name="cl_name">
 		<input type="submit" value="추가" name="checklistCateAdd">
 	</form>
@@ -60,7 +60,7 @@
 	
 	<!-- 카테고리 삭제 -->
 	<h4>카테고리 삭제</h4>
-	<form action="checklistCateDel.trip" method="post">
+	<form action="/tvlog/admin/checklistCateDel.trip" method="post">
 		삭제할 카테고리 이름 : 
 		<select name="cl_num">
 			<c:forEach var="list" items="${list}">

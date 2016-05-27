@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		
 		@RequestMapping("/member/loginForm.trip")
 		public String loginForm(){
-			return "/schedule/b_2.jsp";
+			return "/schedule/index.jsp";
 		}
 		
 		@RequestMapping(value="/member/loginPro.trip",method=RequestMethod.POST)
@@ -40,7 +40,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 					request.setAttribute("dto",dto);
 									
 				}				
-				return "/schedule/b_2.jsp";
+				return "/schedule/index.jsp";
 					
 		}
 		

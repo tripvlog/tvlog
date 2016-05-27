@@ -172,7 +172,7 @@
 								<hr>
 								<div id="normallogin" align="center">
 									<INPUT type="text" name="id" id="loginId" size="31" maxlength="12" placeholder="아이디" style="margin-bottom: 7"><br/>
-      								<INPUT type=password name="pw" id="loginPw" size="31" maxlength="12" placeholder="비밀번호"><br/>
+      								<INPUT type=password name="pw" id="loginPw" size="31" maxlength="12" placeholder="비밀번호"><br/><br/>
 								</div>
 								<div align="right">
 									<input type="button" value="비밀번호 찾기" class="btn btn-primary" style="margin-right:10" onclick="">
@@ -223,7 +223,7 @@
 								</tr>
 							</table>
 							<hr>
-							<button type="submit" name="confirm" class="btn btn-primary" align="center">가입하기</button>		
+							<button type="submit" name="confirm" class="btn btn-primary" style="align:right">가입하기</button>		
 					</div>
 					</form>
 				</div>

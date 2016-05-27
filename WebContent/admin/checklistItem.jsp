@@ -17,7 +17,7 @@
 <script src="/tvlog/schedule/schedule.js"></script>
 <script>
 	function itemDellocation(ci_name, cl_num) {
-		window.location="/tvlog/checklistItem.trip?cl_num="+cl_num;
+		window.location="/tvlog/admin/checklistItem.trip?cl_num="+cl_num;
 	}
 </script>
 <style>
@@ -49,7 +49,7 @@
 	
 	<!-- 항목 추가 -->
 	<h4>항목 추가</h4>
-	<form action="checklistItemAdd.trip" method="post">
+	<form action="/tvlog/admin/checklistItemAdd.trip" method="post">
 		추가할 항목 이름 : <input type="text" name="ci_name">
 		<input type="hidden" name="cl_num" value="${cl_num }">
 		<input type="submit" value="추가" name="checklistItemAdd">
@@ -61,7 +61,7 @@
 	
 	<!-- 항목 삭제 -->
 	<h4>항목 삭제</h4>
-	<form action="checklistItemDel.trip" method="post">
+	<form action="/tvlog/admin/checklistItemDel.trip" method="post">
 		삭제할 항목 이름 : 
 		<select name="ci_num">
 			<c:forEach var="list" items="${list}">
