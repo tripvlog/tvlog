@@ -1,4 +1,4 @@
-package project.vlog.bean;
+package trip.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
@@ -11,8 +11,8 @@ public class MainBean {
 	@Autowired
 	private SqlMapClientTemplate sqlMap;
 	
-	@RequestMapping("/test.trip")
-	public String test(){
-		return "/test/kh.jsp";
+	@RequestMapping("/main/main.trip")
+	public String main(){
+		return "/main/main.jsp";
 	}
 }
