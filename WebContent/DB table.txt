@@ -10,7 +10,8 @@ create table t_schedule(
     s_range number,
     s_step number,
     s_info varchar2(1000),
-    s_content varchar2(4000)
+    s_content varchar2(4000),
+    s_memberCount number default 1
 );
 
 create sequence t_schedule_seq nocache;
