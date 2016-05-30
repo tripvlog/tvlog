@@ -103,7 +103,7 @@
     		<div class="modal-dialog" >
     		<div class="modal-content" id="modalSize">
       		<div class="modal-header" >
-		    	<form action="" method="post">
+		    	<form action="/tvlog/schedule/schedule-new.trip" method="post">
 				<div class="panel panel-success" >
 					<div class="panel-heading">
 						<h3>새 일정 만들기</h3>
