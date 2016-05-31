@@ -78,7 +78,7 @@
 <body onload="mainBody()" style="width:1200">
 <div class="container">
 	<!-- 상단 메뉴바 -->
-	<nav class="navbar navbar-default" role="navigation">
+	<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0">
     	<div class="container-fluid">
     		<div class="navbar-header" style="float: left;">
     			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -132,7 +132,7 @@
 					</div>
 					<div class="panel-body">
 						<input type="submit" value="새 일정 만들기"  class="btn btn-success" />
-						<input type="button" value="취소" class="btn btn-warning"  />
+						<input type="button" value="취소" class="btn btn-warning" data-dismiss="modal" />
 					</div>
 				</div>
 				</form>

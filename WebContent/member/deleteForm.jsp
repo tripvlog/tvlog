@@ -36,7 +36,7 @@
   <TR height="30">
     <TD colspan="2" align="middle"  >
       <INPUT type=submit value="회원탈퇴"> 
-      <input type="button" value="취  소" onclick="javascript:window.location='main.trip'"></TD></TR>
+      <input type="button" value="취  소" onclick="javascript:window.location='/main/main.trip'"></TD></TR>
 </TABLE>
 </form>
 </BODY>

@@ -241,7 +241,7 @@
     			${sessionScope.memId} <span class="caret"></span>
     		</button>
     		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">마이페이지</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myPage.trip">마이페이지</a></li>
 				<li class="divider"></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일정</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
@@ -287,7 +287,7 @@
 					</div>
 					<div class="panel-body">
 						<input type="submit" value="새 일정 만들기"  class="btn btn-success" />
-						<input type="button" value="취소" class="btn btn-warning"  />
+						<input type="button" value="취소" class="btn btn-warning" data-dismiss="modal" />
 					</div>
 				</div>
 				</form>

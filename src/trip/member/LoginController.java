@@ -61,7 +61,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			}else{
 				sqlmap.insert("fbInsert",dto);
 			}
-			return "/member/loginPro.jsp";
+			return "/member/myPage.jsp";
 					
 		}
 		
@@ -87,6 +87,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			MultipartFile mf = request.getFile("save");
 			System.out.println(mf);
 			String rp = request.getRealPath("//img//member//");
+			System.out.println(rp);
 			String orgName = mf.getOriginalFilename();
 			String ext = orgName.substring(orgName.lastIndexOf("."));
 			String savName = dto.getId()+ext;
@@ -173,6 +174,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			sqlmap.update("modifyUpdate", dto);
 			
 			return"/member/modifyPro.jsp";
+		}
+		@RequestMapping("/member/myPage.trip")
+		public String myPage(HttpSession session, HttpServletRequest request){
+			String id = (String)session.getAttribute("memId");
+			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);
+			request.setAttribute("dto",dto);
+			return"/member/myPage.jsp";
 		}
 	
 	}

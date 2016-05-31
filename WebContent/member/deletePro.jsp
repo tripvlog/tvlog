@@ -17,7 +17,7 @@
   <tr>
     <td align="center"> 
       <p>흑흑.... 서운합니다. 안녕히 가세요.</p>
-      <meta http-equiv="Refresh" content="5;url=main.jsp" >
+      <meta http-equiv="Refresh" content="5;url=/main/main.trip" >
     </td>
   </tr>
   <tr>
