@@ -65,7 +65,7 @@
 				<form action="/tvlog/band/b_write.trip" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="band_id" value="${band.band_id}">
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
-					<input type="file" name="band_board_img"><input type="submit" value="저장"> <input type="reset" value="취소">
+					<input type="file" name="band_board_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
 				</form>
 					<hr color="red">
 			</div>
