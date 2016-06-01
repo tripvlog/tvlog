@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,67 +8,51 @@
 <meta name="generator" content="Bootply" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Bootstrap Uses a fixed left sidebar, that attaches after scrolling past a large top header. example snippet for Bootstrap." />
-
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"  ></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <!-- CSS code from Bootply.com editor -->
-	<style type="text/css">
-		#navlink:hover{
-	    	color : #6B9900;
-	    	font-weight : bold;
-	    	font-size : 120%;
-	    }		
-		body {
-			padding-top: 2px;
-			width:1200px;
-		}
-		#content{
-			width: 1200px;
-		}
-		#bannerContainer{
-			height:50px;
-		}
-		#top-banner{
-			margin:0px;
-		}
-		#topNavbar{
-			margin: 0px;
-			margin-top: 2px;
-		}
-	</style>
-	<script>
-	$(document).ready(function() {
-		 $.ajax({
-		        type: "post",
-		        url : "/tvlog/member/loginForm.trip",
-		       
-		        success: mainSuccess,	// 페이지요청 성공시 실행 함수
-		        error: mainError	//페이지요청 실패시 실행함수
-		 	});
-	
-	});
-	function mainSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
-	    $("#loginSpace").html(aaa);
-	    console.log(resdata);
+
+<style type="text/css">
+	#navlink:hover{
+    	color : #6B9900;
+    	font-weight : bold;
+    	font-size : 120%;
+    }		
+	body {
+		padding-top: 2px;
 	}
-	function mainError(){
-	    alert("Error");
+	#content{
+		width: 1200px;
 	}
-	</script>
+
+</style>
+<script>
+function mainBody(){
+    $.ajax({
+        type: "post",
+        url : "/tvlog/member/loginForm.trip",
+       
+        success: mainSuccess,	// 페이지요청 성공시 실행 함수
+        error: mainError	//페이지요청 실패시 실행함수
+ 	});
+}
+function mainSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
+    $("#loginSpace").html(aaa);
+    console.log(resdata);
+}
+function mainError(){
+    alert("Error");
+}
+</script>
+
 </head>
-<body >
-<header class="navbar navbar-bright navbar-fixed-top" role="banner" id="top-banner">
-	<div class="container" id="bannerContainer">
+<body onload="mainBody()" style="width:1200">
+<div class="container">
 	<!-- 상단 메뉴바 -->
-	<nav class="navbar navbar-default" role="navigation" id="topNavbar">
+	<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0">
     	<div class="container-fluid">
     		<div class="navbar-header" style="float: left;">
     			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -84,7 +67,7 @@
     				<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#scheduleModal" data-whatever="@mdo">일정 만들기</a></li>  						
     			</ul>
     		</div>
-    		<div class="collapse navbar-collapse"  style="float:right;" id="loginSpace">
+    		<div class="collapse navbar-collapse"  style="float:right;margin-top:20" id="loginSpace">
     		</div>
     	</div>
     </nav>
@@ -123,7 +106,7 @@
 					</div>
 					<div class="panel-body">
 						<input type="submit" value="새 일정 만들기"  class="btn btn-success" />
-						<input type="button" value="취소" class="btn btn-warning"  />
+						<input type="button" value="취소" class="btn btn-warning" data-dismiss="modal" />
 					</div>
 				</div>
 				</form>
@@ -131,7 +114,6 @@
 			</div>
 			</div>
 		</div>
-	</div>
-</header>
+</div>
 </body>
 </html>

@@ -100,7 +100,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			sqlmap.insert("member_create_band_list", dto);
 			sqlmap.insert("member_create_friend_list", dto);
 			return "/member/joinPro.jsp";
-			
 		}
 		
 		
@@ -170,10 +169,33 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			return"/member/modifyForm.jsp";
 		}
 		@RequestMapping("/member/modifyPro.trip")
-		public String modifyPro(HttpSession session, LoginDTO dto){
+		public String modifyPro(HttpSession session, LoginDTO dto, MultipartHttpServletRequest request) throws Exception{
 			String id = (String)session.getAttribute("memId");
 			dto.setId(id);
 			sqlmap.update("modifyUpdate", dto);
+			
+			String defaultImg = "default.jpg";
+			
+			MultipartFile mf = request.getFile("path");
+			
+			if(defaultImg.equals(mf)){
+				
+			}
+			
+			if(mf != null){
+				mf = (MultipartFile)sqlmap.queryForObject("pw", id);
+				
+			
+				
+				
+			String rp = request.getRealPath("//img//member//");
+			String orgName = mf.getOriginalFilename();     //원본 이름
+			String ext = orgName.substring(orgName.lastIndexOf(".")); //파일의 확장자를 잘라서 가져오는 것
+			String savName = dto.getId()+ext;  //저장할 이름 : 아이디+확장자
+			File sf = new File(rp+"//"+savName);  //rp가 //img//member// 여기니까 그 경로에 바로 위에서 지정한 이름 넣어줌
+			mf.transferTo(sf);  //mf를 sf로 바꿈
+			dto.setPath(savName);
+			}
 			
 			return"/member/modifyPro.jsp";
 		}
@@ -182,6 +204,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			String id = (String)session.getAttribute("memId");
 			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);
 			request.setAttribute("dto",dto);
+			
+			
+			
 			return"/member/myPage.jsp";
 		}
 	

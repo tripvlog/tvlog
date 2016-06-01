@@ -132,7 +132,7 @@ public class AdminBean {
 	
 	
 	/* 회원 관리자 페이지 시작 */
-	@RequestMapping("/admin/checklistItemSel.trip")
+	@RequestMapping("/admin/memberSel.trip")
 	public ModelAndView memberSel(LoginDTO dto) {
 				
 		List list = new ArrayList();

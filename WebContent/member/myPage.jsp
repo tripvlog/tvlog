@@ -146,49 +146,98 @@ function mainBody(){
 	  		<li role="presentation" class=""><a data-target="#modify" role="tab" id="modify-tab" data-toggle="tab" aria-controls="modify" aria-expanded="false">회원 정보 수정</a></li>
 		</ul>
 		<div id="myTabContent" class="tab-content"> 
+	  		<!-- 알림 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade active in" id="alarm" aria-labelledby="alarm-tab" >
-	 			알림 탭 내용
+	 			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />111<br /><br /><br />111<br /><br /><br /><br /><br /><br />11111<br /><br /><br /><br /><br />5555<br /><br /><br /><br /><br />1111<br /><br /><br /><br /><br /><br /><br /><br /><br />33333333333
 	 		</div>
+	 		<!-- 친구 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="friend" aria-labelledby="friend-tab">
-	  			친구 탭 내용
+	  			<div class="col-sm-2">
+					<ul id="myTab6" class="nav nav-pills nav-stacked" role="tablist">
+						<li role="presentation" class="active"><a href="#friendSelect" id="friendSelect-tab6" role="tab" data-toggle="tab" aria-controls="friendSelect" aria-expanded="false">친구 검색</a></li>
+						<li role="presentation" class=""><a href="#friendList" role="tab" id="#friendList-tab6" data-toggle="tab" aria-controls="friendList" aria-expanded="true">친구 목록</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-10">
+					<div id="myTabContent6" class="tab-content">
+						<div role="tabpanel" class="tab-pane fade active in" id="friendSelect" aria-labelledby="friendSelect-tab6">
+							친구검색
+						</div>
+						<div role="tabpanel" class="tab-pane fade" id="friendList" aria-labelledby="friendList-tab6">
+							친구목록
+						</div>
+					</div>
+				</div>
 	  		</div>
+	  		<!-- 밴드 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="band" aria-labelledby="band-tab">
-	  			밴드 탭 내용
+	  			
 	  		</div>
+	  		<!-- 여행일정 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="schedule" aria-labelledby="schedule-tab">
-	  			여행일정 탭 내용
+	  			
 	  		</div>
+	  		<!-- 포스트 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="post" aria-labelledby="post-tab">
-	  			포스트 탭 내용
 	  			<form action="/tvlog/member/modifyForm.trip" method="post">
 					<input type="submit" value="회원 정보 수정" id="memberModify">
 				</form>
 				<form action="/tvlog/member/deleteForm.trip">
 					<input type="submit" value="회원 탈퇴" id="memberDelete">
 				</form>
-	  			
 			</div>
 		    <!-- 회원정보 탭 내용 -->
-	  		<div role="tabpanel" class="tab-pane fade" id="modify" aria-labelledby="modify-tab"> 			
-	  			<div class="col-sm-2">
+	  		<div role="tabpanel" class="tab-pane fade" id="modify" aria-labelledby="modify-tab">
+				<div class="col-sm-2">
 					<ul id="myTab6" class="nav nav-pills nav-stacked" role="tablist">
-						<li role="presentation" class="active"><a href="#memberModify" id="memberModify-tab6" role="tab" data-toggle="tab" aria-controls="memberModify" aria-expanded="false">회원 정보 수정</a></li>
-						<li role="presentation" class=""><a href="#memberDelete" role="tab" id="memberDelete-tab6" data-toggle="tab" aria-controls="memberDelete" aria-expanded="true">회원 탈퇴</a></li>
+						<li role="presentation" class="active"><a href="#home6" id="home-tab6" role="tab" data-toggle="tab" aria-controls="home6" aria-expanded="false">회원 정보 수정</a></li>
+						<li role="presentation" class=""><a href="#profile6" role="tab" id="profile-tab6" data-toggle="tab" aria-controls="profile6" aria-expanded="true">회원 탈퇴</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-10">
 					<div id="myTabContent6" class="tab-content">
-						<div role="tabpanel" class="tab-pane fade active in" id="memberModify" aria-labelledby="memberModify-tab6">
-							<%@ include file="/member/modifyForm.jsp" %>
-						</div>
-						<div role="tabpanel" class="tab-pane fade" id="memberDelete" aria-labelledby="memberDelete-tab6">
-							<%@ include file="/member/deleteForm.jsp" %>
+						<div role="tabpanel" class="tab-pane fade active in" id="home6" aria-labelledby="home-tab6">
+								<center><h1>회원 정보 수정</h1></center>								
+								<form enctype="multipart/form-data" method="post" action="/tvlog/member/modifyPro.trip" name="userinput" onsubmit="return checkIt()">
+									<table align="center" border="2" width="750">
+										<tr>
+											<td>아이디</td>
+											<td>${dto.id}</td>
+										</tr>
+										<tr>
+											<td width="200">비밀번호</td>
+											<td width="400"><input type="password" name="pw" size="15" maxlength="12" value="${dto.pw}"></td>
+										<tr>
+											<td width="200">닉네임</td>
+											<td width="400"><input type="text" name="name" size="15" maxlength="12" value="${dto.name}"></td>
+										</tr>
+										<tr>
+											<td width="200">도메인</td>
+											<td width="400"><input type="text" name="domain" size="15" maxlength="12" value="${dto.domain}">&nbsp;&nbsp;
+												<input type="button" value="중복확인" onClick="confirmDomainClick(this.form)" />&nbsp&nbsp
+												<font color="blue"> * 중복확인 버튼을 클릭</font>
+											</td>
+										</tr>
+										</td>
+										</tr>
+										<tr>
+											<td width="200">프로필 사진 등록</td>
+											<td width="400"><input type="file" name="path" value="${dto.path}"></td>
+										</tr>
+										<tr>
+											<td colspan="2" align="center">
+												<input type="submit"name="modify" value="수   정"> 
+											</td>
+										</tr>
+									</table>
+								</form>
+							</div>
+						<div role="tabpanel" class="tab-pane fade" id="profile6" aria-labelledby="profile-tab6">
+							<p>Profile content</p>
 						</div>
 					</div>
 				</div>
-	  			
-				
-	  		</div>
+			</div>
 		</div>
 	</div>
 </div>	
