@@ -3,6 +3,7 @@ package trip.diary;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
@@ -25,7 +26,8 @@ public class DiaryAction {
 	public String s_editor(){ return "/diary/s_editor.jsp"; }
 	
 	@RequestMapping("/diary/submit.trip")
-	public String submit(HttpServletRequest request, ImgVO vo){
+	public String submit(HttpServletRequest request, HttpSession session, ImgVO vo){
+		vo.setDiary_writer((String)session.getAttribute("memId"));
 		sqlMap.insert("diary_insert", vo);
 		return "redirect:list.trip";
 	}

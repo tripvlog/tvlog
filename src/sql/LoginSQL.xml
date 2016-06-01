@@ -27,6 +27,10 @@
 		select pw from t_member where id=#id#
 	</select>
 	
+	<select id="member_get_img" parameterClass="String" resultClass="String">
+		select path from t_member where id = #id#
+	</select>
+	
 	<insert id="fbInsert" parameterClass="trip.member.LoginDTO">
 		insert into t_member (id,fb_login) values(#id#,1)
 	</insert>
@@ -36,11 +40,11 @@
 	</insert>
 	
 	<insert id="member_create_band_list" parameterClass="trip.member.LoginDTO">
-			create table t_member_band_$id$(band_id number primary key, band_name varchar2(300), band_img varchar2(300), band_reg date default sysdate)
+		create table t_member_band_$id$(band_no number, band_id number primary key, band_name varchar2(300), band_img varchar2(300), band_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
 		
 	<insert id="member_create_friend_list" parameterClass="trip.member.LoginDTO">
-		create table t_member_friend_$id$(friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number, friend_reg date default sysdate)
+		create table t_member_friend_$id$(friend_no number, friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number, friend_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 친구 목록 -->
 	
 	<update id="modifyUpdate" parameterClass="trip.member.LoginDTO">

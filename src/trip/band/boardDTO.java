@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class boardDTO {
 
+	private int band_id;
 	private int band_board_num;
 	private int band_board_notice;
 	private String band_board_writer;
@@ -11,6 +12,14 @@ public class boardDTO {
 	private String band_board_content;
 	private int band_board_readcount;
 	private Timestamp band_board_reg;
+
+	public int getBand_id() {
+		return band_id;
+	}
+
+	public void setBand_id(int band_id) {
+		this.band_id = band_id;
+	}
 
 	public int getBand_board_num() {
 		return band_board_num;

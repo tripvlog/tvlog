@@ -62,107 +62,36 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 
 			<div class="col-xs-12 col-sm-9">
-				<p class="pull-right visible-xs">
-					<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-				</p>
-				<div class="jumbotron">
-					<h1>공지사항</h1>
-					<p>qqqqqqqqqqwwwwwwwwwweeeeeeeeeerrrrrrrrrrttttttttttyyyyyyyyyy
-					uuuuuuuuuuiiiiiiiiiioooooooooopppppppppp</p>
-				</div>
-				<div class="row">
-					<div class="col-xs-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce
-							dapibus, tellus ac cursus commodo, tortor mauris condimentum
-							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-							malesuada magna mollis euismod. Donec sed odio dui.</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-						</p>
-					</div>
-					<!--/.col-xs-6.col-lg-4-->
-					<div class="col-xs-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce
-							dapibus, tellus ac cursus commodo, tortor mauris condimentum
-							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-							malesuada magna mollis euismod. Donec sed odio dui.</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-						</p>
-					</div>
-					<!--/.col-xs-6.col-lg-4-->
-					<div class="col-xs-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce
-							dapibus, tellus ac cursus commodo, tortor mauris condimentum
-							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-							malesuada magna mollis euismod. Donec sed odio dui.</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-						</p>
-					</div>
-					<!--/.col-xs-6.col-lg-4-->
-					<div class="col-xs-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce
-							dapibus, tellus ac cursus commodo, tortor mauris condimentum
-							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-							malesuada magna mollis euismod. Donec sed odio dui.</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-						</p>
-					</div>
-					<!--/.col-xs-6.col-lg-4-->
-					<div class="col-xs-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce
-							dapibus, tellus ac cursus commodo, tortor mauris condimentum
-							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-							malesuada magna mollis euismod. Donec sed odio dui.</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-						</p>
-					</div>
-					<!--/.col-xs-6.col-lg-4-->
-					<div class="col-xs-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce
-							dapibus, tellus ac cursus commodo, tortor mauris condimentum
-							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-							malesuada magna mollis euismod. Donec sed odio dui.</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-						</p>
-					</div>
-					<!--/.col-xs-6.col-lg-4-->
-				</div>
-				<!--/row-->
+				<form action="/tvlog/band/b_write.trip" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="band_id" value="${band.band_id}">
+					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
+					<input type="file" name="band_board_img"><input type="submit" value="저장"> <input type="reset" value="취소">
+				</form>
+					<hr color="red">
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 
 			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
 				<div class="list-group">
-					<div class="list-group-item" align="center">
-						<img src="/tvlog/img/band/${band.band_img}" width="230" height="150"><br />
+					<div class="list-group-item" align="center"><a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">
+						<img src="/tvlog/img/band/${band.band_img}" width="230" height="150"></a><br />
 						${band.band_name}<br />
 						${band.band_intro}<br />
 					</div>
 					<hr>
 					<a href="#" class="list-group-item active">1</a>
-					<a href="#" class="list-group-item">2</a>
-					<a href="#" class="list-group-item">3</a>
+					<a href="##" class="list-group-item">2</a>
+					<a href="###" class="list-group-item">3</a>
 				</div>
 			</div>
 			<!--/.sidebar-offcanvas-->
 		</div>
 		<!--/row-->
 
-		<hr>
+		<hr color="black">
 
 		<footer>
-			<p>&copy; Company 2014</p>
+			<p>&copy; Trip Blog♥</p>
 		</footer>
 
 	</div>

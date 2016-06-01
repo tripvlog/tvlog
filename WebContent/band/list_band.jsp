@@ -57,19 +57,20 @@
     <div class="container">
     	<div class="row">
 	    	<c:forEach var="band" items="${b_list}">
-	    		<div class="col-md-2" align="center">
-		    		<a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">
-					<img src="/tvlog/img/band/${band.band_img}" width="150" height="150"><br />
-					${band.band_name}<br />
-					${band.band_intro}</a>
-				</div>
+	    		<a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">
+	    			<div class="col-md-2" align="center">
+						<img src="/tvlog/img/band/${band.band_img}" width="150" height="150"><br />
+						${band.band_name}<br />
+						${band.band_intro}
+					</div>
+				</a>
 			</c:forEach>
+			<a href="/tvlog/band/b_create.trip">
 			<div class="col-md-2" align="center">
-				<a href="/tvlog/band/b_create.trip">
 				<img src="/tvlog/img/band/default.jpg" width="150" height="150" ><br /><br />
 				밴드 만들기
-				</a>
 			</div>
+			</a>
 		</div>
     </div>
     </body>
