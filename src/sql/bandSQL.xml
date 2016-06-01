@@ -14,13 +14,21 @@
 		select * from t_band where band_id = #band_id#
 	</select>
 	
+	<select id="band_content" resultClass="trip.band.boardDTO" parameterClass="int">
+		select * from t_band_board_$band_id$
+	</select>
+	
+<!-- =============================================================================== -->
+	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
 		update t_band set band_img = #band_img# where band_id = #band_id#
 	</update>
 
+<!-- =============================================================================== -->
+
 	<insert id="band_create" parameterClass="trip.band.BandDTO">
 		insert into t_band(band_id, band_name, band_intro, band_range, band_reg) values(t_band_seq.NEXTVAL, #band_name#, #band_intro#, #band_range#, sysdate)
-	</insert>
+	</insert><!-- band 리더 추가 해야됨 -->
 	
 	<insert id="band_create_table_board" parameterClass="int">
 		create table t_band_board_$band_id$(band_board_num number primary key, band_board_notice number default 0, band_board_writer varchar2(100), band_board_img varchar2(1000), band_board_content varchar2(2000), band_board_readcount number default 0, band_board_reg date default sysdate)
@@ -31,11 +39,7 @@
 	</insert>
 	
 	<insert id="band_create_table_member" parameterClass="int">
-		create table t_band_member_$band_id$(band_board_member_member varchar2(100), band_board_member_level number, band_board_member_reg date default sysdate)
+		create table t_band_member_$band_id$(band_member varchar2(100), band_member_img varchar2(300), band_member_level number, band_member_reg date default sysdate)
 	</insert>
-	
-	<insert id="band_member_add_leader" parameterClass="trip.band.BandDTO">
-		insert into t_band_member_$band_id$ values(##, 1, sysdate)
-	</insert><!-- map 으로 받으면 됨(band_id 값과 사용자 id 값) -->
 	
 </sqlMap>

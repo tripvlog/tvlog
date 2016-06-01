@@ -97,6 +97,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			
 			dto.setPath(savName);
 			sqlmap.insert("joinInsert", dto);
+			sqlmap.insert("member_create_band_list", dto);
+			sqlmap.insert("member_create_friend_list", dto);
 			return "/member/joinPro.jsp";
 			
 		}

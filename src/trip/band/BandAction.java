@@ -50,7 +50,7 @@ public class BandAction {
 				e.printStackTrace();
 			}
 		}
-		return "redirect:/band/b_create.trip";
+		return "redirect:/band/b_list.trip";
 	}
 	
 	@RequestMapping("/band/b_list.trip")
@@ -61,10 +61,12 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_view.trip")
-	public String bandView(HttpServletRequest request, BandDTO dto){
-		System.out.println(dto.getBand_id() + "============== getband_id ============");
-		dto = (BandDTO)sqlMap.queryForObject("band_view", dto);
-		request.setAttribute("dto", dto);
+	public String bandView(HttpServletRequest request, BandDTO band){
+		System.out.println(band.getBand_id() + "============== getband_id ============");
+		band = (BandDTO)sqlMap.queryForObject("band_view", band);
+		boardDTO band_board_content = (boardDTO)sqlMap.queryForObject("band_content", band.getBand_id());
+		request.setAttribute("band_board_content", band_board_content);
+		request.setAttribute("band", band);
 		return "/band/view_band.jsp";
 	}
 }

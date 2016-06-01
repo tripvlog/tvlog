@@ -2,41 +2,53 @@
 <!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
 
 <sqlMap>
-<select id="loginCheck" resultClass="int" parameterClass="trip.member.LoginDTO">
-select count(*) from t_member where id=#id# and pw=#pw#
-</select>
-<select id="idcheck" resultClass="int" parameterClass="String">
-	select count(*) from t_member where id=#id# 
-</select>
 
-<select id="domaincheck" resultClass="int" parameterClass="String">
-select count(*) from t_member where domain=#domain# 
-</select>
-<select id="modify" resultClass="trip.member.LoginDTO" parameterClass="String">
-select * from t_member where id=#id#
-</select>
-
-<insert id="fbInsert" parameterClass="trip.member.LoginDTO">
-insert into t_member (id,fb_login) values(#id#,1)
-</insert>
-
-<insert id="joinInsert" parameterClass="trip.member.LoginDTO">
-insert into t_member (id,pw,name,domain,path) values(#id#,#pw#,#name#,#domain#,#path#)
-</insert>
-<update id="modifyUpdate" parameterClass="trip.member.LoginDTO">
-update t_member set pw=#pw#,name=#name#,domain=#domain#,path=#path# where id=#id#
-</update>
-
-<select id="path" resultClass="trip.member.LoginDTO" parameterClass="trip.member.LoginDTO">
-select * from t_member where id=#id#
-</select>
-
-<select id="pw" resultClass="String" parameterClass="String">
-select pw from t_member where id=#id#
-</select>
-
-<delete id="delete" parameterClass="String">
-delete from t_member where id=#dbid#
-</delete>
+	<select id="loginCheck" resultClass="int" parameterClass="trip.member.LoginDTO">
+		select count(*) from t_member where id=#id# and pw=#pw#
+	</select>
+	
+	<select id="idcheck" resultClass="int" parameterClass="String">
+		select count(*) from t_member where id=#id# 
+	</select>
+	
+	<select id="domaincheck" resultClass="int" parameterClass="String">
+		select count(*) from t_member where domain=#domain# 
+	</select>
+	
+	<select id="modify" resultClass="trip.member.LoginDTO" parameterClass="String">
+		select * from t_member where id=#id#
+	</select>
+	
+	<select id="path" resultClass="trip.member.LoginDTO" parameterClass="trip.member.LoginDTO">
+		select * from t_member where id=#id#
+	</select>
+	
+	<select id="pw" resultClass="String" parameterClass="String">
+		select pw from t_member where id=#id#
+	</select>
+	
+	<insert id="fbInsert" parameterClass="trip.member.LoginDTO">
+		insert into t_member (id,fb_login) values(#id#,1)
+	</insert>
+	
+	<insert id="joinInsert" parameterClass="trip.member.LoginDTO">
+		insert into t_member (id,pw,name,domain,path) values(#id#,#pw#,#name#,#domain#,#path#)
+	</insert>
+	
+	<insert id="member_create_band_list" parameterClass="trip.member.LoginDTO">
+			create table t_member_band_$id$(band_id number primary key, band_name varchar2(300), band_img varchar2(300), band_reg date default sysdate)
+	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
+		
+	<insert id="member_create_friend_list" parameterClass="trip.member.LoginDTO">
+		create table t_member_friend_$id$(friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number, friend_reg date default sysdate)
+	</insert><!-- 회원가입시 자동생성되는 친구 목록 -->
+	
+	<update id="modifyUpdate" parameterClass="trip.member.LoginDTO">
+		update t_member set pw=#pw#,name=#name#,domain=#domain#,path=#path# where id=#id#
+	</update>
+	
+	<delete id="delete" parameterClass="String">
+		delete from t_member where id=#dbid#
+	</delete>
 
 </sqlMap>
