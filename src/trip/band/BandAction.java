@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -83,10 +84,36 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_write.trip")
-	public String bandWrite(HttpServletRequest request, HttpSession session){
-		System.out.println(" *** b_write.trip start *** ");
-		System.out.println(request.getParameter("band_board_content"));
-		System.out.println(request.getParameterValues("band_board_img"));
+	public String bandWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO dto){
+		
+		List<MultipartFile> band_board_img = request.getFiles("board_img");
+		String board_imgs = "";
+			
+			for(MultipartFile multi : band_board_img){
+				if(multi.getOriginalFilename().equals("")){
+					break;
+				}
+				String fileorgName = multi.getOriginalFilename();
+				String fileName_ext = fileorgName.substring(fileorgName.lastIndexOf('.') + 1);
+				fileName_ext = fileName_ext.toLowerCase();
+				String filesavName = "bb_" + request.getParameter("band_id") + "_" + UUID.randomUUID().toString().substring(0, 8);
+				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+				File file = new File(filePath + filesavName + "." + fileName_ext);
+				System.out.println(file);
+				board_imgs = board_imgs + filesavName + "." + fileName_ext + " ";
+				if(!file.exists())
+					file.mkdirs();
+				
+				try{
+					multi.transferTo(file);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		
+		System.out.println(dto.getBand_board_content() + " // band_board_content");
+		System.out.println(dto.getBand_board_img() + " // band_board_img");
+		System.out.println(board_imgs + " // board_imgs");
 		System.out.println(" *** b_write.trip end *** ");
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
 	}

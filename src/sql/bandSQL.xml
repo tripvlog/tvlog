@@ -18,6 +18,10 @@
 		select * from t_band_board_$band_id$
 	</select>
 	
+	<select id="main_band" resultClass="trip.band.BandDTO">
+		<![CDATA[select * from (select * from t_band where band_range = 1 order by band_reg desc) where rownum <= 6]]>
+	</select>
+	
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
