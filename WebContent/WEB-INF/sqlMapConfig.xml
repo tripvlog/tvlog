@@ -10,5 +10,5 @@
 	<sqlMap resource="/sql/ChecklistPersonalSQL.xml" />
 	<sqlMap resource="/sql/DiarySQL.xml" />
 	<sqlMap resource="/sql/bandSQL.xml" />
-	<sqlMap resource="/sql/PostSQL.xml" /> 
+	<sqlMap resource="/sql/postSQL.xml" /> 
 </sqlMapConfig>

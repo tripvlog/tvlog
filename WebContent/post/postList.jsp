@@ -78,8 +78,12 @@
 
 <!-- 그림 이미지 크기 조절 -->
 <style>
-	p img{
+	#list_content img{
 		width: 300px;
+		height: 200px;
+	}
+	#modal-content img{
+		width: 1000px;
 		height: auto;
 	}
 </style>
@@ -202,10 +206,10 @@
 	   				</ul>
 					</div>
 						<fmt:formatDate value="${dto.regdate}" type="date"/> <br />
-					<p>	<font color="bule" face="굴림체">${dto.select_p }&nbsp;&nbsp;</font><b><font size="3">${dto.subject}</font></b> 
+					<p id="list_content">	<font color="bule" face="굴림체">${dto.select_p }&nbsp;&nbsp;</font><b><font size="3">${dto.subject}</font></b> 
 					<ul>
 						<li class="ellipsis">
-					<div style="width:250px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+					<div style="width:300px; height:200px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
 						${dto.content }</div></p></li></ul> </div><br/>
 					<!-- 	<img src="/tvlog/post/postimg/${dto.listimg}" width="300"><br /> -->
  					<align="left"><a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="good${dto.no }">${dto.good}</span></align>	
@@ -247,7 +251,7 @@
 	      </div>
 	      <div class="modal-body">
 		
-		<p><font face="굴림체" color="blue">${dto.select_p }&nbsp;&nbsp;</font><b><font size="5">${dto.subject}</font></b><br/></p>
+		<p id="modal-content"><font face="굴림체" color="blue">${dto.select_p }&nbsp;&nbsp;</font><b><font size="5">${dto.subject}</font></b><br/></p>
 	    ${dto.content } 
 		
 	      </div>
@@ -385,14 +389,16 @@
             
        
              <tr align="right">
-          <td colspan="5">
-               <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-				  포스트 작성
-				</button>
-          <input type="button" value="글쓰기" class="inputb" onClick="javascript:location.href='postWriteForm.trip?currentPage=${currentPage}';">
-      </td>
+          		<td colspan="5">
+					<c:if test="${sessionScope.memId !=null }">           
+               		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+				 	 포스트 작성
+					</button>
+       				</c:if>
+          			<input type="button" value="글쓰기" class="inputb" onClick="javascript:location.href='postWriteForm.trip?currentPage=${currentPage}';">
+      			</td>
               </tr>
-         <tr>     
+         	<tr>     
    
        
         

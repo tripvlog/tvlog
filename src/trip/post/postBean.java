@@ -45,13 +45,13 @@ public class postBean {
        
        if(id==null){
        list = sqlMapClientTemplate.queryForList("post.All",null); 
-       System.out.println(list.get(4).getContent());
+       
      
        }else if(id!=null){
     	   System.out.println("11="+id);
     	   ldto = sqlMapClientTemplate.queryForList("post.public_2", id);
     	   System.out.println("ldto="+ldto.get(0));
-    	   System.out.println("22="+id);
+    	   
     	   list =sqlMapClientTemplate.queryForList("post.sessionList", id);
        
     	/*   for(int i = 0; i <= ldto.size(); i++){
