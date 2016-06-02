@@ -83,10 +83,10 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_write.trip")
-	public String bandWrite(MultipartHttpServletRequest request, HttpSession session){
+	public String bandWrite(HttpServletRequest request, HttpSession session){
 		System.out.println(" *** b_write.trip start *** ");
 		System.out.println(request.getParameter("band_board_content"));
-		System.out.println(request.getFile("band_board_img"));
+		System.out.println(request.getParameterValues("band_board_img"));
 		System.out.println(" *** b_write.trip end *** ");
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
 	}
