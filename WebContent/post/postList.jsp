@@ -15,7 +15,10 @@
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
 	<script type="text/javascript" src="/tvlog/diary/diary_editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	
+	<!-- 네이버 스마트 에디터 사용 부분 -->
 	<script type="text/javascript">
+	
 		var oEditors = [];
 		var oEditors2 = [];
 		$(document).ready(function() {
@@ -29,7 +32,7 @@
 			$("#savebutton").click(function(){
 				oEditors2.getById["contentMain"].exec("UPDATE_CONTENTS_FIELD", []);
 				$("#frm").submit();
-    			alert("내용모디파이"+a); 
+    			alert("작성이 완료되었습니다"); 
 			});
 		});
 		function editTest(idNum) {
@@ -47,7 +50,8 @@
 			
 		}
 </script>
-<style>
+
+<style><!-- 부트스트랩 관련 스타일 -->
 .ellipsis{
 	width:250px;
 	display:inline-blosck;
@@ -55,35 +59,91 @@
 	overflow:hidden;
 	white-space:nowrap;
 	}
+	
+	#test11{
+		width: 90px;
+		float: left;
+		margin: 0;
+		padding: 0;
+	}
+	#test22{
+		width:483px;
+		float: left;
+	}
+	#test33{
+	width:800px;
+	float: left;
+	}
 </style>
-<style>
+<style> <!-- 그림 이미지 크기 조절 -->
 	p img{
 		width: 300px;
 		height: auto;
 	}
 </style>
 
-
-	<script type="text/javascript">
+<!-- 좋아요 버튼 에이작스, 코멘트 에이작스 -->	
+<script type="text/javascript">
        var a;
 		function callAjax(num){
 			a=num;
     	   $.ajax({
                   type: "post",
-                  url : "/tvlog/postGood.trip",
+                  url : "/tvlog/post/postGood.trip",
                   data: {no:num},
                   success: good,   // 페이지요청 성공시 실행 함수
-                  error: whenError   //페이지요청 실패시 실행함수
+                  error: whenError1   //페이지요청 실패시 실행함수
                }); 
           }
       function good(data){
          $("#good"+a).html(data);
       }
-      function whenError(){
+      function whenError1(){
+         alert("로그인 후 추천 가능합니다");
+      }    
+      var c;
+		function ccallAjax(num){
+			c=num;
+    	   $.ajax({
+                  type: "post",
+                  url : "/tvlog/post/postGood.trip",
+                  data: {no:num},
+                  success: good2,   // 페이지요청 성공시 실행 함수
+                  error: whenError2   //페이지요청 실패시 실행함수
+               }); 
+          }
+      function good2(data){
+         $("#ggood"+c).html(data);
+      }
+      function whenError2(){
          alert("로그인 후 추천 가능합니다");
       }
-   
+   		var b;
+      function commentAjax(num){
+			b=num;
+		
+    	   $.ajax({
+                  type: "post",
+                  url : "/tvlog/post/commentView.trip",
+            	  data:{ no:num },
+            	  success: comment,   // 페이지요청 성공시 실행 함수
+                  error: whenError   //페이지요청 실패시 실행함수
+               }); 
+          }
+      function comment(aaa){
+         $("#2good"+b).html(aaa);
+      }
+      function whenError(){
+         alert("내용을 입력하세요");
+      }
+
+      function loginAjax(num){
+			alert("로그인 후 작성 가능합니다");
+			
+        }
+      
 </script>
+
 </head>
   
   <body>
@@ -91,8 +151,21 @@
         <tr>
            <td align="center"><h2>포스트 게시판</h2></td>
         </tr>
+        	<td>
+        	<c:if test="${sessionScope.memId !=null }">
+        		<div class="container" align="right">
+        		<div class="btn-toobar" role="toolbar" aria-label="Toolbar with button groups">
+				<div class="btn-group" role="group" aria-label="First group">
+	    		<button type="button" onClick="javascript:location.href='/tvlog/post/postList.trip'" class="btn btn-success">전체포스트</button>
+	    		<button type="button" onClick="javascript:location.href='/tvlog/post/friendOnly.trip'" class="btn btn-success">친구포스트</button>
+	  	  		<button type="button" onClick="javascript:location.href='/tvlog/post/mypost.trip'" class="btn btn-success">내 포스트</button>
+	  	  		<button type="button" class="btn btn-success">다운로드</button>
+	  			</div>
+	  			</div>
+	  		</c:if>
+        	</td>
         <c:if test="${sessionScope.memId== null }">	
-        <input type="button" value="로그인 " onClick="javascript:location.href='loginForm.trip'"/>
+        <input type="button" value="로그인 " onClick="javascript:location.href='/tvlog/member/loginForm.trip'"/>
         </c:if>
         <tr>
            <td height="20"></td>
@@ -103,67 +176,118 @@
    <table width="600" border="0" cellspacing="0" cellpadding="2">
 
 
-		<!--  리스트 for문 시작    -->
+		<!--  리스트 게시물 뿌려주는 for문 시작    -->
 
          
 		<c:forEach begin="0" end="${(fn:length(list)+3) / 4 - 1}" var="row">
 		
 			<tr   align="center">
-			<c:forEach begin="0" end="3" var="col">
-				<c:set var="dto" value="${list[row * 4+col]}" />
-				<c:if test="${not empty dto }">           					
-					<td class="t_po" width=100 align="left" data-toggle="modal" data-target="#myModal2${dto.no }" >
-						${dto.name} <br />
+					<c:forEach begin="0" end="3" var="col">
+					<c:set var="dto" value="${list[row * 4+col]}" />
+					<c:if test="${not empty dto }">           					
+					<td><div class="t_po" width=100 align="left" data-toggle="modal" data-target="#myModal2${dto.no }" onclick="javascript:commentAjax(${dto.no });" >
+					
+					<div class="dropdown">
+			  		<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+					
+						${dto.id} 
+					  <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
+	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
+	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/postListSerch.trip?friend_id=${dto.id}">포스트</a></li>
+	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
+	   				</ul>
+					</div>
 						<fmt:formatDate value="${dto.regdate}" type="date"/> <br />
-					<p>	<b><h4>${dto.subject}</b></h4> 
+					<p>	<font color="bule" face="굴림체">${dto.select_p }&nbsp;&nbsp;</font><b><font size="3">${dto.subject}</font></b> 
 					<ul>
 						<li class="ellipsis">
 					<div style="width:250px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-						${dto.content }</div><br/></p></li></ul>
+						${dto.content }</div></p></li></ul> </div><br/>
 					<!-- 	<img src="/tvlog/post/postimg/${dto.listimg}" width="300"><br /> -->
- 						<a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="good${dto.no }">${dto.good}</span>
-						
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					</td>
-					<td>
+ 					<align="left"><a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="good${dto.no }">${dto.good}</span></align>	
+					
+					<!-- 
 						<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal4${dto.no }" onclick="editTest('content${dto.no}')" >
 				 			 수정
 						</button>
+					 -->	
+					
 					</td>
             	</c:if>
 			
                
-              
+              <!--  뷰 모달 부분 -->
               
                <div class="modal fade" id="myModal2${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h4 class="modal-title" id="myModalLabel">${dto.id }&nbsp</h4><fmt:formatDate value="${dto.regdate}" type="date"/>
+		
+		<div class="container">
+			<div class="dropdown">
+			  <a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+			
+			<h4 class="modal-title" id="myModalLabel">
+			${dto.id }
+			  <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
+	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
+	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/postListSerch.trip?friend_id=${dto.id}">포스트</a></li>
+	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/loginForm.trip">일정</a></li>
+	   	</ul>
+	</div>
+</div>
+			</h4><fmt:formatDate value="${dto.regdate}" type="date"/>
 	      </div>
 	      <div class="modal-body">
 		
-		<p><b>${dto.subject}</b><br/></p>
-	    ${dto.content }
-	
+		<p><font face="굴림체" color="blue">${dto.select_p }&nbsp;&nbsp;</font><b><font size="5">${dto.subject}</font></b><br/></p>
+	    ${dto.content } 
+		
 	      </div>
+	    
+	      <span id="2good${dto.no }">
+	      </span>
+	     
 	      
 	      <div class="modal-authtor">
-	    <left><a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="good${dto.no }">${dto.good}</span></left>  
+	    <left><a href="javascript:ccallAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="ggood${dto.no }">${dto.good}</span></left>  
 	      </div>
-	      
+	    <form action="comment.trip" method="post">
+	      		<input type="hidden" name="id" value="${sessionScpoe.memId }"/>
+	      		<input type="hidden" name="no" value="${dto.no }"/>
+	      	<div id="test33">
+	      		<input class="form-control" type="text" placeholder="코멘트를 입력하세요" name="content" />
+	       	 </div>
+	      	 <div id="test44">
+	      		<c:if test="${sessionScope.memId !=null }">
+	      			<button type="submit" class="btn btn-warning">저장</button>
+	      		 </c:if>
+	      		 <c:if test="${sessionScope.memId ==null }">
+	      		 	<button type="button" class="btn btn-warning" onclick="javascript:loginAjax();">저장</button>
+	      		 </c:if>
+	      	</div>
+	      	</form>
 	      <div class="modal-footer">
-	      <input  class="form-control" type="text" placeholder="코멘트를 입력하세요" id="subject" name="comment" />
-	      <button type="button" class="btn btn-warning">저장</button>
+	      
 		<br/>
-		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	
-		  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal3${dto.no }">
-				  포스트 삭제
+			<c:if test="${sessionScope.memId !=null }">
+        	 <c:if test="${sessionScope.memId == dto.id }">
+				<form action="postModifyForm.trip" method="post">
+				<input type="hidden" name="no" value="${dto.no }"/>
+				<button type="submit" class="btn btn-info">수정</button>
+				</form>
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal3${dto.no }">
+				 삭제
 				</button>
+			</c:if>
+        	</c:if>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	
 	      </div>
 	    </div>
 	  </div>
@@ -182,12 +306,12 @@
 	      <div class="modal-body">
 		<input type="hidden" name="no" value="${dto.no}"/>
 		<p>정말 삭제하시겠습니까?</p>
-			${dto.no}
+			
 	      </div>
 	  
 	      <div class="modal-footer">
 		<br/>
-		<input name="submit" type="submit" value="삭제" class="btn btn-warning"/>
+		<input name="submit" type="submit" value="삭제" class="btn btn-danger"/>
 		<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	  </form>     
 		
@@ -220,9 +344,9 @@
 	  </div>
 	</div>
 </form>
-               
+
              </c:forEach>
-             </tr> 
+             </tr>            
 		</c:forEach>
         
          
@@ -245,9 +369,9 @@
           
           <form action="search.trip">
           <select name="select">
-          <option selected value="writer">글쓴이</option>
-          <option selected value="subject">제목</option>
-          <option selected value="no">번호</option>
+         	 <option selected value="writer">글쓴이</option>
+         	 <option selected value="subject">제목</option>
+          	 <option selected value="no">번호</option>
           </select> 
           <input type="text" name="find"></input>
           <input type="submit" value="검색"></input>
@@ -274,21 +398,39 @@
         <!-- 모달 팝업 -->
    <form action="postWritePro.trip" method="post" enctype="multipart/form-data" id="frm">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-	  <div class="modal-dialog modal-lg"> <!-- 폼 폭 -->
+	  <div class="modal-dialog" > <!-- 폼 폭 크게는 modal-lg를 오른쪽에 붙인다 -->
 	    <div class="modal-content">
 	      <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 		<h4 class="modal-title" id="myModalLabel">포스트 작성</h4>
 	      </div>
-	      <div class="modal-body">
-	   
-	     
+	      <div class="modal-body" id="test11">
 	      	<input type="hidden" name="id" value="${sessionScope.memId }"/>
+		  
+		  <select class="form-control" name="select_p">
+         	 <option selected value="메모">메모</option>
+         	 <option selected value="정보">정보</option>
+          	 <option selected value="여행기">여행기</option>
+          	 <option selected value="질문">질문</option>
+          	 <option selected value="잡담">잡담</option>
+          </select> 
+			</div>
+			<div id="test22">
 			 <input  class="form-control" type="text" placeholder="제목을 입력하세요" id="subject" name="subject" /><br/>
+			</div>
+			
+			<div>
 			 <textarea name="content" id="contentMain" rows="10" cols="100"></textarea>
 	      </div>
+	      	<select class="form-control" name="p_public">
+         		 <option selected value="4">비공개</option>
+          		 <option selected value="3">친구공개</option>
+          		 <option selected value="2">밴드공개</option>
+          	 	<option selected value="1">전체공개</option>
+         	 </select> 
 	     
 	      <div class="modal-footer">
+	      
 	      		<input type="button" id="savebutton" value="저장" class="btn btn-warning"/> 
 				<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
 	      </div>

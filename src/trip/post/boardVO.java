@@ -19,8 +19,18 @@ public class boardVO {
 	private int good;
 	private Date regdate;
 	private String listimg;
+	private String select_p;
+	private String p_public;
+	private String friend_id;
 	
+
 	
+	public String getFriend_id() {		return friend_id;	}
+	public void setFriend_id(String friend_id) {		this.friend_id = friend_id;	}
+	public String getP_public() {		return p_public;	}
+	public void setP_public(String p_public) {		this.p_public = p_public;	}
+	public String getSelect_p() {	return select_p;	}
+	public void setSelect_p(String select_p) {		this.select_p = select_p;	}
 	public void setListimg(String listimg) {
 		this.listimg = listimg;
 	}

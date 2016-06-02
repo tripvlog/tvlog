@@ -27,10 +27,15 @@ public class postBean {
    @Autowired
    private SqlMapClientTemplate sqlMapClientTemplate;
    
-   @RequestMapping("/post/postList.trip")
+   @RequestMapping("/post/postList.trip") //리스트화면
    public ModelAndView postList(HttpServletRequest request, boardVO dto, HttpSession session){
+	  String id=null;
+	  id= (String)session.getAttribute("memId");
+	  dto.setId(id);
+	  System.out.println("리스트화면id="+id);
      
-      List<boardVO> list = null;       
+	  List<boardVO> list = null;   
+	  List<boardVO> ldto = null;   
        int blockCount = 10;   
        int blockPage = 5;    
        int currentPage = 1;
@@ -38,8 +43,24 @@ public class postBean {
        currentPage = Integer.parseInt(request.getParameter("currentPage"));
        }
        
+       if(id==null){
        list = sqlMapClientTemplate.queryForList("post.All",null); 
-   
+     
+       }else if(id!=null){
+    	   System.out.println("11="+id);
+    	   ldto = sqlMapClientTemplate.queryForList("post.public_2", id);
+    	   System.out.println("ldto="+ldto.get(0));
+    	   System.out.println("22="+id);
+    	   list =sqlMapClientTemplate.queryForList("post.sessionList", id);
+       
+    	/*   for(int i = 0; i <= ldto.size(); i++){
+    		   
+    		  id = id + (" or id='"+ldto.get(i).getFriend_id()+"'");
+    		  System.out.println("반복문="+id);
+    	list =sqlMapClientTemplate.queryForList("post.sessionList", id);
+    		System.out.println("리스트의끝="+list);
+    		  //   list = sqlMapClientTemplate.queryForList("post.public_4", id);
+       }*/}
        int totalCount = list.size(); 
       pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
       String pagingHtml = page.getPagingHtml().toString();
@@ -66,6 +87,155 @@ public class postBean {
 
    return mv;
    }
+   @RequestMapping("/post/postListSerch.trip")
+   public ModelAndView postListSerch(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
+	  
+	   		String id=null;	   
+		  id= (String)session.getAttribute("memId");
+		  dto.setId(id);
+	     
+		  List<boardVO> list = null;   
+		  List<boardVO> ldto = null;   
+	       int blockCount = 10;   
+	       int blockPage = 5;    
+	       int currentPage = 1;
+	       if(request.getParameter("currentPage")!=null){
+	       currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	       }
+	       
+	       if(id==null){
+	       list = sqlMapClientTemplate.queryForList("post.friendPost", dto); 
+	     
+	       }else if(id!=null){
+	    	 
+	    	 //  ldto = sqlMapClientTemplate.queryForList("post.public_2", id);
+	    	  // sql 조인 기능 찾기 전에 친구 테이블을 리스트로 담아 id값에 전부 담으려고 했을 때 사용했던 쿼리 
+	    	   
+	    	   list =sqlMapClientTemplate.queryForList("post.sessionFriend", friend_id);
+	       
+	    	/*   for(int i = 0; i <= ldto.size(); i++){
+	    		   
+	    		  id = id + (" or id='"+ldto.get(i).getFriend_id()+"'");
+	    		  System.out.println("반복문="+id);
+	    	list =sqlMapClientTemplate.queryForList("post.sessionList", id);
+	    		System.out.println("리스트의끝="+list);
+	    		  //   list = sqlMapClientTemplate.queryForList("post.public_4", id);
+	       }*/}
+	       int totalCount = list.size(); 
+	      pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
+	      String pagingHtml = page.getPagingHtml().toString();
+
+
+	      int lastCount = totalCount;
+
+
+	      if (page.getEndCount() < totalCount)
+	         lastCount = page.getEndCount() + 1;
+
+	      list = list.subList(page.getStartCount(), lastCount);
+	       
+	      ModelAndView mv = new ModelAndView(); 
+	      
+	      
+	      request.setAttribute("dto", dto);
+	       mv.addObject("list", list);
+	      mv.addObject("currentPage", currentPage);
+	      mv.addObject("PagingHtml", pagingHtml);
+	   
+	      mv.setViewName("/post/postList.jsp");
+	      
+
+	   return mv;
+	   }
+   @RequestMapping("/post/friendOnly.trip")
+   public ModelAndView friendOnly(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
+		  
+  		String id=null;	   
+	  id= (String)session.getAttribute("memId");
+	  dto.setId(id);
+    
+	  List<boardVO> list = null;   
+	  List<boardVO> ldto = null;   
+      int blockCount = 10;   
+      int blockPage = 5;    
+      int currentPage = 1;
+      if(request.getParameter("currentPage")!=null){
+      currentPage = Integer.parseInt(request.getParameter("currentPage"));
+      }
+   
+      list =sqlMapClientTemplate.queryForList("post.friendOnly", id);
+      
+     int totalCount = list.size(); 
+     pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
+     String pagingHtml = page.getPagingHtml().toString();
+
+
+     int lastCount = totalCount;
+
+
+     if (page.getEndCount() < totalCount)
+        lastCount = page.getEndCount() + 1;
+
+     list = list.subList(page.getStartCount(), lastCount);
+      
+     ModelAndView mv = new ModelAndView(); 
+     
+     
+     request.setAttribute("dto", dto);
+      mv.addObject("list", list);
+     mv.addObject("currentPage", currentPage);
+     mv.addObject("PagingHtml", pagingHtml);
+  
+     mv.setViewName("/post/postList.jsp");
+     
+
+  return mv;
+  }
+   @RequestMapping("/post/mypost.trip")
+   public ModelAndView mypost(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
+		  
+	   String id=null;	   
+	  id= (String)session.getAttribute("memId");
+	  dto.setId(id);
+   
+	  List<boardVO> list = null;   
+	  List<boardVO> ldto = null;   
+     int blockCount = 10;   
+     int blockPage = 5;    
+     int currentPage = 1;
+     if(request.getParameter("currentPage")!=null){
+     currentPage = Integer.parseInt(request.getParameter("currentPage"));
+     }
+  
+     list =sqlMapClientTemplate.queryForList("post.mypost", id);
+     
+    int totalCount = list.size(); 
+    pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
+    String pagingHtml = page.getPagingHtml().toString();
+
+
+    int lastCount = totalCount;
+
+
+    if (page.getEndCount() < totalCount)
+       lastCount = page.getEndCount() + 1;
+
+    list = list.subList(page.getStartCount(), lastCount);
+     
+    ModelAndView mv = new ModelAndView(); 
+    
+    
+    request.setAttribute("dto", dto);
+     mv.addObject("list", list);
+    mv.addObject("currentPage", currentPage);
+    mv.addObject("PagingHtml", pagingHtml);
+ 
+    mv.setViewName("/post/postList.jsp");
+    
+
+ return mv;
+ }
+   
    @RequestMapping("/post/postWriteForm.trip")
    public String postWriteForm(HttpServletRequest request, int currentPage){
       request.setAttribute("currentPage", currentPage);
@@ -78,6 +248,7 @@ public class postBean {
    public String postWritePro(boardVO dto, HttpServletRequest request, MultipartHttpServletRequest mrequest){
 	   System.out.println("서브젝트="+dto.getSubject());
 	      System.out.println("컨텐츠="+dto.getContent());
+	      System.out.println("셀렉트="+dto.getSelect_p());
 	   
 	   Calendar today = Calendar.getInstance();   
       dto.setRegdate(today.getTime());
@@ -231,13 +402,14 @@ public class postBean {
    }
    
    @RequestMapping("/post/postModifyForm.trip")
-   public String postModifyForm(HttpServletRequest request, boardVO dto, int currentPage, String name){
-      
-      request.setAttribute("currentPage", currentPage);
+   public String postModifyForm(HttpServletRequest request, boardVO dto){
+	   
+	   dto = (boardVO)sqlMapClientTemplate.queryForObject("post.modifysearch", dto);
+
       request.setAttribute("no", dto.getNo());
       request.setAttribute("dto", dto);
 
-      return "/postboard/checkPassword.jsp";
+      return "/post/postModifyForm.jsp";
    }
 
    @RequestMapping("/post/postModifyPro.trip")
@@ -269,7 +441,7 @@ public class postBean {
       return "/postboard/boardWrite.jsp";
    }
    @RequestMapping("/post/postModify.trip")
-   public String postModify(boardVO dto, HttpServletRequest request, int currentPage, int no){
+   public String postModify(boardVO dto, HttpServletRequest request, int no){
 	  System.out.println("모디파이넘버="+dto.getNo());
 	  System.out.println("모디파이넘버="+no);
 	   sqlMapClientTemplate.update("post.update", dto);
@@ -379,39 +551,50 @@ public class postBean {
          dto.setId(id);
          System.out.println("id="+dto.getId());
          System.out.println("no="+dto.getNo());
-         int count =(Integer)sqlMapClientTemplate.queryForObject("checkGood", dto);
+         int count =(Integer)sqlMapClientTemplate.queryForObject("post.checkGood", dto);
          
          if(count != 1){ 
-            sqlMapClientTemplate.insert("insertPgood", dto);
-            sqlMapClientTemplate.update("updateGood",no);
+            sqlMapClientTemplate.insert("post.insertPgood", dto);
+            sqlMapClientTemplate.update("post.updateGood",no);
  
          }else if(count == 1){
-            sqlMapClientTemplate.delete("deletePgood", dto);
-            sqlMapClientTemplate.update("minusGood",no);
+            sqlMapClientTemplate.delete("post.deletePgood", dto);
+            sqlMapClientTemplate.update("post.minusGood",no);
          }
-         int good = (Integer)sqlMapClientTemplate.queryForObject("selectGood", no);
+         int good = (Integer)sqlMapClientTemplate.queryForObject("post.selectGood", no);
             request.setAttribute("good", good);
             
-         return "/postboard/postGood.jsp";
+         return "/post/postGood.jsp";
       }
 
       @RequestMapping("/post/comment.trip")
-      public String comment(boardVO dto, HttpServletRequest request, int currentPage, int no){
-    	  System.out.println("스타트코멘1="+no);
+      public String comment(HttpSession session, boardVO dto, HttpServletRequest request, int no){
+    	
+    	  String id= (String)session.getAttribute("memId");
+    	  dto.setId(id);
     	  Calendar today = Calendar.getInstance();
     	  dto.setRegdate(today.getTime());
-    	  
-    	  List<boardVO> colist = null;
-    	  
-    	  sqlMapClientTemplate.insert("insertComment", dto);
-    	  colist=sqlMapClientTemplate.queryForList("selectComment", no);
+    	  sqlMapClientTemplate.insert("post.insertComment", dto);
+   
+    	  /*
+    	  List<boardVO> colist = null;    	  
+    	  colist=sqlMapClientTemplate.queryForList("post.selectComment", no);
     	   request.setAttribute("colist", colist); 
-    	    
+    	    */
     /*	   
        return "redirect:/postView.trip?no="+no+"&currentPage="+currentPage;
 		바로 다른 메소드로 이어지도록 */
-    	return "/postboard/commentView.jsp";
+    	return "redirect:/post/postList.trip";
       }
+      @RequestMapping("/post/commentView.trip")
+      public String commnetView(boardVO dto, HttpServletRequest request, int no){
+    	 System.out.println("코멘트뷰="+no);
+    	  List<boardVO> colist = null;
+    	  colist=sqlMapClientTemplate.queryForList("post.selectComment", no);
+    	  request.setAttribute("colist", colist);
+      return "/post/commentView.jsp";
+      }
+      
       @RequestMapping("/post/startComment.trip")
       public String StartComment(boardVO dto, int no, HttpServletRequest request){
     	  List<boardVO> colist = null;
@@ -421,7 +604,11 @@ public class postBean {
     	  return "/postboard/commentView.jsp";
       }
      
-      
+      @RequestMapping("/post/deleteComment.trip")
+      public String deleteComment(boardVO dto){
+    	  sqlMapClientTemplate.delete("post.deleteComment", dto);
+    	  return "redirect:/post/postList.trip";
+      }
       
       
    
