@@ -75,7 +75,9 @@
 	float: left;
 	}
 </style>
-<style> <!-- 그림 이미지 크기 조절 -->
+
+<!-- 그림 이미지 크기 조절 -->
+<style>
 	p img{
 		width: 300px;
 		height: auto;
@@ -195,7 +197,7 @@
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
 	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
-	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/postListSerch.trip?friend_id=${dto.id}">포스트</a></li>
+	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
 	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
 	   				</ul>
 					</div>
@@ -236,7 +238,7 @@
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
 	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
-	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/postListSerch.trip?friend_id=${dto.id}">포스트</a></li>
+	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
 	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/loginForm.trip">일정</a></li>
 	   	</ul>
 	</div>

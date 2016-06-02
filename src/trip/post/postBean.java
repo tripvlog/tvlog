@@ -45,6 +45,7 @@ public class postBean {
        
        if(id==null){
        list = sqlMapClientTemplate.queryForList("post.All",null); 
+       System.out.println(list.get(4).getContent());
      
        }else if(id!=null){
     	   System.out.println("11="+id);
@@ -87,8 +88,8 @@ public class postBean {
 
    return mv;
    }
-   @RequestMapping("/post/postListSerch.trip")
-   public ModelAndView postListSerch(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
+   @RequestMapping("/post/friendpost.trip")
+   public ModelAndView friendpost(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
 	  
 	   		String id=null;	   
 		  id= (String)session.getAttribute("memId");
@@ -191,6 +192,50 @@ public class postBean {
 
   return mv;
   }
+   @RequestMapping("/post/publicfriend.trip")
+   public ModelAndView publicfriend(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
+		  
+  		String id=null;	   
+	  id= (String)session.getAttribute("memId");
+	  dto.setId(id);
+    
+	  List<boardVO> list = null;   
+	  List<boardVO> ldto = null;   
+      int blockCount = 10;   
+      int blockPage = 5;    
+      int currentPage = 1;
+      if(request.getParameter("currentPage")!=null){
+      currentPage = Integer.parseInt(request.getParameter("currentPage"));
+      }
+   
+      list =sqlMapClientTemplate.queryForList("post.publicfriend", friend_id);
+      
+     int totalCount = list.size(); 
+     pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
+     String pagingHtml = page.getPagingHtml().toString();
+
+
+     int lastCount = totalCount;
+
+
+     if (page.getEndCount() < totalCount)
+        lastCount = page.getEndCount() + 1;
+
+     list = list.subList(page.getStartCount(), lastCount);
+      
+     ModelAndView mv = new ModelAndView(); 
+     
+     
+     request.setAttribute("dto", dto);
+      mv.addObject("list", list);
+     mv.addObject("currentPage", currentPage);
+     mv.addObject("PagingHtml", pagingHtml);
+  
+     mv.setViewName("/post/postList.jsp");
+     
+
+  return mv;
+   }
    @RequestMapping("/post/mypost.trip")
    public ModelAndView mypost(String friend_id, HttpServletRequest request, boardVO dto, HttpSession session){
 		  
@@ -252,6 +297,15 @@ public class postBean {
 	   
 	   Calendar today = Calendar.getInstance();   
       dto.setRegdate(today.getTime());
+      
+      String imgFile= dto.getContent();
+      int img = imgFile.indexOf("<img src=");
+      if(img != -1){
+    	  imgFile = imgFile.substring(img);
+    	  imgFile = imgFile.substring(imgFile.indexOf("\"")+1, imgFile.indexOf("title")-2);
+    	  dto.setFile_savname(imgFile);
+    	  System.out.println("=====>>  "+imgFile);
+      }
       
       sqlMapClientTemplate.insert("post.insertPost", dto);
      
