@@ -433,7 +433,7 @@ public class postBean {
       mv.addObject("find",find);
       System.out.println(find);
       
-      mv.setViewName("/tvlog/postList.jsp");
+      mv.setViewName("/post/postList.jsp");
       
 
    return mv;
@@ -498,6 +498,16 @@ public class postBean {
    public String postModify(boardVO dto, HttpServletRequest request, int no){
 	  System.out.println("모디파이넘버="+dto.getNo());
 	  System.out.println("모디파이넘버="+no);
+	  
+	  String imgFile= dto.getContent();
+      int img = imgFile.indexOf("<img src=");
+      if(img != -1){
+    	  imgFile = imgFile.substring(img);
+    	  imgFile = imgFile.substring(imgFile.indexOf("\"")+1, imgFile.indexOf("title")-2);
+    	  dto.setFile_savname(imgFile);
+    	  System.out.println("=====>>  "+imgFile);
+      }
+      
 	   sqlMapClientTemplate.update("post.update", dto);
 	   return "redirect:/post/postList.trip";
    }

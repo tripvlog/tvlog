@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -51,7 +51,13 @@
 		}
 </script>
 
-<style><!-- 부트스트랩 관련 스타일 -->
+<style>
+	#contain{
+         width: 1140px;
+         margin: auto;
+       
+
+	}
 .ellipsis{
 	width:250px;
 	display:inline-blosck;
@@ -74,19 +80,11 @@
 	width:800px;
 	float: left;
 	}
+
 </style>
 
 <!-- 그림 이미지 크기 조절 -->
-<style>
-	#list_content img{
-		width: 300px;
-		height: 200px;
-	}
-	#modal-content img{
-		width: 1000px;
-		height: auto;
-	}
-</style>
+
 
 <!-- 좋아요 버튼 에이작스, 코멘트 에이작스 -->	
 <script type="text/javascript">
@@ -153,6 +151,7 @@
 </head>
   
   <body>
+  	<div id="contain">
      <table border="0" cellspacing="0" cellpadding="2">
         <tr>
            <td align="center"><h2>포스트 게시판</h2></td>
@@ -178,182 +177,144 @@
         </tr>
      </table>
      
-  
-   <table width="600" border="0" cellspacing="0" cellpadding="2">
-
-
+  <div id="post">
+   <table width="1140px" >
 		<!--  리스트 게시물 뿌려주는 for문 시작    -->
-
-         
-		<c:forEach begin="0" end="${(fn:length(list)+3) / 4 - 1}" var="row">
-		
-			<tr   align="center">
-					<c:forEach begin="0" end="3" var="col">
-					<c:set var="dto" value="${list[row * 4+col]}" />
+		<c:forEach begin="0" end="${(fn:length(list)+2) / 3 - 1}" var="row">
+			<tr>
+				<c:forEach begin="0" end="2" var="col">
+					<c:set var="dto" value="${list[row * 3+col]}" />
 					<c:if test="${not empty dto }">           					
-					<td><div class="t_po" width=100 align="left" data-toggle="modal" data-target="#myModal2${dto.no }" onclick="javascript:commentAjax(${dto.no });" >
-					
-					<div class="dropdown">
-			  		<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-					
-						${dto.id} 
-					  <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
-	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
-	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
-	    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
-	   				</ul>
-					</div>
-						<fmt:formatDate value="${dto.regdate}" type="date"/> <br />
-					<p id="list_content">	<font color="bule" face="굴림체">${dto.select_p }&nbsp;&nbsp;</font><b><font size="3">${dto.subject}</font></b> 
-					<ul>
-						<li class="ellipsis">
-					<div style="width:300px; height:200px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-						${dto.content }</div></p></li></ul> </div><br/>
-					<!-- 	<img src="/tvlog/post/postimg/${dto.listimg}" width="300"><br /> -->
- 					<align="left"><a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="good${dto.no }">${dto.good}</span></align>	
-					
-					<!-- 
-						<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal4${dto.no }" onclick="editTest('content${dto.no}')" >
-				 			 수정
-						</button>
-					 -->	
-					
-					</td>
-            	</c:if>
-			
-               
-              <!--  뷰 모달 부분 -->
-              
-               <div class="modal fade" id="myModal2${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-		
-		<div class="container">
-			<div class="dropdown">
-			  <a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-			
-			<h4 class="modal-title" id="myModalLabel">
-			${dto.id }
-			  <span class="caret"></span></a>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
-	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
-	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
-	    <li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/loginForm.trip">일정</a></li>
-	   	</ul>
-	</div>
-</div>
-			</h4><fmt:formatDate value="${dto.regdate}" type="date"/>
-	      </div>
-	      <div class="modal-body">
-		
-		<p id="modal-content"><font face="굴림체" color="blue">${dto.select_p }&nbsp;&nbsp;</font><b><font size="5">${dto.subject}</font></b><br/></p>
-	    ${dto.content } 
-		
-	      </div>
-	    
-	      <span id="2good${dto.no }">
-	      </span>
-	     
-	      
-	      <div class="modal-authtor">
-	    <left><a href="javascript:ccallAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="ggood${dto.no }">${dto.good}</span></left>  
-	      </div>
-	    <form action="comment.trip" method="post">
-	      		<input type="hidden" name="id" value="${sessionScpoe.memId }"/>
-	      		<input type="hidden" name="no" value="${dto.no }"/>
-	      	<div id="test33">
-	      		<input class="form-control" type="text" placeholder="코멘트를 입력하세요" name="content" />
-	       	 </div>
-	      	 <div id="test44">
-	      		<c:if test="${sessionScope.memId !=null }">
-	      			<button type="submit" class="btn btn-warning">저장</button>
-	      		 </c:if>
-	      		 <c:if test="${sessionScope.memId ==null }">
-	      		 	<button type="button" class="btn btn-warning" onclick="javascript:loginAjax();">저장</button>
-	      		 </c:if>
-	      	</div>
-	      	</form>
-	      <div class="modal-footer">
-	      
-		<br/>
-			<c:if test="${sessionScope.memId !=null }">
-        	 <c:if test="${sessionScope.memId == dto.id }">
-				<form action="postModifyForm.trip" method="post">
-				<input type="hidden" name="no" value="${dto.no }"/>
-				<button type="submit" class="btn btn-info">수정</button>
-				</form>
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal3${dto.no }">
-				 삭제
-				</button>
-			</c:if>
-        	</c:if>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	
-	      </div>
-	    </div>
-	  </div>
-	</div>
-               
-   <!-- #####     딜리트 부분 #########        -->            
-               
-      <div class="modal fade" id="myModal3${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h4 class="modal-title" id="myModalLabel">포스트 삭제</h4><fmt:formatDate value="${dto.regdate}" type="date"/>
-	      </div>
-   	<form action="postDelete.trip" method="post" >         
-	      <div class="modal-body">
-		<input type="hidden" name="no" value="${dto.no}"/>
-		<p>정말 삭제하시겠습니까?</p>
-			
-	      </div>
-	  
-	      <div class="modal-footer">
-		<br/>
-		<input name="submit" type="submit" value="삭제" class="btn btn-danger"/>
-		<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-	  </form>     
-		
-	      </div>
-	    </div>
-	  </div>
-	</div>
-             <!-- 모디파이 부분 -->
-  <form action="postModify.trip" method="post" enctype="multipart/form-data" id="form">
-	<div class="modal fade" id="myModal4${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-	  <div class="modal-dialog modal-lg"> <!-- 폼 폭 -->
-	    <div class="modal-content">
-	      <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-		<h4 class="modal-title" id="myModalLabel">포스트 수정</h4>
-	      </div>
-	      <div class="modal-body">
-	   
-			 <input type="hidden" name="no" value="${dto.no}"/>     
-	      	 <input type="hidden" name="id" value="${sessionScope.memId }"/>
-			 <input  class="form-control" type="text" placeholder="제목을 입력하세요" id="subject" name="subject"  value="${dto.subject }"/>	
-			 <textarea name="content" id="content${dto.no}" rows="10" cols="100">${dto.content }</textarea>
-	      </div>
-	     
-	      <div class="modal-footer">
-	      		<input type="button" id="savebutton2" value="저장" class="btn btn-warning"/> 
-				<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-</form>
+						<td width="380px" >
 
-             </c:forEach>
-             </tr>            
-		</c:forEach>
+							<div id="post-content" class="t_po" align="left" data-toggle="modal" data-target="#myModal2${dto.no }" onclick="javascript:commentAjax(${dto.no });">
+								<img src="${dto.file_savname}" width="370px" height="250px" style="border-radius:10px;" />
+							</div>
+							<div style="float:left; margin-bottom:20px;">
+								<div class="dropdown"  style="float:left">
+			  						<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">${dto.id} <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
+	   								</ul>
+								</div>
+								<div  style="float:left">
+									<fmt:formatDate value="${dto.regdate}" type="date"/>
+									<a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a>
+	 								<span id="good${dto.no }">${dto.good}</span>
+	 								
+ 								</div>
+							</div>
+						</td>
+            		</c:if>
+              <!--  뷰 모달 부분 -->
+		<div class="modal fade" id="myModal2${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  		<div class="modal-dialog modal-lg">
+	    		<div class="modal-content">
+	      			<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>		
+						<div class="container">
+							<div class="dropdown">
+			  					<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">			
+								<h4 class="modal-title" id="myModalLabel">${dto.id }<span class="caret"></span></a></h4>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
+	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
+	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
+	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/loginForm.trip">일정</a></li>
+	   							</ul>
+							</div>
+						</div>
+						<fmt:formatDate value="${dto.regdate}" type="date"/>
+	      			</div>
+	      			<div class="modal-body">
+						<p id="modal-content"><font face="굴림체" color="blue">${dto.select_p }&nbsp;&nbsp;</font><b><font size="5">${dto.subject}</font></b><br/></p>
+	    				${dto.content } 		
+	      			</div>
+	      			<span id="2good${dto.no }"></span>
+	      			<div class="modal-authtor">
+	    				<left><a href="javascript:ccallAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="ggood${dto.no }">${dto.good}</span></left>  
+	      			</div>
+	    			<form action="comment.trip" method="post">
+	      				<input type="hidden" name="id" value="${sessionScpoe.memId }"/>
+	      				<input type="hidden" name="no" value="${dto.no }"/>
+	      				<div id="test33">
+	      					<input class="form-control" type="text" placeholder="코멘트를 입력하세요" name="content" />
+	       	 			</div>
+	      	 			<div id="test44">
+	      					<c:if test="${sessionScope.memId !=null }">
+	      						<button type="submit" class="btn btn-warning">저장</button>
+	      		 			</c:if>
+	      		 			<c:if test="${sessionScope.memId ==null }">
+	      		 				<button type="button" class="btn btn-warning" onclick="javascript:loginAjax();">저장</button>
+	      		 			</c:if>
+	      				</div>
+	      			</form>
+	      			<div class="modal-footer">
+						<br/>
+						<c:if test="${sessionScope.memId !=null }">
+	        	 			<c:if test="${sessionScope.memId == dto.id }">
+								<form action="postModifyForm.trip" method="post">
+									<input type="hidden" name="no" value="${dto.no }"/>
+									<button type="submit" class="btn btn-info">수정</button>
+								</form>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal3${dto.no }">삭제</button>
+							</c:if>
+	        			</c:if>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	      			</div>
+	    		</div>
+	  		</div>
+		</div>
+   <!-- #####     딜리트 부분 #########        -->            
+      	<div class="modal fade" id="myModal3${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  		<div class="modal-dialog">
+	    		<div class="modal-content">
+	      			<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="myModalLabel">포스트 삭제</h4><fmt:formatDate value="${dto.regdate}" type="date"/>
+	      			</div>
+   					<form action="postDelete.trip" method="post" >         
+	      				<div class="modal-body">
+							<input type="hidden" name="no" value="${dto.no}"/>
+							<p>정말 삭제하시겠습니까?</p>			
+	      				</div>	  
+	      				<div class="modal-footer">
+							<br/>
+							<input name="submit" type="submit" value="삭제" class="btn btn-danger"/>
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					</form>     		
+	      		</div>
+	    	</div>
+	  	</div>
+             <!-- 모디파이 부분 -->
+  		<form action="postModify.trip" method="post" enctype="multipart/form-data" id="form">
+			<div class="modal fade" id="myModal4${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  			<div class="modal-dialog modal-lg"> <!-- 폼 폭 -->
+	    			<div class="modal-content">
+	      				<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title" id="myModalLabel">포스트 수정</h4>
+	      				</div>
+		      			<div class="modal-body">	   
+				 			<input type="hidden" name="no" value="${dto.no}"/>     
+		      	 			<input type="hidden" name="id" value="${sessionScope.memId }"/>
+				 			<input  class="form-control" type="text" placeholder="제목을 입력하세요" id="subject" name="subject"  value="${dto.subject }"/>	
+				 			<textarea name="content" id="content${dto.no}" rows="10" cols="100">${dto.content }</textarea>
+		      			</div>
+			      		<div class="modal-footer">
+			      			<input type="button" id="savebutton2" value="저장" class="btn btn-warning"/> 
+							<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+			      		</div>
+		    		</div>
+				</div>
+			</div>
+		</form>
+	</c:forEach>
+	</tr>            
+</c:forEach>
         
          
          <c:if test="list.size() <= 0">
@@ -446,14 +407,10 @@
 	  </div>
 	</div>
 </form>
-              
-               
-     
-
-
-
         
         </tr>     
    </table>
+   </div>
+   </div>
    </body>
 </html>

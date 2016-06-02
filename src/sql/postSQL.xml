@@ -85,7 +85,8 @@ select * from t_post where id=#id#
 <update id="update" parameterClass="dto">
    UPDATE t_post SET SUBJECT = #subject#,
    					select_p = #select_p#,
-                      CONTENT = #content#                        
+                      CONTENT = #content#,  
+                      file_savname=#file_savname#                     
                      WHERE no = #no#
 </update>
          
@@ -143,5 +144,14 @@ select * from t_post where id=#id#
 	<![CDATA[ select * from (select  * from t_post where p_public=1 order by no desc) where rownum <=6 ]]>
 </select>
 
+ <select id="rjator" resultClass="dto" parameterClass="String">         
+         select * from t_post where no  like '%'||#find#||'%'
+</select>
+<select id="rjator1" resultClass="dto" parameterClass="String">         
+   select * from t_post where subject  like '%'||#find#||'%'
+</select>  
+<select id="rjator2" resultClass="dto" parameterClass="String">         
+   select * from t_post where id  like '%'||#find#||'%'
+</select>   
 
 </sqlMap>
