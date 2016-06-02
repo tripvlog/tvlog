@@ -31,6 +31,10 @@
 		select path from t_member where id = #id#
 	</select>
 	
+	<select id="findPw" parameterClass="trip.member.LoginDTO" resultClass="trip.member.LoginDTO">
+		select id from t_member where pw=#pw#
+	</select>
+	
 	<insert id="fbInsert" parameterClass="trip.member.LoginDTO">
 		insert into t_member (id,fb_login) values(#id#,1)
 	</insert>
