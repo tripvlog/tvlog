@@ -28,7 +28,7 @@
 	}
 	#profile {
 		min-height: 270px;
-		background-image:url('/tvlog/img/member/myPageDefault.png');
+		background-image:url('/tvlog/img/myPage/myPageDefault.png');
 		width:1140;
 		height:410;
 		margin-top:0px;

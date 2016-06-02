@@ -29,44 +29,32 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		
 		@RequestMapping(value="/member/loginPro.trip",method=RequestMethod.POST)
 		public String Login(HttpSession session, LoginDTO dto,HttpServletRequest request){
-			
-				int count = (Integer)sqlmap.queryForObject("loginCheck",dto);
-				if(count==1){			
-				
-					session.setAttribute("memId",dto.getId());
-					session.setAttribute("fb",new Integer(0));
-					dto=(LoginDTO)sqlmap.queryForObject("path", dto);
-					request.setAttribute("imgPath",  dto.getPath());
-					request.setAttribute("dto",dto);
-									
-				}				
-				return "/main/index.jsp";
-					
+			int count = (Integer)sqlmap.queryForObject("loginCheck",dto);
+			if(count==1){	
+				session.setAttribute("memId",dto.getId());
+				session.setAttribute("fb",new Integer(0));
+				dto=(LoginDTO)sqlmap.queryForObject("path", dto);
+				request.setAttribute("imgPath",  dto.getPath());
+				request.setAttribute("dto",dto);
+			}				
+			return "/main/index.jsp";
 		}
 		
 		@RequestMapping("/member/loginfbPro.trip")
 		public String Loginfb(HttpSession session, LoginDTO dto,HttpServletRequest request){
-			
 			int count = (Integer)sqlmap.queryForObject("idcheck",dto.getId());
-			
 			session.setAttribute("memId",dto.getId());
 			session.setAttribute("fb",new Integer(1));
 			if(count==1){			
-					
 					dto=(LoginDTO)sqlmap.queryForObject("path", dto);
 					String imgPath = "D:\\save\\" + dto.getPath();
 					request.setAttribute("imgPath", imgPath);
 					request.setAttribute("dto",dto);
-									
 			}else{
 				sqlmap.insert("fbInsert",dto);
 			}
 			return "/member/myPage.jsp";
-					
 		}
-		
-		
-		
 		
 		@RequestMapping("/member/logout.trip")
 		public String logout(HttpSession session){
@@ -76,32 +64,27 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 		@RequestMapping("/member/joinForm.trip")
 		public String join(){
-				
-				return "/member/joinForm.jsp";
-					     
+			return "/member/joinForm.jsp";
 		}
 		
 		@RequestMapping("/member/joinPro.trip")
 		public String joinPro(MultipartHttpServletRequest request,LoginDTO dto)throws Exception{
-			
-			MultipartFile mf = request.getFile("save");
-			System.out.println(mf);
-			String rp = request.getRealPath("//img//member//");
-			System.out.println(rp);
-			String orgName = mf.getOriginalFilename();
-			String ext = orgName.substring(orgName.lastIndexOf("."));
-			String savName = dto.getId()+ext;
-			System.out.println(savName);
-			File sf = new File(rp+"//"+savName);
-			mf.transferTo(sf);
-			
-			dto.setPath(savName);
 			sqlmap.insert("joinInsert", dto);
 			sqlmap.insert("member_create_band_list", dto);
 			sqlmap.insert("member_create_friend_list", dto);
+			MultipartFile mf = request.getFile("save");
+			if(mf.getSize() > 0){
+				String rp = request.getRealPath("//img//member//");
+				String orgName = mf.getOriginalFilename();
+				String ext = orgName.substring(orgName.lastIndexOf("."));
+				String savName = dto.getId()+ext;
+				File sf = new File(rp+"//"+savName);
+				mf.transferTo(sf);
+				dto.setPath(savName);
+				sqlmap.update("joinUpdate", dto);
+			}
 			return "/member/joinPro.jsp";
 		}
-		
 		
 		@RequestMapping("/member/ConfirmId.trip")
 		public String ConfirmId(HttpServletRequest request,String id){
@@ -110,15 +93,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			request.setAttribute("id", id);
 			String view =null;
 			if(count==1){
-				
 				 view="/member/ExistId.jsp";
 			}
 			else{
 				 view="/member/IdCheck.jsp";
 			} 
-				
 			return view;	
-			
 		}
 		
 		
@@ -130,37 +110,30 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			request.setAttribute("domain", domain);
 			String view =null;
 			if(count==1){
-				
 				 view="/member/ExistDomain.jsp";
 			}
 			else{
 				 view="/member/DomainCheck.jsp";
 			} 
-				
 			return view;	
 		}
-	
 		
 		@RequestMapping("/member/deleteForm.trip")
 		public String deleteForm(){
 			return "/member/deleteForm.jsp";
-			
 		}
 		
 		@RequestMapping("/member/deletePro.trip")
 		public String facebooklogin(HttpSession session,HttpServletRequest request , String pw){
-			
 			String dbid = (String) session.getAttribute("memId");
-		
 			String dbpw = (String) sqlmap.queryForObject("pw", dbid);
-		
 			if(dbpw.equals(pw)){		
 				sqlmap.delete("delete", dbid);
 				session.invalidate();
 			}
 			return "/member/deletePro.jsp";
-			
 		}
+		
 		@RequestMapping("/member/modifyForm.trip")
 		public String modifyForm(HttpSession session, LoginDTO dto, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
@@ -168,44 +141,56 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			request.setAttribute("dto",dto);
 			return"/member/modifyForm.jsp";
 		}
+		
 		@RequestMapping("/member/modifyPro.trip")
-		public String modifyPro(HttpSession session, LoginDTO dto, MultipartHttpServletRequest request) throws Exception{
+		public String modifyPro( MultipartHttpServletRequest request, HttpSession session) throws Exception{
+			LoginDTO dto = new LoginDTO();
 			String id = (String)session.getAttribute("memId");
 			dto.setId(id);
-			sqlmap.update("modifyUpdate", dto);
+			dto.setName(request.getParameter("name"));
+			dto.setPw(request.getParameter("pw"));
+			dto.setDomain(request.getParameter("domain"));
 			
-			String defaultImg = "default.jpg";
 			
 			MultipartFile mf = request.getFile("path");
-			
-			if(defaultImg.equals(mf)){
-				
+			System.out.println(mf);
+			if(mf.getSize() > 0){
+				String dbpath = (String)sqlmap.queryForObject("member_get_img", id);
+				if(dbpath.equals("default.jpg")){
+					String rp = request.getRealPath("//img//member//");
+					String orgName = mf.getOriginalFilename();  // 원본 이름
+					String ext = orgName.substring(orgName.lastIndexOf("."));   // .확장자
+					String savName = dto.getId()+ext;   //저장할 이름 : 아이디+확장자
+					File sf = new File(rp+"//"+savName);  //rp경로에 저장한 이름 넣고 sf에 대입
+					mf.transferTo(sf);   //mf를 sf로 바꿔줌
+					dto.setPath(savName);
+					sqlmap.update("modifyUpdate", dto);
+				}
+				else{
+					String rp = request.getRealPath("//img//member//");
+					File deleteFile = new File(rp + dbpath);
+					deleteFile.delete();  //원래 파일 삭제
+					// 다시 새로운 파일 저장
+					String orgName = mf.getOriginalFilename();
+					String ext = orgName.substring(orgName.lastIndexOf("."));
+					String savName = dto.getId()+ext;
+					File sf = new File(rp+"//"+savName);
+					mf.transferTo(sf);
+					dto.setPath(savName);
+					sqlmap.update("modifyUpdate", dto);
+				}
 			}
-			
-			if(mf != null){
-				mf = (MultipartFile)sqlmap.queryForObject("pw", id);
-				
-			
-				
-				
-			String rp = request.getRealPath("//img//member//");
-			String orgName = mf.getOriginalFilename();     //원본 이름
-			String ext = orgName.substring(orgName.lastIndexOf(".")); //파일의 확장자를 잘라서 가져오는 것
-			String savName = dto.getId()+ext;  //저장할 이름 : 아이디+확장자
-			File sf = new File(rp+"//"+savName);  //rp가 //img//member// 여기니까 그 경로에 바로 위에서 지정한 이름 넣어줌
-			mf.transferTo(sf);  //mf를 sf로 바꿈
-			dto.setPath(savName);
+			else{
+				sqlmap.update("modifyUpdateTwo", dto);
 			}
-			
 			return"/member/modifyPro.jsp";
 		}
+		
 		@RequestMapping("/member/myPage.trip")
 		public String myPage(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
 			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);
 			request.setAttribute("dto",dto);
-			
-			
 			
 			return"/member/myPage.jsp";
 		}

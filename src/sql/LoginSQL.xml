@@ -36,7 +36,7 @@
 	</insert>
 	
 	<insert id="joinInsert" parameterClass="trip.member.LoginDTO">
-		insert into t_member (id,pw,name,domain,path) values(#id#,#pw#,#name#,#domain#,#path#)
+		insert into t_member (id,pw,name,domain) values(#id#,#pw#,#name#,#domain#)
 	</insert>
 	
 	<insert id="member_create_band_list" parameterClass="trip.member.LoginDTO">
@@ -46,9 +46,17 @@
 	<insert id="member_create_friend_list" parameterClass="trip.member.LoginDTO">
 		create table t_member_friend_$id$(friend_no number, friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number, friend_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 친구 목록 -->
+
+	<update id="joinUpdate" parameterClass="trip.member.LoginDTO">
+		update t_member set path=#path# where id=#id#
+	</update>
 	
 	<update id="modifyUpdate" parameterClass="trip.member.LoginDTO">
 		update t_member set pw=#pw#,name=#name#,domain=#domain#,path=#path# where id=#id#
+	</update>
+	
+	<update id="modifyUpdateTwo" parameterClass="trip.member.LoginDTO">
+		update t_member set pw=#pw#,name=#name#,domain=#domain# where id=#id#
 	</update>
 	
 	<delete id="delete" parameterClass="String">
