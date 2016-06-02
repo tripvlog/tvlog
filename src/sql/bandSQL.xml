@@ -22,6 +22,9 @@
 		<![CDATA[select * from (select * from t_band where band_range = 1 order by band_reg desc) where rownum <= 6]]>
 	</select>
 	
+	<select id="band_member_info" resultClass="trip.band.memberDTO" parameterClass="trip.band.memberDTO">
+		select band_member_name, band_member_img from t_band_member_$band_id$ where band_member_id = #band_member_id#
+	</select>
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
@@ -47,7 +50,7 @@
 	</insert>
 	
 	<insert id="band_create_table_member" parameterClass="int">
-		create table t_band_member_$band_id$(band_member_no number, band_member varchar2(100), band_member_img varchar2(300), band_member_level number, band_member_reg date default sysdate)
+		create table t_band_member_$band_id$(band_member_no number, band_member_id varchar2(100), band_member_name varchar2(300), band_member_img varchar2(300), band_member_level number, band_member_reg date default sysdate)
 	</insert>
 	
 	<insert id="band_create_sequence_member" parameterClass="int">
@@ -55,7 +58,7 @@
 	</insert>
 	
 	<insert id="band_insert_leader" parameterClass="java.util.Map">
-		insert into t_band_member_$band_id$ values(t_band_member_$band_id$_seq.nextval, #member_id#, #band_member_img#, 2, sysdate)
+		insert into t_band_member_$band_id$ values(t_band_member_$band_id$_seq.nextval, #leader_id#, #leader_name#, #band_member_img#, 2, sysdate)
 	</insert>
 	
 	<insert id="band_board_write" parameterClass="trip.band.boardDTO">

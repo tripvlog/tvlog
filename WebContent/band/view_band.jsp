@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -67,7 +68,20 @@
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
 					<input type="file" name="board_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
 				</form>
-					<hr color="red">
+					<hr style="color:red">
+					<c:forEach var = "i" items="${b_board_contents}">
+						<div>
+							-------------------------------------------------------------------------------<br />
+							${i.band_board_num} : band_board_num<br />
+							${i.band_board_notice} : band_board_notice<br />
+							${i.band_board_writer} : band_board_writer<br />
+							${i.band_board_img} : band_board_img<br />
+							${i.band_board_content} : band_board_content<br />
+							${i.band_board_readcount} : band_board_readcount<br />
+							${i.band_board_reg} : band_board_reg<br />
+							********************************************************************************
+						</div>
+					</c:forEach>
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 

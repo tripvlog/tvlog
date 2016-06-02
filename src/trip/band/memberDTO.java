@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 public class memberDTO {
 
 	private int band_member_no;
-	private String band_member;
+	private String band_member_id;
+	private String band_member_name;
 	private String band_member_img;
 	private int band_member_level;
 	private Timestamp band_member_reg;
@@ -18,12 +19,20 @@ public class memberDTO {
 		this.band_member_no = band_member_no;
 	}
 
-	public String getBand_member() {
-		return band_member;
+	public String getBand_member_id() {
+		return band_member_id;
 	}
 
-	public void setBand_member(String band_member) {
-		this.band_member = band_member;
+	public void setBand_member_id(String band_member_id) {
+		this.band_member_id = band_member_id;
+	}
+
+	public String getBand_member_name() {
+		return band_member_name;
+	}
+
+	public void setBand_member_name(String band_member_name) {
+		this.band_member_name = band_member_name;
 	}
 
 	public String getBand_member_img() {

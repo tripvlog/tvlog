@@ -30,7 +30,7 @@ public class BandAction {
 	public String bandCreatePro(MultipartHttpServletRequest request, HttpSession session, BandDTO dto){
 		
 		MultipartFile b_img = request.getFile("b_img");
-		session.setAttribute("memId", "test111"); // 임의 세션 값 설정
+		session.setAttribute("memId", "asdf"); // 임의 세션 값 설정
 		dto.setBand_leader((String)session.getAttribute("memId"));
 		sqlMap.insert("band_create", dto);
 		dto.setBand_id((int)sqlMap.queryForObject("band_selectLastId", null));
@@ -40,12 +40,15 @@ public class BandAction {
 		sqlMap.insert("band_create_table_member", dto.getBand_id()); // 멤버 테이블 생성
 		sqlMap.insert("band_create_sequence_member", dto.getBand_id()); // 멤버 시퀀스 생성
 		
+		String leader_name = (String)sqlMap.queryForObject("member_get_name", dto.getBand_leader());
 		Map map = new HashMap();
 		map.put("band_id", dto.getBand_id());
-		map.put("member_id", dto.getBand_leader());
+		map.put("leader_id", dto.getBand_leader());
+		map.put("leader_name", leader_name);
 		String memberImg = (String)sqlMap.queryForObject("member_get_img", dto.getBand_leader());
 		map.put("band_member_img", memberImg);
 		sqlMap.insert("band_insert_leader", map); // 밴드 멤버안에 리더 추가
+		
 		String band_img = request.getFile("b_img").getOriginalFilename();
 		
 		if(!band_img.equals("")){
@@ -77,8 +80,10 @@ public class BandAction {
 	@RequestMapping("/band/b_view.trip")
 	public String bandView(HttpServletRequest request, BandDTO band){
 		band = (BandDTO)sqlMap.queryForObject("band_view", band);
-		boardDTO band_board_content = (boardDTO)sqlMap.queryForObject("band_content", band.getBand_id());
-		request.setAttribute("band_board_content", band_board_content);
+		List band_board = sqlMap.queryForList("band_content", band.getBand_id());
+		//List member_info = sqlMap.queryForList("band_member_info", );
+		// 게시글을 등록한 회원에 대해 닉네임, 프로필 사진을 가져와 View 부분에 보여줘야함
+		request.setAttribute("b_board_contents", band_board);
 		request.setAttribute("band", band);
 		return "/band/view_band.jsp";
 	}
@@ -100,7 +105,7 @@ public class BandAction {
 				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 				File file = new File(filePath + filesavName + "." + fileName_ext);
 				System.out.println(file);
-				board_imgs = board_imgs + filesavName + "." + fileName_ext + " ";
+				board_imgs = board_imgs + "<img src=/tvlog/img/band/" +filesavName + "." + fileName_ext + "> ";
 				if(!file.exists())
 					file.mkdirs();
 				
@@ -110,11 +115,10 @@ public class BandAction {
 					e.printStackTrace();
 				}
 			}
-		
-		System.out.println(dto.getBand_board_content() + " // band_board_content");
-		System.out.println(dto.getBand_board_img() + " // band_board_img");
-		System.out.println(board_imgs + " // board_imgs");
-		System.out.println(" *** b_write.trip end *** ");
+		session.setAttribute("memId", "hEllO");
+		dto.setBand_board_writer((String)session.getAttribute("memId"));
+		dto.setBand_board_img(board_imgs);
+		sqlMap.insert("band_board_write", dto);
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
 	}
 }
