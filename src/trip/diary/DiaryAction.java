@@ -85,4 +85,12 @@ public class DiaryAction {
 		return "redirect:list.trip";
 	}
 	
+	@RequestMapping("/diary/cluster.trip")
+ 	public String cluster(HttpServletRequest request){
+ 		List location = sqlMap.queryForList("diary_cluster", null);
+ 		System.out.println(location.size() + " is locatioin value");
+ 		request.setAttribute("location", location);
+ 		System.out.println(" ========== cluster.trip ok ========== ");
+ 		return "/diary/cluster.jsp";
+ 	}
 }
