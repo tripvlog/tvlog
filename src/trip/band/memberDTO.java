@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 public class memberDTO {
 
 	private int band_id;
-
 	private int band_member_no;
 	private String band_member_id;
 	private String band_member_name;

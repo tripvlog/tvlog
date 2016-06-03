@@ -17,7 +17,8 @@
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <!-- Custom styles for this template -->
 <link href="offcanvas.css" rel="stylesheet">
@@ -33,6 +34,16 @@
     <![endif]-->
 </head>
 
+<script>
+	function board_delete(board_num){
+		var num = board_num;
+		alert(num);
+		var check = confirm("삭제하시겠습니까?");
+		if(check == true){		
+			location.href="/tvlog/band/bb_delete.trip?band_id=${band_id}&band_board_num=" + num;
+		}
+	}
+</script>
 <body>
 	<nav class="navbar navbar-fixed-top navbar-inverse">
 		<div class="container">
@@ -65,7 +76,7 @@
 		
 			<div class="col-xs-12 col-sm-9">
 				<!-- 밴드에 게시글 작성 -->
-				<form action="/tvlog/band/b_write.trip" method="post" enctype="multipart/form-data">
+				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data">
 				
 					<input type="hidden" name="band_id" value="${band.band_id}">
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
@@ -74,24 +85,34 @@
 				</form>
 				
 					<hr style="color:red">
-					<div><!-- 작성된 게시글 출력 -->
-						<c:forEach var="m" items="${meminfo}">
-							${m.name}<br />
-							${m.path}
-						</c:forEach>
-					</div>
 					<c:forEach var="i" items="${b_board_contents}">
-					
-						<div>
-							-------------------------------------------------------------------------------<br />
+
+					<div><!-- 내 게시물만 수정 및 삭제 가능 -->
+						<c:if test="${sessionScope.memId == i.band_board_writer}">
+							<div class="dropdown" id="mydropdown">
+								<img src="/tvlog/img/member/${i.path}" width="50" height="50">${i.name}
+								<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+								<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">수정하기</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" onclick="board_delete(${i.band_board_num})">삭제하기</a></li>
+								</ul>
+							</div>
+						</c:if>
+						
+						<c:if test="${sessionScope.memId != i.band_board_writer}">
+							<img src="/tvlog/img/member/${i.path}" width="50" height="50">${i.name}
+						</c:if>
+						<br />
 							${i.band_board_num} : band_board_num<br />
 							${i.band_board_notice} : band_board_notice<br />
 							${i.band_board_writer} : band_board_writer<br />
-							${i.band_board_img} : band_board_img<br />
+							<img src="/tvlog/img/band/${i.band_board_img}" width="250" height="250"> : band_board_img<br />
 							${i.band_board_content} : band_board_content<br />
 							${i.band_board_readcount} : band_board_readcount<br />
-							${i.band_board_reg} : band_board_reg<br />
-							********************************************************************************
+							${i.band_board_reg} : band_board_reg<br /><br />
+							<hr>
 						</div>
 						
 					</c:forEach>
@@ -111,6 +132,12 @@
 					<a href="#" class="list-group-item active">1</a>
 					<a href="##" class="list-group-item">2</a>
 					<a href="###" class="list-group-item">3</a>
+					<hr>
+					내 밴드<br />
+					<img src="/tvlog/img/band/${band.band_img}" width="50" height="50">&nbsp;${band.band_name}
+					<hr>
+					이런 밴드는 어떠세요?<br />
+					<a href="####">6</a>
 				</div>
 			</div><!-- 우측 메뉴바 끝 -->
 			<!--/.sidebar-offcanvas-->

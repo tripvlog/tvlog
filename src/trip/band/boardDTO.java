@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 public class boardDTO {
 
 	private int band_id;
+	private String name;
+	private String path;
 	private int band_board_num;
 	private int band_board_notice;
 	private String band_board_writer;
@@ -19,6 +21,22 @@ public class boardDTO {
 
 	public void setBand_id(int band_id) {
 		this.band_id = band_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public int getBand_board_num() {

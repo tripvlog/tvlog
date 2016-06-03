@@ -32,5 +32,5 @@
 	<input type="radio" name="band_range" value="3">비공개
 	<br />
 	<textarea name="band_intro" cols="45" rows="5"></textarea><br />
-	<input type="submit" value="완료" /> <input type="button" value="취소" onclick="b_cancle()" />
+	<input type="submit" value="완료" /> <input type="button" value="취소" onclick="javascript:location.href='/tvlog/band/b_list.trip'" />
 </form>

@@ -30,7 +30,7 @@ public class BandAction {
 	public String bandCreatePro(MultipartHttpServletRequest request, HttpSession session, BandDTO dto){
 		
 		MultipartFile b_img = request.getFile("b_img");
-		session.setAttribute("memId", "asdf"); // 임의 세션 값 설정
+		session.setAttribute("memId", "Test"); // 임의 세션 값 설정
 		dto.setBand_leader((String)session.getAttribute("memId"));
 		sqlMap.insert("band_create", dto);
 		dto.setBand_id((int)sqlMap.queryForObject("band_selectLastId", null));
@@ -39,6 +39,7 @@ public class BandAction {
 		sqlMap.insert("band_create_table_comment", dto.getBand_id()); // 댓글 테이블 생성
 		sqlMap.insert("band_create_table_member", dto.getBand_id()); // 멤버 테이블 생성
 		sqlMap.insert("band_create_sequence_member", dto.getBand_id()); // 멤버 시퀀스 생성
+		sqlMap.insert("band_create_table_board_imgs", dto.getBand_id()); // 밴드 게시물에 올라오는 이미지를 기록할 테이블 생성
 		
 		String leader_name = (String)sqlMap.queryForObject("member_get_name", dto.getBand_leader());
 		Map map = new HashMap();
@@ -82,13 +83,14 @@ public class BandAction {
 		band = (BandDTO)sqlMap.queryForObject("band_view", band);
 		List band_board = sqlMap.queryForList("band_content", band.getBand_id());
 
+		request.setAttribute("band_id", band.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
 		request.setAttribute("band", band);
 		return "/band/view_band.jsp";
 	}
 	
-	@RequestMapping("/band/b_write.trip")
-	public String bandWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO dto){
+	@RequestMapping("/band/bb_write.trip")
+	public String b_boardWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO dto){
 		
 		List<MultipartFile> band_board_img = request.getFiles("board_img");
 		String board_imgs = "";
@@ -104,7 +106,7 @@ public class BandAction {
 				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 				File file = new File(filePath + filesavName + "." + fileName_ext);
 				System.out.println(file);
-				board_imgs = board_imgs + "<img src=/tvlog/img/band/" +filesavName + "." + fileName_ext + "> ";
+				board_imgs = board_imgs + filesavName + "." + fileName_ext;
 				if(!file.exists())
 					file.mkdirs();
 				
@@ -114,11 +116,21 @@ public class BandAction {
 					e.printStackTrace();
 				}
 			}
-		session.setAttribute("memId", "asdf");
+		session.setAttribute("memId", "kk");
 		dto.setBand_board_writer((String)session.getAttribute("memId")); // 밴드 게시물은 작성자의 세션값을 받아 db에 넣음
 		dto.setBand_board_img(board_imgs);
 		sqlMap.insert("band_board_write", dto);
 		
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
+	}
+	
+	@RequestMapping("/band/bb_delete.trip")
+	public String b_boardDelete(boardDTO dto){
+		System.out.println(" ***************************************************** ");
+		System.out.println(dto.getBand_board_num());
+		System.out.println(dto.getBand_id());
+		sqlMap.delete("band_board_del", dto);
+		System.out.println(" ***************************************************** ");
+		return "redirect:/band/b_view.trip?band_id=" + dto.getBand_id();
 	}
 }

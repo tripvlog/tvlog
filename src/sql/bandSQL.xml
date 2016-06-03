@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="band_content" resultClass="trip.band.boardDTO" parameterClass="int">
-		select * from t_band_board_$band_id$
+		select * from (select * from t_member a, t_band_board_$band_id$ b where a.id = b.band_board_writer) order by band_board_reg desc
 	</select>
 	
 	<select id="main_band" resultClass="trip.band.BandDTO">
@@ -26,6 +26,9 @@
 		select name, path from t_member where id = (select band_board_writer from t_band_board_$band_id$)
 	</select>
 	
+	<select id="band_board_img" resultClass="trip.band.boardDTO" parameterClass="trip.band.boardDTO">
+		select band_board_img from t_band_board_$band_id$
+	</select>
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
@@ -34,6 +37,11 @@
 
 <!-- =============================================================================== -->
 
+	<delete id="band_board_del" parameterClass="trip.band.boardDTO">
+		delete t_band_board_$band_id$ where band_board_num = #band_board_num#
+	</delete>
+
+<!-- =============================================================================== -->
 	<insert id="band_create" parameterClass="trip.band.BandDTO">
 		insert into t_band(band_id, band_name, band_leader, band_intro, band_range, band_reg) values(t_band_seq.NEXTVAL, #band_name#, #band_leader#, #band_intro#, #band_range#, sysdate)
 	</insert>
@@ -56,6 +64,10 @@
 	
 	<insert id="band_create_sequence_member" parameterClass="int">
 		create sequence t_band_member_$band_id$_seq nocache
+	</insert>
+	
+	<insert id="band_create_table_board_imgs" parameterClass="int">
+		create table t_band_board_imgs_$band_id$(band_board_num number, band_board_writer varchar2(100), band_board_img varchar2(200), band_board_img_reg date default sysdate)
 	</insert>
 	
 	<insert id="band_insert_leader" parameterClass="java.util.Map">
