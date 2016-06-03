@@ -58,12 +58,13 @@
 	</nav>
 	<!-- /.navbar -->
 
+<!-- 내용시작 -->
 	<div class="container">
 
 		<div class="row row-offcanvas row-offcanvas-right">
-
+		
 			<div class="col-xs-12 col-sm-9">
-			
+				<!-- 밴드에 게시글 작성 -->
 				<form action="/tvlog/band/b_write.trip" method="post" enctype="multipart/form-data">
 				
 					<input type="hidden" name="band_id" value="${band.band_id}">
@@ -73,7 +74,7 @@
 				</form>
 				
 					<hr style="color:red">
-					<div>
+					<div><!-- 작성된 게시글 출력 -->
 						<c:forEach var="m" items="${meminfo}">
 							${m.name}<br />
 							${m.path}
@@ -97,7 +98,8 @@
 					
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
-
+<!-- 내용 끝 -->
+<!-- 우측 메뉴바 시작 -->
 			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
 				<div class="list-group">
 					<div class="list-group-item" align="center"><a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">
@@ -110,7 +112,7 @@
 					<a href="##" class="list-group-item">2</a>
 					<a href="###" class="list-group-item">3</a>
 				</div>
-			</div>
+			</div><!-- 우측 메뉴바 끝 -->
 			<!--/.sidebar-offcanvas-->
 		</div>
 		<!--/row-->

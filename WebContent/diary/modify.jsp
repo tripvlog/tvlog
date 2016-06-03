@@ -12,9 +12,11 @@
 <input type="text" name="diary_title" placeholder="제목" value="${vo.diary_title}" />
 <input type="text" name="diary_location" placeholder="위치" value="${vo.diary_location}" />
 <select id="diary_range" name="diary_range">
-	<option value="0">나만보기</option>
-	<option value="1">친구와</option>
-	<option value="2">전체공개</option>
+	<option value="1">모두</option>
+	<option value="2">친구와</option>
+	<option value="3">밴드랑</option>
+	<option value="4">친구랑 밴드</option>
+	<option value="5">나만</option>
 </select>
 <br /><hr>
 <textarea name="diary_content" id="diary_content" rows="10" cols="100">${vo.diary_content}</textarea>

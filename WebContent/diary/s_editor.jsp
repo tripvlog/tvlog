@@ -9,9 +9,11 @@
 <input type="text" name="diary_writer" placeholder="작성자" />
 <input type="text" name="diary_location" placeholder="위치" />
 <select id="diary_range" name="diary_range">
-	<option value="0">나만보기</option>
-	<option value="1">친구와</option>
-	<option value="2">전체공개</option>
+	<option value="1">모두</option>
+	<option value="2">친구와</option>
+	<option value="3">밴드랑</option>
+	<option value="4">친구랑 밴드</option>
+	<option value="5">나만</option>
 </select>
 <button type="button" onclick="popup()">지도</button>
 <br /><hr>

@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="band_select" resultClass="trip.band.BandDTO">
-		select * from t_band where band_range > 0
+		<![CDATA[select * from t_band where band_range < 3]]>
 	</select>
 	
 	<select id="band_view" resultClass="trip.band.BandDTO" parameterClass="trip.band.BandDTO">
@@ -25,6 +25,7 @@
 	<select id="band_member_info" resultClass="trip.band.memberDTO" parameterClass="int">
 		select name, path from t_member where id = (select band_board_writer from t_band_board_$band_id$)
 	</select>
+	
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
@@ -38,7 +39,7 @@
 	</insert>
 	
 	<insert id="band_create_table_board" parameterClass="int">
-		create table t_band_board_$band_id$(band_board_num number primary key, band_board_notice number default 0, band_board_writer_id varchar2(100), band_board_writer_name varchar2(100), band_board_writer_img varchar2(200), band_board_img varchar2(1000), band_board_content varchar2(2000), band_board_readcount number default 0, band_board_reg date default sysdate)
+		create table t_band_board_$band_id$(band_board_num number primary key, band_board_notice number default 0, band_board_writer varchar2(100), band_board_img varchar2(1000), band_board_content varchar2(2000), band_board_readcount number default 0, band_board_reg date default sysdate)
 	</insert>
 	
 	<insert id="band_create_sequence_board" parameterClass="int">

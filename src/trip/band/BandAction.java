@@ -81,14 +81,8 @@ public class BandAction {
 	public String bandView(HttpServletRequest request, BandDTO band, memberDTO memdto){
 		band = (BandDTO)sqlMap.queryForObject("band_view", band);
 		List band_board = sqlMap.queryForList("band_content", band.getBand_id());
-		List member_info = sqlMap.queryForList("band_member_info", band.getBand_id());
-		
-		memdto.setBand_id(Integer.parseInt(request.getParameter("band_id")));
-		memdto = (memberDTO)sqlMap.queryForObject("band_member_info", memdto);
-		//List member_info = sqlMap.queryForList("band_member_info", );
-		// 게시글을 등록한 회원에 대해 닉네임, 프로필 사진을 가져와 View 부분에 보여줘야함
+
 		request.setAttribute("b_board_contents", band_board);
-		request.setAttribute("meminfo", member_info);
 		request.setAttribute("band", band);
 		return "/band/view_band.jsp";
 	}

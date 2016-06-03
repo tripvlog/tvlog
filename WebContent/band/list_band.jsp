@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button><!-- 상단 메뉴바 -->
           <a class="navbar-brand" href="/tvlog/main/main.trip">Trip Blog</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
@@ -53,7 +53,7 @@
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
-    
+    <!-- 밴드 목록 보여주기 -->
     <div class="container">
     	<div class="row">
 	    	<c:forEach var="band" items="${b_list}">
