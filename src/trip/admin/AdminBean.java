@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
@@ -19,8 +20,31 @@ public class AdminBean {
 
 	@Autowired
 	private SqlMapClientTemplate sqlMap;
+	
+	/* ******* 관리자 메인 페이지 시작 ******* */
+	@RequestMapping("/admin/adminMain.trip")
+	public String adminMain(HttpServletRequest request , HttpSession session){
+		int postAllCount = (Integer)sqlMap.queryForObject("admin.postAllCount", null);
+		int postDayCount = (Integer)sqlMap.queryForObject("admin.postDayCount", null);
+		int bandAllCount = (Integer)sqlMap.queryForObject("admin.bandAllCount", null);
+		int bandDayCount = (Integer)sqlMap.queryForObject("admin.bandDayCount", null);
+		int scheduleAllCount = (Integer)sqlMap.queryForObject("admin.scheduleAllCount", null);
+		int scheduleDayCount = (Integer)sqlMap.queryForObject("admin.scheduleDayCount", null);
+		int memberAllCount = (Integer)sqlMap.queryForObject("admin.memberAllCount", null);
+		request.setAttribute("postAllCount", postAllCount);
+		request.setAttribute("postDayCount", postDayCount);
+		request.setAttribute("bandAllCount", bandAllCount);
+		request.setAttribute("bandDayCount", bandDayCount);
+		request.setAttribute("scheduleAllCount", scheduleAllCount);
+		request.setAttribute("scheduleDayCount", scheduleDayCount);
+		request.setAttribute("memberAllCount", memberAllCount);
+		return "/admin/main.jsp";
+	}
+	/* ******* 관리자 메인 페이지  끝******* */
+	
+	
 
-	/* 체크리스트 관리자 페이지 시작 */
+	/* ******* 체크리스트 관리자 페이지 시작 ******* */
 	/* 체크리스트 관리자 페이지 */
 	@RequestMapping("/admin/checklist.trip")
 	public String checklist() {
@@ -127,23 +151,55 @@ public class AdminBean {
 		
 		return "redirect:/admin/checklistItem.trip?cl_num="+dto.getCl_num();
 	}
-	/* 체크리스트 관리자 페이지 끝 */
-
+	/* ****** 체크리스트 관리자 페이지 끝 ****** */
 	
 	
-	/* 회원 관리자 페이지 시작 */
-	@RequestMapping("/admin/memberSel.trip")
-	public ModelAndView memberSel(LoginDTO dto) {
-				
-		List list = new ArrayList();
-		list = sqlMap.queryForList("ch_item_select_innerJoin", null);
+	
+	/* ******* 회원 관리자 페이지 시작 ******* */
+	@RequestMapping("/admin/memberManagement.trip")
+	public String memberManagement() {
 		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("list", list);
-		mv.setViewName("");
-				
-		return mv;
+		return "/admin/memberManagement.jsp";
 	}
-
-	/* 회원 관리자 페이지 끝 */
+	/* ******* 회원 관리자 페이지 끝 ******* */
+	
+	
+	
+	/* ******* 일정 관리자 페이지 시작  ******* */
+	@RequestMapping("/admin/scheduleManagement.trip")
+	public String scheduleManagement() {
+		
+		return "/admin/scheduleManagement.jsp";
+	}
+	/* ******* 일정 관리자 페이지 끝 ******* */
+	
+	
+	
+	/* ******* 일기 관리자 페이지 시작  ******* */
+	@RequestMapping("/admin/diaryManagement.trip")
+	public String diaryManagement() {
+		
+		return "/admin/diaryManagement.jsp";
+	}
+	/* ******* 일기 관리자 페이지 끝 ******* */
+	
+	
+	
+	/* *******밴드 관리자 페이지 시작 ******* */
+	@RequestMapping("/admin/bandManagement.trip")
+	public String bandManagement() {
+		
+		return "/admin/bandManagement.jsp";
+	}
+	/* *******밴드 관리자 페이지 끝******* */
+	
+	
+	
+	/* ******* 포스트 관리자 페이지 시작 management ******* */
+	@RequestMapping("/admin/postManagement.trip")
+	public String postManagement() {
+		
+		return "/admin/postManagement.jsp";
+	}
+	/* *******포스트 관리자 페이지 끝******* */
 }

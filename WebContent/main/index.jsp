@@ -4,7 +4,7 @@
     <html>
     	<head>
     		<meta charset="UTF-8">
-    		<title>bootstrap test</title>
+    		<title>트래블로그</title>
     		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     		<link rel="stylesheet" type="text/css" href="/jsmusic/webapp/user/mun/css/login.css"/> 
@@ -127,6 +127,24 @@
 	    alert("Error");
 	}
 	
+	//비밀번호 찾기 ajax
+	function findPw(){
+		$.ajax({
+	        type: "post",
+	        url : "/tvlog/member/findPw.trip",
+	        data: {	// url 페이지도 전달할 파라미터
+	   			id : $('#id').val()
+	        },
+	        success: findPwSuccess,	// 페이지요청 성공시 실행 함수
+	        error: findPwError	//페이지요청 실패시 실행함수
+	 	});
+	}
+	function findPwSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다.
+	    $("#findPwSpace").html(aaa);
+	}
+	function findPwError(){
+	    alert("Error");
+	}
 </script>
 <style type="text/css">
     			#navlink:hover{
@@ -175,7 +193,7 @@
       								<INPUT type=password name="pw" id="loginPw" size="31" maxlength="12" placeholder="비밀번호"><br/><br/>
 								</div>
 								<div align="right">
-									<input type="button" value="비밀번호 찾기" class="btn btn-primary" style="margin-right:10" onclick="">
+									<input type="button" value="비밀번호 찾기" class="btn btn-primary" style="margin-right:10"  data-toggle="modal" data-dismiss="modal" data-target="#findPwModal">
 								</div>
 							</div>
 							<br />
@@ -230,27 +248,82 @@
 			</div>
 		</div>
 
+		<!-- 비밀번호 찾기 모달 -->
+		<div class="modal fade" id="findPwModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<center><h4 class="modal-title" id="myModalLabel">비밀번호 찾기</h4></center>
+					</div>
+					<div class="modal-body">
+						<center><font size="3">아이디를 입력하세요</font> <br><br>
+						<input type="text" id="id" name="id"></center>
+						<hr>
+						<input type="button" class="btn btn-primary"  onclick="findPw()" data-toggle="modal" data-dismiss="modal" data-target="#findPwResultModal" value="찾기" >
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 비밀번호 찾기 결과 모달 -->
+		<div class="modal fade" id="findPwResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<center><h4 class="modal-title" id="myModalLabel">비밀번호 찾기</h4></center>
+					</div>
+					<div class="modal-body" id="findPwSpace">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</c:if>
     	
     	<!-- 로그인 후 -->
-    	<c:if test="${sessionScope.memId != null}">
+    	<c:if test="${sessionScope.memId != null && sessionScope.memId != 'tripvlog05'}">
     	
     	<div class="dropdown">
     		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style="height:50px;">
-    			${sessionScope.memId} <span class="caret"></span>
+    			${sessionScope.memId} 님<span class="caret"></span>
     		</button>
     		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myPage.trip">마이페이지</a></li>
-				<li class="divider"></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일정</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">포스트</a></li>
 				<li class="divider"></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
 			</ul>
 		</div>
 		</c:if>
+		
+		<!-- 관리자 로그인 -->
+    		<c:if test="${sessionScope.memId == 'tripvlog05'}">
+    	
+    		<div class="dropdown">
+    			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style="height:50px;">
+    				관리자님 <span class="caret"></span>
+    			</button>
+    			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/memberManagement.trip">회원 관리</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/scheduleManagement.trip">일정 관리</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/diaryManagement.trip">일기 관리</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/bandManagement.trip">밴드 관리</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/postManagement.trip">포스트 관리</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/checklist.trip">체크리스트 관리</a></li>
+					<li class="divider"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
+				</ul>
+			</div>
+			</c:if>
 		
     	</body>
     </html>

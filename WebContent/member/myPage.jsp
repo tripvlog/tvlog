@@ -40,7 +40,12 @@
 		width:200px; left:0; right:0; margin-left:auto; margin-right:auto;
 		height:120px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; 
 	}
-
+	#logo{
+		width: 80px;
+		height:50px;
+		padding: 0;
+		margin: 0;
+	}
 </style>
 <script>
 function mainBody(){
@@ -70,13 +75,14 @@ function mainBody(){
     		<div class="navbar-header" style="float: left;">
     			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
     			</button>
-    			<a class="navbar-brand" href="#">Trip Blog</a>
+    			<a id="logo" class="navbar-brand" href="/tvlog/main/main.trip"><img src="/tvlog/img/logo/logo.png" style="width:80px;height:50px;margin=0;padding:0"></a>
     		</div>
     		<div class="collapse navbar-collapse"  style="float:left;">
     			<ul class="nav navbar-nav">
-    				<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
-    				<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
-    				<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
+    				<li class="#about"><a href="/tvlog/main/findSchedule.trip" id="navlink">여행일정 찾기</a></li>
+    				<li class="#about"><a href="/tvlog/main/findPlace.trip" id="navlink">명소 찾기</a></li>
+    				<li class="#about"><a href="/tvlog/band/b_list.trip" id="navlink">밴드</a></li>
+    				<li class="#about"><a href="/tvlog/main/community.trip" id="navlink">커뮤니티</a></li>
     				<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#scheduleModal" data-whatever="@mdo">일정 만들기</a></li>  						
     			</ul>
     		</div>
@@ -142,6 +148,7 @@ function mainBody(){
 	  		<li role="presentation" class=""><a data-target="#friend" role="tab" id="friend-tab" data-toggle="tab" aria-controls="friend" aria-expanded="false">친       구</a></li>
 	  		<li role="presentation" class=""><a data-target="#band" role="tab" id="band-tab" data-toggle="tab" aria-controls="band" aria-expanded="false">밴        드</a></li>
 	  		<li role="presentation" class=""><a data-target="#schedule" role="tab" id="schedule-tab" data-toggle="tab" aria-controls="schedule" aria-expanded="false">여 행 일 정</a></li>
+	  		<li role="presentation" class=""><a data-target="#diary" role="tab" id="diary-tab" data-toggle="tab" aria-controls="diary" aria-expanded="false">여 행 일 기</a></li>
 	  		<li role="presentation" class=""><a data-target="#post" role="tab" id="post-tab" data-toggle="tab" aria-controls="post" aria-expanded="false">포  스  트</a></li>
 	  		<li role="presentation" class=""><a data-target="#modify" role="tab" id="modify-tab" data-toggle="tab" aria-controls="modify" aria-expanded="false">회원 정보 수정</a></li>
 		</ul>
@@ -169,22 +176,25 @@ function mainBody(){
 					</div>
 				</div>
 	  		</div>
+	  		
 	  		<!-- 밴드 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="band" aria-labelledby="band-tab">
 	  			
 	  		</div>
+	  		
 	  		<!-- 여행일정 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="schedule" aria-labelledby="schedule-tab">
 	  			
 	  		</div>
+	  		
+	  		<!-- 여행일기 탭 내용 -->
+	  		<div role="tabpanel" class="tab-pane fade" id="diary" aria-labelledby="diary-tab">
+	  			
+	  		</div>
+	  		
 	  		<!-- 포스트 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="post" aria-labelledby="post-tab">
-	  			<form action="/tvlog/member/modifyForm.trip" method="post">
-					<input type="submit" value="회원 정보 수정" id="memberModify">
-				</form>
-				<form action="/tvlog/member/deleteForm.trip">
-					<input type="submit" value="회원 탈퇴" id="memberDelete">
-				</form>
+	  		
 			</div>
 		    <!-- 회원정보 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="modify" aria-labelledby="modify-tab">

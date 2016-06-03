@@ -194,6 +194,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			
 			return"/member/myPage.jsp";
 		}
-	
+		
+		@RequestMapping("/member/findPw.trip")
+		public String findPw(String id, HttpServletRequest request){
+			id = request.getParameter("id");
+			String findpw = (String) sqlmap.queryForObject("pw", id);
+			request.setAttribute("pw", findpw);
+			return "/main/findPw.jsp";
+		}
 	}
 

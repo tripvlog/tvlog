@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
 
-<sqlMap>
+<sqlMap namespace="admin">
 	<select id="memberSelect" resultClass="trip.member.LoginDTO" >
 		select * from t_member
 	</select>
+	
+	<select id="postAllCount" resultClass="int">
+		select count(*) from t_post
+	</select>
+	
+	<select id="postDayCount" resultClass="int">
+		select count(*) from t_post where to_char(regdate,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
+	</select>
+	
+	<select id="bandAllCount" resultClass="int">
+		select count(*) from t_band
+	</select>
+	
+	<select id="bandDayCount" resultClass="int">
+		select count(*) from t_band where to_char(band_reg,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
+		
+	</select>
+	
+	<select id="scheduleAllCount" resultClass="int">
+		select count(*) from t_schedule
+	</select>
+	
+	<select id="scheduleDayCount" resultClass="int">
+		select count(*) from t_schedule where to_char(s_regdate,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
+	</select>
+	
+	<select id="memberAllCount" resultClass="int">
+		select count(*) from t_member
+	</select>
+	
+	
 </sqlMap>

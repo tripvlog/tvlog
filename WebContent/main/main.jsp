@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +27,26 @@
 	}
 	#content{
 		width: 1200px;
+		margin: 0px;
 	}
-
+	.post-content{
+		width : 370px; 
+		height: 250px; 
+		padding-top : 100px;
+		border-radius:10px; 
+		margin-bottom:10px; 
+		opacity: 1;
+		font-size: 25px; 
+		font-weight: bold;
+		text-align: center; 
+		color: #ffffff;
+	}
+	#logo{
+		width: 80px;
+		height:50px;
+		padding: 0;
+		margin: 0;
+	}
 </style>
 
 	<!-- JavaScript jQuery code from Bootply.com editor  -->
@@ -83,13 +102,14 @@
     		<div class="navbar-header" style="float: left;">
     			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
     			</button>
-    			<a class="navbar-brand" href="#">Trip Blog</a>
+    			<a id="logo" class="navbar-brand" href="/tvlog/main/main.trip"><img src="/tvlog/img/logo/logo.png" style="width:80px;height:50px;margin=0;padding:0" ></a>
     		</div>
     		<div class="collapse navbar-collapse"  style="float:left;">
     			<ul class="nav navbar-nav">
-    				<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
-    				<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
-    				<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
+    				<li class="#about"><a href="/tvlog/main/findSchedule.trip" id="navlink">여행일정 찾기</a></li>
+    				<li class="#about"><a href="/tvlog/main/findPlace.trip" id="navlink">명소 찾기</a></li>
+    				<li class="#about"><a href="/tvlog/band/b_list.trip" id="navlink">밴드</a></li>
+    				<li class="#about"><a href="/tvlog/main/community.trip" id="navlink">커뮤니티</a></li>
     				<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#scheduleModal" data-whatever="@mdo">일정 만들기</a></li>  						
     			</ul>
     		</div>
@@ -145,9 +165,47 @@
 
 	<!-- 메인 지도 -->
 	<iframe src="/tvlog/main/cluster.jsp" name="map" width="1140" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-
+	
 	</div>
 
+	<div id="post">
+		<h3 style="background-color:skyblue;">POST</h3>
+		<table  width="1140px">
+			<c:forEach begin="0" end="${(fn:length(postList) + 2) / 3 - 1}" var="row">
+				<tr>
+				    <c:forEach begin="0" end="2" var="col">
+				        <c:set var="post" value="${postList[row * 3 + col]}"/>
+				        <c:if test="${not empty post}">
+				        <td  width="380px"> 
+				        	<div class="post-content" style="background-image:url('${post.file_savname}');" onclick="window.location='/tvlog/post/postList.trip'">
+				        		${post.subject }
+				        	</div>
+				        </td>
+				        </c:if>
+				    </c:forEach>	
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<div id="band">
+		<h3 style="background-color:green;">BAND</h3>
+		<table  width="1140px">
+			<c:forEach begin="0" end="${(fn:length(bandList) + 2) / 3 - 1}" var="row">
+				<tr>
+				    <c:forEach begin="0" end="2" var="col">
+				        <c:set var="band" value="${bandList[row * 3 + col]}"/>
+				        <c:if test="${not empty band}">
+				        <td  width="380px">
+				        	<div class="post-content" style="background-image:url('/tvlog/img/band/${band.band_img}');" onclick="window.location='/tvlog/band/b_view.trip?band_id=${band.band_id}'">
+				        		${band.band_name }
+				        	</div>
+				        </td>
+				        </c:if>
+				    </c:forEach>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 </div>	
 </body>
 </html>
