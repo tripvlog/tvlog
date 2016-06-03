@@ -48,20 +48,9 @@ public class postBean {
        
      
        }else if(id!=null){
-    	   System.out.println("11="+id);
-    	   ldto = sqlMapClientTemplate.queryForList("post.public_2", id);
-    	   System.out.println("ldto="+ldto.get(0));
     	   
     	   list =sqlMapClientTemplate.queryForList("post.sessionList", id);
-       
-    	/*   for(int i = 0; i <= ldto.size(); i++){
-    		   
-    		  id = id + (" or id='"+ldto.get(i).getFriend_id()+"'");
-    		  System.out.println("반복문="+id);
-    	list =sqlMapClientTemplate.queryForList("post.sessionList", id);
-    		System.out.println("리스트의끝="+list);
-    		  //   list = sqlMapClientTemplate.queryForList("post.public_4", id);
-       }*/}
+       }
        int totalCount = list.size(); 
       pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
       String pagingHtml = page.getPagingHtml().toString();

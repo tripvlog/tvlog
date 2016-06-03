@@ -80,6 +80,16 @@
 	width:800px;
 	float: left;
 	}
+	#search{
+	width:90px;
+	float: left;
+	}
+	#search2{
+	width:300px;
+	float: left;
+	}
+	
+	
 
 </style>
 
@@ -148,6 +158,13 @@
       
 </script>
 
+	<script type="text/javascript">
+		function open_win_noresizable (url, name) {
+			var oWin = window.open(url, name, "scrollbars=no,status=no,resizable=no,width=300,height=150");
+			var abc = url;
+		}
+	</script>
+
 </head>
   
   <body>
@@ -181,25 +198,29 @@
    <table width="1140px" >
 		<!--  리스트 게시물 뿌려주는 for문 시작    -->
 		<c:forEach begin="0" end="${(fn:length(list)+2) / 3 - 1}" var="row">
+			
 			<tr>
 				<c:forEach begin="0" end="2" var="col">
 					<c:set var="dto" value="${list[row * 3+col]}" />
 					<c:if test="${not empty dto }">           					
 						<td width="380px" >
-
 							<div id="post-content" class="t_po" align="left" data-toggle="modal" data-target="#myModal2${dto.no }" onclick="javascript:commentAjax(${dto.no });">
 								<img src="${dto.file_savname}" width="370px" height="250px" style="border-radius:10px;" />
+							<div>
+								<h4><b>	${dto.subject }</b></h4>
+							</div>
 							</div>
 							<div style="float:left; margin-bottom:20px;">
 								<div class="dropdown"  style="float:left">
 			  						<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">${dto.id} <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
-	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:OpenWindow('newFriend.jsp?friend_id=${dto.id }','470','340')">친구 추가</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/diary/frienddiary.trip?friend_id=${dto.id}">다이어리</a></li>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
 	   								</ul>
 								</div>
+								
 								<div  style="float:left">
 									<fmt:formatDate value="${dto.regdate}" type="date"/>
 									<a href="javascript:callAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a>
@@ -312,6 +333,26 @@
 				</div>
 			</div>
 		</form>
+		
+		<!-- 친구 신청 모달 -->
+		<div class="modal fade" id="friendmoda${dto.no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+		...
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		
 	</c:forEach>
 	</tr>            
 </c:forEach>
@@ -334,13 +375,17 @@
          <tr align="right">
           <td colspan="5">
           
-          <form action="search.trip">
-          <select name="select">
+          <div id="search">
+          <form action="search.trip" method="post">
+          <select name="select" class="form-control">
          	 <option selected value="writer">글쓴이</option>
          	 <option selected value="subject">제목</option>
           	 <option selected value="no">번호</option>
           </select> 
-          <input type="text" name="find"></input>
+          </div>
+          <div id="search2">
+          <input type="text" name="find" class="form-control"></input>
+          </div>
           <input type="submit" value="검색"></input>
           </form>
           
@@ -364,7 +409,7 @@
        
         
         
-        <!-- 모달 팝업 -->
+        <!-- 포스트 작성 모달 팝업 -->
    <form action="postWritePro.trip" method="post" enctype="multipart/form-data" id="frm">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 	  <div class="modal-dialog" > <!-- 폼 폭 크게는 modal-lg를 오른쪽에 붙인다 -->
@@ -392,10 +437,11 @@
 			 <textarea name="content" id="contentMain" rows="10" cols="100"></textarea>
 	      </div>
 	      	<select class="form-control" name="p_public">
-         		 <option selected value="4">비공개</option>
-          		 <option selected value="3">친구공개</option>
-          		 <option selected value="2">밴드공개</option>
-          	 	<option selected value="1">전체공개</option>
+         		 <option selected value="5">비공개</option>
+         		 <option selected value="4">친구와 밴드 공개</option>
+          		 <option selected value="3">친구 공개</option>
+          		 <option selected value="2">밴드 공개</option>
+          	 	<option selected value="1">전체 공개</option>
          	 </select> 
 	     
 	      <div class="modal-footer">

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import trip.post.boardVO;
+
 @Controller
 public class DiaryAction {
 
@@ -52,6 +54,24 @@ public class DiaryAction {
 	public String list(ImgVO vo, HttpServletRequest request){
 		List list = sqlMap.queryForList("diary_select", null);
 		request.setAttribute("list", list);
+		return "/diary/list.jsp";
+	}
+	@RequestMapping("/diary/frienddiary.trip")
+	public String frienddiary(boardVO dto, String friend_id, HttpSession session, HttpServletRequest request){
+		  String id=null;	   
+		  id= (String)session.getAttribute("memId");
+		  dto.setId(id);
+		  
+		  List<boardVO> list = null;   
+		  
+		  if(id==null){
+		  list = sqlMap.queryForList("diary_frienddiary", dto); 
+  
+		  }else if(id!=null){
+			  list =sqlMap.queryForList("diary_sessionFriend", friend_id);
+		  }
+		  request.setAttribute("list", list);
+		  
 		return "/diary/list.jsp";
 	}
 	

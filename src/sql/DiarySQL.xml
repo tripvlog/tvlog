@@ -30,4 +30,11 @@
 		delete t_diary where diary_num = #diary_num#
 	</delete>
 	
+	<select id="diary_frienddiary" parameterClass="trip.post.boardVO" resultClass="trip.diary.ImgVO">
+	<![CDATA[ select * from t_diary where diary_writer=#friend_id# and diary_range='1' order by diary_num desc ]]>
+	</select>
+	
+	<select id="diary_sessionFriend" parameterClass="String" resultClass="trip.diary.ImgVO">
+	<![CDATA[select * from t_diary where diary_writer=#friend_id# and diary_range <5 order by diary_num desc]]>
+	</select>
 </sqlMap>
