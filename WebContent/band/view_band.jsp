@@ -63,13 +63,24 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 
 			<div class="col-xs-12 col-sm-9">
+			
 				<form action="/tvlog/band/b_write.trip" method="post" enctype="multipart/form-data">
+				
 					<input type="hidden" name="band_id" value="${band.band_id}">
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
 					<input type="file" name="board_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
+					
 				</form>
+				
 					<hr style="color:red">
-					<c:forEach var = "i" items="${b_board_contents}">
+					<div>
+						<c:forEach var="m" items="${meminfo}">
+							${m.name}<br />
+							${m.path}
+						</c:forEach>
+					</div>
+					<c:forEach var="i" items="${b_board_contents}">
+					
 						<div>
 							-------------------------------------------------------------------------------<br />
 							${i.band_board_num} : band_board_num<br />
@@ -81,7 +92,9 @@
 							${i.band_board_reg} : band_board_reg<br />
 							********************************************************************************
 						</div>
+						
 					</c:forEach>
+					
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 

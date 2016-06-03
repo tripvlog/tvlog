@@ -78,12 +78,17 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_view.trip")
-	public String bandView(HttpServletRequest request, BandDTO band){
+	public String bandView(HttpServletRequest request, BandDTO band, memberDTO memdto){
 		band = (BandDTO)sqlMap.queryForObject("band_view", band);
 		List band_board = sqlMap.queryForList("band_content", band.getBand_id());
+		List member_info = sqlMap.queryForList("band_member_info", band.getBand_id());
+		
+		memdto.setBand_id(Integer.parseInt(request.getParameter("band_id")));
+		memdto = (memberDTO)sqlMap.queryForObject("band_member_info", memdto);
 		//List member_info = sqlMap.queryForList("band_member_info", );
 		// 게시글을 등록한 회원에 대해 닉네임, 프로필 사진을 가져와 View 부분에 보여줘야함
 		request.setAttribute("b_board_contents", band_board);
+		request.setAttribute("meminfo", member_info);
 		request.setAttribute("band", band);
 		return "/band/view_band.jsp";
 	}
@@ -115,10 +120,11 @@ public class BandAction {
 					e.printStackTrace();
 				}
 			}
-		session.setAttribute("memId", "hEllO");
-		dto.setBand_board_writer((String)session.getAttribute("memId"));
+		session.setAttribute("memId", "asdf");
+		dto.setBand_board_writer((String)session.getAttribute("memId")); // 밴드 게시물은 작성자의 세션값을 받아 db에 넣음
 		dto.setBand_board_img(board_imgs);
 		sqlMap.insert("band_board_write", dto);
+		
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
 	}
 }

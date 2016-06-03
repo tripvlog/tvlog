@@ -4,12 +4,22 @@ import java.sql.Timestamp;
 
 public class memberDTO {
 
+	private int band_id;
+
 	private int band_member_no;
 	private String band_member_id;
 	private String band_member_name;
 	private String band_member_img;
 	private int band_member_level;
 	private Timestamp band_member_reg;
+
+	public int getBand_id() {
+		return band_id;
+	}
+
+	public void setBand_id(int band_id) {
+		this.band_id = band_id;
+	}
 
 	public int getBand_member_no() {
 		return band_member_no;

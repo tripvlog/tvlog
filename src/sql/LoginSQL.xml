@@ -31,7 +31,11 @@
 		select pw from t_member where =#pw#
 	</select>
 
-	<select id="member_get_img" parameterClass="String" resultClass="trip.member.LoginDTO">
+	<select id="member_get_img" parameterClass="String" resultClass="String">
+		select path from t_member where id = #id#
+	</select>
+	
+	<select id="member_get_name-path" parameterClass="String" resultClass="trip.member.LoginDTO">
 		select name, path from t_member where id = #id#
 	</select>
 	
