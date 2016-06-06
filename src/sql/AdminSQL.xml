@@ -2,9 +2,60 @@
 <!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
 
 <sqlMap namespace="admin">
-	<select id="memberSelect" resultClass="trip.member.LoginDTO" >
-		select * from t_member
+	<select id="memberSelectList" resultClass="trip.member.LoginDTO" >
+		select * from t_member order by id asc
 	</select>
+	
+	<select id="scheduleSelectList" resultClass="trip.schedule.ScheduleDTO" >
+		select * from t_schedule order by s_num asc
+	</select>
+	
+	<select id="scheduleDetailSelectList" resultClass="trip.schedule.ScheduleDTO" >
+		select * from t_schedule_detail order by sd_num asc
+	</select>
+	
+	<select id="diarySelectList" resultClass="trip.diary.ImgVO" >
+		select * from t_diary order by diary_num asc
+	</select>
+	
+	<select id="postSelectList" resultClass="trip.post.boardVO" >
+		select * from t_post order by no asc
+	</select>
+	
+	<select id="bandSelectList" resultClass="trip.band.BandDTO" >
+		select * from t_band order by band_id asc
+	</select>
+	
+	
+	
+	
+	<delete id="memberDeleteList" parameterClass="String">
+		delete from t_member where id=#id#
+	</delete>
+	
+	<delete id="scheduleDeleteList" parameterClass="int">
+		delete from t_schedule where s_num=#s_num#
+	</delete>
+	
+	<delete id="scheduleDetailDeleteList" parameterClass="int">
+		delete from t_schedule_detail where sd_num=#sd_num#
+	</delete>
+	
+	<delete id="diaryDeleteList" parameterClass="int">
+		delete from t_diary where diary_num=#diary_num#
+	</delete>
+	
+	<delete id="postDeleteList" parameterClass="int">
+		delete from t_post where no=#no#
+	</delete>
+	
+	<delete id="bandDeleteList" parameterClass="int">
+		delete from t_band where band_id=#band_id#
+	</delete>
+	
+	
+	
+	
 	
 	<select id="postAllCount" resultClass="int">
 		select count(*) from t_post
@@ -20,7 +71,6 @@
 	
 	<select id="bandDayCount" resultClass="int">
 		select count(*) from t_band where to_char(band_reg,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
-		
 	</select>
 	
 	<select id="scheduleAllCount" resultClass="int">
@@ -35,5 +85,11 @@
 		select count(*) from t_member
 	</select>
 	
+	<select id="diaryAllCount" resultClass="int">
+		select count(*) from t_diary
+	</select>
 	
+	<select id="diaryDayCount" resultClass="int">
+		select count(*) from t_diary where to_char(diary_reg,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
+	</select>
 </sqlMap>

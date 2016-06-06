@@ -31,6 +31,8 @@ public class AdminBean {
 		int scheduleAllCount = (Integer)sqlMap.queryForObject("admin.scheduleAllCount", null);
 		int scheduleDayCount = (Integer)sqlMap.queryForObject("admin.scheduleDayCount", null);
 		int memberAllCount = (Integer)sqlMap.queryForObject("admin.memberAllCount", null);
+		int diaryAllCount = (Integer)sqlMap.queryForObject("admin.diaryAllCount", null);
+		int diaryDayCount = (Integer)sqlMap.queryForObject("admin.diaryDayCount", null);
 		request.setAttribute("postAllCount", postAllCount);
 		request.setAttribute("postDayCount", postDayCount);
 		request.setAttribute("bandAllCount", bandAllCount);
@@ -38,6 +40,8 @@ public class AdminBean {
 		request.setAttribute("scheduleAllCount", scheduleAllCount);
 		request.setAttribute("scheduleDayCount", scheduleDayCount);
 		request.setAttribute("memberAllCount", memberAllCount);
+		request.setAttribute("diaryAllCount", diaryAllCount);
+		request.setAttribute("diaryDayCount", diaryDayCount);
 		return "/admin/main.jsp";
 	}
 	/* ******* 관리자 메인 페이지  끝******* */
@@ -157,9 +161,17 @@ public class AdminBean {
 	
 	/* ******* 회원 관리자 페이지 시작 ******* */
 	@RequestMapping("/admin/memberManagement.trip")
-	public String memberManagement() {
+	public ModelAndView memberManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.memberSelectList", null);
+		int memberAllCount = (Integer)sqlMap.queryForObject("admin.memberAllCount", null);
 		
-		return "/admin/memberManagement.jsp";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("memberAllCount", memberAllCount);
+		mv.setViewName("/admin/memberManagement.jsp");
+				
+		return mv;
 	}
 	/* ******* 회원 관리자 페이지 끝 ******* */
 	
@@ -167,9 +179,17 @@ public class AdminBean {
 	
 	/* ******* 일정 관리자 페이지 시작  ******* */
 	@RequestMapping("/admin/scheduleManagement.trip")
-	public String scheduleManagement() {
+	public ModelAndView scheduleManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.scheduleSelectList", null);
+		int scheduleAllCount = (Integer)sqlMap.queryForObject("admin.scheduleAllCount", null);
 		
-		return "/admin/scheduleManagement.jsp";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("scheduleAllCount", scheduleAllCount);
+		mv.setViewName("/admin/scheduleManagement.jsp");
+				
+		return mv;
 	}
 	/* ******* 일정 관리자 페이지 끝 ******* */
 	
@@ -177,9 +197,17 @@ public class AdminBean {
 	
 	/* ******* 일기 관리자 페이지 시작  ******* */
 	@RequestMapping("/admin/diaryManagement.trip")
-	public String diaryManagement() {
+	public ModelAndView diaryManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.diarySelectList", null);
+		int diaryAllCount = (Integer)sqlMap.queryForObject("admin.diaryAllCount", null);
 		
-		return "/admin/diaryManagement.jsp";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("diaryAllCount", diaryAllCount);
+		mv.setViewName("/admin/diaryManagement.jsp");
+				
+		return mv;
 	}
 	/* ******* 일기 관리자 페이지 끝 ******* */
 	
@@ -187,9 +215,17 @@ public class AdminBean {
 	
 	/* *******밴드 관리자 페이지 시작 ******* */
 	@RequestMapping("/admin/bandManagement.trip")
-	public String bandManagement() {
+	public ModelAndView bandManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.bandSelectList", null);
+		int bandAllCount = (Integer)sqlMap.queryForObject("admin.bandAllCount", null);
 		
-		return "/admin/bandManagement.jsp";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("bandAllCount", bandAllCount);
+		mv.setViewName("/admin/bandManagement.jsp");
+				
+		return mv;
 	}
 	/* *******밴드 관리자 페이지 끝******* */
 	
@@ -197,9 +233,17 @@ public class AdminBean {
 	
 	/* ******* 포스트 관리자 페이지 시작 management ******* */
 	@RequestMapping("/admin/postManagement.trip")
-	public String postManagement() {
+	public ModelAndView postManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.postSelectList", null);
+		int postAllCount = (Integer)sqlMap.queryForObject("admin.postAllCount", null);
 		
-		return "/admin/postManagement.jsp";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("postAllCount", postAllCount);
+		mv.setViewName("/admin/postManagement.jsp");
+				
+		return mv;
 	}
 	/* *******포스트 관리자 페이지 끝******* */
 }

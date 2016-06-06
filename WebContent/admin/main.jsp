@@ -8,7 +8,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Grid Item Animation Layout - Demo 2</title>
+		<title>트래블로그</title>
 		<link rel="shortcut icon" href="../favicon.ico">
 		<link rel="stylesheet" type="text/css" href="/tvlog/admin/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="/tvlog/admin/style2.css" />
@@ -63,6 +63,20 @@
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${memberAllCount} </span>
+						</div>
+					</a>
+					<a class="grid__item" href="#">
+						<h2 class="title title--preview"> Diary All Count</h2>
+						<div class="loader"></div>
+						<div class="meta meta--preview">
+							<span class="meta__avatar"> ${diaryAllCount} </span>
+						</div>
+					</a>
+					<a class="grid__item" href="#">
+						<h2 class="title title--preview"> Diary Day Count</h2>
+						<div class="loader"></div>
+						<div class="meta meta--preview">
+							<span class="meta__avatar"> ${diaryDayCount} </span>
 						</div>
 					</a>
 				</section>
