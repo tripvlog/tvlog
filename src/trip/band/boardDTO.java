@@ -10,10 +10,27 @@ public class boardDTO {
 	private int band_board_num;
 	private int band_board_notice;
 	private String band_board_writer;
-	private String band_board_img;
 	private String band_board_content;
+	private String band_board_img;
+	private String board_img;
 	private int band_board_readcount;
 	private Timestamp band_board_reg;
+
+	public String getBand_board_img() {
+		return band_board_img;
+	}
+
+	public void setBand_board_img(String band_board_img) {
+		this.band_board_img = band_board_img;
+	}
+
+	public String getBoard_img() {
+		return board_img;
+	}
+
+	public void setBoard_img(String board_img) {
+		this.board_img = board_img;
+	}
 
 	public int getBand_id() {
 		return band_id;
@@ -61,14 +78,6 @@ public class boardDTO {
 
 	public void setBand_board_writer(String band_board_writer) {
 		this.band_board_writer = band_board_writer;
-	}
-
-	public String getBand_board_img() {
-		return band_board_img;
-	}
-
-	public void setBand_board_img(String band_board_img) {
-		this.band_board_img = band_board_img;
 	}
 
 	public String getBand_board_content() {

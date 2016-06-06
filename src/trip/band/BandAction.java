@@ -79,22 +79,30 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_view.trip")
-	public String bandView(HttpServletRequest request, BandDTO band, memberDTO memdto){
-		band = (BandDTO)sqlMap.queryForObject("band_view", band);
-		List band_board = sqlMap.queryForList("band_content", band.getBand_id());
-
-		request.setAttribute("band_id", band.getBand_id());
+	public String bandView(HttpServletRequest request, BandDTO banddto, memberDTO memdto, trip.member.BandListDTO bandlistdto, HttpSession session){
+		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
+		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
+		List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
+		request.setAttribute("band_id", banddto.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
-		request.setAttribute("band", band);
+		request.setAttribute("band", banddto);
 		return "/band/view_band.jsp";
 	}
 	
 	@RequestMapping("/band/bb_write.trip")
-	public String b_boardWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO dto){
-		
-		List<MultipartFile> band_board_img = request.getFiles("board_img");
+	public String b_boardWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO boarddto, imgDTO imgdto){
+
+		List<MultipartFile> band_board_img = request.getFiles("upload_img");
 		String board_imgs = "";
-			
+		session.setAttribute("memId", "kk"); // 임의 세션 값 설졍
+		boarddto.setBand_board_writer((String)session.getAttribute("memId")); // 밴드 게시물은 작성자의 세션값을 받아 db에 넣음
+		sqlMap.insert("band_board_write", boarddto);
+		
+		imgdto.setBand_id(Integer.parseInt(request.getParameter("band_id")));
+		int board_maxnum = (int) sqlMap.queryForObject("band_board_num", imgdto.getBand_id());
+		imgdto.setBoard_num(board_maxnum);
+		imgdto.setBoard_writer(boarddto.getBand_board_writer());
+		
 			for(MultipartFile multi : band_board_img){
 				if(multi.getOriginalFilename().equals("")){
 					break;
@@ -105,32 +113,40 @@ public class BandAction {
 				String filesavName = "bb_" + request.getParameter("band_id") + "_" + UUID.randomUUID().toString().substring(0, 8);
 				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 				File file = new File(filePath + filesavName + "." + fileName_ext);
-				System.out.println(file);
-				board_imgs = board_imgs + filesavName + "." + fileName_ext;
+				board_imgs = board_imgs + "<img src=/tvlog/img/band/" + filesavName + "." + fileName_ext + ">";
+				
 				if(!file.exists())
 					file.mkdirs();
 				
 				try{
 					multi.transferTo(file);
+					imgdto.setBoard_img(filesavName + "." + fileName_ext);
+					sqlMap.insert("band_board_insert_img", imgdto);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
 			}
-		session.setAttribute("memId", "kk");
-		dto.setBand_board_writer((String)session.getAttribute("memId")); // 밴드 게시물은 작성자의 세션값을 받아 db에 넣음
-		dto.setBand_board_img(board_imgs);
-		sqlMap.insert("band_board_write", dto);
-		
+		boarddto.setBand_board_img(board_imgs);
+		boarddto.setBand_board_num(imgdto.getBoard_num());
+		sqlMap.update("band_board_img", boarddto);
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
 	}
 	
 	@RequestMapping("/band/bb_delete.trip")
-	public String b_boardDelete(boardDTO dto){
-		System.out.println(" ***************************************************** ");
-		System.out.println(dto.getBand_board_num());
-		System.out.println(dto.getBand_id());
-		sqlMap.delete("band_board_del", dto);
-		System.out.println(" ***************************************************** ");
-		return "redirect:/band/b_view.trip?band_id=" + dto.getBand_id();
+	public String b_boardDelete(imgDTO imgdto, HttpSession session, HttpServletRequest request){
+		List band_board_img = sqlMap.queryForList("band_img_select", imgdto);
+		if(!band_board_img.toString().equals("[]")){
+			for(Object obj : band_board_img){
+				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+				String img = filePath + obj.toString();
+				File imgfile = new File(img);
+				if(imgfile.exists()){
+					imgfile.delete();
+				}
+			}
+		}
+		sqlMap.delete("band_board_imgs_del", imgdto);
+		sqlMap.delete("band_board_del", imgdto);
+		return "redirect:/band/b_view.trip?band_id=" + imgdto.getBand_id();
 	}
 }

@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="band_content" resultClass="trip.band.boardDTO" parameterClass="int">
-		select * from (select * from t_member a, t_band_board_$band_id$ b where a.id = b.band_board_writer) order by band_board_reg desc
+		select * from (select * from t_band_board_$band_id$ a, t_member b where b.id = a.band_board_writer) order by band_board_reg desc
 	</select>
 	
 	<select id="main_band" resultClass="trip.band.BandDTO">
@@ -25,20 +25,37 @@
 	<select id="band_member_info" resultClass="trip.band.memberDTO" parameterClass="int">
 		select name, path from t_member where id = (select band_board_writer from t_band_board_$band_id$)
 	</select>
-	
-	<select id="band_board_img" resultClass="trip.band.boardDTO" parameterClass="trip.band.boardDTO">
-		select band_board_img from t_band_board_$band_id$
+
+	<select id="band_board_num" resultClass="int" parameterClass="int">
+		select max(band_board_num) from t_band_board_$band_id$
 	</select>
+	
+	<select id="band_img_select" resultClass="String" parameterClass="trip.band.imgDTO">
+		select board_img from t_band_board_imgs_$band_id$ where board_num = #board_num#
+	</select>
+	
+	<select id="band_my_list" resultClass="trip.member.BandListDTO" parameterClass="trip.member.BandListDTO">
+		select * from t_member_band_$member_id$
+	</select>
+	
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
 		update t_band set band_img = #band_img# where band_id = #band_id#
 	</update>
 
+	<update id="band_board_img" parameterClass="trip.band.boardDTO">
+		update t_band_board_$band_id$ set band_board_img = #band_board_img# where band_board_num = #band_board_num#
+	</update>
+
 <!-- =============================================================================== -->
 
-	<delete id="band_board_del" parameterClass="trip.band.boardDTO">
-		delete t_band_board_$band_id$ where band_board_num = #band_board_num#
+	<delete id="band_board_imgs_del" parameterClass="trip.band.imgDTO">
+		delete t_band_board_imgs_$band_id$ where board_num = #board_num#
+	</delete>
+	
+	<delete id="band_board_del" parameterClass="trip.band.imgDTO">
+		delete t_band_board_$band_id$ where band_board_num = #board_num#
 	</delete>
 
 <!-- =============================================================================== -->
@@ -47,7 +64,7 @@
 	</insert>
 	
 	<insert id="band_create_table_board" parameterClass="int">
-		create table t_band_board_$band_id$(band_board_num number primary key, band_board_notice number default 0, band_board_writer varchar2(100), band_board_img varchar2(1000), band_board_content varchar2(2000), band_board_readcount number default 0, band_board_reg date default sysdate)
+		create table t_band_board_$band_id$(band_board_num number default 0 primary key, band_board_notice number default 0, band_board_writer varchar2(100), band_board_content varchar2(2000), band_board_img varchar2(3000), band_board_readcount number default 0, band_board_reg date default sysdate)
 	</insert>
 	
 	<insert id="band_create_sequence_board" parameterClass="int">
@@ -67,17 +84,21 @@
 	</insert>
 	
 	<insert id="band_create_table_board_imgs" parameterClass="int">
-		create table t_band_board_imgs_$band_id$(band_board_num number, band_board_writer varchar2(100), band_board_img varchar2(200), band_board_img_reg date default sysdate)
+		create table t_band_board_imgs_$band_id$(board_num number, board_writer varchar2(100), board_img varchar2(200), board_img_reg date default sysdate)
 	</insert>
 	
 	<insert id="band_insert_leader" parameterClass="java.util.Map">
 		insert into t_band_member_$band_id$ values(t_band_member_$band_id$_seq.nextval, #leader_id#, #leader_name#, #band_member_img#, 2, sysdate)
 	</insert>
-
-<!-- ************************************* -->
 	
 	<insert id="band_board_write" parameterClass="trip.band.boardDTO">
-		insert into t_band_board_$band_id$ values(t_band_board_$band_id$_seq.nextval, 0, #band_board_writer#, #band_board_img#, #band_board_content#, 0, sysdate)
+		insert into t_band_board_$band_id$(band_board_num, band_board_notice, band_board_writer, band_board_content, band_board_readcount, band_board_reg) values(t_band_board_$band_id$_seq.nextval, 0, #band_board_writer#, #band_board_content#, 0, sysdate)
 	</insert>
+	
+	<insert id="band_board_insert_img" parameterClass="trip.band.imgDTO">
+		insert into t_band_board_imgs_$band_id$ values(#board_num#, #board_writer#, #board_img#, sysdate)
+	</insert>
+	
+<!-- ************************************* -->
 	
 </sqlMap>

@@ -67,7 +67,7 @@
 			</c:forEach>
 			<a href="/tvlog/band/b_create.trip">
 			<div class="col-md-2" align="center">
-				<img src=/tvlog/img/band/BI_default.jpg width="150" height="150" ><br /><br />
+				<img src=/tvlog/img/band/default.jpg width="150" height="150" ><br /><br />
 				밴드 만들기
 			</div>
 			</a>

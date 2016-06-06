@@ -40,7 +40,7 @@
 		alert(num);
 		var check = confirm("삭제하시겠습니까?");
 		if(check == true){		
-			location.href="/tvlog/band/bb_delete.trip?band_id=${band_id}&band_board_num=" + num;
+			location.href="/tvlog/band/bb_delete.trip?band_id=${band_id}&board_num=" + num;
 		}
 	}
 </script>
@@ -77,10 +77,10 @@
 			<div class="col-xs-12 col-sm-9">
 				<!-- 밴드에 게시글 작성 -->
 				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data">
-				
+					
 					<input type="hidden" name="band_id" value="${band.band_id}">
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
-					<input type="file" name="board_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
+					<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
 					
 				</form>
 				
@@ -108,15 +108,12 @@
 							${i.band_board_num} : band_board_num<br />
 							${i.band_board_notice} : band_board_notice<br />
 							${i.band_board_writer} : band_board_writer<br />
-							<img src="/tvlog/img/band/${i.band_board_img}" width="250" height="250"> : band_board_img<br />
+							${i.band_board_img} : band_board_img<br />
 							${i.band_board_content} : band_board_content<br />
 							${i.band_board_readcount} : band_board_readcount<br />
 							${i.band_board_reg} : band_board_reg<br /><br />
-							<hr>
 						</div>
-						
 					</c:forEach>
-					
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 <!-- 내용 끝 -->
