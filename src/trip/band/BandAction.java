@@ -82,10 +82,13 @@ public class BandAction {
 	public String bandView(HttpServletRequest request, BandDTO banddto, memberDTO memdto, trip.member.BandListDTO bandlistdto, HttpSession session){
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
 		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
+		bandlistdto.setMember_id((String)session.getAttribute("memId"));
 		List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
+		
 		request.setAttribute("band_id", banddto.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
 		request.setAttribute("band", banddto);
+		request.setAttribute("band_list", band_list);
 		return "/band/view_band.jsp";
 	}
 	
