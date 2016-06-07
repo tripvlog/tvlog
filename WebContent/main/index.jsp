@@ -53,23 +53,6 @@
 		alter("로그인 후에 이용하세요!");
 	}
 	
-	//로그인할 때 아이디, 비밀번호 입력안한 경우 
-	function begin(){
-         document.myform.id.focus();
-      }
-	function checkIt(){
-        if(!document.myform.id.value){
-    
-          alert("아이디를 입력하지 않으셨습니다.");
-          document.myform.id.focus();
-          return false;
-        }
-        if(!document.myform.passwd.value){
-          alert("비밀번호를 입력하지 않으셨습니다.");
-          document.myform.passwd.focus();
-          return false;
-        }
-	}
 	
 	//아이디 중복확인 버튼 클릭시 이벤트 
 	function confirmClick(userinput){ 
@@ -95,17 +78,6 @@
 	    open(url, "confirm","toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500, height=200");
 	}
 
-
-
-	//필수값(id, pw, pwchk)확인  
-	function fsubmit(){
-		if(document.userinput.id.value==""||document.userinput.pw.value==""||document.userinput.pw_chk.value==""||document.userinput.member_nm.value==""){
-			alert("아이디, 패스워드는  필수 입력사항입니다.");
-			return false;
-		}else{
-	    	return true;  // 정상적인 submit 진행                
-		}
-	}
 	
 	// 로그인 ajax
 	function loginSubmit(){
@@ -299,6 +271,11 @@
     		</button>
     		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myPage.trip">마이페이지</a></li>
+				<li class="divider"></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일정</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">밴드</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">포스트</a></li>
 				<li class="divider"></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
 			</ul>

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import trip.member.LoginDTO;
 
 @Controller
 public class AdminBean {
@@ -160,6 +159,7 @@ public class AdminBean {
 	
 	
 	/* ******* 회원 관리자 페이지 시작 ******* */
+	/* 회원 전체 검색 */
 	@RequestMapping("/admin/memberManagement.trip")
 	public ModelAndView memberManagement() {
 		List list = new ArrayList();
@@ -173,11 +173,18 @@ public class AdminBean {
 				
 		return mv;
 	}
+	/* 회원 삭제 */
+	@RequestMapping("/admin/memberDeleteManagement.trip")
+	public String memberDeleteManagement(String id) {
+		sqlMap.delete("admin.memberDeleteList", id);
+		return "redirect:/admin/memberManagement.trip";
+	}
 	/* ******* 회원 관리자 페이지 끝 ******* */
 	
 	
 	
 	/* ******* 일정 관리자 페이지 시작  ******* */
+	/* 일정 전체 검색 */
 	@RequestMapping("/admin/scheduleManagement.trip")
 	public ModelAndView scheduleManagement() {
 		List list = new ArrayList();
@@ -191,11 +198,33 @@ public class AdminBean {
 				
 		return mv;
 	}
+	/* 오늘 올라온 일정 검색 */
+	@RequestMapping("/admin/scheduleDayManagement.trip")
+	public ModelAndView scheduleDayManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.scheduleDaySelectList", null);
+		int scheduleDayCount = (Integer)sqlMap.queryForObject("admin.scheduleDayCount", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("scheduleDayCount", scheduleDayCount);
+		mv.setViewName("/admin/scheduleDayManagement.jsp");
+				
+		return mv;
+	}
+	/* 일정 삭제 */
+	@RequestMapping("/admin/scheduleDeleteManagement.trip")
+	public String scheduleDeleteManagement(int s_num) {
+		sqlMap.delete("admin.scheduleDeleteList", s_num);
+		sqlMap.delete("admin.scheduleDetailDeleteList", s_num);
+		return "redirect:/admin/scheduleManagement.trip";
+	}
 	/* ******* 일정 관리자 페이지 끝 ******* */
 	
 	
 	
 	/* ******* 일기 관리자 페이지 시작  ******* */
+	/* 일기 전체 검색 */
 	@RequestMapping("/admin/diaryManagement.trip")
 	public ModelAndView diaryManagement() {
 		List list = new ArrayList();
@@ -209,11 +238,32 @@ public class AdminBean {
 				
 		return mv;
 	}
+	/* 오늘 올라온 일기 검색 */
+	@RequestMapping("/admin/diaryDayManagement.trip")
+	public ModelAndView diaryDayManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.diaryDaySelectList", null);
+		int diaryDayCount = (Integer)sqlMap.queryForObject("admin.diaryDayCount", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("diaryDayCount", diaryDayCount);
+		mv.setViewName("/admin/diaryDayManagement.jsp");
+				
+		return mv;
+	}
+	/* 일기 삭제 */
+	@RequestMapping("/admin/diaryDeleteManagement.trip")
+	public String diaryDeleteManagement(int diary_num) {
+		sqlMap.delete("admin.diaryDeleteList", diary_num);
+		return "redirect:/admin/diaryManagement.trip";
+	}
 	/* ******* 일기 관리자 페이지 끝 ******* */
 	
 	
 	
 	/* *******밴드 관리자 페이지 시작 ******* */
+	/* 밴드 전체 검색 */
 	@RequestMapping("/admin/bandManagement.trip")
 	public ModelAndView bandManagement() {
 		List list = new ArrayList();
@@ -227,11 +277,38 @@ public class AdminBean {
 				
 		return mv;
 	}
+	/* 오늘 올라온 밴드 검색 */
+	@RequestMapping("/admin/bandDayManagement.trip")
+	public ModelAndView bandDayManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.bandDaySelectList", null);
+		int bandDayCount = (Integer)sqlMap.queryForObject("admin.bandDayCount", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("bandDayCount", bandDayCount);
+		mv.setViewName("/admin/bandDayManagement.jsp");
+				
+		return mv;
+	}
+	/* 밴드 삭제 */
+	@RequestMapping("/admin/bandDeleteManagement.trip")
+	public String bandDeleteManagement(int band_id) {
+		sqlMap.delete("admin.bandDeleteList", band_id);
+		sqlMap.delete("admin.delete_band", band_id);
+		sqlMap.delete("admin.delete_band_seq", band_id);
+		sqlMap.delete("admin.delete_band_comment", band_id);
+		sqlMap.delete("admin.delete_band_member", band_id);
+		sqlMap.delete("admin.delete_band_member_seq", band_id);
+		sqlMap.delete("admin.delete_band_imgs", band_id);
+		return "redirect:/admin/bandManagement.trip";
+	}
 	/* *******밴드 관리자 페이지 끝******* */
 	
 	
 	
 	/* ******* 포스트 관리자 페이지 시작 management ******* */
+	/* 포스트 전체 검색 */
 	@RequestMapping("/admin/postManagement.trip")
 	public ModelAndView postManagement() {
 		List list = new ArrayList();
@@ -244,6 +321,26 @@ public class AdminBean {
 		mv.setViewName("/admin/postManagement.jsp");
 				
 		return mv;
+	}
+	/* 오늘 올라온 포스트 검색 */
+	@RequestMapping("/admin/postDayManagement.trip")
+	public ModelAndView postDayManagement() {
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.postDaySelectList", null);
+		int postDayCount = (Integer)sqlMap.queryForObject("admin.postDayCount", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("postDayCount", postDayCount);
+		mv.setViewName("/admin/postDayManagement.jsp");
+				
+		return mv;
+	}
+	/* 포스트 삭제 */
+	@RequestMapping("/admin/postDeleteManagement.trip")
+	public String postDeleteManagement(int no) {
+		sqlMap.delete("admin.postDeleteList", no);
+		return "redirect:/admin/postManagement.trip";
 	}
 	/* *******포스트 관리자 페이지 끝******* */
 }

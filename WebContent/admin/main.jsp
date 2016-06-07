@@ -16,63 +16,63 @@
 	<body>
 		<div class="container">
 			<div id="theGrid" class="main">
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/postManagement.trip">
 						<h2 class="title title--preview"> Post All Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${postAllCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/postDayManagement.trip">
 						<h2 class="title title--preview"> Post Day Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${postDayCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/scheduleManagement.trip">
 						<h2 class="title title--preview"> Schedule All Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${scheduleAllCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/scheduleDayManagement.trip">
 						<h2 class="title title--preview"> Schedule Day Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${scheduleDayCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/bandManagement.trip">
 						<h2 class="title title--preview"> Band All Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${bandAllCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/bandDayManagement.trip">
 						<h2 class="title title--preview"> Band Day Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${bandDayCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/memberManagement.trip">
 						<h2 class="title title--preview"> Member Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${memberAllCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/diaryManagement.trip">
 						<h2 class="title title--preview"> Diary All Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${diaryAllCount} </span>
 						</div>
 					</a>
-					<a class="grid__item" href="#">
+					<a class="grid__item" href="/tvlog/admin/diaryDayManagement.trip">
 						<h2 class="title title--preview"> Diary Day Count</h2>
 						<div class="loader"></div>
 						<div class="meta meta--preview">

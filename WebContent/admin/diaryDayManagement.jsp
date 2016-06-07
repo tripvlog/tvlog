@@ -5,22 +5,12 @@
 <html>
 <head>
 <title>트래블로그</title>
-<script>
-	function deleteThis(diary_num){
-		var deleteThis = confirm("삭제하시겠습니까?");
-		if(deleteThis == true){ 
-			location.href="/tvlog/admin/diaryDeleteManagement.trip?diary_num="+diary_num;
-		}
-		else if(deleteThis == false){
-		}
-	}
-</script>
 </head>
 <body>
 <div id="totalDiv">
-	<c:if test="${diaryAllCount != 0}">
-	<!-- 일기 검색 -->
-	<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>
+	<c:if test="${diaryDayCount != 0}">
+	<!-- 오늘 올라온 일기 검색 -->
+	<h4>오늘 올라온 일기 검색 (${diaryDayCount} 개)</h4>
 	<table width="900" border="1" cellspacing="0" cellpadding="2" >
 		<tr align="center">
 			<td>일기 번호</td>
@@ -28,7 +18,6 @@
 			<td>일기 제목</td>
 			<td>일기 공개범위</td>
 			<td>일기 등록 날짜</td>
-			<td>삭제</td>
 		</tr>
 		<c:forEach var="list" items="${list}">
 		<tr align="center">
@@ -37,14 +26,14 @@
 			<td>${list.diary_title}</td>
 			<td>${list.diary_range}</td>
 			<td>${list.diary_reg}</td>
-			<td><input type="button" value="삭제" onclick="deleteThis('${list.diary_num}')"></td>
 		</tr>
 		</c:forEach>
 	</table>
-	<!-- 일기 검색 끝 -->
+	<!-- 오늘 올라온 일기 검색 끝 -->
 	</c:if>
-	<c:if test="${diaryAllCount == 0}">
-		등록된 일기가 없습니다.
+	<c:if test="${diaryDayCount == 0}">
+		<h4>오늘 올라온 일기 검색 (${diaryDayCount} 개)</h4>
+		오늘 올라온 일기가 없습니다.
 	</c:if>
 </div>
 </body>

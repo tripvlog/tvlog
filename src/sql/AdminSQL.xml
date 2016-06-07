@@ -26,36 +26,21 @@
 		select * from t_band order by band_id asc
 	</select>
 	
+	<select id="scheduleDaySelectList" resultClass="trip.schedule.ScheduleDTO" >
+		select * from t_schedule where to_char(s_regdate,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
+	</select>
 	
+	<select id="diaryDaySelectList" resultClass="trip.diary.ImgVO">
+		select * from t_diary where to_char(diary_reg,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
+	</select>
 	
+	<select id="postDaySelectList" resultClass="trip.post.boardVO">
+		select * from t_post where to_char(regdate,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
+	</select>
 	
-	<delete id="memberDeleteList" parameterClass="String">
-		delete from t_member where id=#id#
-	</delete>
-	
-	<delete id="scheduleDeleteList" parameterClass="int">
-		delete from t_schedule where s_num=#s_num#
-	</delete>
-	
-	<delete id="scheduleDetailDeleteList" parameterClass="int">
-		delete from t_schedule_detail where sd_num=#sd_num#
-	</delete>
-	
-	<delete id="diaryDeleteList" parameterClass="int">
-		delete from t_diary where diary_num=#diary_num#
-	</delete>
-	
-	<delete id="postDeleteList" parameterClass="int">
-		delete from t_post where no=#no#
-	</delete>
-	
-	<delete id="bandDeleteList" parameterClass="int">
-		delete from t_band where band_id=#band_id#
-	</delete>
-	
-	
-	
-	
+	<select id="bandDaySelectList" resultClass="trip.band.BandDTO" >
+		select * from t_band where to_char(band_reg,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
+	</select>
 	
 	<select id="postAllCount" resultClass="int">
 		select count(*) from t_post
@@ -92,4 +77,57 @@
 	<select id="diaryDayCount" resultClass="int">
 		select count(*) from t_diary where to_char(diary_reg,'yyyymmdd') = to_char(sysdate,'yyyymmdd')
 	</select>
+	
+	<delete id="memberDeleteList" parameterClass="String">
+		delete from t_member where id=#id#
+	</delete>
+	
+	<delete id="scheduleDeleteList" parameterClass="int">
+		delete from t_schedule where s_num=#s_num#
+	</delete>
+	
+	<delete id="scheduleDetailDeleteList" parameterClass="int">
+		delete from t_schedule_detail where s_num=#s_num#
+	</delete>
+	
+	<delete id="diaryDeleteList" parameterClass="int">
+		delete from t_diary where diary_num=#diary_num#
+	</delete>
+	
+	<delete id="postDeleteList" parameterClass="int">
+		delete from t_post where no=#no#
+	</delete>
+	
+	<delete id="bandDeleteList" parameterClass="int">
+		delete from t_band where band_id=#band_id#
+	</delete>
+	
+	
+	
+	
+	
+	<delete id="delete_band" parameterClass="int">
+		drop table t_band_board_$band_id$
+	</delete>
+	
+	<delete id="delete_band_seq" parameterClass="int">
+		drop sequence t_band_board_$band_id$_seq
+	</delete>
+	
+	<delete id="delete_band_comment" parameterClass="int">
+		drop table t_band_board_comment_$band_id$
+	</delete>
+	
+	<delete id="delete_band_member" parameterClass="int">
+		drop table t_band_member_$band_id$
+	</delete>
+	
+	<delete id="delete_band_member_seq" parameterClass="int">
+		drop sequence t_band_member_$band_id$_seq
+	</delete>
+	
+	<delete id="delete_band_imgs" parameterClass="int">
+		drop table t_band_board_imgs_$band_id$
+	</delete>
+	
 </sqlMap>

@@ -217,6 +217,7 @@ function mainBody(){
 										<tr>
 											<td width="200">비밀번호</td>
 											<td width="400"><input type="password" name="pw" size="15" maxlength="12" value="${dto.pw}"></td>
+										</tr>
 										<tr>
 											<td width="200">닉네임</td>
 											<td width="400"><input type="text" name="name" size="15" maxlength="12" value="${dto.name}"></td>
@@ -225,10 +226,7 @@ function mainBody(){
 											<td width="200">도메인</td>
 											<td width="400"><input type="text" name="domain" size="15" maxlength="12" value="${dto.domain}">&nbsp;&nbsp;
 												<input type="button" value="중복확인" onClick="confirmDomainClick(this.form)" />&nbsp&nbsp
-												<font color="blue"> * 중복확인 버튼을 클릭</font>
-											</td>
-										</tr>
-										</td>
+												<font color="blue"> * 중복확인 버튼을 클릭</font> </td>
 										</tr>
 										<tr>
 											<td width="200">프로필 사진 등록</td>
@@ -243,7 +241,18 @@ function mainBody(){
 								</form>
 							</div>
 						<div role="tabpanel" class="tab-pane fade" id="profile6" aria-labelledby="profile-tab6">
-							<p>Profile content</p>
+							<center><h1>회원 정보 수정</h1></center>	
+							<form name="myform" action="/tvlog/member/deletePro.trip" method="post">
+								<TABLE cellSpacing=1 cellPadding=1 width="260" border=1 align="center">
+									<TR height="30">
+										<TD width="110" align=center>비밀번호</TD>
+										<TD width="150" align=center><INPUT type=password name="pw" size="15" maxlength="12"></TD>
+									</TR>
+									<TR height="30">
+										<TD colspan="2" align="center"><INPUT type=submit value="회원탈퇴"></TD>
+									</TR>
+								</TABLE>
+							</form>
 						</div>
 					</div>
 				</div>
