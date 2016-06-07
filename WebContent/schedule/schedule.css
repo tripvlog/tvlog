@@ -89,14 +89,15 @@
 	#stock_table td{
 	border : 3px solid #000000;
 	}
-	ul{ 
-  	  list-style:none; 
+	#transportUl{ 
+  	  overflow: auto; 
+  	  list-style-type: none;
    	} 
    	#transportLi {
-   		width:55px;
-   		height:50px;
+   		float : left;
+   		display: inline;
+   		margin-right: 10px;
    	}
-	li {display: inline;}
 	
 	#navlink:hover{
     	color : #6B9900;

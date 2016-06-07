@@ -144,9 +144,11 @@ function initAutocomplete() {
         bounds.extend(place.geometry.location);
       }
       
-      alert(address);  //검색위치의 위도, 경도 구하는 거
+      alert(address+"--"+place.geometry.location.lng());  //검색위치의 위도, 경도 구하는 거
+      //place.geometry.location.lat();  위도
+      //place.geometry.location.lng();  경도
       var loc = document.getElementById('mylocation');
-      loc.innerHTML="<i class='fa fa-hand-o-right' aria-hidden='true'></i> 지명 : "+place.name+" <br /> <i class='fa fa-hand-o-right' aria-hidden='true'></i> 주소 : "+address+" <input type='hidden' value='"+place.geometry.location+"'><input type='hidden' value='"+place.name+"'>";      
+      loc.innerHTML="위도 : "+place.geometry.location.lat()+" 경도 : "+place.geometry.location.lng();      
     });
     //검색된 다수개의 지점을 모두 보여줄 수 있는 크기로 지도를 맞춤
     map.fitBounds(bounds);
@@ -168,5 +170,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&libraries=places&callback=initAutocomplete"
          async defer></script>
+      <div id="kkk">
+      	
+      </div>
   </body>
 </html>

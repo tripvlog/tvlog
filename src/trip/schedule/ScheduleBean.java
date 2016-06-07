@@ -111,6 +111,14 @@ public class ScheduleBean {
 		return "/schedule/schedule-update.jsp";
 	}
 	
+	@RequestMapping("/schedule/schedule-detail-updatepopup.trip")
+	public String detailpopup(HttpServletRequest request,int sd_num){
+		ScheduleDetailDTO dto = (ScheduleDetailDTO)sqlMap.queryForObject("schedule.scheduleDetailpopup", sd_num);
+		
+		request.setAttribute("dto",dto);
+		return "/schedule/schedule-detail-updatepopup.jsp";
+	}
+	
 	@RequestMapping("/schedule/schedule-detail-scheduleUpdate.trip")
 	public String detailUpdate(HttpServletRequest request,ScheduleDetailDTO dto){
 		System.out.println("asfasdfdfaasf");
