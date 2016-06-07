@@ -34,25 +34,8 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button><!-- 상단 메뉴바 -->
-          <a class="navbar-brand" href="/tvlog/main/main.trip">Trip Blog</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/tvlog/band/b_list.trip">밴드 홈</a></li>
-            <li><a href="#">밴드 찾기</a></li>
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+  <jsp:include page="/main/header.jsp" /><br />
+
     <!-- 밴드 목록 보여주기 -->
     <div class="container">
     	<div class="row">
@@ -67,7 +50,7 @@
 			</c:forEach>
 			<a href="/tvlog/band/b_create.trip">
 			<div class="col-md-2" align="center">
-				<img src=/tvlog/img/band/default.jpg width="150" height="150" ><br /><br />
+				<img src="/tvlog/img/band/default.jpg" width="150" height="150" ><br /><br />
 				밴드 만들기
 			</div>
 			</a>

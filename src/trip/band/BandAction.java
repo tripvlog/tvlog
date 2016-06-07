@@ -30,7 +30,6 @@ public class BandAction {
 	public String bandCreatePro(MultipartHttpServletRequest request, HttpSession session, BandDTO dto){
 		
 		MultipartFile b_img = request.getFile("b_img");
-		session.setAttribute("memId", "Test"); // 임의 세션 값 설정
 		dto.setBand_leader((String)session.getAttribute("memId"));
 		sqlMap.insert("band_create", dto);
 		dto.setBand_id((int)sqlMap.queryForObject("band_selectLastId", null));
@@ -79,25 +78,45 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_view.trip")
-	public String bandView(HttpServletRequest request, BandDTO banddto, memberDTO memdto, trip.member.BandListDTO bandlistdto, HttpSession session){
+	public String bandView(HttpServletRequest request, HttpSession session, BandDTO banddto, boardDTO boarddto, memberDTO memdto, trip.member.BandListDTO bandlistdto){
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
 		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
-		bandlistdto.setMember_id((String)session.getAttribute("memId"));
-		List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
 		
+		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
+			bandlistdto.setMember_id((String)session.getAttribute("memId"));
+			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
+			request.setAttribute("band_li st", band_list);
+		}
+		String modify = "";
+		if(request.getParameter("modify") == null){
+			modify = "false";
+		}else{
+			modify = request.getParameter("modify");
+		}
+		if(modify.equals("true")){
+			boarddto = (boardDTO)sqlMap.queryForObject("band_board_select", boarddto);
+			request.setAttribute("modify_board", boarddto);
+			request.setAttribute("modify", "true");
+		}
 		request.setAttribute("band_id", banddto.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
 		request.setAttribute("band", banddto);
-		request.setAttribute("band_list", band_list);
 		return "/band/view_band.jsp";
 	}
 	
 	@RequestMapping("/band/bb_write.trip")
 	public String b_boardWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO boarddto, imgDTO imgdto){
-
+		System.out.println(request.getParameter("modify"));
+		String modify = "";
+		if(request.getParameter("modify") == null){
+			modify = "false";
+		}
+		if(request.getParameter("modify").equals("complete")){
+			sqlMap.update("band_modify_content", boarddto);
+			return "redirect:/band/b_list.trip";
+		}
 		List<MultipartFile> band_board_img = request.getFiles("upload_img");
 		String board_imgs = "";
-		session.setAttribute("memId", "kk"); // 임의 세션 값 설졍
 		boarddto.setBand_board_writer((String)session.getAttribute("memId")); // 밴드 게시물은 작성자의 세션값을 받아 db에 넣음
 		sqlMap.insert("band_board_write", boarddto);
 		
@@ -152,4 +171,5 @@ public class BandAction {
 		sqlMap.delete("band_board_del", imgdto);
 		return "redirect:/band/b_view.trip?band_id=" + imgdto.getBand_id();
 	}
+	
 }

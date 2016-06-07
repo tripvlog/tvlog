@@ -34,6 +34,10 @@
 		select board_img from t_band_board_imgs_$band_id$ where board_num = #board_num#
 	</select>
 	
+	<select id="band_board_select" resultClass="trip.band.boardDTO" parameterClass="trip.band.boardDTO">
+		select * from t_band_board_$band_id$ where band_board_num = #band_board_num#
+	</select>
+	
 	<select id="band_my_list" resultClass="trip.member.BandListDTO" parameterClass="trip.member.BandListDTO">
 		select * from t_member_band_$member_id$
 	</select>
@@ -46,6 +50,10 @@
 
 	<update id="band_board_img" parameterClass="trip.band.boardDTO">
 		update t_band_board_$band_id$ set band_board_img = #band_board_img# where band_board_num = #band_board_num#
+	</update>
+	
+	<update id="band_modify_content" parameterClass="trip.band.boardDTO">
+		update t_band_board_$band_id$ set band_board_content = #band_board_content# where band_board_num = #band_board_num#
 	</update>
 
 <!-- =============================================================================== -->
@@ -92,7 +100,7 @@
 	</insert>
 	
 	<insert id="band_board_write" parameterClass="trip.band.boardDTO">
-		insert into t_band_board_$band_id$(band_board_num, band_board_notice, band_board_writer, band_board_content, band_board_readcount, band_board_reg) values(t_band_board_$band_id$_seq.nextval, 0, #band_board_writer#, #band_board_content#, 0, sysdate)
+		insert into t_band_board_$band_id$(band_board_num, band_board_writer, band_board_content, band_board_reg) values(t_band_board_$band_id$_seq.nextval, #band_board_writer#, #band_board_content#, sysdate)
 	</insert>
 	
 	<insert id="band_board_insert_img" parameterClass="trip.band.imgDTO">

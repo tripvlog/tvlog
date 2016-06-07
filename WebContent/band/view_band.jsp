@@ -43,31 +43,23 @@
 			location.href="/tvlog/band/bb_delete.trip?band_id=${band_id}&board_num=" + num;
 		}
 	}
+	
+	function error_login(session){
+		var id = session;
+		var content = document.getElementById("board_content").value;
+		if(id == null){
+			alert("로그인이 필요합니다");
+			return false;
+		}
+		if(content == ""){
+			alert("내용을 입력해주세요");
+			document.getElementById("board_content").focus();
+			return false;
+		}
+	}
 </script>
 <body>
-	<nav class="navbar navbar-fixed-top navbar-inverse">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/tvlog/main/main.trip">Trip Blog</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/tvlog/band/b_list.trip">밴드 홈</a></li>
-					<li><a href="#">밴드 찾기</a></li>
-				</ul>
-			</div>
-			<!-- /.nav-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
-	<!-- /.navbar -->
+	<jsp:include page="/main/header.jsp" /><br />
 
 <!-- 내용시작 -->
 	<div class="container">
@@ -76,44 +68,56 @@
 		
 			<div class="col-xs-12 col-sm-9">
 				<!-- 밴드에 게시글 작성 -->
-				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data">
+				<c:if test="${modify != true}">
+				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data" onsubmit="return error_login('${sessionScope.memId}')">
 					
 					<input type="hidden" name="band_id" value="${band.band_id}">
-					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content"></textarea><br />
+					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content" id="board_content"></textarea><br />
 					<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
 					
 				</form>
 				
 					<hr style="color:red">
-					<c:forEach var="i" items="${b_board_contents}">
+					<c:forEach var="v" items="${b_board_contents}">
 
-					<div><!-- 내 게시물만 수정 및 삭제 가능 -->
-						<c:if test="${sessionScope.memId == i.band_board_writer}">
+					<div><!-- 작성자랑 현재 로그인한 세션 값 비교하여 일치하면 수정 및 삭제 기능 추가 -->
+						<c:if test="${sessionScope.memId == v.band_board_writer}">
 							<div class="dropdown" id="mydropdown">
-								<img src="/tvlog/img/member/${i.path}" width="50" height="50">${i.name}
+								<img src="/tvlog/img/member/${v.path}" width="50" height="50">${v.name}
 								<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 								<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">수정하기</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" onclick="board_delete(${i.band_board_num})">삭제하기</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/band/b_view.trip?band_id=${band_id}&band_board_num=${v.band_board_num}&modify=true">수정하기</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" onclick="board_delete(${v.band_board_num})">삭제하기</a></li>
 								</ul>
 							</div>
 						</c:if>
-						
-						<c:if test="${sessionScope.memId != i.band_board_writer}">
-							<img src="/tvlog/img/member/${i.path}" width="50" height="50">${i.name}
+						<!-- 작성자가 아닐경우 읽기만 가능 -->
+						<c:if test="${sessionScope.memId != v.band_board_writer}">
+							<img src="/tvlog/img/member/${v.path}" width="50" height="50">${v.name}
 						</c:if>
 						<br />
-							${i.band_board_num} : band_board_num<br />
-							${i.band_board_notice} : band_board_notice<br />
-							${i.band_board_writer} : band_board_writer<br />
-							${i.band_board_img} : band_board_img<br />
-							${i.band_board_content} : band_board_content<br />
-							${i.band_board_readcount} : band_board_readcount<br />
-							${i.band_board_reg} : band_board_reg<br /><br />
+							${v.band_board_num} : band_board_num<br />
+							${v.band_board_notice} : band_board_notice<br />
+							${v.band_board_writer} : band_board_writer<br />
+							${v.band_board_img} : band_board_img<br />
+							${v.band_board_content} : band_board_content<br />
+							${v.band_board_readcount} : band_board_readcount<br />
+							${v.band_board_reg} : band_board_reg<br /><br />
 						</div>
 					</c:forEach>
+			</c:if><!-- 내용 수정 시작 -->
+			<c:if test="${modify == true}">
+				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="band_id" value="${band_id}">
+					<input type="hidden" name="band_board_num" value="${modify_board.band_board_num}">
+					<input type="hidden" name="modify" value="complete">
+					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content">${modify_board.band_board_content}</textarea><br />
+					<input type="file" name="upload_img" multiple>
+					<input type="submit" value="저장"> <input type="reset" value="취소"> <input type="button" value="뒤로" onclick="javascript:window.location='/tvlog/band/b_view.trip?band_id=${band_id}'">
+				</form>
+			</c:if><!-- 내용 수정 끝 -->
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 <!-- 내용 끝 -->
@@ -130,9 +134,13 @@
 					<a href="##" class="list-group-item">2</a>
 					<a href="###" class="list-group-item">3</a>
 					<hr>
-					내 밴드<br />
-					<img src="/tvlog/img/band/${band.band_img}" width="50" height="50">&nbsp;${band.band_name}
+					<c:if test="${sessionScope.memId != null}"><!-- 로그인이 되어있으면 내가 가입한 밴드를 보여줌 -->
+							내 밴드<br />
+						<c:forEach var="band_list" items="${band_list}">
+							<img src="/tvlog/img/band/${band_list.band_img}" width="50" height="50">&nbsp;${band_list.band_name}
+						</c:forEach>
 					<hr>
+					</c:if><!-- 다른밴드 추천 -->
 					이런 밴드는 어떠세요?<br />
 					<a href="####">6</a>
 				</div>
