@@ -11,5 +11,6 @@
 	<sqlMap resource="/sql/DiarySQL.xml" />
 	<sqlMap resource="/sql/bandSQL.xml" />
 	<sqlMap resource="/sql/postSQL.xml" /> 
-	<sqlMap resource="/sql/AdminSQL.xml" /> 
+	<sqlMap resource="/sql/AdminSQL.xml" />
+	<sqlMap resource="/sql/scheduleSQL.xml" />  
 </sqlMapConfig>

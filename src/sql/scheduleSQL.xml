@@ -3,8 +3,52 @@
 
 <sqlMap namespace="schedule">
 	<typeAlias alias="schedule" type="trip.schedule.ScheduleDTO"/>
+	<typeAlias alias="scheduleDetail" type="trip.schedule.ScheduleDetailDTO"/>
 	<insert id="scheduleInsert" parameterClass="schedule">
 		insert into t_schedule(s_num,s_writer,s_title,s_startday,s_theme,s_step)  
 		values(t_schedule_seq.nextval,#s_writer#,#s_title#,to_date(#s_startday#,'yyyy/mm/dd'),#s_theme#,#s_step#)
 	</insert>
+	
+	<select id="scheduleMax" resultClass="int">
+		select max(s_num) from t_schedule
+	</select>
+	
+	
+	<insert id="scheduleDetailInsert" parameterClass="scheduleDetail">
+		insert into t_schedule_detail  
+		values(t_schedule_detail_seq.nextval,
+					#s_num#,
+					#sd_startpoint#,
+					#sd_endpoint#,
+					#sd_memo#,
+					#sd_transport#,
+					#sd_orgfile#,
+					#sd_savfile#,
+					#sd_budget#,
+					#sd_map#,
+					#sd_range#,
+					#sd_status#,
+					#sd_tdid#
+					)
+	</insert>
+	<select id="scheduleDetailList" resultClass="scheduleDetail" parameterClass="int">
+		select * from t_schedule_detail where s_num=#s_num#
+	</select>
+	
+	<select id="scheduleCount" resultClass="int" parameterClass="String">
+		select count(*) from t_schedule where s_writer=#s_writer#
+	</select>
+	
+	<select id="scheduleList" resultClass="schedule" parameterClass="String">
+		select * from t_schedule where s_writer=#s_writer#
+	</select>
+	
+	<update id="scheduleUpdate" parameterClass="schedule">
+		update t_schedule set s_info=#s_info#, s_content=#s_content#, s_startday=#s_startday# , s_endday=#s_endday#,
+		s_theme=#s_theme#,s_membercount=#s_membercount# where s_num=#s_num#
+	</update>
+	
+	<select id="scheduleContent" resultClass="schedule" parameterClass="int">
+		select * from t_schedule where s_num=#s_num#
+	</select>
 </sqlMap>

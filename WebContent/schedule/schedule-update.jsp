@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,13 +21,27 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="/tvlog/schedule/schedule.js"></script>
+<style type="text/css">
+	#navlink:hover{
+    	color : #6B9900;
+    	font-weight : bold;
+    	font-size : 120%;
+    }		
+	body {
+		padding-top: 2px;
+	}
+	#content{
+		width: 1200px;
+	}
 
+</style>
 <script type="text/javascript">
 	var objTd;
 	function korea(id,icon){
 		objTd = icon.parentNode;		
 	}	
-
+	
+	
 	
 	$(document).ready(function() {
 		var $body = $(document.body);
@@ -47,79 +62,93 @@
          ga('create', 'UA-40413119-1', 'bootply.com');
          ga('send', 'pageview');
 </script>
-
+<script>
+function mainBody(){
+    $.ajax({
+        type: "post",
+        url : "/tvlog/member/loginForm.trip",
+       
+        success: mainSuccess,	// 페이지요청 성공시 실행 함수
+        error: mainError	//페이지요청 실패시 실행함수
+ 	});
+}
+function mainSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
+    $("#loginSpace").html(aaa);
+    console.log(resdata);
+}
+function mainError(){
+    alert("Error");
+}
+</script>
 <title>트립블로그</title>
 </head>
-<body>
+<body onload="mainBody()" style="width:1200">
 <div class="container" id="container">
-	<header class="navbar navbar-bright navbar-fixed-top" role="banner" id="top-banner">
-		<div class="container">
-			<div class="navbar-header">
-				<!-- 상단 메뉴 시작 -->
-							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse"></button>
-							<a class="navbar-brand" href="#">Trip Blog</a>
-						
-							<ul class="nav navbar-nav">
-								<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
-								<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
-								<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
-								<li class="#about"><a href="#" id="navlink" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">일정 만들기</a></li>
-								<li class="#about"><a href="#"></a>
-							</ul>
-				<!-- 상단 메뉴 끝 -->
-			</div>
-		</div>
-	</header>
+	<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0">
+    	<div class="container-fluid">
+    		<div class="navbar-header" style="float: left;">
+    			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+    			</button>
+    			<a class="navbar-brand" href="#">Trip Blog</a>
+    		</div>
+    		<div class="collapse navbar-collapse"  style="float:left;">
+    			<ul class="nav navbar-nav">
+    				<li class="#about"><a href="#" id="navlink">여행일정 찾기</a></li>
+    				<li class="#about"><a href="#" id="navlink">명소 찾기</a></li>
+    				<li class="#about"><a href="#" id="navlink">커뮤니티</a></li>
+    				<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#scheduleModal" data-whatever="@mdo">일정 만들기</a></li>  						
+    			</ul>
+    		</div>
+    		<div class="collapse navbar-collapse"  style="float:right;margin-top:20" id="loginSpace">
+    		</div>
+    	</div>
+    </nav>
 	<!-- 여행 일정 제목 들어갈 곳 -->
 	<div id="masthead">
-		<h1>${dto.s_title}</h1>
+		<p>${dto.s_title}</p>
 	</div>
 	<!-- -----------일정만들기 --- 모달 시작 -->
-				<div class="modal fade" id="exampleModal" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content" id="modalSize">
-							<div class="modal-header">
-								<form action="" method="post">
-									<div class="panel panel-success">
-										<div class="panel-heading">
-											<h3>
-												새 일정 만들기
-												</h2>
-										</div>
-										<div class="panel-body">
-											<h4>여행 제목</h4>
-											<input type="text" name="subject" class="form-control" placeholder="예 : 5박 6일 유럽 명소여행" />
-										</div>
-										<div class="panel-body">
-											<h4>여행 단계</h4>
-											<input type="radio" name="step" />여행 전 
-											<input type="radio" name="step" />여행 후
-										</div>
-										<div class="panel-body" id="date">
-											<h4>여행 시작날짜</h4>
-											<input type="date" name="date" class="form-control hasDatepicker" size="10" />
-										</div>
-										<div class="panel-body">
-											<h4>여행 테마</h4>
-											<input type="checkbox" value="theme" /> 나홀로여행
-											<input type="checkbox" value="theme" /> 친구와 함께 
-											<input type="checkbox" value="theme" /> 가족과 함께 
-											<input type="checkbox" value="theme" /> 단체여행 
-											<input type="checkbox" value="theme" /> 패키지 여행 
-											<input type="checkbox" value="theme" /> 커플
-										</div>
-										<div class="panel-body">
-											<input type="submit" value="새 일정 만들기" class="btn btn-success" />
-											<input type="button" value="취소" class="btn btn-warning" />
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
+				<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    		<div class="modal-dialog" >
+    		<div class="modal-content" id="modalSize">
+      		<div class="modal-header" >
+		    	<form action="/tvlog/schedule/schedule-new.trip" method="post">
+				<div class="panel panel-success" >
+					<div class="panel-heading">
+						<h3>새 일정 만들기</h3>
+					</div>
+					<div class="panel-body" >
+						<h4>여행 제목</h4>
+						<input type="text" name="subject" class="form-control"  placeholder="예 : 5박 6일 유럽 명소여행" />
+					</div>
+					<div class="panel-body">
+						<h4>여행 단계</h4>
+						<input type="radio" name="step" />여행 전
+						<input type="radio" name="step" />여행 후
+					</div>
+					<div class="panel-body" id="date">
+						<h4>여행 시작날짜</h4>
+						<input type="date" name="date" class="form-control hasDatepicker"  size="10" />
+					</div>
+					<div class="panel-body">
+						<h4>여행 테마</h4>
+						<input type="checkbox" value="theme" /> 나홀로여행
+						<input type="checkbox" value="theme" /> 친구와 함께 
+						<input type="checkbox" value="theme" /> 가족과 함께
+						<input type="checkbox" value="theme" /> 단체여행
+						<input type="checkbox" value="theme" /> 패키지 여행 
+						<input type="checkbox" value="theme" /> 커플 
+					</div>
+					<div class="panel-body">
+						<input type="submit" value="새 일정 만들기"  class="btn btn-success" />
+						<input type="button" value="취소" data-dismiss="modal" class="btn btn-warning"  />
 					</div>
 				</div>
+				</form>
+			</div>
+			</div>
+			</div>
+		</div>
 				<!-- -----------일정만들기 --- 모달 끝 -->
 &nbsp;
 	<div class="row" id="containerTwo">
@@ -127,7 +156,7 @@
 		<div class="col-md-2" id="savecontainer">
 			<div id="btn-group" class="btn-group" role="group" aria-label="">
 				<button type="button" class="btn btn-default btn-lg" id="scheduleSave" style="WIDTH:81pt" onclick="scheduleSave()"><i class="fa fa-floppy-o" aria-hidden="true"></i><center> 저장하기</center></button>
-				<button type="button" class="btn btn-default btn-lg" style="WIDTH:55pt"><i class="fa fa-times" aria-hidden="true"></i><center> 취소</center></button>
+				<button type="button" class="btn btn-default btn-lg" style="WIDTH:55pt" onclick="window.location='/tvlog/schedule/schedule-content.trip?s_num=${dto.s_num}'"><i class="fa fa-times" aria-hidden="true"></i><center> 취소</center></button>
 			</div>
 			<p></p>
 			<div id="btn-group2" class="btn-group" role="group" aria-label="">
@@ -214,10 +243,10 @@
 			<input type="hidden" name="s_num" value="${dto.s_num}" />
 		<div class="container-fluid" id="container-fluid">
 			<div class="row" id="row1">
-				<input type="text" id="planMessage" name="s_info" class="form-control plan-brief" placeholder="일정에 대한 간단한 설명" maxlength="300" value="" />
+				<input type="text" id="planMessage" name="s_info" class="form-control plan-brief" placeholder="일정에 대한 간단한 설명" maxlength="300" value="${dto.s_info}" />
          	</div>
          	<div class="row" id="row2">
-         		<br /><textarea class="form-control"  name="s_content" id="planDetailMessage" placeholder="일정에 대한 자세한 설명"  maxlength="20000"></textarea>
+         		<br /><textarea class="form-control"  name="s_content" id="planDetailMessage" placeholder="일정에 대한 자세한 설명"  maxlength="20000">${dto.s_content}</textarea>
 			</div>
 			&nbsp;
 			<div class="row" id="startschedule">
@@ -232,9 +261,9 @@
 				<div class="col-md-1"></div>
 			</div>
 			<div class="row" id="startschedule">
-				<div class="col-md-2" id="tripstart"><input id="tourStartDay" type="date" name="s_startday" value="${dto.s_startday}" class="form-control hasDatepicker"  size="10"/></div>
-				<div class="col-md-1"><input type="number" name="s_endday" id="count" value="1" onchange="test()" min="1" class="form-control"/></div>
-				<div class="col-md-1"><input type="number"  name="s_membercount" class="form-control" min="1" value="1" id="persons" /></div>
+				<div class="col-md-2" id="tripstart"><input id="tourStartDay" type="date" name="s_startday" value="${dto.s_startday}" class="form-control hasDatepicker"  size="10"/>	</div>
+				<div class="col-md-1"><input type="number" name="s_endday" id="count" value="${dto.s_endday}" onchange="test()" min="1" class="form-control"/></div>
+				<div class="col-md-1"><input type="number"  name="s_membercount" class="form-control" min="1" value="${dto.s_membercount }" id="persons" /></div>
 				<div class="col-md-2">
 					<c:if test="${dto.s_step == 0 }">
 							<input type="radio" name="s_step" value="0" checked />여행 전 
@@ -276,16 +305,52 @@
 			
 			<p></p>
 			<table id='stock_table' class="table table-bordered" border="2">
-				<tr><td width="100" >ALL</td><td>&nbsp;</td></tr>
+				<tr><td width="100" >ALL</td><td>1 Day</td>
+					<c:forEach var="i" begin="2" end="${dto.s_endday}" step="1" varStatus="k">
+						<td>${i} Day</td>
+					</c:forEach>
+				</tr>
 
 				<c:forEach var="i" begin="1" end="24" step="1" varStatus="k">
-					<tr><td rowspan="2">${i}시</td><td  id="1_${i}" onmouseover="aa(${i});" onmouseout="bb(${i});">
-						<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}" whatever="1_${i}" data-toggle="modal" data-target="#detail-create"></i>
-						</td>
+					<tr><td rowspan="2">${i}시</td>
+						<c:forEach var="j" begin="1" end="${dto.s_endday}" step="1" varStatus="k">
+							<td  id="${j}_${i}" onmouseover="aa(${j},${i});" onmouseout="bb(${j},${i});">
+								<c:set var="tdid" value="${j}_${i}" />
+								<c:set var="doneLoop" value="false" />
+								<c:forEach items="${detaillist}" var="detailDTO" varStatus="status">
+									<c:if test="${not doneLoop}"> 
+										<c:if  test="${detailDTO.sd_tdid ==  tdid}">
+											나와라...${detailDTO.sd_tdid}
+											<c:set var="doneLoop" value="true"/> 
+										</c:if>
+									</c:if>
+								</c:forEach>
+								<c:if test="${not doneLoop}"> 		
+									<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${j}${i}" whatever="${j}_${i}" data-toggle="modal" data-target="#detail-create" onclick="korea('${j}_${i}',this);"></i>
+									<c:set var="doneLoop" value="false"/> 
+								</c:if>
+							</td>
+						</c:forEach>
 					</tr>
-	   				<tr><td onmouseover="aa(${i}${i});" onmouseout="bb(${i}${i});"  id="1_${i}_30">
-	   						<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${i}${i}" whatever="1_${i}_30" data-toggle="modal" data-target="#detail-create" onclick="korea('1_${i}_30',this);"></i>
-	   					</td>
+	   				<tr>
+	   				<c:forEach var="j" begin="1" end="${dto.s_endday}" step="1" varStatus="k">
+		   				<td id="${j}_${i}_30" onmouseover="aa(${j},${i}${i});" onmouseout="bb(${j},${i}${i});"  >
+		   						<c:set var="tdid" value="${j}_${i}_30" />
+		   						<c:set var="doneLoop" value="false" />
+								<c:forEach items="${detaillist}" var="detailDTO">
+									<c:if test="${not doneLoop}"> 
+										<c:if  test="${detailDTO.sd_tdid ==  tdid}">
+											나와라...${detailDTO.sd_tdid}
+											<c:set var="doneLoop" value="true"/> 
+										</c:if>
+									</c:if>
+								</c:forEach>
+								<c:if  test="${not doneLoop}">
+											<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${j}${i}${i}" whatever="${j}_${i}_30" data-toggle="modal" data-target="#detail-create" onclick="korea('${j}_${i}_30',this);"></i>
+											<c:set var="doneLoop" value="false"/> 
+								</c:if>
+		   					</td>
+		   				</c:forEach>
 	   				</tr>
 				</c:forEach>
 			</table>

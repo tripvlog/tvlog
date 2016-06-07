@@ -9,6 +9,17 @@ function test(){
 		staticNum = colCount;
 	}
 }
+
+function startDay(dayCount){
+	alert(dayCount);
+	co = parseInt(dayCount);
+	var i = 0;
+	while(i < co){
+	    add_col();
+	    i++;
+	}
+}
+
 function add_col() 
 {
 	var colCount = document.getElementById('count').value;
@@ -48,6 +59,7 @@ function add_col()
 	    	icon.style.visibility = "hidden";
 	    });
 	}
+	return true ;
 }
 
 function del_col() {
@@ -62,13 +74,13 @@ function del_col() {
         }
     }
 }
-function aa(idNum){
-	icon = document.getElementById("plus"+idNum);
+function aa(j,idNum){
+	icon = document.getElementById("plus"+j+""+idNum);
 	icon.style.visibility = "visible";
 }
-function bb(idNum){
+function bb(j,idNum){
 	
-	icon = document.getElementById("plus"+idNum);
+	icon = document.getElementById("plus"+j+""+idNum);
 	icon.style.visibility = "hidden";
 }
 
@@ -81,15 +93,10 @@ function mymemo(event,td){
 	my.style.left=(parseInt(event.clientX)-380)+"px";
 }
 
-
-
-
-
 function scheduleSave() {
-	//저장하기 버튼 누르면 보여줄 화면
+	alert("저장");
+	document.scheduleUpdate.submit();
 }
-
-
 
 
 function btnicon1(){
