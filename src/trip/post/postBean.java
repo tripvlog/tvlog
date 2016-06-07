@@ -97,20 +97,14 @@ public class postBean {
 	       list = sqlMapClientTemplate.queryForList("post.friendPost", dto); 
 	     
 	       }else if(id!=null){
-	    	 
-	    	 //  ldto = sqlMapClientTemplate.queryForList("post.public_2", id);
-	    	  // sql 조인 기능 찾기 전에 친구 테이블을 리스트로 담아 id값에 전부 담으려고 했을 때 사용했던 쿼리 
+	    	   int count =(Integer)sqlMapClientTemplate.queryForObject("member_friendCheck", dto);
 	    	   
-	    	   list =sqlMapClientTemplate.queryForList("post.sessionFriend", friend_id);
-	       
-	    	/*   for(int i = 0; i <= ldto.size(); i++){
-	    		   
-	    		  id = id + (" or id='"+ldto.get(i).getFriend_id()+"'");
-	    		  System.out.println("반복문="+id);
-	    	list =sqlMapClientTemplate.queryForList("post.sessionList", id);
-	    		System.out.println("리스트의끝="+list);
-	    		  //   list = sqlMapClientTemplate.queryForList("post.public_4", id);
-	       }*/}
+	    	   if(count ==1){
+	    	   list =sqlMapClientTemplate.queryForList("post.sessionFriend", friend_id);}
+	    	   else if(count != 1){
+	    	       list = sqlMapClientTemplate.queryForList("post.friendPost", dto); 	    		   
+	    	   }
+	    	}
 	       int totalCount = list.size(); 
 	      pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
 	      String pagingHtml = page.getPagingHtml().toString();
@@ -662,7 +656,84 @@ public class postBean {
     	  sqlMapClientTemplate.delete("post.deleteComment", dto);
     	  return "redirect:/post/postList.trip";
       }
-      
-      
-   
+      @RequestMapping("/post/newFriend.trip")
+      public String newFriend(HttpSession session, String id, String friend_id, HttpServletRequest request){
+    	  id= (String)session.getAttribute("memId");
+    	  request.setAttribute("id", id);
+    	  request.setAttribute("friend_id", friend_id);
+    	  return "/post/newFriend.jsp";
+      }
+      //친구신청 한 아이디에 0번, 받은 아이디에 1번을 friend_state 에 넣는다
+      @RequestMapping("/post/newFriendPro.trip")
+      public String newFriendPro(boardVO dto){
+    	
+    	  int count =(Integer)sqlMapClientTemplate.queryForObject("member_friendCheck", dto);
+    	  System.out.println("친구추가=="+dto.getId());
+    	  System.out.println("친구추가=="+dto.getFriend_id());
+    	
+    	  if(count==0){
+    		  sqlMapClientTemplate.insert("member_sendfriend", dto);
+    		  sqlMapClientTemplate.insert("member_getfriend", dto);
+    	  }else{
+    		  return "/post/friendFail.jsp";
+    	  }
+    	  return "/post/postList.jsp";
+      }
+      //친구관리창
+      @RequestMapping("/post/friendManage.trip") 
+      public String friendManage(boardVO dto, HttpSession session, HttpServletRequest request){
+    	  String id = (String)session.getAttribute("memId");
+    	  List<boardVO> list = null;
+    	  List<boardVO> list2 = null;
+    	  List<boardVO> list3 = null;
+    	  list=sqlMapClientTemplate.queryForList("member_selectFriend1", id);
+    	  //받은 친구 신청(1번) 리스트에 담기
+    	  int count = (Integer)sqlMapClientTemplate.queryForObject("member_selectFriendcount1", id);
+    	  //받은 친구 신청 개수 count에 담기
+    	  list2=sqlMapClientTemplate.queryForList("member_selectFriend0", id);
+    	  //내가 한 친구 신청 list2 에 담기
+    	  int count2 = (Integer)sqlMapClientTemplate.queryForObject("member_selectFriendcount0", id);
+    	  //내가 한 친구 신청 count2에 담기
+    	  list3=sqlMapClientTemplate.queryForList("member_selectFriend2", id);
+    	  // 친구수락된 목록 뽑아 담기
+    	  int count3 = (Integer)sqlMapClientTemplate.queryForObject("member_selectFriendcount2", id);
+    	  request.setAttribute("list", list);
+    	  request.setAttribute("list2", list2);
+       	  request.setAttribute("list3", list3);
+    	  request.setAttribute("count", count);
+    	  request.setAttribute("count2", count2);
+    	  request.setAttribute("count3", count3);
+    	  
+
+    	  return "/post/friendManage.jsp";
+      }//친구신청 수락
+   @RequestMapping("/post/okFriend.trip")
+   public String okFriend(HttpSession session, boardVO dto){
+	   String id = (String)session.getAttribute("memId");
+	   dto.setId(id);
+	   sqlMapClientTemplate.update("member_okfriend1", dto);
+	   sqlMapClientTemplate.update("member_okfriend2", dto);
+	   
+	   return "redirect:/post/friendManage.trip";
+   }
+   //친구신청 거절
+   @RequestMapping("/post/noFriend.trip")
+   public String noFriend(HttpSession session, boardVO dto){
+	   String id = (String)session.getAttribute("memId");
+	   dto.setId(id);
+	   sqlMapClientTemplate.delete("member_nofriend1", dto);
+	   sqlMapClientTemplate.delete("member_nofriend2", dto);
+	   
+	   return "redirect:/post/friendManage.trip";
+   }
+   //친구 끊기
+   @RequestMapping("/post/deleteFriend.trip")
+   public String deleteFriend(HttpSession session, boardVO dto){
+	   String id = (String)session.getAttribute("memId");
+	   dto.setId(id);
+	   sqlMapClientTemplate.delete("member_nofriend1", dto);
+	   sqlMapClientTemplate.delete("member_nofriend2", dto);
+	   
+	   return "redirect:/post/friendManage.trip";
+   }
 }

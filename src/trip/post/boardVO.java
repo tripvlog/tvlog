@@ -22,9 +22,15 @@ public class boardVO {
 	private String select_p;
 	private String p_public;
 	private String friend_id;
-	
+	private Date friend_reg;
 
 	
+	public Date getFriend_reg() {
+		return friend_reg;
+	}
+	public void setFriend_reg(Date friend_reg) {
+		this.friend_reg = friend_reg;
+	}
 	public String getFriend_id() {		return friend_id;	}
 	public void setFriend_id(String friend_id) {		this.friend_id = friend_id;	}
 	public String getP_public() {		return p_public;	}

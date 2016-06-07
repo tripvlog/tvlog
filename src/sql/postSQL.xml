@@ -17,14 +17,14 @@
 </select>
 
 <select id="sessionList" parameterClass="string" resultClass="dto">
-<![CDATA[select * from(select a.* from (select * from t_post where p_public < 4) a, (select * from t_friend where id='test') b 
+<![CDATA[select * from(select a.* from (select * from t_post where p_public < 5) a, (select * from t_member_friend_$id$) b 
 where a.id = b.friend_id
 union
 select * from t_post where p_public < 2) order by regdate desc]]>
 </select>
 
 <select id="sessionFriend" parameterClass="String" resultClass="dto">
-	<![CDATA[select * from t_post where id=#friend_id# and p_public <3 order by no desc]]>
+	<![CDATA[select * from t_post where id=#friend_id# and p_public <5 order by no desc]]>
 </select>
 
 <select id="friendPost" parameterClass="dto" resultClass="dto">
@@ -32,7 +32,7 @@ select * from t_post where p_public < 2) order by regdate desc]]>
 </select>
 
 <select id="friendOnly" parameterClass="String" resultClass="dto">
-<![CDATA[ select * from(select a.* from (select * from t_post where p_public < 4) a, (select * from t_friend where id=#id#) b 
+<![CDATA[ select * from(select a.* from (select * from t_post where p_public < 5) a, (select * from t_member_friend_$id$) b 
 where a.id = b.friend_id) order by no desc]]>
 </select>
 

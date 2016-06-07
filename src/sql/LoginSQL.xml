@@ -56,7 +56,7 @@
 	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
 		
 	<insert id="member_create_friend_list" parameterClass="trip.member.LoginDTO">
-		create table t_member_friend_$id$(friend_no number, friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number, friend_reg date default sysdate)
+		create table t_member_friend_$id$(friend_no number, friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number default '0', friend_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 친구 목록 -->
 
 	<update id="joinUpdate" parameterClass="trip.member.LoginDTO">
@@ -74,5 +74,57 @@
 	<delete id="delete" parameterClass="String">
 		delete from t_member where id=#dbid#
 	</delete>
+	
+	<select id="member_friendCheck" parameterClass="trip.post.boardVO" resultClass="int">
+		select count(*) from t_member_friend_$id$ where friend_id=#friend_id#
+	</select>
+	
+	<insert id="member_sendfriend" parameterClass="trip.post.boardVO">
+		insert into t_member_friend_$id$ (friend_id, friend_state) values(#friend_id#, '0')
+	</insert>
 
+	<insert id="member_getfriend" parameterClass="trip.post.boardVO">
+		insert into t_member_friend_$friend_id$ (friend_id, friend_state) values(#id#, '1')
+	</insert>	
+	
+	<select id="member_selectFriend1" parameterClass="String" resultClass="trip.post.boardVO">
+		select * from t_member_friend_$id$ where friend_state=1 order by friend_reg desc
+	</select>
+
+	<select id="member_selectFriendcount1" parameterClass="String" resultClass="int">
+		select count(*) from t_member_friend_$id$ where friend_state=1 order by friend_reg desc
+	</select>
+
+	<select id="member_selectFriend0" parameterClass="String" resultClass="trip.post.boardVO">
+		select * from t_member_friend_$id$ where friend_state=0 order by friend_reg desc
+	</select>
+	
+	<select id="member_selectFriendcount0" parameterClass="String" resultClass="int">
+		select count(*) from t_member_friend_$id$ where friend_state=0 order by friend_reg desc
+	</select>
+		
+	<select id="member_selectFriend2" parameterClass="String" resultClass="trip.post.boardVO">
+		select * from t_member_friend_$id$ where friend_state=2 order by friend_reg desc
+	</select>
+	
+	<select id="member_selectFriendcount2" parameterClass="String" resultClass="int">
+		select count(*) from t_member_friend_$id$ where friend_state=2 order by friend_reg desc
+	</select>
+	
+	<update id="member_okfriend1" parameterClass="trip.post.boardVO">
+		update t_member_friend_$id$ set friend_state=2 where friend_id=#friend_id#
+	</update>
+
+	<update id="member_okfriend2" parameterClass="trip.post.boardVO">
+		update t_member_friend_$friend_id$ set friend_state=2 where friend_id=#id#
+	</update>
+
+	<delete id="member_nofriend1" parameterClass="trip.post.boardVO">
+		delete from t_member_friend_$id$ where friend_id=#friend_id#
+	</delete>
+
+	<delete id="member_nofriend2" parameterClass="trip.post.boardVO">
+		delete from t_member_friend_$friend_id$ where friend_id=#id#
+	</delete>	
+	
 </sqlMap>

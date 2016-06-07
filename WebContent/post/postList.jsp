@@ -159,15 +159,16 @@
 </script>
 
 	<script type="text/javascript">
-		function open_win_noresizable (url, name) {
-			var oWin = window.open(url, name, "scrollbars=no,status=no,resizable=no,width=300,height=150");
-			var abc = url;
-		}
+	function OpenWindow(url,intWidth,intHeight) { 
+	      window.open(url, "_blank", "width="+intWidth+",height="+intHeight+",resizable=1,scrollbars=1") ; 
+	} 
 	</script>
 
 </head>
   
   <body>
+
+
   	<div id="contain">
      <table border="0" cellspacing="0" cellpadding="2">
         <tr>
@@ -181,7 +182,7 @@
 	    		<button type="button" onClick="javascript:location.href='/tvlog/post/postList.trip'" class="btn btn-success">전체포스트</button>
 	    		<button type="button" onClick="javascript:location.href='/tvlog/post/friendOnly.trip'" class="btn btn-success">친구포스트</button>
 	  	  		<button type="button" onClick="javascript:location.href='/tvlog/post/mypost.trip'" class="btn btn-success">내 포스트</button>
-	  	  		<button type="button" class="btn btn-success">다운로드</button>
+	  	  		<button type="button" onClick="javascript:OpenWindow('friendManage.trip?','600','340')" class="btn btn-success">친구 관리</button>
 	  			</div>
 	  			</div>
 	  		</c:if>
@@ -214,7 +215,7 @@
 								<div class="dropdown"  style="float:left">
 			  						<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">${dto.id} <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:OpenWindow('newFriend.jsp?friend_id=${dto.id }','470','340')">친구 추가</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:OpenWindow('newFriend.trip?friend_id=${dto.id }','470','340')">친구 추가</a></li>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/diary/frienddiary.trip?friend_id=${dto.id}">다이어리</a></li>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
@@ -239,10 +240,10 @@
 						<div class="container">
 							<div class="dropdown">
 			  					<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">			
-								<h4 class="modal-title" id="myModalLabel">${dto.id }<span class="caret"></span></a></h4>
+								<h4 class="modal-title" id="myModalLabel">${dto.id }<span class="caret"></h4></span></a>
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">친구 추가</a></li>
-	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">다이어리</a></li>
+	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:OpenWindow('newFriend.trip?friend_id=${dto.id }','470','340')">친구 추가</a></li>
+	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/diary/frienddiary.trip?friend_id=${dto.id}">다이어리</a></li>
 	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
 	    							<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/loginForm.trip">일정</a></li>
 	   							</ul>
