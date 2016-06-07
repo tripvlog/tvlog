@@ -41,8 +41,55 @@
 		objTd = icon.parentNode;		
 	}	
 	
+	function detailSave(form){
+		tdid = objTd.getAttribute('id');
+		 $.ajax({
+	 	        type: "post",
+	 	        url : "/tvlog/schedule/schedule-detail-transport.trip",
+	 	       data: {	// url 페이지도 전달할 파라미터
+	 	    	    sd_tdid : tdid, 
+	 	    	    s_num : $('#s_num').val(),
+	 	    	    sd_status : $('#sd_status').val(),
+	 	    	    sd_startpoint : $('#from_0').val(),
+		        	sd_endpoint  : $('#to_0').val(),
+		        	sd_memo  : $('#memo_0').val(),
+		        	sd_budget  : $('#money').val(),
+		        	sd_budgetselect : $('#budgetselect').val(),
+		        	sd_transport : $('#selectTransport').val()
+		        },
+	 	        success: success,	// 페이지요청 성공시 실행 함수
+	 	        error: whenError	//페이지요청 실패시 실행함수
+	      	});	
+	}
+	function success(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
+		objTd.innerHTML=aaa;
+        
+    }
+    function whenError(){
+        alert("Error");
+    }
 	
-	
+    
+    function testK(form){
+    	objTd = form.sd_tdid.value;
+    	alert(objTd+" "+form.sd_num.value);
+    	 $.ajax({
+	 	        type: "post",
+	 	        url : "/tvlog/schedule/schedule-detail-scheduleUpdate.trip",
+	 	        data: {	// url 페이지도 전달할 파라미터
+	 	    	    sd_num : form.sd_num.value,
+	 	    	    sd_status : form.sd_status.value,
+	 	    	    sd_startpoint : form.sd_startpoint.value,
+		        	sd_endpoint  : form.sd_endpoint.value,
+		        	sd_memo  : form.sd_memo.value,
+		        	sd_budget  : form.sd_budget.value,
+		        	sd_transport : form.sd_transport.value
+		        },
+	 	        success: success,	// 페이지요청 성공시 실행 함수
+	 	        error: whenError	//페이지요청 실패시 실행함수
+	      	});	
+    }
+    
 	$(document).ready(function() {
 		var $body = $(document.body);
 		var navHeight = $('.navbar').outerHeight(true) + 10;
@@ -320,7 +367,45 @@ function mainError(){
 								<c:forEach items="${detaillist}" var="detailDTO" varStatus="status">
 									<c:if test="${not doneLoop}"> 
 										<c:if  test="${detailDTO.sd_tdid ==  tdid}">
-											나와라...${detailDTO.sd_tdid}
+											<div id="#detail-content" data-toggle="modal" data-target="#detailview${status.count}">
+												<c:if test="${detailDTO.sd_status == 0}">
+													${detailDTO.sd_startpoint}
+													<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+										    		${detailDTO.sd_endpoint} <br /> 
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 1}">
+													지도 : ${detailDTO.sd_map}
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 2}">
+													메모 : ${detailDTO.sd_memo}
+									    		</c:if>
+								    		</div>
+								    		
+								    		<div class="modal fade" id="detailview${status.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    											<div class="modal-dialog" >
+													<div class="modal-content" id="modalSize">
+														<div class="modal-header" >
+															<div class="panel panel-success" >
+																<div class="panel-body" >
+																	<c:if test="${detailDTO.sd_status == 0}">
+																		출발 : ${detailDTO.sd_startpoint} 	
+																		<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+									    								도착 : ${detailDTO.sd_endpoint} <br />
+									    								메모 : ${detailDTO.sd_memo} <br />
+									    								비용 : ${detailDTO.sd_budget}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 1}">
+								    									지도 : ${detailDTO.sd_map}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 2}">
+								    									메모 : ${detailDTO.sd_memo}
+								    								</c:if>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
 											<c:set var="doneLoop" value="true"/> 
 										</c:if>
 									</c:if>
@@ -340,14 +425,52 @@ function mainError(){
 								<c:forEach items="${detaillist}" var="detailDTO">
 									<c:if test="${not doneLoop}"> 
 										<c:if  test="${detailDTO.sd_tdid ==  tdid}">
-											나와라...${detailDTO.sd_tdid}
+											<div id="#detail-content" data-toggle="modal" data-target="#detailview${status.count}">
+												<c:if test="${detailDTO.sd_status == 0}">
+													${detailDTO.sd_startpoint}
+													<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+										    		${detailDTO.sd_endpoint} <br /> 
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 1}">
+													지도 : ${detailDTO.sd_map}
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 2}">
+													메모 : ${detailDTO.sd_memo}
+									    		</c:if>
+								    		</div>
+								    		<div class="modal fade" id="detailview${status.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    											<div class="modal-dialog" >
+													<div class="modal-content" id="modalSize">
+														<div class="modal-header" >
+															<div class="panel panel-success" >
+																<div class="panel-body" >
+																	<c:if test="${detailDTO.sd_status == 0}">
+																		출발 : ${detailDTO.sd_startpoint} 	
+																		<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+									    								도착 : ${detailDTO.sd_endpoint} <br />
+									    								메모 : ${detailDTO.sd_memo} <br />
+									    								비용 : ${detailDTO.sd_budget}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 1}">
+								    									지도 : ${detailDTO.sd_map}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 2}">
+								    									메모 : ${detailDTO.sd_memo}
+								    								</c:if>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+								    		
 											<c:set var="doneLoop" value="true"/> 
 										</c:if>
 									</c:if>
 								</c:forEach>
 								<c:if  test="${not doneLoop}">
-											<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${j}${i}${i}" whatever="${j}_${i}_30" data-toggle="modal" data-target="#detail-create" onclick="korea('${j}_${i}_30',this);"></i>
-											<c:set var="doneLoop" value="false"/> 
+									<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${j}${i}${i}" whatever="${j}_${i}_30" data-toggle="modal" data-target="#detail-create" onclick="korea('${j}_${i}_30',this);"></i>
+									<c:set var="doneLoop" value="false"/> 
 								</c:if>
 		   					</td>
 		   				</c:forEach>
@@ -381,34 +504,30 @@ function mainError(){
 						<!-- 탭 시작 -->
 						<div class="container2">
 							<ul id="myTab" class="nav nav-tabs" role="tablist">
-								<li role="presentation" class="active"><a
-									data-target="#transport" id="transport-tab" role="tab"
-									data-toggle="tab" aria-controls="home" aria-expanded="true">교통</a></li>
-								<li role="presentation" class=""><a data-target="#place"
-									role="tab" id="place-tab" data-toggle="tab"
-									aria-controls="profile" aria-expanded="false">장소</a></li>
-								<li role="presentation" class=""><a data-target="#memo"
-									role="tab" id="memo-tab" data-toggle="tab"
-									aria-controls="profile" aria-expanded="false">메모</a></li>
+								<li role="presentation" class="active"><a data-target="#transport" id="transport-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">교통</a></li>
+								<li role="presentation" class=""><a data-target="#place" role="tab" id="place-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">장소</a></li>
+								<li role="presentation" class=""><a data-target="#memo" role="tab" id="memo-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">메모</a></li>
 							</ul>
 							
 							<div id="myTabContent" class="tab-content">
 								<!-- 교통 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade active in" id="transport" aria-labelledby="transport-tab">
-								<form action="" method="post">
+								<form action="/tvlog/schedule/schedule-detail-time.trip" method="post">
+								<input type="hidden" id="s_num" name="s_num" value="${dto.s_num}" />
+								<input type="hidden" id="sd_status" name="sd_status" value="0" />
 								<br />
 								<div id="row22">
 									<div class="col-md-20" >
 										<ul id="transportUl">
-											<li id="transportLi"><button id="btn1" onclick="btnicon1()"><i class="fa fa-plane fa-2x" aria-hidden="true"></i><br/>비행기</button></li>
-											<li id="transportLi"><button id="btn2" onclick="btnicon2()"><i class="fa fa-train fa-2x" aria-hidden="true"></i><br/>기  차</button></li>
-											<li id="transportLi"><button id="btn3" onclick="btnicon3()"><i class="fa fa-subway fa-2x" aria-hidden="true"></i><br/>지하철</button></li>
-											<li id="transportLi"><button id="btn4" onclick="btnicon4()"><i class="fa fa-bus fa-2x" aria-hidden="true"></i><br/>버  스</button></li>
-											<li id="transportLi"><button id="btn5" onclick="btnicon5()"><i class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도  보</button></li>
-											<li id="transportLi"><button id="btn6" onclick="btnicon6()"><i class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택  시</button></li>
-											<li id="transportLi"><button id="btn7" onclick="btnicon7()"><i class="fa fa-ship fa-2x" aria-hidden="true"></i><br/> 배 </button></li>
-											<li id="transportLi"><button id="btn8" onclick="btnicon8()"><i class="fa fa-car fa-2x" aria-hidden="true"></i><br/>자가용</button></li>
-											<li id="transportLi"><button id="btn9" onclick="btnicon9()"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기  타</button></li>
+											<li id="transportLi"><i id="btn1" onclick="btnicon1('fa fa-plane fa-2x')" class="fa fa-plane fa-2x" aria-hidden="true"></i><br/>비행기</li>
+											<li id="transportLi"><i id="btn2" onclick="btnicon2('fa fa-train fa-2x')" class="fa fa-train fa-2x" aria-hidden="true"></i><br/>기  차</li>
+											<li id="transportLi"><i id="btn3" onclick="btnicon3('fa fa-subway fa-2x')" class="fa fa-subway fa-2x" aria-hidden="true"></i><br/>지하철</li>
+											<li id="transportLi"><i id="btn4" onclick="btnicon4('fa fa-subway fa-2x')" class="fa fa-subway fa-2x" aria-hidden="true"></i><br/>버  스</li>
+											<li id="transportLi"><i id="btn5" onclick="btnicon5('fa fa-road fa-2x')" class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도  보</li>
+											<li id="transportLi"><i id="btn6" onclick="btnicon6('fa fa-taxi fa-2x')" class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택  시</li>
+											<li id="transportLi"><i id="btn7" onclick="btnicon7('fa fa-ship fa-2x')" class="fa fa-ship fa-2x" aria-hidden="true"></i><br/>&nbsp; 배 </li>
+											<li id="transportLi"><i id="btn8" onclick="btnicon8('fa fa-car fa-2x')" class="fa fa-car fa-2x" aria-hidden="true"></i><br/>자가용</li>
+											<li id="transportLi"><i id="btn9" onclick="btnicon9('fa fa-bicycle fa-2x')" class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기  타</li>
 										</ul>
 									</div>
 								<div id="row33">
@@ -419,17 +538,16 @@ function mainError(){
 															<table width="550" height="200" align="center">
 																<tr>
 																	<td id="btnicon"></td>
-																	<td>출발지 <input type="text" id="from_0" class="form-control transport-from-input" value="" style="width: 95%;"></td>
-																	<td>도착지 <input type="text" id="to_0" class="form-control transport-to-input" value=""style="width: 95%;"></td>
+																	<td>출발지 <input type="text" id="from_0" name="sd_startpoint" class="form-control transport-from-input" value="" style="width: 95%;"></td>
+																	<td>도착지 <input type="text" id="to_0" name="sd_endpoint" class="form-control transport-to-input" value=""style="width: 95%;"></td>
 																</tr>
 																<tr>
 																	<td>메모</td>
-																	<td colspan="2"><input type="text" id="memo_0"
-																		class="form-control transport-memo-input" value="" style="width:98%;"></td>
+																	<td colspan="2"><input type="text" id="memo_0" name="sd_memo" class="form-control transport-memo-input" value="" style="width:98%;"></td>
 																</tr>
 																<tr>
 																	<td>비용</td>
-																	<td><input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align:right;width:95%"></td>
+																	<td><input type="text" id="money" name="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align:right;width:95%"></td>
 																	<td><select class="currency-select transport-currency-select form-control" style="width:95%">
 																			<option value="2">USD(미국)</option>
 																			<option value="1" selected="selected">KRW(한국)</option>
@@ -485,7 +603,7 @@ function mainError(){
 								</div>
 							</div>
 							<br />
-							<input type="submit" class="btn btn-success" value="저장">
+							<input type="button" class="btn btn-success"  data-dismiss="modal" value="저장" onclick="detailSave(this);">
 							</form>	
 								</div>
 								<!-- 교통 탭 끝 -->
@@ -506,7 +624,7 @@ function mainError(){
 								<form action="" method="post">	
 									<br />
 									<div class="row" id="row2">
-         								<textarea class="form-control"  id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
+         								<textarea class="form-control" name="sd_memo" id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
          								<br />
 									</div>
 									<input type="submit" class="btn btn-success" value="저장">

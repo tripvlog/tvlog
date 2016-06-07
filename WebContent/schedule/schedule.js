@@ -99,39 +99,39 @@ function scheduleSave() {
 }
 
 
-function btnicon1(){
+function btnicon1(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-plane' aria-hidden='true'></i><br/>비행기";
+	tdicon.innerHTML="<i class='fa fa-plane' aria-hidden='true'></i><br/>비행기 <input type='hidden' id='selectTransport' name='selectTransport' value='"+transport+"' />";
 }
-function btnicon2(){
+function btnicon2(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-train' aria-hidden='true'></i><br/>기  차";
+	tdicon.innerHTML="<i class='fa fa-train' aria-hidden='true'></i><br/>기  차<input type='hidden' id='selectTransport' name='selectTransport' value='"+transport+"' />";
 }
-function btnicon3(){
+function btnicon3(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-subway' aria-hidden='true'></i><br/>지하철";
+	tdicon.innerHTML="<i class='fa fa-subway' aria-hidden='true'></i><br/>지하철<input type='hidden' id='selectTransport' name='selectTransport' value='"+transport+"' />";
 }
-function btnicon4(){
+function btnicon4(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-bus' aria-hidden='true'></i><br/>버  스";
+	tdicon.innerHTML="<i class='fa fa-bus' aria-hidden='true'></i><br/>버  스<input type='hidden' id='selectTransport' name='sd_transport' value='"+transport+"' />";
 }
-function btnicon5(){
+function btnicon5(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-road' aria-hidden='true'></i><br/>도  보";
+	tdicon.innerHTML="<i class='fa fa-road' aria-hidden='true'></i><br/>도  보<input type='hidden' id='selectTransport' name='sd_transport' value='"+transport+"' />";
 }
-function btnicon6(){
+function btnicon6(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-taxi' aria-hidden='true'></i><br/>택  시";
+	tdicon.innerHTML="<i class='fa fa-taxi' aria-hidden='true'></i><br/>택  시<input type='hidden' id='selectTransport' name='sd_transport' value='"+transport+"' />";
 }
-function btnicon7(){
+function btnicon7(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-ship' aria-hidden='true'></i><br/> 배 ";
+	tdicon.innerHTML="<i class='fa fa-ship' aria-hidden='true'></i><br/> 배 <input type='hidden' id='selectTransport' name='sd_transport' value='"+transport+"' />";
 }
-function btnicon8(){
+function btnicon8(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-car' aria-hidden='true'></i><br/>자가용";
+	tdicon.innerHTML="<i class='fa fa-car' aria-hidden='true'></i><br/>자가용<input type='hidden' id='selectTransport' name='sd_transport' value='"+transport+"' />";
 }
-function btnicon9(){
+function btnicon9(transport){
 	var tdicon = document.getElementById('btnicon');
-	tdicon.innerHTML="<i class='fa fa-bicycle' aria-hidden='true'></i><br/>기  타";
+	tdicon.innerHTML="<i class='fa fa-bicycle' aria-hidden='true'></i><br/>기  타<input type='hidden' id='selectTransport' name='sd_transport' value='"+transport+"' />";
 }

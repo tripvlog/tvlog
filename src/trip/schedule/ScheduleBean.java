@@ -35,10 +35,7 @@ public class ScheduleBean {
 	}
 	
 	@RequestMapping("/schedule/schedule-detail-transport.trip")
-	public String transport(HttpServletRequest request,ScheduleDetailDTO dto , String selectTransport){
-		System.out.println(selectTransport);
-		int s_num = 1;		// 일정번호 임의지정 ... 일정선택후 상세일정진입시. 일정번호 대입된다.
-		dto.setS_num(s_num);
+	public String transport(HttpServletRequest request,ScheduleDetailDTO dto){
 		sqlMap.insert("schedule.scheduleDetailInsert", dto);
 		
 		request.setAttribute("dto",dto);
@@ -112,6 +109,15 @@ public class ScheduleBean {
 		request.setAttribute("detaillist", list);
 		
 		return "/schedule/schedule-update.jsp";
+	}
+	
+	@RequestMapping("/schedule/schedule-detail-scheduleUpdate.trip")
+	public String detailUpdate(HttpServletRequest request,ScheduleDetailDTO dto){
+		System.out.println("asfasdfdfaasf");
+		sqlMap.update("schedule.scheduleDetailUpdate", dto);
+		
+		request.setAttribute("dto",dto);
+		return "/schedule/schedule-detail-transport.jsp";
 	}
 
 }

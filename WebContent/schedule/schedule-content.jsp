@@ -4,6 +4,13 @@
 <html>
 <head>
 <link rel="stylesheet" href="/tvlog/schedule/schedule.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
+<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <script src="/tvlog/schedule/schedule.js"></script>
 <script type="text/javascript">
 	var objTd;
@@ -136,21 +143,6 @@
 		  </div>
 		</div> 
 		<!-- 체크리스트 끝 -->
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		<!-- 오른쪽 그룹 - 일정 -->
 		<div class="col-md-10" id="schedulecontainer" >
 		<!-- 여행 소개 -->
@@ -229,7 +221,45 @@
 								<c:forEach items="${detaillist}" var="detailDTO" varStatus="status">
 									<c:if test="${not doneLoop}"> 
 										<c:if  test="${detailDTO.sd_tdid ==  tdid}">
-											나와라...${detailDTO.sd_tdid}
+											<div id="#detail-content" data-toggle="modal" data-target="#detailview${status.count}">
+												<c:if test="${detailDTO.sd_status == 0}">
+													${detailDTO.sd_startpoint}
+													<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+										    		${detailDTO.sd_endpoint} <br /> 
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 1}">
+													지도 : ${detailDTO.sd_map}
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 2}">
+													메모 : ${detailDTO.sd_memo}
+									    		</c:if>
+								    		</div>
+								    		
+								    		<div class="modal fade" id="detailview${status.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    											<div class="modal-dialog" >
+													<div class="modal-content" id="modalSize">
+														<div class="modal-header" >
+															<div class="panel panel-success" >
+																<div class="panel-body" >
+																	<c:if test="${detailDTO.sd_status == 0}">
+																		출발 : ${detailDTO.sd_startpoint} 	
+																		<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+									    								도착 : ${detailDTO.sd_endpoint} <br />
+									    								메모 : ${detailDTO.sd_memo} <br />
+									    								비용 : ${detailDTO.sd_budget}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 1}">
+								    									지도 : ${detailDTO.sd_map}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 2}">
+								    									메모 : ${detailDTO.sd_memo}
+								    								</c:if>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>	
 											<c:set var="doneLoop" value="true"/> 
 										</c:if>
 									</c:if>
@@ -249,7 +279,45 @@
 								<c:forEach items="${detaillist}" var="detailDTO">
 									<c:if test="${not doneLoop}"> 
 										<c:if  test="${detailDTO.sd_tdid ==  tdid}">
-											나와라...${detailDTO.sd_tdid}
+											<div id="#detail-content" data-toggle="modal" data-target="#detailview${status.count}">
+												<c:if test="${detailDTO.sd_status == 0}">
+													${detailDTO.sd_startpoint}
+													<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+										    		${detailDTO.sd_endpoint} <br /> 
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 1}">
+													지도 : ${detailDTO.sd_map}
+									    		</c:if>
+									    		<c:if test="${detailDTO.sd_status == 2}">
+													메모 : ${detailDTO.sd_memo}
+									    		</c:if>
+								    		</div>
+								    		
+								    		<div class="modal fade" id="detailview${status.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    											<div class="modal-dialog" >
+													<div class="modal-content" id="modalSize">
+														<div class="modal-header" >
+															<div class="panel panel-success" >
+																<div class="panel-body" >
+																	<c:if test="${detailDTO.sd_status == 0}">
+																		출발 : ${detailDTO.sd_startpoint} 	
+																		<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+									    								도착 : ${detailDTO.sd_endpoint} <br />
+									    								메모 : ${detailDTO.sd_memo} <br />
+									    								비용 : ${detailDTO.sd_budget}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 1}">
+								    									지도 : ${detailDTO.sd_map}
+								    								</c:if>
+								    								<c:if test="${detailDTO.sd_status == 2}">
+								    									메모 : ${detailDTO.sd_memo}
+								    								</c:if>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>	
 											<c:set var="doneLoop" value="true"/> 
 										</c:if>
 									</c:if>

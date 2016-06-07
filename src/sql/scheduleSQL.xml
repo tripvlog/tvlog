@@ -51,4 +51,16 @@
 	<select id="scheduleContent" resultClass="schedule" parameterClass="int">
 		select * from t_schedule where s_num=#s_num#
 	</select>
+	
+	<update id="scheduleDetailUpdate" parameterClass="scheduleDetail">
+		update t_schedule_detail set 
+					sd_startpoint=#sd_startpoint#,
+					sd_endpoint=#sd_endpoint#,
+					sd_memo=#sd_memo#,
+					sd_transport=#sd_transport#,
+					sd_budget=#sd_budget#,
+					sd_status=#sd_status#
+					where sd_num=#sd_num#
+	</update>
+	
 </sqlMap>
