@@ -117,25 +117,25 @@
 							</div>
 							<div class="panel-body" >
 								<h4>여행 제목</h4>
-								<input type="text" name="subject" class="form-control"  placeholder="예 : 5박 6일 유럽 명소여행" />
+								<input type="text" name="s_title" class="form-control"  placeholder="예 : 5박 6일 유럽 명소여행" />
 							</div>
 							<div class="panel-body">
 								<h4>여행 단계</h4>
-								<input type="radio" name="step" />여행 전
-								<input type="radio" name="step" />여행 후
+								<input type="radio" name="s_step" value="0" />여행 전
+								<input type="radio" name="s_step" value="1" />여행 후
 							</div>
 							<div class="panel-body" id="date">
 								<h4>여행 시작날짜</h4>
-								<input type="date" name="date" class="form-control hasDatepicker"  size="10" />
+								<input type="date" name="s_startday" class="form-control hasDatepicker"  size="10" />
 							</div>
 							<div class="panel-body">
 								<h4>여행 테마</h4>
-								<input type="checkbox" value="theme" /> 나홀로여행
-								<input type="checkbox" value="theme" /> 친구와 함께 
-								<input type="checkbox" value="theme" /> 가족과 함께
-								<input type="checkbox" value="theme" /> 단체여행
-								<input type="checkbox" value="theme" /> 패키지 여행 
-								<input type="checkbox" value="theme" /> 커플 
+								<input type="checkbox" name="s_theme" value="나홀로여행" /> 나홀로여행
+								<input type="checkbox" name="s_theme"  value="친구와 함" /> 친구와 함께 
+								<input type="checkbox" name="s_theme"  value="가족과 함께" /> 가족과 함께
+								<input type="checkbox" name="s_theme"  value="단체여행" /> 단체여행
+								<input type="checkbox" name="s_theme"  value="패키지 여행" /> 패키지 여행 
+								<input type="checkbox" name="s_theme"  value="커플" /> 커플 
 							</div>
 							<div class="panel-body">
 								<input type="submit" value="새 일정 만들기"  class="btn btn-success" />
