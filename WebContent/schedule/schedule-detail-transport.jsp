@@ -8,10 +8,9 @@
     		${dto.sd_startpoint} 
     		<i id="btn1" class="${dto.sd_transport}" aria-hidden="true"></i>
     		${dto.sd_endpoint} <br /> 
-    		${dto.sd_memo}
     	</c:if>
     	<c:if test="${dto.sd_status == 1}">
-			지도 : ${dto.sd_map}
+			<i class="fa fa-map-marker" aria-hidden="true"></i> ${dto.sd_startpoint}
 		</c:if>
 		<c:if test="${dto.sd_status == 2}">
 			메모 : ${dto.sd_memo}
@@ -20,7 +19,7 @@
     	
     	<!-- 모달  -->
     	<div class="modal fade" id="detailview${dto.sd_num}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    		<div class="modal-dialog" >
+    		<div class="modal-dialog modal-lg" >
 				<div class="modal-content" id="modalSize">
 					<div class="modal-header" >
 						<div class="panel panel-success" >
@@ -33,7 +32,7 @@
 									비용 : ${dto.sd_budget}
 								</c:if>
 								<c:if test="${dto.sd_status == 1}">
-									지도 : ${dto.sd_map}
+									<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${dto.sd_map}" name="map" width="370" height="205" ALLOWTRANSPARENCY="false"></iframe>
 								</c:if>
 								<c:if test="${dto.sd_status == 2}">
 									메모 : ${dto.sd_memo}

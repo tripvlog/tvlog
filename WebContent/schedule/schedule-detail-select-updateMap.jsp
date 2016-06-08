@@ -69,18 +69,28 @@
   <body>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
+    <%String s = request.getParameter("latlng"); %>
     <script>
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
-
 function initAutocomplete() {
+	var a = '<%=s%>';
+	var bb = a.split(':');
+	alert(bb[0]+"--"+bb[1]);
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
+    center: {lat: parseFloat(bb[0]), lng: parseFloat(bb[1])},
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-
+  
+  var marker = new google.maps.Marker({
+	    position: {lat: parseFloat(bb[0]), lng: parseFloat(bb[1])},
+	    map: map,
+	    title: 'Hello World!'
+   });
+  marker.setMap(map);
+  
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);

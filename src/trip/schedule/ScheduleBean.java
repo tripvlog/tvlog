@@ -34,6 +34,7 @@ public class ScheduleBean {
 		return "/schedule/schedule-detail.jsp";
 	}
 	
+	//----- 상세일정 등록 부분 ( 교통)
 	@RequestMapping("/schedule/schedule-detail-transport.trip")
 	public String transport(HttpServletRequest request,ScheduleDetailDTO dto){
 		sqlMap.insert("schedule.scheduleDetailInsert", dto);
@@ -41,6 +42,17 @@ public class ScheduleBean {
 		request.setAttribute("dto",dto);
 		return "/schedule/schedule-detail-transport.jsp";
 	}
+	//----- 상세일정 등록 부분 ( 위치)	
+	@RequestMapping("/schedule/schedule-detail-Map.trip")
+	public String map(HttpServletRequest request,ScheduleDetailDTO dto){
+		sqlMap.insert("schedule.scheduleDetailInsert", dto);
+		
+		request.setAttribute("dto",dto);
+		return "/schedule/schedule-detail-transport.jsp";
+	}
+	
+	
+	
 	
 	@RequestMapping("/schedule/schedule-detail-main.trip")
 	public String detail_main(HttpServletRequest request){

@@ -12,44 +12,30 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-<!-- CSS code from Bootply.com editor -->
-
-<style type="text/css">
-	#navlink:hover{
-    	color : #6B9900;
-    	font-weight : bold;
-    	font-size : 120%;
-    }		
-	body {
-		padding-top: 2px;
-	}
-	#content{
-		width: 1200px;
-	}
-	#logo{
-		width: 80px;
-		height:50px;
-		padding: 0;
-		margin: 0;
-	}
-
-</style>
-
-	<!-- JavaScript jQuery code from Bootply.com editor  -->
-
+	<style type="text/css">
+		#navlink:hover{
+	    	color : #6B9900;
+	    	font-weight : bold;
+	    	font-size : 120%;
+	    }		
+		body { padding-top: 2px; }
+		#content{ width: 1200px; }
+		#logo{
+			width: 80px;
+			height:50px;
+			padding: 0;
+			margin: 0;
+		}
+	</style>
 	<script type='text/javascript'> 
 		$(document).ready(function() {
 			var $body = $(document.body);
 			var navHeight = $('.navbar').outerHeight(true) + 10;
-
 			$body.scrollspy({
 				target : '#leftCol',
 				offset : navHeight
 			});
-
 		});
-		
 		function mainBody(){
 	        $.ajax({
 		        type: "post",
@@ -67,21 +53,8 @@
 	        alert("Error");
 	    }
 	</script>
-
-	<script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-          ga('create', 'UA-40413119-1', 'bootply.com');
-          ga('send', 'pageview');
-	</script>
-
 </head>
-
-<!-- HTML code from Bootply.com editor -->
-
-<body onload="mainBody()" style="width:1200">
+<body onload="mainBody()" >
 <div class="container">
 	<!-- 상단 메뉴바 -->
 	<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0">

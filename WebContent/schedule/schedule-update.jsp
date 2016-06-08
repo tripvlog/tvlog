@@ -70,6 +70,24 @@
     }
 	
     
+    function detailMapSave(){
+    	tdid = objTd.getAttribute('id');
+		 $.ajax({
+	 	        type: "post",
+	 	        url : "/tvlog/schedule/schedule-detail-Map.trip",
+	 	       data: {	// url 페이지도 전달할 파라미터
+	 	    	    sd_tdid : tdid, 
+	 	    	    s_num : $('#s_num').val(),
+	 	    	   	sd_startpoint : $('#placename').val(),
+	 	    	    sd_status : $('#sd_status1').val(),
+		        	sd_map : $('#latlng').val()
+		        },
+	 	        success: success,	// 페이지요청 성공시 실행 함수
+	 	        error: whenError	//페이지요청 실패시 실행함수
+	      	});	
+    }
+    
+    
     function detailpopup(sd_num){
     	 url = "/tvlog/schedule/schedule-detail-updatepopup.trip?sd_num="+sd_num;
          // 새로운 윈도우를 엽니다.
@@ -489,44 +507,6 @@ function mainError(){
 																			<option value="0">EUR(유럽연합)</option>
 																			<option value="3">JPY(일본)</option>
 																			<option value="4">CNY(중국)</option>
-																			<option value="5">HKD(홍콩)</option>
-																			<option value="6">TWD(대만)</option>
-																			<option value="7">GBP(영국)</option>
-																			<option value="8">CAD(캐나다)</option>
-																			<option value="9">CHF(스위스)</option>
-																			<option value="10">SEK(스웨덴)</option>
-																			<option value="11">AUD(호주)</option>
-																			<option value="12">NZD(뉴질랜드)</option>
-																			<option value="13">CZK(체코)</option>
-																			<option value="14">TRY(터키)</option>
-																			<option value="15">MNT(몽골)</option>
-																			<option value="16">ILS(이스라엘)</option>
-																			<option value="17">DKK(덴마크)</option>
-																			<option value="18">NOK(노르웨이)</option>
-																			<option value="19">SAR(사우디아라비아)</option>
-																			<option value="20">KWD(쿠웨이트)</option>
-																			<option value="21">BHD(바레인)</option>
-																			<option value="22">AED(아랍에미리트)</option>
-																			<option value="23">JOD(요르단)</option>
-																			<option value="24">EGP(이집트)</option>
-																			<option value="25">THB(태국)</option>
-																			<option value="26">SGD(싱가포르)</option>
-																			<option value="27">MYR(말레이시아)</option>
-																			<option value="28">IDR(인도네시아)</option>
-																			<option value="29">QAR(카타르)</option>
-																			<option value="30">KZT(카자흐스탄)</option>
-																			<option value="31">BND(브루나이)</option>
-																			<option value="32">INR(인도)</option>
-																			<option value="33">PKR(파키스탄)</option>
-																			<option value="34">BDT(방글라데시)</option>
-																			<option value="35">PHP(필리핀)</option>
-																			<option value="36">MXN(멕시코)</option>
-																			<option value="37">BRL(브라질)</option>
-																			<option value="38">VND(베트남)</option>
-																			<option value="39">ZAR(남아프리카 공화국)</option>
-																			<option value="40">RUB(러시아)</option>
-																			<option value="41">HUF(헝가리)</option>
-																			<option value="42">PLN(폴란드)</option>
 																		</select>
 																	</td>
 																</tr>
@@ -545,12 +525,13 @@ function mainError(){
 
 								<!-- 장소 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
-								<form action="" method="post">	<br />
-									<iframe src="/tvlog/schedule/schedule-detail-select-map.jsp" name="map" width="570" height="405" ALLOWTRANSPARENCY="false"></iframe> 
-									<div id="mylocation"></div>
-									<br />
-									<input type="submit" class="btn btn-success" value="저장">
-								</form>
+									<form action="" method="post">	<br />
+										<iframe src="/tvlog/schedule/schedule-detail-select-map.jsp" name="map" width="570" height="405" ALLOWTRANSPARENCY="false"></iframe>
+										<input type="hidden" id="sd_status1" name="sd_status" value="1" /> 
+										<div id="mylocation"></div>
+										<br />
+										<input type="button" class="btn btn-success" data-dismiss="modal" value="저장" onclick="detailMapSave();">
+									</form>
 								</div>
 								<!-- 장소 탭 끝 -->
 
