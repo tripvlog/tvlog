@@ -70,7 +70,7 @@
 				<!-- 밴드에 게시글 작성 -->
 				<c:if test="${modify != true}">
 				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data" onsubmit="return error_login('${sessionScope.memId}')">
-					
+					<input type="hidden" name="modify" value="false">
 					<input type="hidden" name="band_id" value="${band.band_id}">
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content" id="board_content"></textarea><br />
 					<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
@@ -114,8 +114,11 @@
 					<input type="hidden" name="band_board_num" value="${modify_board.band_board_num}">
 					<input type="hidden" name="modify" value="complete">
 					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content">${modify_board.band_board_content}</textarea><br />
-					<input type="file" name="upload_img" multiple>
-					<input type="submit" value="저장"> <input type="reset" value="취소"> <input type="button" value="뒤로" onclick="javascript:window.location='/tvlog/band/b_view.trip?band_id=${band_id}'">
+					<input type="file" name="upload_img" multiple>현재 ${imgCount}개가 저장되어있습니다. 업로드시 기존 파일은 지워집니다.<br />
+					<c:forEach var="m" items="${imgs}">
+					<img src="/tvlog/img/band/${m.board_img}" width="300" height="300">
+					</c:forEach><br />
+					<input type="submit" value="저장"> <input type="button" value="취소" onclick="javascript:window.location='/tvlog/band/b_view.trip?band_id=${band_id}'">
 				</form>
 			</c:if><!-- 내용 수정 끝 -->
 			</div>
@@ -142,7 +145,12 @@
 					<hr>
 					</c:if><!-- 다른밴드 추천 -->
 					이런 밴드는 어떠세요?<br />
-					<a href="####">6</a>
+					<c:forEach var="b" items="${bandlist}">
+					<div>
+						<a href="/tvlog/band/b_view.trip?band_id=${b.band_id}">
+						<img src="/tvlog/img/band/${b.band_img}" width="50" height="50">${b.band_name}</a>
+					</div>
+					</c:forEach>
 				</div>
 			</div><!-- 우측 메뉴바 끝 -->
 			<!--/.sidebar-offcanvas-->

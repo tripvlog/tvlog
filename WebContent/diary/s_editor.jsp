@@ -6,7 +6,7 @@
 
 <form action="/tvlog/diary/submit.trip" method="post" enctype="multipart/form-data" id="frm">
 <input type="text" name="diary_title" placeholder="제목">
-<input type="text" name="diary_writer" placeholder="작성자" />
+<input type="hidden" name="diary_writer" value="${sessionScope.memId}" placeholder="작성자" />
 <input type="text" name="diary_location" placeholder="위치" />
 <select id="diary_range" name="diary_range">
 	<option value="1">모두</option>

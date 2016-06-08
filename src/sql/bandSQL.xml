@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="band_select" resultClass="trip.band.BandDTO">
-		<![CDATA[select * from t_band where band_range < 3]]>
+		<![CDATA[select * from t_band where band_range < 5]]>
 	</select>
 	
 	<select id="band_view" resultClass="trip.band.BandDTO" parameterClass="trip.band.BandDTO">
@@ -25,8 +25,8 @@
 	<select id="band_member_info" resultClass="trip.band.memberDTO" parameterClass="int">
 		select name, path from t_member where id = (select band_board_writer from t_band_board_$band_id$)
 	</select>
-
-	<select id="band_board_num" resultClass="int" parameterClass="int">
+	
+	<select id="band_board_maxnum" resultClass="int" parameterClass="int">
 		select max(band_board_num) from t_band_board_$band_id$
 	</select>
 	
@@ -42,6 +42,14 @@
 		select * from t_member_band_$member_id$
 	</select>
 	
+	<select id="band_board_img_count" resultClass="int" parameterClass="trip.band.boardDTO">
+		select count(*) from t_band_board_imgs_$band_id$ where board_num = #band_board_num#
+	</select>
+	
+	<select id="band_board_imgs_get" resultClass="trip.band.imgDTO" parameterClass="trip.band.boardDTO">
+		select board_img from t_band_board_imgs_$band_id$ where board_num = #band_board_num#
+	</select>
+	
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
@@ -53,7 +61,7 @@
 	</update>
 	
 	<update id="band_modify_content" parameterClass="trip.band.boardDTO">
-		update t_band_board_$band_id$ set band_board_content = #band_board_content# where band_board_num = #band_board_num#
+		update t_band_board_$band_id$ set band_board_content = #band_board_content#, band_board_reg = sysdate where band_board_num = #band_board_num#
 	</update>
 
 <!-- =============================================================================== -->
@@ -107,6 +115,9 @@
 		insert into t_band_board_imgs_$band_id$ values(#board_num#, #board_writer#, #board_img#, sysdate)
 	</insert>
 	
+	<insert id="band_insert_my_list" parameterClass="trip.member.BandListDTO">
+		insert into t_member_band_$member_id$ values(t_member_band_$member_id$_seq.NEXTVAL, #band_id#, #band_name#, #band_img#, sysdate)
+	</insert>
 <!-- ************************************* -->
 	
 </sqlMap>

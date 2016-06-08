@@ -74,7 +74,9 @@ import org.springframework.web.servlet.ModelAndView;
 		public String joinPro(MultipartHttpServletRequest request,LoginDTO dto)throws Exception{
 			sqlmap.insert("joinInsert", dto);
 			sqlmap.insert("member_create_band_list", dto);
+			sqlmap.insert("member_create_band_seq", dto);
 			sqlmap.insert("member_create_friend_list", dto);
+			sqlmap.insert("member_create_friend_seq", dto);
 			MultipartFile mf = request.getFile("save");
 			if(mf.getSize() > 0){
 				String rp = request.getRealPath("//img//member//");
@@ -161,19 +163,19 @@ import org.springframework.web.servlet.ModelAndView;
 				String dbpath = (String)sqlmap.queryForObject("member_get_img", id);
 				if(dbpath.equals("default.jpg")){
 					String rp = request.getRealPath("//img//member//");
-					String orgName = mf.getOriginalFilename();  // ¿øº» ÀÌ¸§
-					String ext = orgName.substring(orgName.lastIndexOf("."));   // .È®ÀåÀÚ
-					String savName = dto.getId()+ext;   //ÀúÀåÇÒ ÀÌ¸§ : ¾ÆÀÌµð+È®ÀåÀÚ
-					File sf = new File(rp+"//"+savName);  //rp°æ·Î¿¡ ÀúÀåÇÑ ÀÌ¸§ ³Ö°í sf¿¡ ´ëÀÔ
-					mf.transferTo(sf);   //mf¸¦ sf·Î ¹Ù²ãÁÜ
+					String orgName = mf.getOriginalFilename();  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+					String ext = orgName.substring(orgName.lastIndexOf("."));   // .È®ï¿½ï¿½ï¿½ï¿½
+					String savName = dto.getId()+ext;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ : ï¿½ï¿½ï¿½Ìµï¿½+È®ï¿½ï¿½ï¿½ï¿½
+					File sf = new File(rp+"//"+savName);  //rpï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½Ö°ï¿½ sfï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					mf.transferTo(sf);   //mfï¿½ï¿½ sfï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½
 					dto.setPath(savName);
 					sqlmap.update("modifyUpdate", dto);
 				}
 				else{
 					String rp = request.getRealPath("//img//member//");
 					File deleteFile = new File(rp + dbpath);
-					deleteFile.delete();  //¿ø·¡ ÆÄÀÏ »èÁ¦
-					// ´Ù½Ã »õ·Î¿î ÆÄÀÏ ÀúÀå
+					deleteFile.delete();  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					// ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					String orgName = mf.getOriginalFilename();
 					String ext = orgName.substring(orgName.lastIndexOf("."));
 					String savName = dto.getId()+ext;
@@ -192,18 +194,18 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping("/member/myPage.trip")
 		public ModelAndView myPage(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
-			// È¸¿ø Á¤º¸ ¼öÁ¤
+			// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);    
 			request.setAttribute("dto",dto);
-			// ³»°¡ ¾´ Æ÷½ºÆ®
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
 			List post = new ArrayList();
 			post = sqlmap.queryForList("myPostList", id);
-			// ³»°¡ ¸¸µç ÀÏÁ¤
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			int myScheduleListCount = (Integer)sqlmap.queryForObject("myScheduleListCount", id);
 			List schedule = new ArrayList();
 			schedule = sqlmap.queryForList("myScheduleList", id);
-			// ³» Ä£±¸ ¸ñ·Ï
+			// ï¿½ï¿½ Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½
 			int myFriendListCount = (Integer)sqlmap.queryForObject("myFriendListCount", id);
 			List friend = new ArrayList();
 			friend = sqlmap.queryForList("myFriendList", id);
