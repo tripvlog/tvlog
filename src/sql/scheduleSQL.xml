@@ -9,8 +9,8 @@
 		values(t_schedule_seq.nextval,#s_writer#,#s_title#,to_date(#s_startday#,'yyyy/mm/dd'),#s_theme#,#s_step#)
 	</insert>
 	
-	<select id="scheduleMax" resultClass="int">
-		select max(s_num) from t_schedule
+	<select id="scheduleMax" resultClass="schedule">
+		select * from t_schedule where s_num=(select max(s_num) from t_schedule)
 	</select>
 	
 	
