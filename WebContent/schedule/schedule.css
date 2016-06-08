@@ -1,10 +1,5 @@
 @CHARSET "UTF-8";
 
-#tabtest{    /* 스토리, 지도/일정 탭 */
-		width:470px;
-		height:65px;
-		font-size:30px;
-	}
 	.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {   /* 스토리, 지도/일정 탭 - 마우스 오버 색상 지정 */
 		color:#ffffff;
     	background-color:#47C83E;
@@ -16,9 +11,19 @@
     	background-color:#FFFFFF;
     }
     #myTab{   /* 스토리, 지도/일정 탭 - 배경색 지정*/
+    	 overflow: auto; 
+  	  	list-style-type: none;
     	background-color:#FFFFFF;
     	Border-radius:10px;
-    } 
+    }
+    #tabtest{    /* 스토리, 지도/일정 탭 */
+    	float : left;
+   		display: inline;
+		width:400px;
+		height:65px;
+		font-size:30px;
+	}
+	 
     #row1{    /* 일정에 대한 간단한 설명 */
     	margin:0px;
     	padding:0px 0px;
@@ -115,7 +120,7 @@
 	}
 
 #masthead {
-	width: 1200px;
+	width: 1140px;
 	min-height: 270px;
 	background-image : url('/tvlog/img/schedule/schedule-img.png');
 	text-align: center;
@@ -133,6 +138,17 @@
 	background-color: #EAEAEA;
 	border-color: #EAEAEA;
 }
+
+#savecontainer{
+	width: 1140px;
+}
+#scheduleSave{
+	width: 220px;
+	height : 50px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+} 
+
 
 @media screen and (min-width: 768px) {
 	#masthead h1 {

@@ -29,9 +29,12 @@ public class ScheduleBean {
 		String id = (String)session.getAttribute("memId");
 		dto.setS_writer(id); 
 		sqlMap.insert("schedule.scheduleInsert", dto);
-		dto.setS_num((Integer)sqlMap.queryForObject("schedule.scheduleMax", null));
+		dto = (ScheduleDTO)sqlMap.queryForObject("schedule.scheduleMax", null);
+		if(dto.getS_startday() != null){
+			dto.setS_startday(dto.getS_startday().split(" ")[0]);
+		}
 		request.setAttribute("dto", dto);
-		return "/schedule/schedule-detail.jsp";
+		return "/schedule/schedule-update.jsp";
 	}
 	
 	//----- 상세일정 등록 부분 ( 교통)
