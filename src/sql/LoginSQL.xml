@@ -54,11 +54,19 @@
 	<insert id="member_create_band_list" parameterClass="trip.member.LoginDTO">
 		create table t_member_band_$id$(band_no number, band_id number primary key, band_name varchar2(300), band_img varchar2(300), band_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
-		
+	
+	<insert id="member_create_band_seq" parameterClass="trip.member.LoginDTO">
+		create sequence t_membr_band_$id$_seq nocache
+	</insert>	
+	
 	<insert id="member_create_friend_list" parameterClass="trip.member.LoginDTO">
 		create table t_member_friend_$id$(friend_no number, friend_id varchar2(300) primary key, friend_name varchar2(300), friend_state number default '0', friend_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 친구 목록 -->
-
+	
+	<insert id="member_create_friend_seq" parameterClass="trip.member.LoginDTO">
+		create sequence t_membr_friend_$id$_seq nocache
+	</insert>
+	
 	<update id="joinUpdate" parameterClass="trip.member.LoginDTO">
 		update t_member set path=#path# where id=#id#
 	</update>
@@ -127,4 +135,46 @@
 		delete from t_member_friend_$friend_id$ where friend_id=#id#
 	</delete>	
 	
+	
+	
+	
+	<select id="myFriendListCount" resultClass="int" parameterClass="String">
+	select count(*) from  t_member m,t_member_friend_$id$ f where m.id = f.friend_id
+	</select>
+	
+	<select id="myFriendList" resultClass="trip.member.LoginDTO" parameterClass="String">
+		select m.id id, m.path path, m.name name  from  t_member m,t_member_friend_$id$ f where m.id = f.friend_id
+	</select>
+	
+	<select id="myBandList" resultClass="trip.schedule.ScheduleDTO" parameterClass="String">
+		select * from t_member_band_$id$ where s_writer=#s_writer#
+	</select>
+	
+	<select id="myBandListCount" resultClass="int" parameterClass="String">
+		select count(*) from t_band where s_writer=#s_writer#
+	</select>
+	
+	<select id="myScheduleList" resultClass="trip.schedule.ScheduleDTO" parameterClass="String">
+		select * from t_schedule where s_writer=#s_writer#
+	</select>
+	
+	<select id="myScheduleListCount" resultClass="int" parameterClass="String">
+		select count(*) from t_schedule where s_writer=#s_writer#
+	</select>
+	
+	<select id="myDiaryList" resultClass="trip.diary.ImgVO" parameterClass="String">
+		select * from t_diary where diary_writer=#diary_writer#
+	</select>
+	
+	<select id="myPostListCount" resultClass="int" parameterClass="String" >
+		select count(*) from t_post where id=#id#
+	</select>
+	
+	<select id="myPostList" resultClass="trip.post.boardVO" parameterClass="String">
+		select * from t_post where id=#id#
+	</select>
+	
+	<select id="myDiaryListCount" resultClass="int" parameterClass="String">
+		select count(*) from t_diary where diary_writer=#diary_writer#
+	</select>
 </sqlMap>
