@@ -245,7 +245,32 @@ function mainBody(){
 	  		
 	  		<!-- 여행일기 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="diary" aria-labelledby="diary-tab">
-	  			
+	  			<div id="totalDiv">
+					<c:if test="${diaryAllCount != 0}">
+					<!-- 일기 검색 -->
+					<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>
+					<table width="900" border="1" cellspacing="0" cellpadding="2" >
+						<tr align="center">
+							<td>일기 번호</td>
+							<td>일기 작성자</td>
+							<td>일기 제목</td>
+							<td>일기 등록 날짜</td>
+						</tr>
+						<c:forEach var="list" items="${list}">
+						<tr align="center">
+							<td>${list.diary_num}</td>
+							<td>${list.diary_writer}</td>
+							<td>${list.diary_title}</td>
+							<td>${list.diary_reg}</td>
+						</tr>
+						</c:forEach>
+					</table>
+					<!-- 일기 검색 끝 -->
+					</c:if>
+					<c:if test="${diaryAllCount == 0}">
+						등록된 일기가 없습니다.
+					</c:if>
+				</div>
 	  		</div>
 	  		
 	  		<!-- 포스트 탭 내용 -->
