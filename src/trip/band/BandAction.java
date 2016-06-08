@@ -51,8 +51,16 @@ public class BandAction {
 		
 		listdto.setBand_id(banddto.getBand_id());
 		listdto.setBand_name(banddto.getBand_name());
-		listdto.setBand_img(banddto.getBand_img());
+		if(banddto.getBand_img() != null){
+			listdto.setBand_img(banddto.getBand_img());			
+		}else{
+			listdto.setBand_img("default.jpg");
+		}
 		listdto.setMember_id((String)session.getAttribute("memId"));
+		System.out.println("banddto.getband_id : " + banddto.getBand_id());
+		System.out.println("banddto.getband_name : " + banddto.getBand_name());
+		System.out.println("banddto.getband_img : " + banddto.getBand_img());
+		System.out.println("session.getattribute(memid) : " + (String)session.getAttribute("memId"));
 		sqlMap.insert("band_insert_my_list", listdto);
 		String band_img = request.getFile("b_img").getOriginalFilename();
 		
@@ -198,5 +206,18 @@ public class BandAction {
 		sqlMap.delete("band_board_del", imgdto);
 		return "redirect:/band/b_view.trip?band_id=" + imgdto.getBand_id();
 	}
-	
+
+	@RequestMapping("/band/b_modify.trip")
+	public String b_modify(HttpServletRequest request, HttpSession session, BandDTO banddto, trip.member.BandListDTO bandlistdto){
+		System.out.println("band_id : " + request.getParameter("band_id"));
+		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
+		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
+		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
+			bandlistdto.setMember_id((String)session.getAttribute("memId"));
+			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
+			request.setAttribute("band_list", band_list);
+		}
+		request.setAttribute("banddto", banddto);
+		return "/band/modify_band.jsp";
+	}
 }

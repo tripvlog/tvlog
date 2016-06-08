@@ -38,23 +38,38 @@
 
     <!-- 밴드 목록 보여주기 -->
     <div class="container">
-    	<div class="row">
-	    	<c:forEach var="band" items="${b_list}">
-	    		<a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">
-	    			<div class="col-md-2" align="center">
-						<img src="/tvlog/img/band/${band.band_img}" width="150" height="150"><br />
-						${band.band_name}<br />
-						${band.band_intro}
-					</div>
-				</a>
-			</c:forEach>
-			<c:if test="${sessionScope.memId != null}">
-			<a href="/tvlog/band/b_create.trip">
-			<div class="col-md-2" align="center">
-				<img src="/tvlog/img/band/default.jpg" width="150" height="150" ><br /><br />
-				밴드 만들기
+    	<div class="row row-offcanvas row-offcanvas-right">	    	
+			<div class="col-xs-12 col-sm-9">
+				밴드이름 : <input type="text" name="band_name" value="${banddto.band_name}"><br />
+				밴드 이미지 : <input type="file" name="b_img"><img src="/tvlog/img/band/${banddto.band_img}" width="230" height="150"><br />
+				밴드 설명 : <textarea name="band_intro" cols="45" rows="5">${banddto.band_intro}</textarea><br />
 			</div>
-			</a></c:if>
+			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+				<div class="list-group">
+					<div class="list-group-item" align="center"><a href="/tvlog/band/b_view.trip?band_id=${banddto.band_id}">
+						<img src="/tvlog/img/band/${banddto.band_img}" width="230" height="150"></a><br />
+						${banddto.band_name}<br />
+						${banddto.band_intro}<br />
+					</div>
+					<c:if test="${sessionScope.memId != null}"><!-- 로그인이 되어있으면 내가 가입한 밴드를 보여줌 -->
+							내 밴드<br />
+						<c:forEach var="band_list" items="${band_list}">
+							<a href="/tvlog/band/b_view.trip?band_id=${band_list.band_id}">
+							<img src="/tvlog/img/band/${band_list.band_img}" width="50" height="50">&nbsp;${band_list.band_name}<br />
+							</a>
+						</c:forEach>
+					<hr>
+					</c:if><!-- 다른밴드 추천 -->
+					이런 밴드는 어떠세요?<br />
+					<c:forEach var="b" items="${bandlist}">
+					<div>
+						<a href="/tvlog/band/b_view.trip?band_id=${b.band_id}">
+						<img src="/tvlog/img/band/${b.band_img}" width="50" height="50">${b.band_name}</a>
+					</div>
+					</c:forEach>
+				</div>
+				
+			</div>
 		</div>
     </div>
     </body>

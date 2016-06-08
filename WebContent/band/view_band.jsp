@@ -131,16 +131,17 @@
 						<img src="/tvlog/img/band/${band.band_img}" width="230" height="150"></a><br />
 						${band.band_name}<br />
 						${band.band_intro}<br />
+						<hr>
+						<a href="/tvlog/band/b_modify.trip?band_id=${band_id}&">
+						<span class="glyphicon glyphicon-cog" aria-hidden="true">설정</span>
+						</a>
 					</div>
-					<hr>
-					<a href="#" class="list-group-item active">1</a>
-					<a href="##" class="list-group-item">2</a>
-					<a href="###" class="list-group-item">3</a>
-					<hr>
 					<c:if test="${sessionScope.memId != null}"><!-- 로그인이 되어있으면 내가 가입한 밴드를 보여줌 -->
 							내 밴드<br />
 						<c:forEach var="band_list" items="${band_list}">
-							<img src="/tvlog/img/band/${band_list.band_img}" width="50" height="50">&nbsp;${band_list.band_name}
+							<a href="/tvlog/band/b_view.trip?band_id=${band_list.band_id}">
+							<img src="/tvlog/img/band/${band_list.band_img}" width="50" height="50">&nbsp;${band_list.band_name}<br />
+							</a>
 						</c:forEach>
 					<hr>
 					</c:if><!-- 다른밴드 추천 -->
