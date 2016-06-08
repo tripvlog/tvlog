@@ -4,6 +4,8 @@ package trip.member;
 
 	import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 	import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 	@Controller
 	public class LoginController {
@@ -187,12 +190,34 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 		}
 		
 		@RequestMapping("/member/myPage.trip")
-		public String myPage(HttpSession session, HttpServletRequest request){
+		public ModelAndView myPage(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
-			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);
+			// 회원 정보 수정
+			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);    
 			request.setAttribute("dto",dto);
+			// 내가 쓴 포스트
+			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
+			List post = new ArrayList();
+			post = sqlmap.queryForList("myPostList", id);
+			// 내가 만든 일정
+			int myScheduleListCount = (Integer)sqlmap.queryForObject("myScheduleListCount", id);
+			List schedule = new ArrayList();
+			schedule = sqlmap.queryForList("myScheduleList", id);
+			// 내 친구 목록
+			int myFriendListCount = (Integer)sqlmap.queryForObject("myFriendListCount", id);
+			List friend = new ArrayList();
+			friend = sqlmap.queryForList("myFriendList", id);
 			
-			return"/member/myPage.jsp";
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("myPostListCount",myPostListCount);
+			mv.addObject("post", post);
+			mv.addObject("myScheduleListCount", myScheduleListCount);
+			mv.addObject("schedule", schedule);
+			mv.addObject("myFriendListCount", myFriendListCount);
+			mv.addObject("friend", friend);
+			mv.setViewName("/member/myPage.jsp");
+			
+			return mv;
 		}
 		
 		@RequestMapping("/member/findPw.trip")
@@ -201,6 +226,21 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 			String findpw = (String) sqlmap.queryForObject("pw", id);
 			request.setAttribute("pw", findpw);
 			return "/main/findPw.jsp";
+		}
+		
+		@RequestMapping("/member/myPost.trip")
+		public ModelAndView myPost(HttpSession session){
+			String id = (String)session.getAttribute("memId");
+			
+			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
+			List post = new ArrayList();
+			post = sqlmap.queryForList("myPostList", id);
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("myPostListCount",myPostListCount);
+			mv.addObject("post", post);
+			mv.setViewName("/member/myPost.jsp");
+			return mv;
 		}
 	}
 

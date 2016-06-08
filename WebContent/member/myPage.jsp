@@ -159,32 +159,88 @@ function mainBody(){
 	 		</div>
 	 		<!-- 친구 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="friend" aria-labelledby="friend-tab">
-	  			<div class="col-sm-2">
-					<ul id="myTab6" class="nav nav-pills nav-stacked" role="tablist">
-						<li role="presentation" class="active"><a href="#friendSelect" id="friendSelect-tab6" role="tab" data-toggle="tab" aria-controls="friendSelect" aria-expanded="false">친구 검색</a></li>
-						<li role="presentation" class=""><a href="#friendList" role="tab" id="#friendList-tab6" data-toggle="tab" aria-controls="friendList" aria-expanded="true">친구 목록</a></li>
-					</ul>
-				</div>
-				<div class="col-sm-10">
-					<div id="myTabContent6" class="tab-content">
-						<div role="tabpanel" class="tab-pane fade active in" id="friendSelect" aria-labelledby="friendSelect-tab6">
-							친구검색
-						</div>
-						<div role="tabpanel" class="tab-pane fade" id="friendList" aria-labelledby="friendList-tab6">
-							친구목록
-						</div>
-					</div>
+	  			<div id="totalDiv" style="margin-left: 15px">
+					<c:if test="${myFriendListCount != 0}">
+					<h4>내 친구 목록 (${myFriendListCount} 개)</h4>
+					<table width="600" border="1" cellspacing="0" cellpadding="2">
+						<tr align="center">
+							<td>친구 이미지</td>
+							<td>친구 ID</td>
+							<td>친구 이름</td>
+						</tr>
+						<c:forEach var="friend" items="${friend}">
+						<tr align="center">
+							<td><img src="/tvlog/img/member/${friend.path}" width="50" height="50" style="align:center"></td>
+							<td>${friend.id}</td>
+							<td>${friend.name}</td>							
+						</tr>
+						</c:forEach>
+					</table>
+					</c:if>
+					<c:if test="${bandAllCount == 0}">
+						등록된 밴드가 없습니다.
+					</c:if>
 				</div>
 	  		</div>
 	  		
 	  		<!-- 밴드 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="band" aria-labelledby="band-tab">
-	  			
+	  			<div id="totalDiv" style="margin-left: 15px">
+					<c:if test="${bandAllCount != 0}">
+					<!-- 밴드 검색 -->
+					<h4>모든 밴드 검색 (${bandAllCount} 개)</h4>
+					<table width="800" border="1" cellspacing="0" cellpadding="2">
+						<tr align="center">
+							<td>밴드 이름</td>
+							<td>밴드장</td>
+							<td>밴드 이미지</td>
+							<td>밴드 소개</td>
+							<td>밴드 등록날짜</td>
+						</tr>
+						<c:forEach var="list" items="${list}">
+						<tr align="center">
+							<td>${list.band_name}</td>
+							<td>${list.band_leader}</td>
+							<td><img src="/tvlog/img/band/${list.band_img}" width="50" height="50" style="align:center"></td>
+							<td>${list.band_intro}</td>
+							<td>${list.band_reg}</td>
+						</tr>
+						</c:forEach>
+					</table>
+					<!-- 밴드 검색 끝 -->
+					</c:if>
+					<c:if test="${bandAllCount == 0}">
+						등록된 밴드가 없습니다.
+					</c:if>
+				</div>
 	  		</div>
 	  		
 	  		<!-- 여행일정 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="schedule" aria-labelledby="schedule-tab">
-	  			
+	  			<div id="totalDiv" style="margin-left: 15px">
+					<c:if test="${myScheduleListCount != 0}">
+					<h4>모든 스케줄 검색 (${myScheduleListCount} 개)</h4>
+					<table width="1000" border="1" cellspacing="0" cellpadding="2">
+						<tr align="center">
+							<td>일정 작성자</td>
+							<td>여행 제목</td>
+							<td>여행 시작일</td>
+							<td>여행 끝난일</td>
+						</tr>
+						<c:forEach var="schedule" items="${schedule}">
+						<tr align="center">
+							<td>${schedule.s_writer}</td>
+							<td>${schedule.s_title}</td>
+							<td>${schedule.s_startday}</td>
+							<td>${schedule.s_endday}</td>
+						</tr>
+						</c:forEach>
+					</table>
+					</c:if>
+					<c:if test="${myScheduleListCount == 0}">
+						등록된 일정이 없습니다.
+					</c:if>
+				</div>
 	  		</div>
 	  		
 	  		<!-- 여행일기 탭 내용 -->
@@ -194,7 +250,30 @@ function mainBody(){
 	  		
 	  		<!-- 포스트 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="post" aria-labelledby="post-tab">
-	  		
+	  			<div id="totalDiv" style="margin-left: 15px">
+					<c:if test="${myPostListCount != 0}">
+						<h4>내가 쓴 포스트 (${myPostListCount} 개)</h4>
+						<table width="1000" border="1" cellspacing="0" cellpadding="2">
+							<tr align="center">
+								<td>작성자</td>
+								<td>포스트 제목</td>
+								<td>포스트 등록 날짜</td>
+								<td>좋아요</td>
+							</tr>
+							<c:forEach var="post" items="${post}">
+								<tr align="center">
+									<td>${post.id}</td>
+									<td>${post.subject}</td>
+									<td>${post.regdate}</td>
+									<td>${post.good}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+					<c:if test="${myPostListCount == 0}">
+						등록한 포스트가 없습니다.
+					</c:if>
+				</div>
 			</div>
 		    <!-- 회원정보 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="modify" aria-labelledby="modify-tab">

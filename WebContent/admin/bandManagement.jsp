@@ -17,39 +17,39 @@
 </script>
 </head>
 <body>
-<div id="totalDiv">
-	<c:if test="${bandAllCount != 0}">
-	<!-- 밴드 검색 -->
-	<h4>모든 밴드 검색 (${bandAllCount} 개)</h4>
-	<table width="800" border="1" cellspacing="0" cellpadding="2">
-		<tr align="center">
-			<td>밴드 ID</td>
-			<td>밴드 이름</td>
-			<td>밴드장</td>
-			<td>밴드 이미지</td>
-			<td>밴드 소개</td>
-			<td>밴드 공개범위</td>
-			<td>밴드 등록날짜</td>
-			<td>삭제</td>
-		</tr>
-		<c:forEach var="list" items="${list}">
-		<tr align="center">
-			<td>${list.band_id}</td>
-			<td>${list.band_name}</td>
-			<td>${list.band_leader}</td>
-			<td><img src="/tvlog/img/band/${list.band_img}" width="50" height="50" style="align:center"></td>
-			<td>${list.band_intro}</td>
-			<td>${list.band_range}</td>
-			<td>${list.band_reg}</td>
-			<td><input type="button" value="삭제" onclick="deleteThis('${list.band_id}')"></td>
-		</tr>
-		</c:forEach>
-	</table>
-	<!-- 밴드 검색 끝 -->
-	</c:if>
-	<c:if test="${bandAllCount == 0}">
-		등록된 밴드가 없습니다.
-	</c:if>
-</div>
+	<div id="totalDiv">
+		<c:if test="${bandAllCount != 0}">
+		<!-- 밴드 검색 -->
+		<h4>모든 밴드 검색 (${bandAllCount} 개)</h4>
+		<table width="800" border="1" cellspacing="0" cellpadding="2">
+			<tr align="center">
+				<td>밴드 ID</td>
+				<td>밴드 이름</td>
+				<td>밴드장</td>
+				<td>밴드 이미지</td>
+				<td>밴드 소개</td>
+				<td>밴드 공개범위</td>
+				<td>밴드 등록날짜</td>
+				<td>삭제</td>
+			</tr>
+			<c:forEach var="list" items="${list}">
+			<tr align="center">
+				<td>${list.band_id}</td>
+				<td>${list.band_name}</td>
+				<td>${list.band_leader}</td>
+				<td><img src="/tvlog/img/band/${list.band_img}" width="50" height="50" style="align:center"></td>
+				<td>${list.band_intro}</td>
+				<td>${list.band_range}</td>
+				<td>${list.band_reg}</td>
+				<td><input type="button" value="삭제" onclick="deleteThis('${list.band_id}')"></td>
+			</tr>
+			</c:forEach>
+		</table>
+		<!-- 밴드 검색 끝 -->
+		</c:if>
+		<c:if test="${bandAllCount == 0}">
+			등록된 밴드가 없습니다.
+		</c:if>
+	</div>
 </body>
 </html>

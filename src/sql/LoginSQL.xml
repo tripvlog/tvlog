@@ -56,7 +56,7 @@
 	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
 	
 	<insert id="member_create_band_seq" parameterClass="trip.member.LoginDTO">
-		create sequence t_membr_band_$id$_seq nocache
+		create sequence t_member_band_$id$_seq nocache
 	</insert>	
 	
 	<insert id="member_create_friend_list" parameterClass="trip.member.LoginDTO">
@@ -64,7 +64,7 @@
 	</insert><!-- 회원가입시 자동생성되는 친구 목록 -->
 	
 	<insert id="member_create_friend_seq" parameterClass="trip.member.LoginDTO">
-		create sequence t_membr_friend_$id$_seq nocache
+		create sequence t_member_friend_$id$_seq nocache
 	</insert>
 	
 	<update id="joinUpdate" parameterClass="trip.member.LoginDTO">

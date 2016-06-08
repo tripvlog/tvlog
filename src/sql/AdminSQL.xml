@@ -83,51 +83,47 @@
 	</delete>
 	
 	<delete id="scheduleDeleteList" parameterClass="int">
-		delete from t_schedule where s_num=#s_num#
+		<![CDATA[ delete from t_schedule where s_num=#s_num# and s_range < 5 ]]>
 	</delete>
 	
 	<delete id="scheduleDetailDeleteList" parameterClass="int">
-		delete from t_schedule_detail where s_num=#s_num#
+		<![CDATA[ delete from t_schedule_detail where s_num=#s_num# and sd_range < 5 ]]>
 	</delete>
 	
 	<delete id="diaryDeleteList" parameterClass="int">
-		delete from t_diary where diary_num=#diary_num#
+		<![CDATA[ delete from t_diary where diary_num=#diary_num# and diary_range < 5 ]]>
 	</delete>
 	
 	<delete id="postDeleteList" parameterClass="int">
-		delete from t_post where no=#no#
+		<![CDATA[ delete from t_post where no=#no# and p_public < 5 ]]>
 	</delete>
 	
 	<delete id="bandDeleteList" parameterClass="int">
-		delete from t_band where band_id=#band_id#
+		<![CDATA[ delete from t_band where band_id=#band_id# and band_range < 5 ]]>
 	</delete>
 	
-	
-	
-	
-	
 	<delete id="delete_band" parameterClass="int">
-		drop table t_band_board_$band_id$
+		<![CDATA[ drop table t_band_board_$band_id$ and band_range < 5]]>
 	</delete>
 	
 	<delete id="delete_band_seq" parameterClass="int">
-		drop sequence t_band_board_$band_id$_seq
+		<![CDATA[ drop sequence t_band_board_$band_id$_seq and band_range < 5]]>
 	</delete>
 	
 	<delete id="delete_band_comment" parameterClass="int">
-		drop table t_band_board_comment_$band_id$
+		<![CDATA[ drop table t_band_board_comment_$band_id$ and band_range < 5]]>
 	</delete>
 	
 	<delete id="delete_band_member" parameterClass="int">
-		drop table t_band_member_$band_id$
+		<![CDATA[ drop table t_band_member_$band_id$ and band_range < 5]]>
 	</delete>
 	
 	<delete id="delete_band_member_seq" parameterClass="int">
-		drop sequence t_band_member_$band_id$_seq
+		<![CDATA[ drop sequence t_band_member_$band_id$_seq and band_range < 5]]>
 	</delete>
 	
 	<delete id="delete_band_imgs" parameterClass="int">
-		drop table t_band_board_imgs_$band_id$
+		<![CDATA[ drop table t_band_board_imgs_$band_id$ and band_range < 5]]>
 	</delete>
 	
 </sqlMap>
