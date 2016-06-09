@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="/main/header.jsp" /> 
 	<div id="totalDiv" style="margin-left: 9%;">
-		<h4>포스트로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="/tvlog/post/postList.trip"></h4>
+		<h4>포스트로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/post/postList.trip'"></h4>
 		<c:if test="${myPostListCount != 0}">
 			<h4>내가 쓴 포스트 (${myPostListCount} 개)</h4>
 			<table width="1000" border="1" cellspacing="0" cellpadding="2">

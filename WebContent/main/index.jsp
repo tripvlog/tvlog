@@ -17,6 +17,11 @@
 			<script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
 			<script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
 <script>
+
+	function logout(){
+		opener.document.location.reload(true);
+	}
+	
 	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id))
@@ -93,6 +98,7 @@
 	 	});
 	}
 	function loginSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다.
+		/* window.location.reload(true); */
 	    $("#loginSpace").html(aaa);
 	}
 	function loginError(){
@@ -274,10 +280,10 @@
 				<li class="divider"></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/schedule/schedule-list.trip">여행일정</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">밴드</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myBand.trip">밴드</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myPost.trip">포스트</a></li>
 				<li class="divider"></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip" onclick="window.location.reload(true);">로그아웃</a></li>
 			</ul>
 		</div>
 		</c:if>
@@ -297,7 +303,7 @@
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/postManagement.trip">포스트 관리</a></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/checklist.trip">체크리스트 관리</a></li>
 					<li class="divider"></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip">로그아웃</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip" onclick="logout()">로그아웃</a></li>
 				</ul>
 			</div>
 			</c:if>

@@ -163,19 +163,19 @@ import org.springframework.web.servlet.ModelAndView;
 				String dbpath = (String)sqlmap.queryForObject("member_get_img", id);
 				if(dbpath.equals("default.jpg")){
 					String rp = request.getRealPath("//img//member//");
-					String orgName = mf.getOriginalFilename();  // ���� �̸�
-					String ext = orgName.substring(orgName.lastIndexOf("."));   // .Ȯ����
-					String savName = dto.getId()+ext;   //������ �̸� : ���̵�+Ȯ����
-					File sf = new File(rp+"//"+savName);  //rp��ο� ������ �̸� �ְ� sf�� ����
-					mf.transferTo(sf);   //mf�� sf�� �ٲ���
+					String orgName = mf.getOriginalFilename();  // 占쏙옙占쏙옙 占싱몌옙
+					String ext = orgName.substring(orgName.lastIndexOf("."));   // .확占쏙옙占쏙옙
+					String savName = dto.getId()+ext;   //占쏙옙占쏙옙占쏙옙 占싱몌옙 : 占쏙옙占싱듸옙+확占쏙옙占쏙옙
+					File sf = new File(rp+"//"+savName);  //rp占쏙옙恝占� 占쏙옙占쏙옙占쏙옙 占싱몌옙 占쌍곤옙 sf占쏙옙 占쏙옙占쏙옙
+					mf.transferTo(sf);   //mf占쏙옙 sf占쏙옙 占쌕뀐옙占쏙옙
 					dto.setPath(savName);
 					sqlmap.update("modifyUpdate", dto);
 				}
 				else{
 					String rp = request.getRealPath("//img//member//");
 					File deleteFile = new File(rp + dbpath);
-					deleteFile.delete();  //���� ���� ����
-					// �ٽ� ���ο� ���� ����
+					deleteFile.delete();  //占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+					// 占쌕쏙옙 占쏙옙占싸울옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 					String orgName = mf.getOriginalFilename();
 					String ext = orgName.substring(orgName.lastIndexOf("."));
 					String savName = dto.getId()+ext;
@@ -194,21 +194,29 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping("/member/myPage.trip")
 		public ModelAndView myPage(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
-			// ȸ�� ���� ����
+			// 정보수정
 			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);    
 			request.setAttribute("dto",dto);
-			// ���� �� ����Ʈ
+			// 포스트
 			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
 			List post = new ArrayList();
 			post = sqlmap.queryForList("myPostList", id);
-			// ���� ���� ����
+			// 일정
 			int myScheduleListCount = (Integer)sqlmap.queryForObject("myScheduleListCount", id);
 			List schedule = new ArrayList();
 			schedule = sqlmap.queryForList("myScheduleList", id);
-			// �� ģ�� ���
+			// 친구
 			int myFriendListCount = (Integer)sqlmap.queryForObject("myFriendListCount", id);
 			List friend = new ArrayList();
 			friend = sqlmap.queryForList("myFriendList", id);
+			// 일기
+			int myDiaryListCount = (Integer)sqlmap.queryForObject("myDiaryListCount", id);
+			List diary = new ArrayList();
+			diary = sqlmap.queryForList("myDiaryList", id);
+			// 밴드
+			int myBandListCount = (Integer)sqlmap.queryForObject("myBandListCount", id);
+			List band = new ArrayList();
+			band = sqlmap.queryForList("myBandList", id);
 			
 			ModelAndView mv = new ModelAndView();
 			mv.addObject("myPostListCount",myPostListCount);
@@ -217,6 +225,10 @@ import org.springframework.web.servlet.ModelAndView;
 			mv.addObject("schedule", schedule);
 			mv.addObject("myFriendListCount", myFriendListCount);
 			mv.addObject("friend", friend);
+			mv.addObject("myDiaryListCount", myDiaryListCount);
+			mv.addObject("diary", diary);
+			mv.addObject("myBandListCount", myBandListCount);
+			mv.addObject("band", band);
 			mv.setViewName("/member/myPage.jsp");
 			
 			return mv;
@@ -242,6 +254,19 @@ import org.springframework.web.servlet.ModelAndView;
 			mv.addObject("myPostListCount",myPostListCount);
 			mv.addObject("post", post);
 			mv.setViewName("/member/myPost.jsp");
+			return mv;
+		}
+		
+		@RequestMapping("/member/myBand.trip")
+		public ModelAndView myBand(HttpSession session, HttpServletRequest request){
+			String id = (String)session.getAttribute("memId");
+			ModelAndView mv = new ModelAndView();
+			int myBandListCount = (Integer)sqlmap.queryForObject("myBandListCount", id);
+			List band = new ArrayList();
+			band = sqlmap.queryForList("myBandList", id);
+			mv.addObject("myBandListCount", myBandListCount);
+			mv.addObject("band", band);
+			mv.setViewName("/member/myBand.jsp");
 			return mv;
 		}
 	}

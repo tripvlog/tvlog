@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +11,11 @@
 <meta name="description" content="Bootstrap Uses a fixed left sidebar, that attaches after scrolling past a large top header. example snippet for Bootstrap." />
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
 <style type="text/css">
 	#navlink:hover{
     	color : #6B9900;
@@ -46,9 +48,13 @@
 		padding: 0;
 		margin: 0;
 	}
+	
+	#friend-list{
+		text-align: center; 
+	}
 </style>
 <script>
-function mainBody(){
+		function mainBody(){
 	        $.ajax({
 		        type: "post",
 		        url : "/tvlog/member/loginForm.trip",
@@ -64,6 +70,10 @@ function mainBody(){
 	    function mainError(){
 	        alert("Error");
 	    }
+	    
+	    function OpenWindow(url,intWidth,intHeight) { 
+		      window.open(url, "_blank", "width="+intWidth+",height="+intHeight+",resizable=1,scrollbars=1") ; 
+		} 
 </script>
 </head>
 <body onload="mainBody()" style="width:1200">
@@ -160,25 +170,30 @@ function mainBody(){
 	 		<!-- 친구 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="friend" aria-labelledby="friend-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
+	  				<h4><button type="button" onClick="javascript:OpenWindow('/tvlog/post/friendManage.trip?','600','650')" class="btn btn-success">친구관리</button></h4>
 					<c:if test="${myFriendListCount != 0}">
-					<h4>내 친구 목록 (${myFriendListCount} 개)</h4>
-					<table width="600" border="1" cellspacing="0" cellpadding="2">
-						<tr align="center">
-							<td>친구 이미지</td>
-							<td>친구 ID</td>
-							<td>친구 이름</td>
-						</tr>
-						<c:forEach var="friend" items="${friend}">
-						<tr align="center">
-							<td><img src="/tvlog/img/member/${friend.path}" width="50" height="50" style="align:center"></td>
-							<td>${friend.id}</td>
-							<td>${friend.name}</td>							
-						</tr>
-						</c:forEach>
-					</table>
+						<h4>내 친구 목록 (${myFriendListCount} 개)</h4>
+						<table >
+							<c:forEach begin="0" end="${(fn:length(friend) + 3) / 4 - 1}" var="row">
+								<tr>
+				    				<c:forEach begin="0" end="3" var="col">
+										<c:set var="friendDTO" value="${friend[row * 4 + col]}"/>
+										<c:if test="${not empty friendDTO}">
+				        					<td>
+				        						<div id="friend-list" onclick="window.location=''">
+					        						<img src="/tvlog/img/member/${friendDTO.path}" width="100" height="100" style="align:center;border-radius:30px; ">
+					        						<br />
+					        						${friendDTO.name}					    
+				        						</div>
+				        					</td>
+				        				</c:if>
+				    				</c:forEach>
+								</tr>
+							</c:forEach>
+						</table>
 					</c:if>
-					<c:if test="${bandAllCount == 0}">
-						등록된 밴드가 없습니다.
+					<c:if test="${myFriendListCount == 0}">
+						등록된 친구가 없습니다.
 					</c:if>
 				</div>
 	  		</div>
@@ -186,30 +201,31 @@ function mainBody(){
 	  		<!-- 밴드 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="band" aria-labelledby="band-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
-					<c:if test="${bandAllCount != 0}">
-					<!-- 밴드 검색 -->
-					<h4>모든 밴드 검색 (${bandAllCount} 개)</h4>
-					<table width="800" border="1" cellspacing="0" cellpadding="2">
-						<tr align="center">
-							<td>밴드 이름</td>
-							<td>밴드장</td>
-							<td>밴드 이미지</td>
-							<td>밴드 소개</td>
-							<td>밴드 등록날짜</td>
-						</tr>
-						<c:forEach var="list" items="${list}">
-						<tr align="center">
-							<td>${list.band_name}</td>
-							<td>${list.band_leader}</td>
-							<td><img src="/tvlog/img/band/${list.band_img}" width="50" height="50" style="align:center"></td>
-							<td>${list.band_intro}</td>
-							<td>${list.band_reg}</td>
-						</tr>
-						</c:forEach>
-					</table>
-					<!-- 밴드 검색 끝 -->
+	  				<h4>밴드로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/band/b_list.trip'"></h4>
+					<c:if test="${myBandListCount != 0}">
+						<h4>모든 밴드 검색 (${myBandListCount} 개)</h4>
+							<table >
+								<c:forEach begin="0" end="${(fn:length(band) + 3) / 4 - 1}" var="row">
+									<tr>
+					    				<c:forEach begin="0" end="3" var="col">
+											<c:set var="bandDTO" value="${band[row * 4 + col]}"/>
+											<c:if test="${not empty bandDTO}">
+					        					<td>
+					        						<div id="band-list" onclick="window.location=''">
+						        						<img src="/tvlog/img/band/${bandDTO.band_img}" width="100" height="100" style="align:center;border-radius:30px; ">
+						        						<br />
+						        						${bandDTO.band_name}<br />					    
+					        							${bandDTO.band_leader}<br />
+					        							${bandDTO.band_intro}
+					        						</div>
+					        					</td>
+					        				</c:if>
+					    				</c:forEach>
+									</tr>
+								</c:forEach>
+							</table>
 					</c:if>
-					<c:if test="${bandAllCount == 0}">
+					<c:if test="${myBandListCount == 0}">
 						등록된 밴드가 없습니다.
 					</c:if>
 				</div>
@@ -219,7 +235,7 @@ function mainBody(){
 	  		<div role="tabpanel" class="tab-pane fade" id="schedule" aria-labelledby="schedule-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
 					<c:if test="${myScheduleListCount != 0}">
-					<h4>모든 스케줄 검색 (${myScheduleListCount} 개)</h4>
+					<h4>모든 일정 검색 (${myScheduleListCount} 개)</h4>
 					<table width="1000" border="1" cellspacing="0" cellpadding="2">
 						<tr align="center">
 							<td>일정 작성자</td>
@@ -245,10 +261,11 @@ function mainBody(){
 	  		
 	  		<!-- 여행일기 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="diary" aria-labelledby="diary-tab">
-	  			<div id="totalDiv">
-					<c:if test="${diaryAllCount != 0}">
+	  			<div id="totalDiv" style="margin-left: 15px" >
+	  				<h4>일기로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/diary/list.trip'"></h4>
+					<c:if test="${myDiaryListCount != 0}">
 					<!-- 일기 검색 -->
-					<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>
+					<h4>모든 일기 검색 (${myDiaryListCount} 개)</h4>
 					<table width="900" border="1" cellspacing="0" cellpadding="2" >
 						<tr align="center">
 							<td>일기 번호</td>
@@ -256,18 +273,18 @@ function mainBody(){
 							<td>일기 제목</td>
 							<td>일기 등록 날짜</td>
 						</tr>
-						<c:forEach var="list" items="${list}">
+						<c:forEach var="diary" items="${diary}">
 						<tr align="center">
-							<td>${list.diary_num}</td>
-							<td>${list.diary_writer}</td>
-							<td>${list.diary_title}</td>
-							<td>${list.diary_reg}</td>
+							<td>${diary.diary_num}</td>
+							<td>${diary.diary_writer}</td>
+							<td>${diary.diary_title}</td>
+							<td>${diary.diary_reg}</td>
 						</tr>
 						</c:forEach>
 					</table>
 					<!-- 일기 검색 끝 -->
 					</c:if>
-					<c:if test="${diaryAllCount == 0}">
+					<c:if test="${myDiaryListCount == 0}">
 						등록된 일기가 없습니다.
 					</c:if>
 				</div>
@@ -276,6 +293,7 @@ function mainBody(){
 	  		<!-- 포스트 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="post" aria-labelledby="post-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
+	  				<h4>포스트로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/post/postList.trip'"></h4>
 					<c:if test="${myPostListCount != 0}">
 						<h4>내가 쓴 포스트 (${myPostListCount} 개)</h4>
 						<table width="1000" border="1" cellspacing="0" cellpadding="2">

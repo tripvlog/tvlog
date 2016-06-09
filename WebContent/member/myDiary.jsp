@@ -8,6 +8,35 @@
 </head>
 <body>
 <jsp:include page="/main/header.jsp" />
-
+	<div id="totalDiv">
+		<c:if test="${diaryAllCount != 0}">
+		<!-- 일기 검색 -->
+		<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>
+		<table width="900" border="1" cellspacing="0" cellpadding="2" >
+			<tr align="center">
+				<td>일기 번호</td>
+				<td>일기 작성자</td>
+				<td>일기 제목</td>
+				<td>일기 공개범위</td>
+				<td>일기 등록 날짜</td>
+				<td>삭제</td>
+			</tr>
+			<c:forEach var="list" items="${list}">
+			<tr align="center">
+				<td>${list.diary_num}</td>
+				<td>${list.diary_writer}</td>
+				<td>${list.diary_title}</td>
+				<td>${list.diary_range}</td>
+				<td>${list.diary_reg}</td>
+				<td><input type="button" value="삭제" onclick="deleteThis('${list.diary_num}')"></td>
+			</tr>
+			</c:forEach>
+		</table>
+		<!-- 일기 검색 끝 -->
+		</c:if>
+		<c:if test="${diaryAllCount == 0}">
+			등록된 일기가 없습니다.
+		</c:if>
+	</div>
 </body>
 </html>
