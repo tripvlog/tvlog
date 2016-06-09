@@ -177,4 +177,15 @@
 	<select id="myDiaryList" resultClass="trip.diary.ImgVO" parameterClass="String">
 		select * from t_diary where diary_writer=#diary_writer#
 	</select>
+	
+	
+	
+	<select parameterClass="String" resultClass="trip.post.boardVO" id="member_findfriend_id"> 
+	select * from t_member where id=#find# 
+	</select>
+	
+	<select parameterClass="String" resultClass="trip.post.boardVO" id="member_findfriend_name"> 
+	select * from t_member where name like '%'||#find#||'%'
+	</select>
+	
 </sqlMap>
