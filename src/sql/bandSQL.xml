@@ -30,7 +30,7 @@
 		select max(band_board_num) from t_band_board_$band_id$
 	</select>
 	
-	<select id="band_img_select" resultClass="String" parameterClass="trip.band.imgDTO">
+	<select id="band_board_img_select" resultClass="String" parameterClass="trip.band.imgDTO">
 		select board_img from t_band_board_imgs_$band_id$ where board_num = #board_num#
 	</select>
 	
@@ -50,10 +50,29 @@
 		select board_img from t_band_board_imgs_$band_id$ where board_num = #band_board_num#
 	</select>
 	
+	<select id="band_board_member_get" resultClass="trip.band.memberDTO" parameterClass="int">
+		select * from t_band_member_$band_id$
+	</select>
+
+	<select id="band_img_get" resultClass="String" parameterClass="int">
+		select band_img from t_band where band_id = #band_id#
+	</select>
+	
+	<select id="band_member_img_get" resultClass="String" parameterClass="trip.band.memberDTO">
+		select band_member_img from t_band_member_$band_id$ where band_member_id = #band_member_id#
+	</select>
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
 		update t_band set band_img = #band_img# where band_id = #band_id#
+	</update>
+	
+	<update id="band_member_imgUpload" parameterClass="trip.band.memberDTO">
+		update t_band_member_$band_id$ set band_member_img = #band_member_img# where band_member_id = #band_member_id#
+	</update>
+	
+	<update id="member_band_img_change" parameterClass="trip.member.BandListDTO">
+		update t_member_band_$member_id$ set band_img = #band_img# where band_id = #band_id#
 	</update>
 
 	<update id="band_board_img" parameterClass="trip.band.boardDTO">
@@ -64,6 +83,17 @@
 		update t_band_board_$band_id$ set band_board_content = #band_board_content#, band_board_reg = sysdate where band_board_num = #band_board_num#
 	</update>
 
+	<update id="band_modify" parameterClass="trip.band.BandDTO">
+		update t_band set band_name = #band_name#, band_intro = #band_intro#, band_range = #band_range# where band_id = #band_id#
+	</update>
+	
+	<update id="member_band_name_change" parameterClass="trip.member.BandListDTO">
+		update t_member_band_$member_id$ set band_name = #band_name# where band_id = #band_id#
+	</update>
+	
+	<update id="band_member_name_change" parameterClass="trip.band.memberDTO">
+		update t_band_member_$band_id$ set band_member_name = #band_member_name# where band_member_id = #band_member_id#
+	</update>
 <!-- =============================================================================== -->
 
 	<delete id="band_board_imgs_del" parameterClass="trip.band.imgDTO">

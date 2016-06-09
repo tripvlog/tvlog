@@ -97,6 +97,7 @@
 						<c:if test="${sessionScope.memId != v.band_board_writer}">
 							<img src="/tvlog/img/member/${v.path}" width="50" height="50">${v.name}
 						</c:if>
+						
 						<br />
 							${v.band_board_num} : band_board_num<br />
 							${v.band_board_notice} : band_board_notice<br />
@@ -126,15 +127,28 @@
 <!-- 내용 끝 -->
 <!-- 우측 메뉴바 시작 -->
 			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-				<div class="list-group">
+				<div class="list-group"><!-- 현재 들어와있는 밴드에 대한 내용 -->
 					<div class="list-group-item" align="center"><a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">
 						<img src="/tvlog/img/band/${band.band_img}" width="230" height="150"></a><br />
 						${band.band_name}<br />
 						${band.band_intro}<br />
+						<c:if test="${sessionScope.memId != null}">
+						<hr><!-- 밴드에 가입한 회원일경우 개인정보 수정(단, 리더는 밴드내용까지 수정이 가능함) -->
+							<c:forEach var="memberlist" items="${memberrlist}">
+								<c:if test="${sessionScope.memId == memberlist.band_member_id}">
+									<a href="/tvlog/band/b_modify.trip?band_id=${band_id}">
+									<span class="glyphicon glyphicon-cog" aria-hidden="true">설정</span>
+									</a>
+								</c:if>
+								<c:if test="${sessionScope.memId != memberlist.band_member_id}">
+								멤버 가입 요청
+								</c:if>
+							</c:forEach>
+						</c:if>
+						<c:if test="${sessionScope.memId == null}">
 						<hr>
-						<a href="/tvlog/band/b_modify.trip?band_id=${band_id}&">
-						<span class="glyphicon glyphicon-cog" aria-hidden="true">설정</span>
-						</a>
+								로그인 후 밴드에 가입을 해보세요!
+						</c:if>
 					</div>
 					<c:if test="${sessionScope.memId != null}"><!-- 로그인이 되어있으면 내가 가입한 밴드를 보여줌 -->
 							내 밴드<br />
@@ -144,7 +158,7 @@
 							</a>
 						</c:forEach>
 					<hr>
-					</c:if><!-- 다른밴드 추천 -->
+					</c:if><!-- 생성된 순서대로 밴드 추천 -->
 					이런 밴드는 어떠세요?<br />
 					<c:forEach var="b" items="${bandlist}">
 					<div>

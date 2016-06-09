@@ -117,6 +117,9 @@ public class BandAction {
 			request.setAttribute("modify_board", boarddto);
 			request.setAttribute("modify", "true");
 		}
+		List memberlist = sqlMap.queryForList("band_board_member_get", band_id);
+		
+		request.setAttribute("memberrlist", memberlist);
 		request.setAttribute("bandlist", bandlist);
 		request.setAttribute("band_id", banddto.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
@@ -138,7 +141,7 @@ public class BandAction {
 			sqlMap.update("band_modify_content", boarddto);
 			for(MultipartFile multi : band_board_img){ // 새로 업로드 되는 이미지가 있다면 기존 이미지는 삭제
 				if(!multi.getOriginalFilename().equals("")){
-					List board_img = sqlMap.queryForList("band_img_select", imgdto);
+					List board_img = sqlMap.queryForList("band_board_img_select", imgdto);
 					if(!board_img.toString().equals("[]")){
 						for(Object obj : board_img){
 							String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
@@ -191,7 +194,7 @@ public class BandAction {
 	
 	@RequestMapping("/band/bb_delete.trip")
 	public String b_boardDelete(imgDTO imgdto, HttpSession session, HttpServletRequest request){
-		List band_board_img = sqlMap.queryForList("band_img_select", imgdto);
+		List band_board_img = sqlMap.queryForList("band_board_img_select", imgdto);
 		if(!band_board_img.toString().equals("[]")){
 			for(Object obj : band_board_img){
 				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
@@ -208,8 +211,8 @@ public class BandAction {
 	}
 
 	@RequestMapping("/band/b_modify.trip")
-	public String b_modify(HttpServletRequest request, HttpSession session, BandDTO banddto, trip.member.BandListDTO bandlistdto){
-		System.out.println("band_id : " + request.getParameter("band_id"));
+	public String b_modify(HttpServletRequest request, HttpSession session, BandDTO banddto, memberDTO memberdto, trip.member.BandListDTO bandlistdto, int band_id){
+		System.out.println("band_id : " + band_id);
 		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
 		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
@@ -217,7 +220,99 @@ public class BandAction {
 			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
 			request.setAttribute("band_list", band_list);
 		}
+		memberdto.setBand_id(band_id);
+		String getid = (String)session.getAttribute("memId");
+		List memberlist = sqlMap.queryForList("band_board_member_get", band_id);
+
+		for(int i=0; i<memberlist.size(); i++){
+			memberdto = (memberDTO)memberlist.get(i);
+			if(getid.equals(memberdto.getBand_member_id())){
+				request.setAttribute("memberdto", memberdto);
+			}
+		}
+		request.setAttribute("band_id", band_id);
 		request.setAttribute("banddto", banddto);
 		return "/band/modify_band.jsp";
+	}
+	
+	@RequestMapping("/band/b_modifyPro.trip")
+	public String b_modifyPro(MultipartHttpServletRequest request, HttpSession session, int band_id, String modify, memberDTO memberdto, BandDTO banddto, trip.member.BandListDTO bandlistdto){
+		if(modify.equals("band")){
+			System.out.println("band_id : " + band_id);
+			System.out.println("modify : " + modify);
+			bandlistdto.setMember_id(memberdto.getBand_member_id());
+			bandlistdto.setBand_id(band_id);
+			System.out.println("bandlistdto.getMember_id() : " + bandlistdto.getMember_id());
+			System.out.println("bandlistdto.getBand_name() : " + bandlistdto.getBand_name());
+			System.out.println("bandlistdto.getBand_id() : " + bandlistdto.getBand_id());
+			sqlMap.update("band_modify", banddto);
+			sqlMap.update("member_band_name_change", bandlistdto);
+			String band_img = request.getFile("b_img").getOriginalFilename();
+			System.out.println("band_img : " + band_img);
+			if(!band_img.equals("")){
+				String bef_img = (String)sqlMap.queryForObject("band_img_get", band_id);
+				System.out.println("bef_img : " + bef_img);
+				if(!bef_img.equals("") && !bef_img.equals("default.jpg")){ // db에 기존 이미지가 있을 경우 삭제
+					String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+					String img = filePath + bef_img;
+					File imgfile = new File(img);
+					System.out.println("imgfile.exists : " +imgfile.exists());
+					if(imgfile.exists()){
+						imgfile.delete();
+					}
+				}
+				MultipartFile b_img = request.getFile("b_img");
+				String img_path = request.getSession().getServletContext().getRealPath("/");
+				String img_name = "bI_" + band_id;
+				String img_ext = band_img.substring(band_img.lastIndexOf('.') + 1, band_img.length());
+				banddto.setBand_img(img_name + "." + img_ext);
+				bandlistdto.setBand_img(img_name + "." + img_ext);
+				File img_save = new File(img_path + "img/band/" + img_name + "." + img_ext);
+				sqlMap.update("band_imgUpload", banddto);
+				sqlMap.update("member_band_img_change", bandlistdto);
+				
+				try {
+					b_img.transferTo(img_save);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		if(modify.equals("member")){
+			System.out.println("band_id : " + band_id);
+			System.out.println("modify : " + modify);
+			sqlMap.update("band_member_name_change", memberdto);
+			System.out.println("memberdto.getBand_member_name() : " + memberdto.getBand_member_name());
+			String band_img = request.getFile("b_img").getOriginalFilename();
+			
+			if(!band_img.equals("")){
+				String bef_img = (String)sqlMap.queryForObject("band_member_img_get", memberdto);
+				System.out.println("bef_img : " + bef_img);
+				if(!bef_img.equals("") && !bef_img.equals("default.jpg")){
+					String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+					String img = filePath + bef_img;
+					File imgfile = new File(img);
+					System.out.println("imgfile.exists : " +imgfile.exists());
+					if(imgfile.exists()){
+						imgfile.delete();
+					}
+				}
+				MultipartFile b_img = request.getFile("b_img");
+				String img_path = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+				String img_name = "bM_" + band_id + memberdto.getBand_member_id();
+				String img_ext = band_img.substring(band_img.lastIndexOf('.') + 1, band_img.length());
+				memberdto.setBand_member_img(img_name + "." + img_ext);
+				File img_save = new File(img_path + img_name + "." + img_ext);
+				sqlMap.update("band_member_imgUpload", memberdto);
+				
+				try {
+					b_img.transferTo(img_save);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return "redirect:/band/b_view.trip?band_id=" + band_id;
 	}
 }

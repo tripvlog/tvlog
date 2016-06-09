@@ -21,9 +21,6 @@ public class DiaryAction {
 	private SqlMapClientTemplate sqlMap;
 	ImgVO vo;
 	
-	@RequestMapping("/diary/diary.trip")
-	public String diaryForm(){ return "/diary/form.jsp"; }
-	
 	@RequestMapping("/diary/editor.trip")
 	public String s_editor(){ return "/diary/s_editor.jsp"; }
 	

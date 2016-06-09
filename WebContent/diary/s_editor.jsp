@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<!DOCTYPE html>
+<html><head></head>
 <script type="text/javascript" src="/tvlog/diary/diary_editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
+<body>
+<jsp:include page="/main/header.jsp" /><br />
 <form action="/tvlog/diary/submit.trip" method="post" enctype="multipart/form-data" id="frm">
 <input type="text" name="diary_title" placeholder="제목">
 <input type="hidden" name="diary_writer" value="${sessionScope.memId}" placeholder="작성자" />
@@ -22,7 +24,7 @@
 <br />
 <input type="button" id="savebutton" value="등록" />&nbsp;<input type="button" id="cancle" value="취소" />
 </form>
-
+</body>
 <script type="text/javascript">
 $(document).ready(function() {
 	var oEditors = [];
@@ -49,3 +51,4 @@ function popup(){
 	winObject.document.all.text2.value = document.all.text1.value;
 	}
 </script>
+</html>
