@@ -6,32 +6,6 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
-	  <script type="text/javascript">
-    $(document).ready(function(){
-      $("#button").click(function(){
-          callAjax();
-      });
-    });
-    function callAjax(){
-        $.ajax({
-	        type: "post",
-	        url : "/tvlog/post/friendSearch.trip",
-	        data: {	// url 페이지도 전달할 파라미터
-	        	select : $('#select').val(),
-       			find : $('#find').val(),
-	        },
-	        success: test,	// 페이지요청 성공시 실행 함수
-	        error: whenError	//페이지요청 실패시 실행함수
-     	});
-    }
-    function test(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
-        $("#friend").html(aaa);
-        console.log(resdata);
-    }
-    function whenError(){
-        alert("Error");
-    }
-  </script>
 	<style>
 	#search{
 	width:90px;
@@ -60,7 +34,7 @@
 	</script>
 	
 	
-<center><h4>내 친구 관리</h4></center>
+<center><h4>내 밴드 관리</h4></center>
 
 
 
@@ -68,19 +42,19 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"></span><span class="sr-only">Close</span></button>
-		<h4 class="modal-title" id="myModalLabel">받은 친구 신청 (${count }) 개</h4>
+		<h4 class="modal-title" id="myModalLabel">내 밴드 목록 (${count }) 개</h4>
 	      </div>
 	      <div class="modal-body">
 			
 
 	 		<c:forEach var="list" items="${list}">
- 			<form action="okFriend.trip" method="post">
-			 아이디 : ${list.friend_id }&nbsp;&nbsp;
- 			날짜 : <fmt:formatDate value="${list.friend_reg}" type="both"/>&nbsp;&nbsp;&nbsp;&nbsp;
-
- 			<input type="hidden" name="friend_id" value="${list.friend_id }">
- 			<input type="submit" class="btn btn-warning" value="수락" >
- 			<input type="button" class="btn btn-default" value="거절" onClick="javascript:location.href='/tvlog/post/noFriend.trip?friend_id=${list.friend_id}&id=${sessionScope.memId}'">
+ 			<form action="bandKing.trip" method="post">
+			
+ 			밴드 이름 :${list.band_name }
+			<input type="hidden" name="band_name" value="${list.band_name }">
+			<input type="hidden" name="band_id" value="${list.band_id }">
+ 			<input type="submit" class="btn btn-warning" value="관리" >
+ 			<input type="button" class="btn btn-danger" onClick="javascript:location.href='/tvlog/post/bandBye.trip?band_id=${list.band_id}&band_name=${list.band_name}'" value="탈퇴" >		
  			</form>
 			</c:forEach>
 		
@@ -91,7 +65,7 @@
 	    </div>
 	  </div>
 
-
+<!-- 
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -168,6 +142,7 @@
 		  </div>
 	    </div>
 	  </div>
+	 -->
 	
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>

@@ -88,8 +88,9 @@
 	width:300px;
 	float: left;
 	}
-	
-	
+	#search3{
+	float: left;
+	}
 
 </style>
 
@@ -182,7 +183,8 @@
 	    		<button type="button" onClick="javascript:location.href='/tvlog/post/postList.trip'" class="btn btn-success">전체포스트</button>
 	    		<button type="button" onClick="javascript:location.href='/tvlog/post/friendOnly.trip'" class="btn btn-success">친구포스트</button>
 	  	  		<button type="button" onClick="javascript:location.href='/tvlog/post/mypost.trip'" class="btn btn-success">내 포스트</button>
-	  	  		<button type="button" onClick="javascript:OpenWindow('friendManage.trip?','600','340')" class="btn btn-success">친구 관리</button>
+	  	  		<button type="button" onClick="javascript:OpenWindow('friendManage.trip?','600','650')" class="btn btn-success">친구 관리</button>
+	  	  		<button type="button" onClick="javascript:OpenWindow('bandManage.trip?','600','400')" class="btn btn-success">밴드 관리</button>
 	  			</div>
 	  			</div>
 	  		</c:if>
@@ -387,7 +389,9 @@
           <div id="search2">
           <input type="text" name="find" class="form-control"></input>
           </div>
-          <input type="submit" value="검색"></input>
+           <div id="search3">
+          <input type="submit" class="btn btn-success" value="검색"></input>
+           </div>
           </form>
           
           <c:if test="${find != null}">

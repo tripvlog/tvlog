@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import trip.post.boardVO;
 import trip.post.pagingAction;
 import trip.post.PostDTO;
+import trip.band.*;
 
 @Controller
 public class postBean {
@@ -665,19 +666,16 @@ public class postBean {
       }
       //친구신청 한 아이디에 0번, 받은 아이디에 1번을 friend_state 에 넣는다
       @RequestMapping("/post/newFriendPro.trip")
-      public String newFriendPro(boardVO dto){
+      public String newFriendPro(HttpServletRequest request, boardVO dto){
     	
     	  int count =(Integer)sqlMapClientTemplate.queryForObject("member_friendCheck", dto);
-    	  System.out.println("친구추가=="+dto.getId());
-    	  System.out.println("친구추가=="+dto.getFriend_id());
-    	
+    	  request.setAttribute("count", count);
+    	  
     	  if(count==0){
     		  sqlMapClientTemplate.insert("member_sendfriend", dto);
     		  sqlMapClientTemplate.insert("member_getfriend", dto);
-    	  }else{
-    		  return "/post/friendFail.jsp";
     	  }
-    	  return "/post/postList.jsp";
+    	  return "/post/friendOkFail.jsp";
       }
       //친구관리창
       @RequestMapping("/post/friendManage.trip") 
@@ -735,5 +733,102 @@ public class postBean {
 	   sqlMapClientTemplate.delete("member_nofriend2", dto);
 	   
 	   return "redirect:/post/friendManage.trip";
+   }
+   @RequestMapping("/post/friendSearch.trip")
+   public String friendSearch(HttpServletRequest request, boardVO dto, String select, String find){
+	   
+	   List<boardVO> list = null;       
+       
+       if(select.equals("id") ){
+          
+          System.out.println("no이프문__"+find);
+             list = sqlMapClientTemplate.queryForList("member_findfriend_id",find);    
+       
+       }else if(select.equals("name")){
+          System.out.println("subject이프문__"+find);
+             list = sqlMapClientTemplate.queryForList("member_findfriend_name",find);          
+       }
+	   
+       request.setAttribute("list", list);
+       return "/post/friendFind.jsp";
+   }
+   @RequestMapping("/post/bandComeon.trip")
+   public String bandComeon(HttpSession session, BandDTO dto, String friend_id, HttpServletRequest request){
+	   String id = (String)session.getAttribute("memId");
+	   List<BandDTO> list = null;
+	   list = sqlMapClientTemplate.queryForList("post.myBand", id);
+	   
+	   request.setAttribute("list", list);
+	   request.setAttribute("friend_id", friend_id);
+	   return "/post/bandComeon.jsp";
+   }
+   @RequestMapping("/post/bandselect.trip")
+   public String bandselect(HttpSession session, memberDTO dto, String band_member_id, HttpServletRequest request){
+	   String id = (String)session.getAttribute("memId");
+	   int count =(Integer)sqlMapClientTemplate.queryForObject("post.hisbandCheck", dto);	  
+	   if(count==0){
+		   System.out.println("count1는"+count);
+		   sqlMapClientTemplate.insert("post.comeband", dto);	  
+		   sqlMapClientTemplate.insert("post.myband_insert", dto);
+	   }
+	   request.setAttribute("count", count);
+	   request.setAttribute("band_name", dto.getBand_name());
+	   request.setAttribute("dto", dto);
+	   return "/post/bandComeOKNO.jsp";
+   }  
+   @RequestMapping("/post/bandManage.trip")
+   public String bandManage(HttpSession session, memberDTO mdto, BandDTO dto, String friend_id, HttpServletRequest request){
+	  String id = (String)session.getAttribute("memId");
+ 	  List<memberDTO> list = null;
+ 	  List<BandDTO> list2 = null;
+ 
+ 	  list=sqlMapClientTemplate.queryForList("post.myBand", id);
+ 	 int count = (Integer)sqlMapClientTemplate.queryForObject("post.mybandcount", id);
+ 	 request.setAttribute("list", list);
+ 	 request.setAttribute("count", count);
+ 	  request.setAttribute("list2", list2);
+ 	  return "/post/bandManage.jsp";
+   }
+   @RequestMapping("/post/bandBye.trip")
+   public String bandBye(HttpSession session, memberDTO mdto, BandDTO dto, String band_id, HttpServletRequest request){
+	  String id = (String)session.getAttribute("memId");
+	  mdto.setBand_member_id(id);
+	  sqlMapClientTemplate.delete("post.mybandBye", mdto);
+	  sqlMapClientTemplate.delete("post.bandMemberBye", mdto);
+	  return "/post/bandBye.jsp";
+   }
+   @RequestMapping("/post/bandKing.trip")
+   public String bandKing(HttpSession session, memberDTO mdto, BandDTO dto, String band_id, String band_name, HttpServletRequest request){
+	  String id = (String)session.getAttribute("memId");
+ 	  List<memberDTO> list = null;
+ 	 mdto.setBand_member_id(id);
+ 	 int count = (Integer)sqlMapClientTemplate.queryForObject("post.imbandkingCount2", mdto);
+ 	
+ 	 if(count==1){
+ 		 list=sqlMapClientTemplate.queryForList("post.imbandkingCount0", mdto);
+ 	 }	 
+ 	  request.setAttribute("list", list);
+ 	  request.setAttribute("count", count);
+ 	 request.setAttribute("band_id", band_id);
+ 	request.setAttribute("band_name", band_name);
+ 	
+ 	  return "/post/bandMemberLevel.jsp";
+   }
+   @RequestMapping("/post/bandmemberOk.trip")
+   public String bandmemberOk(HttpSession session, memberDTO mdto, String band_id, String band_member_id, String band_name, HttpServletRequest request){
+	   sqlMapClientTemplate.update("post.memberlevelup", mdto);
+	   request.setAttribute("band_id", band_id);
+	   return "redirect:/post/bandManage.trip";
+   }
+   @RequestMapping("/post/bandmemberNo.trip")
+   public String bandmemberNo(HttpSession session, memberDTO mdto, int band_id, String band_member_id, String band_name, HttpServletRequest request){
+	   mdto.setBand_id(band_id);
+	   mdto.setBand_member_id(band_member_id);
+	   
+	   System.out.println("밴드아이디"+band_id);
+	   System.out.println("밴드멤버아이디"+band_member_id);
+	   sqlMapClientTemplate.delete("post.memberNo", mdto);
+	   request.setAttribute("band_id", band_id);
+	   return "redirect:/post/bandManage.trip";
    }
 }
