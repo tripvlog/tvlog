@@ -43,7 +43,8 @@ public class ScheduleDTO {
 		this.s_title = s_title;
 	}
 	public String getS_startday() {
-		return s_startday;
+		String [] sd = s_startday.split(" ");
+		return sd[0];
 	}
 	public void setS_startday(String s_startday) {
 		this.s_startday = s_startday;

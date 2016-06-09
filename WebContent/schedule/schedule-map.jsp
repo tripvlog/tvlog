@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <style>
       #schedule-map {
-      	width: 960px;
+      	width: 100%;
         height: 400px;
         Border-radius:10px;
       }

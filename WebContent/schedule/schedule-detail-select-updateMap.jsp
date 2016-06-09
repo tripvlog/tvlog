@@ -77,7 +77,6 @@
 function initAutocomplete() {
 	var a = '<%=s%>';
 	var bb = a.split(':');
-	alert(bb[0]+"--"+bb[1]);
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: parseFloat(bb[0]), lng: parseFloat(bb[1])},
     zoom: 13,
@@ -179,8 +178,5 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&libraries=places&callback=initAutocomplete"
          async defer></script>
-      <div id="kkk">
-      	
-      </div>
   </body>
 </html>

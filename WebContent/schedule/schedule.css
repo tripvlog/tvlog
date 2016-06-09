@@ -4,14 +4,41 @@
 		color:#ffffff;
     	background-color:#47C83E;
     }
-    #container-fluid{   /* 오른쪽 그룹 */
+    #mainBody{  /* 전체배경 색상 */
+    	background-color: #EAEAEA;
+    }
+    
+    #schedulecontainer{ /* 메인배경 아래 전체 DIV  */
+    	width:1140px; 
+    }
+    
+    #savecontainer{  /*일정수정~체크리스트 까지 버튼 DIV*/
+		width: 100%;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	
+	#scheduleSave{ /*일정수정~체크리스트 까지 버튼 */
+		width: 19.7%;
+		height:60px;
+	} 
+    
+    #container-fluid{   /* 여행 기본 정보 */
         position:inherit;
     	padding:15px 15px;
     	Border-radius:10px;
     	background-color:#FFFFFF;
     }
+    
+   
+    
+    #tabMain{  /* 탭 전체 DIV */
+    	width: 100%;
+    }
+    
     #myTab{   /* 스토리, 지도/일정 탭 - 배경색 지정*/
-    	 overflow: auto; 
+    	width: 100%;
+    	overflow: auto; 
   	  	list-style-type: none;
     	background-color:#FFFFFF;
     	Border-radius:10px;
@@ -19,12 +46,24 @@
     #tabtest{    /* 스토리, 지도/일정 탭 */
     	float : left;
    		display: inline;
-		width:400px;
+		width:49%;
 		height:65px;
 		font-size:30px;
 	}
+	
+	#myTabContent{ /* 스토리 탭  */
+		width : 100%;
+	}
+	
+	#profile{ /* 지도&일정 탭  */
+		width : 100%;
+	}
+	
+	
 	 
     #row1{    /* 일정에 대한 간단한 설명 */
+    	font-size : 20px;
+    	font-weight:bold;
     	margin:0px;
     	padding:0px 0px;
     }
@@ -32,20 +71,18 @@
     	margin:0px;
     	padding:0px 0px;
     }
-    body{    /* 전체 배경 색상 */
-    	background-color:#EAEAEA;
-    }
-    #btn-group{    /* 왼쪽 버튼 그룹1 */
+    
+    #btn-group{    /* ??? */
     	width:185px;
     	Border-radius:10px;
     }
-    #btn-group2{   /* 왼쪽 버튼 그룹2 */
+    #btn-group2{   /* ???? */
   	    width:190px;
     	Border-radius:10px;
     	margin:0px;
     	padding:0px 0px;
     }
-    #budget-tab{
+    #budget-tab{   /*  ????  */
     	list-style-type:none;
    		margin:0;
     	padding:0;
@@ -126,12 +163,15 @@
 	text-align: center;
 	position:relative; 
 }
-#masthead p{
+#masthead #p1{
+	font-size : 50px;	
+	font-weight: bold;
+	color: #FFFFFF;
 	position:absolute;
 	width:200px; left:0; right:0; margin-left:auto; margin-right:auto;
 	height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto;
-	background-color:red;   
 }
+
   
 #masthead .well {
 	margin-top: 50px;
@@ -139,15 +179,7 @@
 	border-color: #EAEAEA;
 }
 
-#savecontainer{
-	width: 1140px;
-}
-#scheduleSave{
-	width: 220px;
-	height : 50px;
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
-} 
+
 
 
 @media screen and (min-width: 768px) {

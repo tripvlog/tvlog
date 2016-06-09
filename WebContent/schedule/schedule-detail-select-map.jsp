@@ -169,8 +169,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&libraries=places&callback=initAutocomplete"
          async defer></script>
-      <div id="kkk">
-      	
-      </div>
+  
   </body>
 </html>

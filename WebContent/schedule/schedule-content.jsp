@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,8 +10,9 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
-<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="/tvlog/schedule/schedule.js"></script>
 <script type="text/javascript">
 	var objTd;
@@ -36,12 +38,12 @@
 </script>
 <title>트립블로그</title>
 </head>
-<body>
+<body id="mainBody">
 <jsp:include page="/main/header.jsp" />
 <div class="container" id="container">	
 	<!-- 여행 일정 제목 들어갈 곳 -->
 	<div id="masthead">
-		<p>${dto.s_title}</p>
+		<p id="p1">${dto.s_title}</p>
 	</div>
 	<!-- 체크리스트 시작 -->
 	<!-- 왼쪽 버튼 그룹 - 저장, 방문명소 -->
@@ -65,6 +67,7 @@
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#budget"><i class="fa fa-krw" aria-hidden="true"></i> 여행가계부</button>
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#checklist"><i class="fa fa-check-square-o" aria-hidden="true"></i> 체크리스트</button>
 	</div>
+	
 <!-- 방문명소 Modal -->
 	<div class="modal fade" id="famousplace" tabindex="-1" role="dialog" aria-labelledby="famousplaceModalLabel" aria-hidden="true">
   		<div class="modal-dialog">
@@ -179,13 +182,33 @@
 		<!-- 스토리 탭 -->
 		<div id="myTabContent" class="tab-content">
 			<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
-	    	<p>탭1</p>
+	    		<div id="schedule">
+	    			<c:forEach var="i" begin="1" end="${dto.s_endday}" step="1" varStatus="k">
+	    				DAY - ${i} <br />
+		    			<c:forEach items="${detaillist}" var="detailDTO" >
+		    				<c:if test="${(fn:substring(detailDTO.sd_tdid, 0, 1)) == i}">
+		    					<c:if test="${detailDTO.sd_status==0}">
+			    					<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+			    					<label style="background-color:#fffff;">${detailDTO.sd_startpoint}</label>
+			    					<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+									${detailDTO.sd_endpoint} 
+									<br />
+								</c:if> 
+								<c:if test="${detailDTO.sd_status==1}">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+									${detailDTO.sd_startpoint}
+									<br />
+								</c:if>
+		    				</c:if> 
+		    			</c:forEach>
+		    		</c:forEach>
+	    		</div>
 			</div>
 		<!-- 지도/일정 탭 -->
 			<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
 			<!-- 지도 시작 -->
 				<br />
-				<iframe src="/tvlog/schedule/schedule-map.jsp" name="map" width="940" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				<iframe src="/tvlog/schedule/schedule-map.jsp" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				<br />
 			<!-- 지도 끝 -->
 			<!-- 지도/일정표의 테이블 -->
@@ -215,7 +238,8 @@
 													    		${detailDTO.sd_endpoint} <br /> 
 												    		</c:if>
 												    		<c:if test="${detailDTO.sd_status == 1}">
-																지도 : ${detailDTO.sd_map}
+																<i class="fa fa-map-marker" aria-hidden="true"></i>
+																${detailDTO.sd_startpoint}
 												    		</c:if>
 												    		<c:if test="${detailDTO.sd_status == 2}">
 																메모 : ${detailDTO.sd_memo}
@@ -235,7 +259,7 @@
 											    									비용 : ${detailDTO.sd_budget}
 										    									</c:if>
 										    									<c:if test="${detailDTO.sd_status == 1}">
-											    									지도 : ${detailDTO.sd_map}
+											    									<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="370" height="205" ALLOWTRANSPARENCY="false"></iframe>
 											    								</c:if>
 											    								<c:if test="${detailDTO.sd_status == 2}">
 											    									메모 : ${detailDTO.sd_memo}
@@ -251,7 +275,6 @@
 												</c:if>
 											</c:forEach>
 											<c:if test="${not doneLoop}"> 		
-												<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${j}${i}" whatever="${j}_${i}" data-toggle="modal" data-target="#detail-create" onclick="korea('${j}_${i}',this);"></i>
 												<c:set var="doneLoop" value="false"/> 
 											</c:if>
 										</td>
@@ -272,7 +295,8 @@
 												    			${detailDTO.sd_endpoint} <br /> 
 											    			</c:if>
 											    			<c:if test="${detailDTO.sd_status == 1}">
-																지도 : ${detailDTO.sd_map}
+											    				<i class="fa fa-map-marker" aria-hidden="true"></i>
+																${detailDTO.sd_startpoint}
 											    			</c:if>
 											    			<c:if test="${detailDTO.sd_status == 2}">
 																메모 : ${detailDTO.sd_memo}
@@ -292,7 +316,7 @@
 												    								비용 : ${detailDTO.sd_budget}
 											    								</c:if>
 										    									<c:if test="${detailDTO.sd_status == 1}">
-										    										지도 : ${detailDTO.sd_map}
+										    										<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="370" height="205" ALLOWTRANSPARENCY="false"></iframe>
 										    									</c:if>
 										    									<c:if test="${detailDTO.sd_status == 2}">
 										    										메모 : ${detailDTO.sd_memo}
@@ -308,7 +332,7 @@
 												</c:if>
 											</c:forEach>
 											<c:if  test="${not doneLoop}">
-												<i class="fa fa-plus-circle" aria-hidden="true" style="visibility:hidden;" id="plus${j}${i}${i}" whatever="${j}_${i}_30" data-toggle="modal" data-target="#detail-create" onclick="korea('${j}_${i}_30',this);"></i>
+												
 												<c:set var="doneLoop" value="false"/> 
 											</c:if>
 				   						</td>
