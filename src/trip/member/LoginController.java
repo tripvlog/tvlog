@@ -163,19 +163,19 @@ import org.springframework.web.servlet.ModelAndView;
 				String dbpath = (String)sqlmap.queryForObject("member_get_img", id);
 				if(dbpath.equals("default.jpg")){
 					String rp = request.getRealPath("//img//member//");
-					String orgName = mf.getOriginalFilename();  // 占쏙옙占쏙옙 占싱몌옙
-					String ext = orgName.substring(orgName.lastIndexOf("."));   // .확占쏙옙占쏙옙
-					String savName = dto.getId()+ext;   //占쏙옙占쏙옙占쏙옙 占싱몌옙 : 占쏙옙占싱듸옙+확占쏙옙占쏙옙
-					File sf = new File(rp+"//"+savName);  //rp占쏙옙恝占� 占쏙옙占쏙옙占쏙옙 占싱몌옙 占쌍곤옙 sf占쏙옙 占쏙옙占쏙옙
-					mf.transferTo(sf);   //mf占쏙옙 sf占쏙옙 占쌕뀐옙占쏙옙
+					String orgName = mf.getOriginalFilename();  // �뜝�룞�삕�뜝�룞�삕 �뜝�떛紐뚯삕
+					String ext = orgName.substring(orgName.lastIndexOf("."));   // .�솗�뜝�룞�삕�뜝�룞�삕
+					String savName = dto.getId()+ext;   //�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떛紐뚯삕 : �뜝�룞�삕�뜝�떛�벝�삕+�솗�뜝�룞�삕�뜝�룞�삕
+					File sf = new File(rp+"//"+savName);  //rp�뜝�룞�삕�걹�뜝占� �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떛紐뚯삕 �뜝�뙇怨ㅼ삕 sf�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
+					mf.transferTo(sf);   //mf�뜝�룞�삕 sf�뜝�룞�삕 �뜝�뙐�먯삕�뜝�룞�삕
 					dto.setPath(savName);
 					sqlmap.update("modifyUpdate", dto);
 				}
 				else{
 					String rp = request.getRealPath("//img//member//");
 					File deleteFile = new File(rp + dbpath);
-					deleteFile.delete();  //占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
-					// 占쌕쏙옙 占쏙옙占싸울옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+					deleteFile.delete();  //�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
+					// �뜝�뙐�룞�삕 �뜝�룞�삕�뜝�떥�슱�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
 					String orgName = mf.getOriginalFilename();
 					String ext = orgName.substring(orgName.lastIndexOf("."));
 					String savName = dto.getId()+ext;
@@ -194,26 +194,26 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping("/member/myPage.trip")
 		public ModelAndView myPage(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
-			// 정보수정
+			// �젙蹂댁닔�젙
 			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);    
 			request.setAttribute("dto",dto);
-			// 포스트
+			// �룷�뒪�듃
 			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
 			List post = new ArrayList();
 			post = sqlmap.queryForList("myPostList", id);
-			// 일정
+			// �씪�젙
 			int myScheduleListCount = (Integer)sqlmap.queryForObject("myScheduleListCount", id);
 			List schedule = new ArrayList();
 			schedule = sqlmap.queryForList("myScheduleList", id);
-			// 친구
+			// 移쒓뎄
 			int myFriendListCount = (Integer)sqlmap.queryForObject("myFriendListCount", id);
 			List friend = new ArrayList();
 			friend = sqlmap.queryForList("myFriendList", id);
-			// 일기
+			// �씪湲�
 			int myDiaryListCount = (Integer)sqlmap.queryForObject("myDiaryListCount", id);
 			List diary = new ArrayList();
 			diary = sqlmap.queryForList("myDiaryList", id);
-			// 밴드
+			// 諛대뱶
 			int myBandListCount = (Integer)sqlmap.queryForObject("myBandListCount", id);
 			List band = new ArrayList();
 			band = sqlmap.queryForList("myBandList", id);
@@ -267,6 +267,19 @@ import org.springframework.web.servlet.ModelAndView;
 			mv.addObject("myBandListCount", myBandListCount);
 			mv.addObject("band", band);
 			mv.setViewName("/member/myBand.jsp");
+			return mv;
+		}
+		
+		@RequestMapping("/member/myDiary.trip")
+		public ModelAndView myDiary(HttpSession session, HttpServletRequest request){
+			String id = (String)session.getAttribute("memId");
+			ModelAndView mv = new ModelAndView();
+			int myDiaryListCount = (Integer)sqlmap.queryForObject("myDiaryListCount", id);
+			List diary = new ArrayList();
+			diary = sqlmap.queryForList("myDiaryList", id);
+			mv.addObject("myDiaryListCount", myDiaryListCount);
+			mv.addObject("diary", diary);
+			mv.setViewName("/member/myDiary.jsp");
 			return mv;
 		}
 	}

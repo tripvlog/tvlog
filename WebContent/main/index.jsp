@@ -279,7 +279,7 @@
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myPage.trip">마이페이지</a></li>
 				<li class="divider"></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/schedule/schedule-list.trip">여행일정</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">여행일기</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myDiary.trip">여행일기</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myBand.trip">밴드</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/myPost.trip">포스트</a></li>
 				<li class="divider"></li>
