@@ -17,6 +17,11 @@
 		select * from t_schedule where s_range=1 order by s_regdate desc
 	</select>
 	
+	<select id="scheduleSearch" resultClass="schedule" parameterClass="String">
+		select * from t_schedule where s_title like '%'||#keyword#||'%'
+	</select>
+	
+	
 	<insert id="scheduleDetailInsert" parameterClass="scheduleDetail">
 		insert into t_schedule_detail  
 		values(t_schedule_detail_seq.nextval,

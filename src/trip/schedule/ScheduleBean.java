@@ -142,6 +142,17 @@ public class ScheduleBean {
 		request.setAttribute("dto",dto);
 		return "/schedule/schedule-detail-transport.jsp";
 	}
+	
+	@RequestMapping("/schedule/schedule-search.trip")
+	public String search(HttpServletRequest request,String keyword){
+		List scheduleList = null;
+		
+		scheduleList = sqlMap.queryForList("schedule.scheduleSearch", keyword);
+		
+		request.setAttribute("scheduleList", scheduleList);
+		request.setAttribute("scheduleCount", scheduleList.size());
+		return "/main/findSchedule.jsp";
+	}
 
 }
 

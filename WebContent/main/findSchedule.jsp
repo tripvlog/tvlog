@@ -58,6 +58,16 @@
 		border-bottom : 2px solid #BDBDBD;
 	}
 </style>
+<script>
+	function goSearch(){
+		var keyword = document.getElementById("search").value;
+		if(keyword == ""){
+			alert("키워드를 입력하세요");
+		}else{
+			window.location="/tvlog/schedule/schedule-search.trip?keyword="+keyword;
+		}
+	}
+</script>
 <body id="mainBody">
 	<jsp:include page="/main/header.jsp" />
 	<div class="container" id="container">	
@@ -72,7 +82,7 @@
 				    	<span class="input-group-addon">
 							<i class="fa fa-search" aria-hidden="true"></i>
 						</span>
-						<input type="text" class="form-control">
+						<input type="text" id="search" class="form-control" onkeypress="if( event.keyCode==13 ){goSearch();}">
 					</div><!-- /input-group -->
 				</div><!-- /.col-sm-6 -->
 			</div>
