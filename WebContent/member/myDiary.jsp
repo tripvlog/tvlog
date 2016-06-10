@@ -4,37 +4,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>트래블로그</title>
 </head>
 <body>
 <jsp:include page="/main/header.jsp" />
-	<div id="totalDiv">
-		<c:if test="${diaryAllCount != 0}">
+	<div id="totalDiv" style="margin-left: 9%;">
+		<h4>일기로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/diary/list.trip'"></h4>
+		<c:if test="${myDiaryListCount != 0}">
 		<!-- 일기 검색 -->
-		<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>
+		<h4>내가 작성한 일기 (${myDiaryListCount} 개)</h4>
 		<table width="900" border="1" cellspacing="0" cellpadding="2" >
 			<tr align="center">
-				<td>일기 번호</td>
 				<td>일기 작성자</td>
 				<td>일기 제목</td>
-				<td>일기 공개범위</td>
 				<td>일기 등록 날짜</td>
-				<td>삭제</td>
 			</tr>
-			<c:forEach var="list" items="${list}">
+			<c:forEach var="diaryDTO" items="${diary}">
 			<tr align="center">
-				<td>${list.diary_num}</td>
-				<td>${list.diary_writer}</td>
-				<td>${list.diary_title}</td>
-				<td>${list.diary_range}</td>
-				<td>${list.diary_reg}</td>
-				<td><input type="button" value="삭제" onclick="deleteThis('${list.diary_num}')"></td>
+				<td>${diaryDTO.diary_writer}</td>
+				<td>${diaryDTO.diary_title}</td>
+				<td>${diaryDTO.diary_reg}</td>
 			</tr>
 			</c:forEach>
 		</table>
 		<!-- 일기 검색 끝 -->
 		</c:if>
-		<c:if test="${diaryAllCount == 0}">
+		<c:if test="${myDiaryListCount == 0}">
 			등록된 일기가 없습니다.
 		</c:if>
 	</div>

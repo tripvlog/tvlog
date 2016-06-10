@@ -15,7 +15,7 @@
 	<div id="totalDiv" style="margin-left: 9%;">
 		<h4>포스트로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/post/postList.trip'"></h4>
 		<c:if test="${myPostListCount != 0}">
-			<h4>내가 쓴 포스트 (${myPostListCount} 개)</h4>
+			<h4>내가 작성한 포스트 (${myPostListCount} 개)</h4>
 			<table width="1000" border="1" cellspacing="0" cellpadding="2">
 				<tr align="center">
 					<td>작성자</td>
@@ -23,12 +23,12 @@
 					<td>포스트 등록 날짜</td>
 					<td>좋아요</td>
 				</tr>
-				<c:forEach var="post" items="${post}">
+				<c:forEach var="postDTO" items="${post}">
 					<tr align="center">
-						<td>${post.id}</td>
-						<td>${post.subject}</td>
-						<td>${post.regdate}</td>
-						<td>${post.good}</td>
+						<td>${postDTO.id}</td>
+						<td>${postDTO.subject}</td>
+						<td>${postDTO.regdate}</td>
+						<td>${postDTO.good}</td>
 					</tr>
 				</c:forEach>
 			</table>

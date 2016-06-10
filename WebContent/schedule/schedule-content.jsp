@@ -78,7 +78,7 @@
       			</div>
       			<div class="modal-body">
       				<!-- 탭시작 -->
-       				<jsp:include page="leftGroup/famousplace.jsp" />
+       				<%@include file="leftGroup/famousplace.jsp" %>
        				<!-- 탭 끝 --> 
       			</div>
       			<div class="modal-footer">
@@ -99,7 +99,7 @@
    				</div>
    				<div class="modal-body">
    				<!-- 탭시작 -->
-      				<jsp:include page="leftGroup/budget.jsp" />
+   					<%@include file="leftGroup/budget.jsp" %>
        			<!-- 탭 끝 -->    
       			</div>
       			<div class="modal-footer">

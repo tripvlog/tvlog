@@ -1,5 +1,6 @@
 package trip.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainBean {
@@ -41,7 +43,16 @@ public class MainBean {
 	
 	// Ä¿¹Â´ÏÆ¼
 	@RequestMapping("/main/community.trip")
-	public String community(){
-		return "/main/community.jsp";
+	public ModelAndView community(){
+		List list = new ArrayList();
+		list = sqlMap.queryForList("admin.postSelectList", null);
+		int postAllCount = (Integer)sqlMap.queryForObject("admin.postAllCount", null);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("postAllCount", postAllCount);
+		mv.setViewName("/main/community.jsp");
+		
+		return mv;
 	}	
 }
