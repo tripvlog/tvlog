@@ -64,6 +64,19 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
+	function ok(member_id, b_id){
+		var id = member_id;
+		var band_id = b_id;
+		alert(band_id + ", " + id);
+		var check = confirm("가입 승인하시겠습니까?");
+		if(check == true){
+			alert("승인이 완료되었습니다");
+			location.href="/tvlog/band/b_join.trip?confirm=yes&band_id=" + band_id + "&band_member_id=" + id;
+		}else{
+			alert("승인이 취소되었습니다");
+		}
+		return false;
+	}
 </script>
   <body>
   <jsp:include page="/main/header.jsp" /><br />
@@ -95,8 +108,24 @@
 						<input type="radio" name="band_range" value="5">비공개 <br />
 						<input type="submit" value="수정 완료">&nbsp;<input type="button" value="돌아가기"  onclick="javascript:window.location='/tvlog/band/b_view.trip?band_id=${band_id}'">
 					</form>
-				</c:if>
 				<hr>
+				밴드가입 요청현황
+				<table border="1" width="800">
+					<tr align="center">
+						<td>프로필 사진</td><td>아이디</td><td>이름</td><td>신청시간</td><td>비고</td>
+					</tr>
+					<c:forEach var="guestlist" items="${guestlist}">
+						<tr align="center">
+							<td><img src="/tvlog/img/member/${guestlist.band_member_img}" width="50" height="50"></td>
+							<td>${guestlist.band_member_id}</td>
+							<td>${guestlist.band_member_name}</td>
+							<td>${guestlist.band_member_reg}</td>
+							<td><button onclick="ok('${guestlist.band_member_id}', '${band_id}')">가입승인</button></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<hr>
+				</c:if>
 				밴드 탈퇴     밴드 삭제
 			</div>
 			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">

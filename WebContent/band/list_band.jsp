@@ -35,9 +35,15 @@
 
   <body>
   <jsp:include page="/main/header.jsp" /><br />
-
+    
     <!-- 밴드 목록 보여주기 -->
     <div class="container">
+    
+    <form action="/tvlog/post/bandSearch.trip" method="post">
+          <input type="text" name="bandname" placeholder="밴드 이름이나 소개로 검색"></input>
+          <input type="submit" class="btn btn-success" value="검색"></input>
+    </form>
+    <hr>
     	<div class="row">
 	    	<c:forEach var="band" items="${b_list}">
 	    		<a href="/tvlog/band/b_view.trip?band_id=${band.band_id}">

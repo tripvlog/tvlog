@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import trip.member.BandListDTO;
+import trip.member.LoginDTO;
+
 @Controller
 public class BandAction {
 
@@ -92,7 +95,7 @@ public class BandAction {
 	
 	@RequestMapping("/band/b_view.trip")
 	public String bandView(HttpServletRequest request, HttpSession session, int band_id, BandDTO banddto, boardDTO boarddto, memberDTO memdto, trip.member.BandListDTO bandlistdto){
-		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
+		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
 		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
 		
@@ -118,8 +121,26 @@ public class BandAction {
 			request.setAttribute("modify", "true");
 		}
 		List memberlist = sqlMap.queryForList("band_board_member_get", band_id);
+		String id = (String)session.getAttribute("memId");
+		if(id == null){
+			id = "";
+		}
+		System.out.println(" 입력된 아이디 : " + id);
+		for(int i=0; i<memberlist.size(); i++){
+			memdto = (memberDTO)memberlist.get(i);
+			System.out.println(memdto.getBand_member_id());
+			if(id.equals(memdto.getBand_member_id())){
+				System.out.println(id + ", " + memdto.getBand_member_id() + " : " + id.equals(memdto.getBand_member_id()));
+				System.out.println("밴드 멤버가 맞습니다");
+				request.setAttribute("guest", "member");
+				break;
+			}else{
+				System.out.println(id + ", " + memdto.getBand_member_id() + " : " + id.equals(memdto.getBand_member_id()));
+				System.out.println("밴드 멤버가 아닙니다");
+			}
+			request.setAttribute("guest", "guest");
+		}
 		
-		request.setAttribute("memberrlist", memberlist);
 		request.setAttribute("bandlist", bandlist);
 		request.setAttribute("band_id", banddto.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
@@ -214,7 +235,7 @@ public class BandAction {
 	public String b_modify(HttpServletRequest request, HttpSession session, BandDTO banddto, memberDTO memberdto, trip.member.BandListDTO bandlistdto, int band_id){
 		System.out.println("band_id : " + band_id);
 		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
-		banddto = (BandDTO)sqlMap.queryForObject("band_view", banddto);
+		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
 			bandlistdto.setMember_id((String)session.getAttribute("memId"));
 			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
@@ -230,6 +251,8 @@ public class BandAction {
 				request.setAttribute("memberdto", memberdto);
 			}
 		}
+		List guestlist = sqlMap.queryForList("band_member_guest", band_id);
+		request.setAttribute("guestlist", guestlist);
 		request.setAttribute("band_id", band_id);
 		request.setAttribute("banddto", banddto);
 		return "/band/modify_band.jsp";
@@ -290,7 +313,7 @@ public class BandAction {
 				String bef_img = (String)sqlMap.queryForObject("band_member_img_get", memberdto);
 				System.out.println("bef_img : " + bef_img);
 				if(!bef_img.equals("") && !bef_img.equals("default.jpg")){
-					String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+					String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "member" + File.separator;
 					String img = filePath + bef_img;
 					File imgfile = new File(img);
 					System.out.println("imgfile.exists : " +imgfile.exists());
@@ -299,7 +322,7 @@ public class BandAction {
 					}
 				}
 				MultipartFile b_img = request.getFile("b_img");
-				String img_path = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
+				String img_path = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "member" + File.separator;
 				String img_name = "bM_" + band_id + memberdto.getBand_member_id();
 				String img_ext = band_img.substring(band_img.lastIndexOf('.') + 1, band_img.length());
 				memberdto.setBand_member_img(img_name + "." + img_ext);
@@ -314,5 +337,32 @@ public class BandAction {
 			}
 		}
 		return "redirect:/band/b_view.trip?band_id=" + band_id;
+	}
+	
+	@RequestMapping("/band/b_join.trip")
+	public String b_invite(HttpServletRequest request, HttpSession session, trip.member.BandListDTO bandlistdto, trip.member.LoginDTO logindto, memberDTO memberdto, int band_id){
+		String confirm = "";
+		if(request.getParameter("confirm") == null){
+			confirm = "no";
+		}else{
+			confirm = request.getParameter("confirm");
+		}
+		if(confirm.equals("yes")){ // 밴드리더가 가입승인
+			sqlMap.update("band_join_confirm", memberdto);
+			bandlistdto = (BandListDTO)sqlMap.queryForObject("band_view", band_id);
+			// 승인된 id db에 있는 밴드목록에 해당 밴드 추가해야함
+			sqlMap.insert("band_insert_my_list", bandlistdto);
+			return "redirect:/band/b_modify.trip?band_id=" + band_id;
+		}else{	// 밴드 가입 신청
+		logindto.setId((String)session.getAttribute("memId"));
+		logindto = (LoginDTO)sqlMap.queryForObject("modify", logindto.getId());
+		Map dto = new HashMap();
+		dto.put("band_id", band_id);
+		dto.put("band_member_id", logindto.getId());
+		dto.put("band_member_name", logindto.getName());
+		dto.put("band_member_img", logindto.getPath());
+		sqlMap.insert("band_join", dto);
+		return "redirect:/band/b_view.trip?band_id=" + band_id;
+		}
 	}
 }

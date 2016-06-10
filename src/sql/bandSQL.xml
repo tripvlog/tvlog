@@ -10,7 +10,7 @@
 		<![CDATA[select * from t_band where band_range < 5]]>
 	</select>
 	
-	<select id="band_view" resultClass="trip.band.BandDTO" parameterClass="trip.band.BandDTO">
+	<select id="band_view" resultClass="trip.band.BandDTO" parameterClass="int">
 		select * from t_band where band_id = #band_id#
 	</select>
 	
@@ -51,7 +51,7 @@
 	</select>
 	
 	<select id="band_board_member_get" resultClass="trip.band.memberDTO" parameterClass="int">
-		select * from t_band_member_$band_id$
+		select * from t_band_member_$band_id$ where band_member_level > 0
 	</select>
 
 	<select id="band_img_get" resultClass="String" parameterClass="int">
@@ -61,6 +61,11 @@
 	<select id="band_member_img_get" resultClass="String" parameterClass="trip.band.memberDTO">
 		select band_member_img from t_band_member_$band_id$ where band_member_id = #band_member_id#
 	</select>
+	
+	<select id="band_member_guest" resultClass="trip.band.memberDTO" parameterClass="int">
+		select * from t_band_member_$band_id$ where band_member_level = 0
+	</select>
+	
 <!-- =============================================================================== -->
 	
 	<update id="band_imgUpload" parameterClass="trip.band.BandDTO">
@@ -93,6 +98,10 @@
 	
 	<update id="band_member_name_change" parameterClass="trip.band.memberDTO">
 		update t_band_member_$band_id$ set band_member_name = #band_member_name# where band_member_id = #band_member_id#
+	</update>
+	
+	<update id="band_join_confirm" parameterClass="trip.band.memberDTO">
+		update t_band_member_$band_id$ set band_member_level = 1, band_member_reg = sysdate where band_member_id = #band_member_id#
 	</update>
 <!-- =============================================================================== -->
 
@@ -148,6 +157,11 @@
 	<insert id="band_insert_my_list" parameterClass="trip.member.BandListDTO">
 		insert into t_member_band_$member_id$ values(t_member_band_$member_id$_seq.NEXTVAL, #band_id#, #band_name#, #band_img#, sysdate)
 	</insert>
+	
+	<insert id="band_join" parameterClass="java.util.Map">
+		insert into t_band_member_$band_id$ values(t_band_member_$band_id$_seq.nextval, #band_member_id#, #band_member_name#, #band_member_img#, 0, sysdate)
+	</insert>
+	
 <!-- ************************************* -->
 	
 </sqlMap>
