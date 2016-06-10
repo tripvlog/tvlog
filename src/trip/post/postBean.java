@@ -841,7 +841,7 @@ public class postBean {
    public String bandSearch(String bandname, BandDTO dto, HttpServletRequest request){
 	   List<BandDTO> list =null;
 	   list = sqlMapClientTemplate.queryForList("post.bandSearch",bandname);   
-	   request.setAttribute("list", list);
+	   request.setAttribute("b_list", list);
 	   
 	   return "/band/list_band.jsp";
    }
