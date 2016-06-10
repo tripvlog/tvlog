@@ -220,7 +220,7 @@ select * from t_post where id=#id#
 </delete>
 
 <select id="bandSearch" parameterClass="String" resultClass="trip.band.BandDTO">
-select * from t_band where band_name  like '%'||#band_name#||'%' or band_intro  like '%'||#band_intro#||'%'
+select * from t_band where band_name  like '%'||#bandname#||'%' or band_intro  like '%'||#bandname#||'%'
 </select>
 
 </sqlMap>

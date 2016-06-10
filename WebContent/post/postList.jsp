@@ -398,7 +398,7 @@
           </form>
           
           
-           <form action="bandSearch" method="post">
+           <form action="bandSearch.trip" method="post">
           <input type="text" name="find" placeholder="밴드 이름이나 소개로 검색"></input>
           <input type="submit" class="btn btn-success" value="검색"></input>
           </form>
