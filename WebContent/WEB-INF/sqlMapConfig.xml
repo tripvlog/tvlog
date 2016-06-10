@@ -13,4 +13,5 @@
 	<sqlMap resource="/sql/postSQL.xml" /> 
 	<sqlMap resource="/sql/AdminSQL.xml" />
 	<sqlMap resource="/sql/scheduleSQL.xml" />  
+	<sqlMap resource="/sql/CommunitySQL.xml" /> 
 </sqlMapConfig>

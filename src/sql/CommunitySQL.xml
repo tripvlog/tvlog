@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+
+<sqlMap>
+	<select id="communityPostList" resultClass="trip.post.boardVO">         
+	    SELECT * FROM t_post where p_public='1'
+	</select>
+	
+	<select id="communityDiaryList" resultClass="trip.diary.ImgVO">
+		SELECT * FROM t_diary where diary_range='1'
+	</select>
+</sqlMap>
