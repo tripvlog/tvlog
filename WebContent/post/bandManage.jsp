@@ -49,7 +49,7 @@
 
 	 		<c:forEach var="list" items="${list}">
  			<form action="bandKing.trip" method="post">
-			
+			<img src="/tvlog/img/band/${list.band_img }" width="100" height="100">
  			πÍµÂ ¿Ã∏ß :${list.band_name }
 			<input type="hidden" name="band_name" value="${list.band_name }">
 			<input type="hidden" name="band_id" value="${list.band_id }">

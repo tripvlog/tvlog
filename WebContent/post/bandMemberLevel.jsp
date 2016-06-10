@@ -42,13 +42,17 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"></span><span class="sr-only">Close</span></button>
-		<h4 class="modal-title" id="myModalLabel">요청된 밴드 가입</h4>
+		<h4 class="modal-title" id="myModalLabel">${band_name } 밴드에 신청된 가입 요청</h4>
 	      </div>
 	      <div class="modal-body">
 			
-
+			<c:if test="${count==0 }">
+			관리할 수 있는 권한이 없는 밴드입니다
+			</c:if>
+			<c:if test="${count !=0 }">
 	 		<c:forEach var="list" items="${list}">
  			<form action="bandmemberOk.trip" method="post">
+ 			<img src="/tvlog/img/band/${list.band_member_img }" width="100" height="100">
 			아이디 : ${list.band_member_id }
  			이름 :${list.band_member_name }
 			<input type="hidden" name="band_name" value="${band_name }">
@@ -58,7 +62,7 @@
  			<input type="button" class="btn btn-danger" onClick="javascript:location.href='/tvlog/post/bandmemberNo.trip?band_id=${band_id}&band_member_id=${list.band_member_id}'" value="거부" >		
  			</form>
 			</c:forEach>
-		
+			</c:if>
 		
 	      </div>
 	      <div class="modal-footer">

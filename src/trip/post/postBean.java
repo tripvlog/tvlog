@@ -762,8 +762,9 @@ public class postBean {
 	   request.setAttribute("friend_id", friend_id);
 	   return "/post/bandComeon.jsp";
    }
+   //밴드 초대를 할 경우, 상대방이 이미 가입된 밴드인지 아닌지 카운트로 판단해서 가입 안 된 밴드일 경우 테이블에 넣는다.
    @RequestMapping("/post/bandselect.trip")
-   public String bandselect(HttpSession session, memberDTO dto, String band_member_id, HttpServletRequest request){
+   public String bandselect(HttpSession session, BandDTO dto, String band_member_id, HttpServletRequest request){
 	   String id = (String)session.getAttribute("memId");
 	   int count =(Integer)sqlMapClientTemplate.queryForObject("post.hisbandCheck", dto);	  
 	   if(count==0){
@@ -776,19 +777,20 @@ public class postBean {
 	   request.setAttribute("dto", dto);
 	   return "/post/bandComeOKNO.jsp";
    }  
+   // 내 밴드 목록을 보여준다
    @RequestMapping("/post/bandManage.trip")
    public String bandManage(HttpSession session, memberDTO mdto, BandDTO dto, String friend_id, HttpServletRequest request){
 	  String id = (String)session.getAttribute("memId");
  	  List<memberDTO> list = null;
- 	  List<BandDTO> list2 = null;
- 
+ 	  
  	  list=sqlMapClientTemplate.queryForList("post.myBand", id);
- 	 int count = (Integer)sqlMapClientTemplate.queryForObject("post.mybandcount", id);
- 	 request.setAttribute("list", list);
- 	 request.setAttribute("count", count);
- 	  request.setAttribute("list2", list2);
+ 	  int count = (Integer)sqlMapClientTemplate.queryForObject("post.mybandcount", id);
+ 	  request.setAttribute("list", list);
+ 	  request.setAttribute("count", count);
+ 	  
  	  return "/post/bandManage.jsp";
    }
+   //내 밴드 목록에서 가입된 밴드 탈퇴
    @RequestMapping("/post/bandBye.trip")
    public String bandBye(HttpSession session, memberDTO mdto, BandDTO dto, String band_id, HttpServletRequest request){
 	  String id = (String)session.getAttribute("memId");
@@ -797,6 +799,7 @@ public class postBean {
 	  sqlMapClientTemplate.delete("post.bandMemberBye", mdto);
 	  return "/post/bandBye.jsp";
    }
+   // 내가 선택한 밴드의 관리자일 경우, 밴드 가입 신청 목록을 리턴한다
    @RequestMapping("/post/bandKing.trip")
    public String bandKing(HttpSession session, memberDTO mdto, BandDTO dto, String band_id, String band_name, HttpServletRequest request){
 	  String id = (String)session.getAttribute("memId");
@@ -814,13 +817,15 @@ public class postBean {
  	
  	  return "/post/bandMemberLevel.jsp";
    }
+   //밴드 가입 신청 수락
    @RequestMapping("/post/bandmemberOk.trip")
    public String bandmemberOk(HttpSession session, memberDTO mdto, String band_id, String band_member_id, String band_name, HttpServletRequest request){
 	   sqlMapClientTemplate.update("post.memberlevelup", mdto);
 	   request.setAttribute("band_id", band_id);
 	   return "redirect:/post/bandManage.trip";
    }
-   @RequestMapping("/post/bandmemberNo.trip")
+   // 밴드 가입 신청 거절 
+   @RequestMapping("/post/bandmemberNo.trip") 
    public String bandmemberNo(HttpSession session, memberDTO mdto, int band_id, String band_member_id, String band_name, HttpServletRequest request){
 	   mdto.setBand_id(band_id);
 	   mdto.setBand_member_id(band_member_id);
@@ -830,5 +835,14 @@ public class postBean {
 	   sqlMapClientTemplate.delete("post.memberNo", mdto);
 	   request.setAttribute("band_id", band_id);
 	   return "redirect:/post/bandManage.trip";
+   }
+   //밴드 이름 검색
+   @RequestMapping("/post/bandSearch.trip")
+   public String bandSearch(String bandname, BandDTO dto, HttpServletRequest request){
+	   List<BandDTO> list =null;
+	   list = sqlMapClientTemplate.queryForList("post.bandSearch",bandname);   
+	   request.setAttribute("b_list", list);
+	   
+	   return "/band/list_band.jsp";
    }
 }

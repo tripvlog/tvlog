@@ -217,10 +217,13 @@
 								<div class="dropdown"  style="float:left">
 			  						<a id="dLabel" data-target="#" href="http://naver.com" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">${dto.id} <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	    							<c:if test="${sessionScope.memId !=null }">
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:OpenWindow('newFriend.trip?friend_id=${dto.id }','470','340')">친구 추가</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:OpenWindow('bandComeon.trip?friend_id=${dto.id }','470','410')">밴드 초대</a></li>
+	    							</c:if>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/diary/frienddiary.trip?friend_id=${dto.id}">다이어리</a></li>
 	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/post/friendpost.trip?friend_id=${dto.id}">포스트</a></li>
-	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li>
+	    								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">일정</a></li> 	
 	   								</ul>
 								</div>
 								
@@ -392,6 +395,12 @@
            <div id="search3">
           <input type="submit" class="btn btn-success" value="검색"></input>
            </div>
+          </form>
+          
+          
+           <form action="bandSearch.trip" method="post">
+          <input type="text" name="find" placeholder="밴드 이름이나 소개로 검색"></input>
+          <input type="submit" class="btn btn-success" value="검색"></input>
           </form>
           
           <c:if test="${find != null}">
