@@ -33,7 +33,6 @@ public class postBean {
 	  String id=null;
 	  id= (String)session.getAttribute("memId");
 	  dto.setId(id);
-	  System.out.println("리스트화면id="+id);
      
 	  List<boardVO> list = null;   
 	  List<boardVO> ldto = null;   
@@ -263,16 +262,7 @@ public class postBean {
     
 
  return mv;
- }
-   
-   @RequestMapping("/post/postWriteForm.trip")
-   public String postWriteForm(HttpServletRequest request, int currentPage){
-      request.setAttribute("currentPage", currentPage);
-
-      return "/post/boardWrite.jsp";
-   }
-   
-   
+ }  
    @RequestMapping("/post/postWritePro.trip")
    public String postWritePro(boardVO dto, HttpServletRequest request, MultipartHttpServletRequest mrequest){
 	   System.out.println("서브젝트="+dto.getSubject());
@@ -836,7 +826,7 @@ public class postBean {
 	   request.setAttribute("band_id", band_id);
 	   return "redirect:/post/bandManage.trip";
    }
-   //밴드 이름 검색
+   //밴드 화면에서 밴드 이름이나 소개로 검색
    @RequestMapping("/post/bandSearch.trip")
    public String bandSearch(String bandname, BandDTO dto, HttpServletRequest request){
 	   List<BandDTO> list =null;
@@ -845,4 +835,23 @@ public class postBean {
 	   
 	   return "/band/list_band.jsp";
    }
+   @RequestMapping("/post/friendschedule-list.trip")
+	public String schedulelist(HttpServletRequest request, HttpSession session, String s_writer){
+		String id= (String)session.getAttribute("memId");
+		
+		if(id == null){
+		int count = (Integer)sqlMapClientTemplate.queryForObject("schedule.scheduleCount", s_writer);
+		List scheduleList = null;
+		if(count > 0){
+			scheduleList = sqlMapClientTemplate.queryForList("schedule.scheduleList", s_writer);
+			request.setAttribute("scheduleList", scheduleList);
+		}
+		request.setAttribute("scheduleCount", count);
+		}else if(id != null){
+			
+			
+		}
+		return "/schedule/schedule-list.jsp";
+	}
+   
 }

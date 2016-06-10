@@ -44,11 +44,11 @@
 	</select>
 	
 	<select id="scheduleCount" resultClass="int" parameterClass="String">
-		select count(*) from t_schedule where s_writer=#s_writer#
+		select count(*) from t_schedule where s_writer=#s_writer# and s_range='1'
 	</select>
 	
 	<select id="scheduleList" resultClass="schedule" parameterClass="String">
-		select * from t_schedule where s_writer=#s_writer#
+		 select * from t_schedule where s_writer=#s_writer# and s_range='1'
 	</select>
 	
 	<update id="scheduleUpdate" parameterClass="schedule">

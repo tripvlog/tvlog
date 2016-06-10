@@ -75,6 +75,7 @@
 
 	 		<c:forEach var="list" items="${list}">
  			<form action="okFriend.trip" method="post">
+ 			
 			 아이디 : ${list.friend_id }&nbsp;&nbsp;
  			날짜 : <fmt:formatDate value="${list.friend_reg}" type="both"/>&nbsp;&nbsp;&nbsp;&nbsp;
 
