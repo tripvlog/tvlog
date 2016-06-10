@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import trip.member.LoginDTO;
 //schedule
 @Controller
 public class ScheduleBean {
@@ -73,6 +75,7 @@ public class ScheduleBean {
 	@RequestMapping("/schedule/schedule-list.trip")
 	public String schedulelist(HttpServletRequest request, HttpSession session){
 		String s_writer = (String)session.getAttribute("memId");
+		LoginDTO dto = (LoginDTO)sqlMap.queryForObject("modify", s_writer);
 		int count = (Integer)sqlMap.queryForObject("schedule.scheduleCount", s_writer);
 		List scheduleList = null;
 		if(count > 0){
@@ -80,6 +83,7 @@ public class ScheduleBean {
 			request.setAttribute("scheduleList", scheduleList);
 		}
 		request.setAttribute("scheduleCount", count);
+		request.setAttribute("member", dto);
 		
 		return "/schedule/schedule-list.jsp";
 	}
@@ -152,6 +156,13 @@ public class ScheduleBean {
 		request.setAttribute("scheduleList", scheduleList);
 		request.setAttribute("scheduleCount", scheduleList.size());
 		return "/main/findSchedule.jsp";
+	}
+	
+	@RequestMapping("/schedule/schedule-del.trip")
+	public String scheduleDel(HttpServletRequest request, int s_num){
+		sqlMap.delete("schedule.scheduleDelete",s_num);
+		sqlMap.delete("schedule.scheduleDetailDelete",s_num);
+		return "redirect:/schedule/schedule-list.trip";
 	}
 
 }

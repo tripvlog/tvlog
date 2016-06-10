@@ -48,8 +48,9 @@
 	<!-- 체크리스트 시작 -->
 	<!-- 왼쪽 버튼 그룹 - 저장, 방문명소 -->
 	<div id="savecontainer">
-		<button type="button"  id="scheduleSave"  onclick="window.location='/tvlog/schedule/schedule-detailUpdate.trip?s_num=${dto.s_num}'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>일정 수정</button>
-		<button type="button" id="scheduleSave">
+		<c:if test="${sessionScope.memId == dto.s_writer}">
+			<button type="button"  id="scheduleSave"  onclick="window.location='/tvlog/schedule/schedule-detailUpdate.trip?s_num=${dto.s_num}'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>일정 수정</button>
+			<button type="button" id="scheduleSave" data-toggle="modal" data-target="#range">
 			<c:if test="${dto.s_range ==1}">
 				<i class="fa fa-unlock" aria-hidden="true"></i>전체
 			</c:if>
@@ -63,13 +64,52 @@
 				<i class="fa fa-lock" aria-hidden="true"></i> 비공개
 			</c:if>	
 		</button>
+		</c:if>
+		<c:if test="${sessionScope.memId != dto.s_writer}">
+			<button type="button"  id="scheduleSave"  onclick="window.location='/tvlog/main/findSchedule.trip'"><i class="fa fa-search" aria-hidden="true"></i>일정 찾기</button>
+			<button type="button" id="scheduleSave">
+			<c:if test="${dto.s_range ==1}">
+				<i class="fa fa-unlock" aria-hidden="true"></i>전체
+			</c:if>
+			<c:if test="${dto.s_range ==2}">
+				<i class="fa fa-user" aria-hidden="true"></i>밴드
+			</c:if>
+			<c:if test="${dto.s_range ==3}">
+				<i class="fa fa-users" aria-hidden="true"></i>친구
+			</c:if>
+			<c:if test="${dto.s_range ==4}">
+				<i class="fa fa-lock" aria-hidden="true"></i> 비공개
+			</c:if>	
+		</button>
+		</c:if>
+		
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#famousplace"><i class="fa fa-map-marker" aria-hidden="true"></i> 방문명소</button>
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#budget"><i class="fa fa-krw" aria-hidden="true"></i> 여행가계부</button>
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#checklist"><i class="fa fa-check-square-o" aria-hidden="true"></i> 체크리스트</button>
 	</div>
-	
+	<!-- 공개설정 Modal -->
+	<div class="modal fade" id="range"  tabindex="-1" role="dialog" aria-labelledby="rangeModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        	<h4 class="modal-title" id="checklistModalLabel">공개 범위 설정</h4>
+				</div>
+				<div class="modal-body">
+					<button type="button" class="range"><i class="fa fa-unlock" aria-hidden="true"></i>전 체</button>
+					<button type="button" class="range"><i class="fa fa-users" aria-hidden="true"></i>친 구</button>
+					<button type="button" class="range"><i class="fa fa-user" aria-hidden="true"></i>밴 드</button>
+					<button type="button" class="range"><i class="fa fa-users" aria-hidden="true"></i>친구 & 밴드</button>
+					<button type="button" class="range"><i class="fa fa-lock" aria-hidden="true"></i> 비공개</button>
+			    </div>
+			    <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div> 
 <!-- 방문명소 Modal -->
-	<div class="modal fade" id="famousplace" tabindex="-1" role="dialog" aria-labelledby="famousplaceModalLabel" aria-hidden="true">
+	<div class="modal fade"  id="famousplace" tabindex="-1" role="dialog" aria-labelledby="famousplaceModalLabel" aria-hidden="true">
   		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-header">
@@ -128,6 +168,9 @@
 		</div>
 	</div> 
 <!-- 체크리스트 끝 -->
+
+
+
 <!-- 오른쪽 그룹 - 일정 -->
 	<div class="col-md-10" id="schedulecontainer" >
 		<!-- 여행 소개 -->
