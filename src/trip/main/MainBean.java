@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
@@ -31,7 +32,11 @@ public class MainBean {
 	
 	// 여행 일정 찾기
 	@RequestMapping("/main/findSchedule.trip")
-	public String findSchedule(){
+	public String findSchedule(HttpServletRequest request, HttpSession session){
+		List scheduleList = null;
+		scheduleList = sqlMap.queryForList("schedule.scheduleRangeList", null);
+		request.setAttribute("scheduleCount", scheduleList.size());
+		request.setAttribute("scheduleList", scheduleList);
 		return "/main/findSchedule.jsp";
 	}
 	

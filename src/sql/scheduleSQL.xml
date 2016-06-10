@@ -13,6 +13,9 @@
 		select * from t_schedule where s_num=(select max(s_num) from t_schedule)
 	</select>
 	
+	<select id="scheduleRangeList" resultClass="schedule">
+		select * from t_schedule where s_range=1 order by s_regdate desc
+	</select>
 	
 	<insert id="scheduleDetailInsert" parameterClass="scheduleDetail">
 		insert into t_schedule_detail  
