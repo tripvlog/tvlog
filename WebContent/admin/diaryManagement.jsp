@@ -17,7 +17,8 @@
 </script>
 </head>
 <body>
-<div id="totalDiv">
+<jsp:include page="/main/header.jsp" /> 
+	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${diaryAllCount != 0}">
 	<!-- 일기 검색 -->
 	<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>

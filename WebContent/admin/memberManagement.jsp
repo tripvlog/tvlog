@@ -17,7 +17,8 @@
 </script>
 </head>
 <body>
-<div id="totalDiv">
+<jsp:include page="/main/header.jsp" /> 
+	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${memberAllCount != 0}">
 	<!-- 회원 검색 -->
 	<h4>모든 회원 검색 (${memberAllCount} 개) </h4>

@@ -17,7 +17,8 @@
 </script>
 </head>
 <body>
-<div id="totalDiv">
+<jsp:include page="/main/header.jsp" /> 
+	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${postAllCount != 0}">
 	<!-- 포스트 검색 -->
 	<h4>모든 포스트 검색 (${postAllCount} 개)</h4>

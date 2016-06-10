@@ -7,7 +7,8 @@
 <title>트래블로그</title>
 </head>
 <body>
-<div id="totalDiv">
+<jsp:include page="/main/header.jsp" /> 
+	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${diaryDayCount != 0}">
 	<!-- 오늘 올라온 일기 검색 -->
 	<h4>오늘 올라온 일기 검색 (${diaryDayCount} 개)</h4>

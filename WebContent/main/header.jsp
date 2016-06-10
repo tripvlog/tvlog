@@ -71,6 +71,10 @@
     				<li class="#about"><a href="/tvlog/band/b_list.trip" id="navlink">밴드</a></li>
     				<li class="#about"><a href="/tvlog/main/community.trip" id="navlink">커뮤니티</a></li>
     				<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#scheduleModal" data-whatever="@mdo">일정 만들기</a></li>  						
+    				<!-- 관리자 로그인 -->
+    				<c:if test="${sessionScope.memId == 'tripvlog05'}">
+    					<li class="#about"><a href="/tvlog/admin/adminMain.trip" id="navlink">관리자</a></li>
+    				</c:if>
     			</ul>
     		</div>
     		<div class="collapse navbar-collapse"  style="float:right;margin-top:20" id="loginSpace">

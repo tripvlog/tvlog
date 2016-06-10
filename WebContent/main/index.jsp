@@ -98,7 +98,7 @@
 	 	});
 	}
 	function loginSuccess(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다.
-		/* window.location.reload(true); */
+		window.location.reload(true);
 	    $("#loginSpace").html(aaa);
 	}
 	function loginError(){

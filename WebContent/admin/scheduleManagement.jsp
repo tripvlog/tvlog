@@ -18,7 +18,8 @@
 </script>
 </head>
 <body>
-<div id="totalDiv">
+<jsp:include page="/main/header.jsp" /> 
+	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${scheduleAllCount != 0}">
 	<!-- 스케줄 검색 -->
 	<h4>모든 스케줄 검색 (${scheduleAllCount} 개)</h4>

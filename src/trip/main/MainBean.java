@@ -50,14 +50,14 @@ public class MainBean {
 	@RequestMapping("/main/community.trip")
 	public ModelAndView community(){
 		List list = new ArrayList();
-		list = sqlMap.queryForList("admin.postSelectList", null);
-		int postAllCount = (Integer)sqlMap.queryForObject("admin.postAllCount", null);
+		list = sqlMap.queryForList("communityPostList", null);
+		List diary_select_1range = new ArrayList(); 
+		diary_select_1range = sqlMap.queryForList("diary_select_1range", null);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
-		mv.addObject("postAllCount", postAllCount);
+		mv.addObject("diary_select_1range", diary_select_1range);
 		mv.setViewName("/main/community.jsp");
-		
 		return mv;
 	}	
 }
