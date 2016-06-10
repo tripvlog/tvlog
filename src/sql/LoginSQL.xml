@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="findPw" parameterClass="trip.member.LoginDTO" resultClass="trip.member.LoginDTO">
-		select pw from t_member where =#pw#
+		select pw from t_member where pw=#pw#
 	</select>
 
 	<select id="member_get_img" parameterClass="String" resultClass="String">
