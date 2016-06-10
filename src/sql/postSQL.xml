@@ -164,13 +164,15 @@ select * from t_post where id=#id#
 	select count(*) from t_member_band_$band_member_id$ where band_id=#band_id#
 </select>
 
-<insert id="myband_insert" parameterClass="trip.band.memberDTO">
+<insert id="myband_insert" parameterClass="trip.band.BandDTO">
 	insert into t_member_band_$band_member_id$ (band_id,
 												band_name,
+												band_img,
 						  			  	band_reg
                            			         )
                 			    VALUES (#band_id#,
                 			    		#band_name#,
+                			    		#band_img#,
                        				     sysdate
                   				        )
 </insert>
@@ -206,15 +208,19 @@ select * from t_post where id=#id#
 </select>
 
 <select id="imbandkingCount0" parameterClass="trip.band.memberDTO" resultClass="trip.band.memberDTO">
-	select * from t_band_member_$band_id$ where band_member_level=0
+	select * from t_band_member_$band_id$ where band_member_level=1
 </select>
 
 <update id="memberlevelup" parameterClass="trip.band.memberDTO">
-       UPDATE t_band_member_$band_id$ SET band_member_level = 1 WHERE band_member_id = #band_member_id#
+       UPDATE t_band_member_$band_id$ SET band_member_level = 0 WHERE band_member_id = #band_member_id#
 </update>
 
 <delete id="memberNo" parameterClass="trip.band.memberDTO">
    delete from t_band_member_$band_id$ where band_member_id = #band_member_id#
 </delete>
+
+<select id="bandSearch" parameterClass="String" resultClass="trip.band.BandDTO">
+select * from t_band where band_name  like '%'||#band_name#||'%' or band_intro  like '%'||#band_intro#||'%'
+</select>
 
 </sqlMap>
