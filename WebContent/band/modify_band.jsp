@@ -64,7 +64,7 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-	function ok(member_id, b_id){
+	function band_ok(member_id, b_id){
 		var id = member_id;
 		var band_id = b_id;
 		alert(band_id + ", " + id);
@@ -74,6 +74,33 @@
 			location.href="/tvlog/band/b_join.trip?confirm=yes&band_id=" + band_id + "&band_member_id=" + id;
 		}else{
 			alert("승인이 취소되었습니다");
+		}
+		return false;
+	}
+	
+	function band_leave(login_id, b_id){
+		var id = login_id;
+		var band_id = b_id;
+		alert(id + ", " + band_id);
+		var check = confirm("탈퇴 하시겠습니까?");
+		if(check == true){
+			alert("탈퇴 되었습니다");
+			location.href="/tvlog/band/b_leave.trip?band_id=" + band_id + "&band_member_id=" + id;
+		}else{
+			alert("탈퇴가 취소되었습니다");
+		}
+		return false;
+	}
+	
+	function band_delete(b_id){
+		var band_id = b_id;
+		alert("밴드 아이디 : " + band_id);
+		var check = confirm("정말로 밴드를 삭제하시겠습니까?");
+		if(check == true){
+			alert("밴드가 삭제되었습니다.");
+			location.href="/tvlog/band/b_drop.trip?band_id=" + band_id;
+		}else{
+			alert("삭제가 취소되었습니다");
 		}
 		return false;
 	}
@@ -120,13 +147,15 @@
 							<td>${guestlist.band_member_id}</td>
 							<td>${guestlist.band_member_name}</td>
 							<td>${guestlist.band_member_reg}</td>
-							<td><button onclick="ok('${guestlist.band_member_id}', '${band_id}')">가입승인</button></td>
+							<td><button onclick="band_ok('${guestlist.band_member_id}', '${band_id}')">가입승인</button></td>
 						</tr>
 					</c:forEach>
 				</table>
 				<hr>
+				<button onclick="band_delete('${band_id}')">밴드 삭제</button>
 				</c:if>
-				밴드 탈퇴     밴드 삭제
+				<button onclick="band_leave('${sessionScope.memId}', '${band_id}')">밴드 탈퇴</button>
+				
 			</div>
 			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
 				<div class="list-group">
