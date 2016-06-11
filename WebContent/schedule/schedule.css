@@ -18,7 +18,7 @@
 		margin-bottom: 10px;
 	}
 	
-	#scheduleSave{ /*일정수정~체크리스트 까지 버튼 */
+	#scheduleSave , #rangeCh{ /*일정수정~체크리스트 까지 버튼 */
 		width: 19.7%;
 		height:60px;
 	} 
@@ -158,8 +158,8 @@
 
 #masthead {
 	width: 1140px;
+	background-size : 1140px 600px;
 	min-height: 270px;
-	background-image : url('/tvlog/img/schedule/schedule-img.png');
 	text-align: center;
 	position:relative; 
 }

@@ -14,6 +14,12 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="/tvlog/schedule/schedule.js"></script>
+<style>
+	#masthead{
+			background-size : 1140px 600px;
+			background-image : url('/tvlog/img/schedule/${dto.s_mainimg}');
+		}
+</style>
 <script type="text/javascript">
 	var objTd;
 	function korea(id,icon){
@@ -63,7 +69,7 @@
 			<c:if test="${dto.s_range ==4}">
 				<i class="fa fa-lock" aria-hidden="true"></i> 비공개
 			</c:if>	
-		</button>
+			</button>
 		</c:if>
 		<c:if test="${sessionScope.memId != dto.s_writer}">
 			<button type="button"  id="scheduleSave"  onclick="window.location='/tvlog/main/findSchedule.trip'"><i class="fa fa-search" aria-hidden="true"></i>일정 찾기</button>
@@ -72,12 +78,15 @@
 				<i class="fa fa-unlock" aria-hidden="true"></i>전체
 			</c:if>
 			<c:if test="${dto.s_range ==2}">
-				<i class="fa fa-user" aria-hidden="true"></i>밴드
+				<i class="fa fa-user" aria-hidden="true"></i>친구
 			</c:if>
 			<c:if test="${dto.s_range ==3}">
-				<i class="fa fa-users" aria-hidden="true"></i>친구
+				<i class="fa fa-users" aria-hidden="true"></i>밴드
 			</c:if>
 			<c:if test="${dto.s_range ==4}">
+				<i class="fa fa-users" aria-hidden="true"></i>친구 & 밴드
+			</c:if>
+			<c:if test="${dto.s_range ==5}">
 				<i class="fa fa-lock" aria-hidden="true"></i> 비공개
 			</c:if>	
 		</button>
@@ -97,8 +106,8 @@
 				</div>
 				<div class="modal-body">
 					<button type="button" class="range"><i class="fa fa-unlock" aria-hidden="true"></i>전 체</button>
-					<button type="button" class="range"><i class="fa fa-users" aria-hidden="true"></i>친 구</button>
-					<button type="button" class="range"><i class="fa fa-user" aria-hidden="true"></i>밴 드</button>
+					<button type="button" class="range"><i class="fa fa-user" aria-hidden="true"></i>친 구</button>
+					<button type="button" class="range"><i class="fa fa-users" aria-hidden="true"></i>밴 드</button>
 					<button type="button" class="range"><i class="fa fa-users" aria-hidden="true"></i>친구 & 밴드</button>
 					<button type="button" class="range"><i class="fa fa-lock" aria-hidden="true"></i> 비공개</button>
 			    </div>
@@ -248,7 +257,7 @@
 			<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
 			<!-- 지도 시작 -->
 				<br />
-				<iframe src="/tvlog/schedule/schedule-map.jsp" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				<iframe src="/tvlog/schedule/schedule-map.trip?s_num=${dto.s_num}" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				<br />
 			<!-- 지도 끝 -->
 			<!-- 지도/일정표의 테이블 -->

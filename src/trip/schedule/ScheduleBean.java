@@ -1,5 +1,6 @@
 package trip.schedule;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import trip.member.LoginDTO;
 //schedule
@@ -112,6 +115,23 @@ public class ScheduleBean {
 		return "/schedule/schedule-content.jsp";
 	}
 	
+	@RequestMapping("/schedule/schedule-map.trip")
+	public String scheduleContentMap(HttpServletRequest request,ScheduleDTO dto, HttpSession session){
+		String s_writer = (String)session.getAttribute("memId");
+		dto.setS_writer(s_writer);
+		int s_num = dto.getS_num();
+		dto = (ScheduleDTO)sqlMap.queryForObject("schedule.scheduleContent",s_num);
+		
+		List list = sqlMap.queryForList("schedule.scheduleDetailMap", s_num);
+		
+		request.setAttribute("dto", dto);
+		request.setAttribute("detaillist", list);
+		request.setAttribute("count", list.size());
+		
+		return "/schedule/schedule-map.jsp";
+	}
+	
+	
 	@RequestMapping("/schedule/schedule-detailUpdate.trip")
 	public String scheduledetailUpdate(HttpServletRequest request,ScheduleDTO dto, HttpSession session){
 		String s_writer = (String)session.getAttribute("memId");
@@ -140,7 +160,6 @@ public class ScheduleBean {
 	
 	@RequestMapping("/schedule/schedule-detail-scheduleUpdate.trip")
 	public String detailUpdate(HttpServletRequest request,ScheduleDetailDTO dto){
-		System.out.println("asfasdfdfaasf");
 		sqlMap.update("schedule.scheduleDetailUpdate", dto);
 		
 		request.setAttribute("dto",dto);
@@ -165,6 +184,30 @@ public class ScheduleBean {
 		return "redirect:/schedule/schedule-list.trip";
 	}
 
+	@RequestMapping("/schedule/schedule-imgCh.trip")
+	public String imgChange(MultipartHttpServletRequest request) throws Exception{
+		MultipartFile mf = request.getFile("scheduleImg");
+		String orgName = mf.getOriginalFilename();
+		String ext = orgName.substring(orgName.lastIndexOf(".")+1);
+		int s_num = Integer.parseInt(request.getParameter("s_num"));
+		String img = request.getParameter("s_mainimg");
+		String path = request.getRealPath("//img//schedule//");
+		String saveName = "schedule"+s_num+"."+ext;
+		File save = new File(path+("//schedule"+s_num+"."+ext));
+		File imgFile = new File(path+"//"+img);
+		if(img.equals("schedule-img.png")){
+			mf.transferTo(save);
+		}else{
+			imgFile.delete();
+			mf.transferTo(save);
+		}
+		ScheduleDTO dto = new ScheduleDTO();
+		dto.setS_num(s_num);
+		dto.setS_mainimg(saveName);
+		sqlMap.update("schedule.scheduleImg",dto);
+		request.setAttribute("dto", dto);
+		return "/schedule/schedule-img.jsp";
+	}
 }
 
 

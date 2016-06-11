@@ -43,6 +43,10 @@
 		select * from t_schedule_detail where s_num=#s_num#
 	</select>
 	
+	<select id="scheduleDetailMap" resultClass="scheduleDetail" parameterClass="int">
+		select * from t_schedule_detail where s_num=#s_num# and sd_map is not null 
+	</select>
+	
 	<select id="scheduleCount" resultClass="int" parameterClass="String">
 		select count(*) from t_schedule where s_writer=#s_writer#
 	</select>
@@ -53,7 +57,7 @@
 	
 	<update id="scheduleUpdate" parameterClass="schedule">
 		update t_schedule set s_info=#s_info#, s_content=#s_content#, s_startday=#s_startday# , s_endday=#s_endday#,
-		s_theme=#s_theme#,s_membercount=#s_membercount# where s_num=#s_num#
+		s_theme=#s_theme#,s_membercount=#s_membercount#,s_range=#s_range# where s_num=#s_num#
 	</update>
 	
 	<select id="scheduleContent" resultClass="schedule" parameterClass="int">
@@ -82,5 +86,8 @@
 	<delete id="scheduleDetailDelete" parameterClass="int">
 		delete from t_schedule_detail where s_num=#s_num#
 	</delete>
+	<update id="scheduleImg" parameterClass="schedule">
+		update t_schedule set s_mainimg=#s_mainimg# where s_num=#s_num#
+	</update>
 	
 </sqlMap>
