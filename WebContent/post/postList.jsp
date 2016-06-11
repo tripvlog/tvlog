@@ -8,8 +8,6 @@
 <head>
    <title>포스트 게시판</title>	
 	<link rel="stylesheet" href="/projcet/postboard/common/css/css.css" type="text/css">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
@@ -168,6 +166,7 @@
 </head>
   
   <body>
+  <jsp:include page="/main/header.jsp" />
 
 
   	<div id="contain">
@@ -389,7 +388,7 @@
           <select name="select" class="form-control">
          	 <option selected value="writer">글쓴이</option>
          	 <option selected value="subject">제목</option>
-          	 <option selected value="no">번호</option>
+          	 
           </select> 
           </div>
           <div id="search2">
@@ -410,7 +409,7 @@
              <tr align="right">
           		<td colspan="5">
 					<c:if test="${sessionScope.memId !=null }">           
-               		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+               		<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal" width="300" height="200">
 				 	 포스트 작성
 					</button>
        				</c:if>

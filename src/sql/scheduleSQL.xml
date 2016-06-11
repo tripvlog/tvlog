@@ -76,4 +76,7 @@
 		select * from t_schedule_detail where sd_num=#sd_num#
 	</select>
 	
+	
+	
+	
 </sqlMap>

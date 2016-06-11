@@ -754,12 +754,12 @@ public class postBean {
    }
    //밴드 초대를 할 경우, 상대방이 이미 가입된 밴드인지 아닌지 카운트로 판단해서 가입 안 된 밴드일 경우 테이블에 넣는다.
    @RequestMapping("/post/bandselect.trip")
-   public String bandselect(HttpSession session, BandDTO dto, String band_member_id, HttpServletRequest request){
+   public String bandselect(HttpSession session, BandDTO dto, memberDTO mdto, String band_member_id, HttpServletRequest request){
 	   String id = (String)session.getAttribute("memId");
-	   int count =(Integer)sqlMapClientTemplate.queryForObject("post.hisbandCheck", dto);	  
+	   int count =(Integer)sqlMapClientTemplate.queryForObject("post.hisbandCheck", mdto);	  
 	   if(count==0){
 		   System.out.println("count1는"+count);
-		   sqlMapClientTemplate.insert("post.comeband", dto);	  
+		   sqlMapClientTemplate.insert("post.comeband", mdto);	  
 		   sqlMapClientTemplate.insert("post.myband_insert", dto);
 	   }
 	   request.setAttribute("count", count);
@@ -838,17 +838,15 @@ public class postBean {
    @RequestMapping("/post/friendschedule-list.trip")
 	public String schedulelist(HttpServletRequest request, HttpSession session, String s_writer){
 		String id= (String)session.getAttribute("memId");
-		
-		if(id == null){
 		int count = (Integer)sqlMapClientTemplate.queryForObject("schedule.scheduleCount", s_writer);
-		List scheduleList = null;
+		request.setAttribute("scheduleCount", count);
+		
 		if(count > 0){
+
+			List scheduleList = null;
 			scheduleList = sqlMapClientTemplate.queryForList("schedule.scheduleList", s_writer);
 			request.setAttribute("scheduleList", scheduleList);
-		}
-		request.setAttribute("scheduleCount", count);
-		}else if(id != null){
-			
+	
 			
 		}
 		return "/schedule/schedule-list.jsp";

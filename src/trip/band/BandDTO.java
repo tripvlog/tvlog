@@ -11,7 +11,15 @@ public class BandDTO {
 	private String band_intro;
 	private int band_range;
 	private Timestamp band_reg;
+	private String band_member_id;
 	
+	
+	public String getBand_member_id() {
+		return band_member_id;
+	}
+	public void setBand_member_id(String band_member_id) {
+		this.band_member_id = band_member_id;
+	}
 	public int getBand_id() { return band_id; }
 	public void setBand_id(int band_id) { this.band_id = band_id; }
 	public String getBand_name() { return band_name; }

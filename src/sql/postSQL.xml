@@ -168,7 +168,8 @@ select * from t_post where id=#id#
 	insert into t_member_band_$band_member_id$ (band_id,
 												band_name,
 												band_img,
-						  			  	band_reg
+												band_reg
+						  			  			
                            			         )
                 			    VALUES (#band_id#,
                 			    		#band_name#,
