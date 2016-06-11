@@ -34,7 +34,6 @@
     		<script>
     			var str = '${detailDTO.sd_map}';
     			var s = str.split(':');
-    			
     			var j = parseInt('${i.count}');
     			point1[point1.length] = '${detailDTO.sd_startpoint}';
     			dayMap[j-1] = s;
@@ -62,26 +61,12 @@
 		  		flightPlanCoordinates[flightPlanCoordinates.length] = {lat: parseFloat(mkk[0]) , lng:parseFloat(mkk[1])}; 
 		  	}
 		  	
-		  	var marker = new Array(po.length);
-		  	var infowindow = new Array(po.length);
+		  
 		  	for(var i = 0 ; i < flightPlanCoordinates.length ; i++){
 				var mk = mks[i];
 				var poi = po[i];
 				
-				marker[i] = new google.maps.Marker({
-				    position: {lat:parseFloat(mk[0]), lng:parseFloat(mk[1])},
-				    map: map,
-				    animation: google.maps.Animation.DROP,
-				    title: 'Hello World!'
-				});
-				
-				 infowindow[i] = new google.maps.InfoWindow();
-				
-				google.maps.event.addListener(marker[i], 'click', function() { 
-						
-						infowindow[i].setContent(poi);
-						infowindow[i].open(map, marker[i]);
-				});
+				addMap(mk , poi);
 		
 			}
 		  	
@@ -92,6 +77,21 @@
 		        strokeWeight: 2,
 			});
 			 flightPath.setMap(map);	 
+		}
+		
+		function addMap(mk,poi){
+				var infowindow = new google.maps.InfoWindow();
+				var marker = new google.maps.Marker({
+				    position: {lat:parseFloat(mk[0]), lng:parseFloat(mk[1])},
+				    map: map,
+				    animation: google.maps.Animation.DROP,
+				    title: 'Hello World!'
+				});
+				
+				google.maps.event.addListener(marker, 'click', function() { 
+					infowindow.setContent("<h4>"+poi+"</h4>");
+					infowindow.open(map, this);
+				});
 		}
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt8pJQNw2nr0vxe8gZ-ur3zvAW5zrsKrw&callback=initMap" async defer></script>
