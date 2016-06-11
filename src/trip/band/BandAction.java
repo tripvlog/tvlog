@@ -121,11 +121,28 @@ public class BandAction {
 			request.setAttribute("modify", "true");
 		}
 		List memberlist = sqlMap.queryForList("band_board_member_get", band_id);
+		List waitmember = sqlMap.queryForList("band_member_guest", band_id);
 		String id = (String)session.getAttribute("memId");
 		if(id == null){
 			id = "";
 		}
 		System.out.println(" 입력된 아이디 : " + id);
+		
+		System.out.println(" =============================================== ");
+		for(int i=0; i<waitmember.size(); i++){
+			memdto = (memberDTO)waitmember.get(i);
+			System.out.println("memdto.getBand_member_id() : " + memdto.getBand_member_id());
+			if(id.equals(memdto.getBand_member_id())){
+				System.out.println("id : " + id + ", " + "memdto.getBand_member_id() : " + memdto.getBand_member_id() + " , " + "id.equals(memdto.getBand_member_id() : " + id.equals(memdto.getBand_member_id()));
+				System.out.println("가입 대기중인 멤버입니다");
+				request.setAttribute("guest", "wait");
+				break;
+			}else{
+				System.out.println(id + ", " + memdto.getBand_member_id() + " : " + id.equals(memdto.getBand_member_id()));
+				System.out.println("밴드 멤버가 아닙니다");
+			}
+			request.setAttribute("guest", "guest");
+		}
 		for(int i=0; i<memberlist.size(); i++){
 			memdto = (memberDTO)memberlist.get(i);
 			System.out.println(memdto.getBand_member_id());
@@ -134,13 +151,10 @@ public class BandAction {
 				System.out.println("밴드 멤버가 맞습니다");
 				request.setAttribute("guest", "member");
 				break;
-			}else{
-				System.out.println(id + ", " + memdto.getBand_member_id() + " : " + id.equals(memdto.getBand_member_id()));
-				System.out.println("밴드 멤버가 아닙니다");
 			}
-			request.setAttribute("guest", "guest");
 		}
 		
+		request.setAttribute("waitmember", waitmember);
 		request.setAttribute("bandlist", bandlist);
 		request.setAttribute("band_id", banddto.getBand_id());
 		request.setAttribute("b_board_contents", band_board);
@@ -340,7 +354,7 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/b_join.trip")
-	public String b_invite(HttpServletRequest request, HttpSession session, trip.member.BandListDTO bandlistdto, trip.member.LoginDTO logindto, memberDTO memberdto, int band_id){
+	public String b_invite(HttpServletRequest request, HttpSession session, BandDTO banddto, trip.member.BandListDTO bandlistdto, trip.member.LoginDTO logindto, memberDTO memberdto, int band_id){
 		String confirm = "";
 		if(request.getParameter("confirm") == null){
 			confirm = "no";
@@ -349,7 +363,16 @@ public class BandAction {
 		}
 		if(confirm.equals("yes")){ // 밴드리더가 가입승인
 			sqlMap.update("band_join_confirm", memberdto);
-			bandlistdto = (BandListDTO)sqlMap.queryForObject("band_view", band_id);
+			banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
+			System.out.println("band_id : " + band_id);
+			System.out.println("banddto.getBand_name() : " + banddto.getBand_name());
+			System.out.println("banddto.getBand_img() : " + banddto.getBand_img());
+			System.out.println("memberdto.getBand_member_id() : " + memberdto.getBand_member_id());
+			bandlistdto.setBand_id(band_id);
+			bandlistdto.setBand_name(banddto.getBand_name());
+			bandlistdto.setBand_img(banddto.getBand_img());
+			bandlistdto.setMember_id(memberdto.getBand_member_id());
+			
 			// 승인된 id db에 있는 밴드목록에 해당 밴드 추가해야함
 			sqlMap.insert("band_insert_my_list", bandlistdto);
 			return "redirect:/band/b_modify.trip?band_id=" + band_id;

@@ -82,14 +82,15 @@
 			<div class="col-xs-12 col-sm-9">
 				<!-- 밴드에 게시글 작성 -->
 				<c:if test="${modify != true}">
-				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data" onsubmit="return error_login('${sessionScope.memId}')">
-					<input type="hidden" name="modify" value="false">
-					<input type="hidden" name="band_id" value="${band.band_id}">
-					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content" id="board_content"></textarea><br />
-					<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
-					
-				</form>
-				
+					<c:if test="${guest == 'member'}"><!-- 밴드 멤버만 글 작성 가능 -->
+						<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data" onsubmit="return error_login('${sessionScope.memId}')">
+							<input type="hidden" name="modify" value="false">
+							<input type="hidden" name="band_id" value="${band.band_id}">
+							<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content" id="board_content"></textarea><br />
+							<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
+							
+						</form>
+					</c:if>
 					<hr style="color:red">
 					<c:forEach var="v" items="${b_board_contents}">
 
@@ -155,6 +156,10 @@
 							<c:if test="${guest == 'guest'}">
 								<button onclick="call('${sessionScope.memId}', '${band_id}')">가입신청 하기</button>
 							</c:if>
+							<c:if test="${guest == 'wait'}">
+								가입승인 대기중입니다~^^
+							</c:if>
+							
 						</c:if>
 						<c:if test="${sessionScope.memId == null}">
 						<hr>

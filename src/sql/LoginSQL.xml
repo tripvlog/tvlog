@@ -52,7 +52,7 @@
 	</insert>
 	
 	<insert id="member_create_band_list" parameterClass="trip.member.LoginDTO">
-		create table t_member_band_$id$(band_no number, band_id number primary key, band_name varchar2(300), band_img varchar2(300) default 'default.jpg', band_reg date default sysdate)
+		create table t_member_band_$id$(band_no number, band_id number primary key, band_name varchar2(300), band_img varchar2(300) default 'default.jpg', band_state number, band_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
 	
 	<insert id="member_create_band_seq" parameterClass="trip.member.LoginDTO">
