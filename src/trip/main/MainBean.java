@@ -60,4 +60,11 @@ public class MainBean {
 		mv.setViewName("/main/community.jsp");
 		return mv;
 	}	
+	
+	@RequestMapping("/diary/myDiaryDelete.trip")
+	public String delete(HttpServletRequest request){
+		int diary_num = Integer.parseInt(request.getParameter("num"));
+		sqlMap.delete("diary_delete", diary_num);
+		return "/member/myDiary.trip";
+	}
 }
