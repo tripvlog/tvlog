@@ -120,6 +120,25 @@
 							${v.band_board_content} : band_board_content<br />
 							${v.band_board_readcount} : band_board_readcount<br />
 							${v.band_board_reg} : band_board_reg<br /><br />
+							 
+							<c:forEach var="comment" items="${b_board_comments}">
+								${comment.BAND_BOARD_COMMENT_BNO}<br />
+								${comment.BAND_BOARD_COMMENT_CNO}<br />
+								${comment.BAND_BOARD_COMMENT_WRITER}<br />
+								${comment.BAND_BOARD_COMMENT_COMMENT}<br />
+								${comment.BAND_BOARD_COMMENT_REG}<br />
+							</c:forEach>
+							
+							<c:if test="${guest == 'member'}">
+								<form action="/tvlog/band/bb_comment.trip" method="post">
+									<input type="hidden" name="board_num" value="${v.band_board_num}">
+									<input type="hidden" name="band_id" value="${band_id}">
+									<input type="hidden" name="member_id" value="${sessionScope.memId}">
+									<input  type="text" placeholder="코멘트를 입력하세요" name="comment" size="100">
+									<button type="submit">저장</button>
+		      		 			</form>
+	      		 			</c:if>
+						<hr>
 						</div>
 					</c:forEach>
 			</c:if><!-- 내용 수정 시작 -->

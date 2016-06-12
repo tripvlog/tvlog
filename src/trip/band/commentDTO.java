@@ -4,11 +4,20 @@ import java.sql.Timestamp;
 
 public class commentDTO {
 
+	private int band_id;
 	private int band_board_comment_bno;
 	private int band_board_comment_cno;
 	private String band_board_comment_writer;
 	private String band_board_comment_comment;
 	private Timestamp band_board_comment_reg;
+
+	public int getBand_id() {
+		return band_id;
+	}
+
+	public void setBand_id(int band_id) {
+		this.band_id = band_id;
+	}
 
 	public int getBand_board_comment_bno() {
 		return band_board_comment_bno;

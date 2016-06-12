@@ -39,6 +39,7 @@ public class BandAction {
 		sqlMap.insert("band_create_table_board", banddto.getBand_id());	// 밴드마다 게시판 테이블 생성
 		sqlMap.insert("band_create_sequence_board",banddto.getBand_id()); // 게시판 시퀀스 생성
 		sqlMap.insert("band_create_table_comment", banddto.getBand_id()); // 댓글 테이블 생성
+		sqlMap.insert("band_create_sequence_comment", banddto.getBand_id()); // 댓글 시퀀스 생성
 		sqlMap.insert("band_create_table_member", banddto.getBand_id()); // 멤버 테이블 생성
 		sqlMap.insert("band_create_sequence_member", banddto.getBand_id()); // 멤버 시퀀스 생성
 		sqlMap.insert("band_create_table_board_imgs", banddto.getBand_id()); // 밴드 게시물에 올라오는 이미지를 기록할 테이블 생성
@@ -93,6 +94,8 @@ public class BandAction {
 	public String bandView(HttpServletRequest request, HttpSession session, int band_id, BandDTO banddto, boardDTO boarddto, memberDTO memdto, trip.member.BandListDTO bandlistdto){
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
+		List board_comment = sqlMap.queryForList("band_comment", band_id);
+		request.setAttribute("b_board_comments", board_comment);
 		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
 		
 		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
@@ -214,6 +217,16 @@ public class BandAction {
 		return "redirect:/band/b_view.trip?band_id=" + request.getParameter("band_id");
 	}
 	
+	@RequestMapping("/band/bb_comment.trip")
+	public String bb_comment(HttpServletRequest request, commentDTO comdto, int band_id, String member_id, int board_num, String comment){
+		comdto.setBand_id(band_id);
+		comdto.setBand_board_comment_bno(board_num);
+		comdto.setBand_board_comment_writer(member_id);
+		comdto.setBand_board_comment_comment(comment);
+		sqlMap.insert("band_comment_insert", comdto);
+		
+		return "redirect:/band/b_view.trip?band_id=" + band_id;
+	}
 	@RequestMapping("/band/bb_delete.trip")
 	public String b_boardDelete(imgDTO imgdto, HttpSession session, HttpServletRequest request){
 		List band_board_img = sqlMap.queryForList("band_board_img_select", imgdto);
@@ -430,11 +443,12 @@ public class BandAction {
 			bandlistdto.setMember_id(memberdto.getBand_member_id());
 			sqlMap.delete("member_band_delete", bandlistdto);
 		}
-		// 밴드목록에서 삭제 및 4개의 테이블과 2개의 시퀀스 제거
+		// 밴드목록에서 삭제 및 4개의 테이블과 3개의 시퀀스 제거
 		sqlMap.delete("band_delete", band_id);
 		sqlMap.delete("band_delete_table_board", band_id);
 		sqlMap.delete("band_delete_sequence_board", band_id);
 		sqlMap.delete("band_delete_table_comment", band_id);
+		sqlMap.delete("band_delete_sequence_comment", band_id);
 		sqlMap.delete("band_delete_table_member", band_id);
 		sqlMap.delete("band_delete_sequence_member", band_id);
 		sqlMap.delete("band_delete_table_board_imgs", band_id);
