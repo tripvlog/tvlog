@@ -57,11 +57,11 @@
 	</select>
 	
 	<select id="scheduleCount" resultClass="int" parameterClass="String">
-		select count(*) from t_schedule where s_writer=#s_writer# and s_range='1'
+		select count(*) from t_schedule where s_writer=#s_writer#
 	</select>
 	
 	<select id="scheduleList" resultClass="schedule" parameterClass="String">
-		 select * from t_schedule where s_writer=#s_writer# and s_range='1'
+		select * from t_schedule where s_writer=#s_writer#
 	</select>
 	
 	<update id="scheduleUpdate" parameterClass="schedule">
@@ -89,7 +89,14 @@
 		select * from t_schedule_detail where sd_num=#sd_num#
 	</select>
 	
-	
-	
+	<delete id="scheduleDelete" parameterClass="int">
+		delete from t_schedule where s_num=#s_num#
+	</delete>
+	<delete id="scheduleDetailDelete" parameterClass="int">
+		delete from t_schedule_detail where s_num=#s_num#
+	</delete>
+	<update id="scheduleImg" parameterClass="schedule">
+		update t_schedule set s_mainimg=#s_mainimg# where s_num=#s_num#
+	</update>
 	
 </sqlMap>

@@ -54,6 +54,10 @@
 					</div>
 				</a>
 			</c:forEach>
+			
+			<c:forEach var="m" items="${close_member}">
+				${m.band_member_id}
+			</c:forEach>
 			<c:if test="${sessionScope.memId != null}">
 			<a href="/tvlog/band/b_create.trip">
 			<div class="col-md-2" align="center">

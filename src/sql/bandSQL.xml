@@ -10,6 +10,10 @@
 		<![CDATA[select * from t_band where band_range < 5]]>
 	</select>
 	
+	<select id="band_select_closed" resultClass="trip.band.BandDTO">
+		select * from t_band where band_range = 5
+	</select>
+	
 	<select id="band_view" resultClass="trip.band.BandDTO" parameterClass="int">
 		select * from t_band where band_id = #band_id#
 	</select>

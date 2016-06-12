@@ -79,15 +79,11 @@ public class BandAction {
 			listdto.setBand_img("default.jpg");
 			sqlMap.insert("band_insert_my_list", listdto);
 		}
-		System.out.println("banddto.getband_id : " + banddto.getBand_id());
-		System.out.println("banddto.getband_name : " + banddto.getBand_name());
-		System.out.println("banddto.getband_img : " + banddto.getBand_img());
-		System.out.println("session.getattribute(memid) : " + (String)session.getAttribute("memId"));
 		return "redirect:/band/b_list.trip";
 	}
 	
 	@RequestMapping("/band/b_list.trip")
-	public String bandList(HttpServletRequest request){
+	public String bandList(HttpServletRequest request, HttpSession session, BandDTO banddto, memberDTO memberdto){
 		List list = sqlMap.queryForList("band_select", null);
 		request.setAttribute("b_list", list);
 		return "/band/list_band.jsp";
@@ -126,34 +122,21 @@ public class BandAction {
 		if(id == null){
 			id = "";
 		}
-		System.out.println(" 입력된 아이디 : " + id + ", band_id : " + band_id);
 		int check = 0;
-		System.out.println(" =============================================== ");
 		for(int i=0; i<waitmember.size(); i++){
 			memdto = (memberDTO)waitmember.get(i);
-			System.out.println("id : " + id);
-			System.out.println("memdto.getBand_member_id() : " + memdto.getBand_member_id());
 			if(id.equals(memdto.getBand_member_id())){
-				System.out.println("id : " + id + ", " + "memdto.getBand_member_id() : " + memdto.getBand_member_id() + " , " + "id.equals(memdto.getBand_member_id() : " + id.equals(memdto.getBand_member_id()));
-				System.out.println("가입 대기중인 멤버입니다");
 				request.setAttribute("guest", "wait");
 				check = 1;
 				break;
 			}
 		}
-		System.out.println("check : " + check);
 		if(check == 0){
 			for(int i=0; i<memberlist.size(); i++){
 				memdto = (memberDTO)memberlist.get(i);
-				System.out.println(memdto.getBand_member_id());
 				if(id.equals(memdto.getBand_member_id())){
-					System.out.println(id + ", " + memdto.getBand_member_id() + " : " + id.equals(memdto.getBand_member_id()));
-					System.out.println("밴드 멤버가 맞습니다");
 					request.setAttribute("guest", "member");
 					break;
-				}else{
-					System.out.println(id + ", " + memdto.getBand_member_id() + " : " + id.equals(memdto.getBand_member_id()));
-					System.out.println("밴드 멤버가 아닙니다");
 				}
 				request.setAttribute("guest", "guest");
 			}
@@ -251,7 +234,6 @@ public class BandAction {
 
 	@RequestMapping("/band/b_modify.trip")
 	public String b_modify(HttpServletRequest request, HttpSession session, BandDTO banddto, memberDTO memberdto, trip.member.BandListDTO bandlistdto, int band_id){
-		System.out.println("band_id : " + band_id);
 		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
@@ -279,13 +261,8 @@ public class BandAction {
 	@RequestMapping("/band/b_modifyPro.trip")
 	public String b_modifyPro(MultipartHttpServletRequest request, HttpSession session, int band_id, String modify, memberDTO memberdto, BandDTO banddto, trip.member.BandListDTO bandlistdto){
 		if(modify.equals("band")){
-			System.out.println("band_id : " + band_id);
-			System.out.println("modify : " + modify);
 			bandlistdto.setMember_id(memberdto.getBand_member_id());
 			bandlistdto.setBand_id(band_id);
-			System.out.println("bandlistdto.getMember_id() : " + bandlistdto.getMember_id());
-			System.out.println("bandlistdto.getBand_name() : " + bandlistdto.getBand_name());
-			System.out.println("bandlistdto.getBand_id() : " + bandlistdto.getBand_id());
 			sqlMap.update("band_modify", banddto);
 			sqlMap.update("member_band_name_change", bandlistdto);
 			String band_img = request.getFile("b_img").getOriginalFilename();
@@ -321,15 +298,11 @@ public class BandAction {
 		}
 		
 		if(modify.equals("member")){
-			System.out.println("band_id : " + band_id);
-			System.out.println("modify : " + modify);
 			sqlMap.update("band_member_name_change", memberdto);
-			System.out.println("memberdto.getBand_member_name() : " + memberdto.getBand_member_name());
 			String band_img = request.getFile("b_img").getOriginalFilename();
 			
 			if(!band_img.equals("")){
 				String bef_img = (String)sqlMap.queryForObject("band_member_img", memberdto);
-				System.out.println("bef_img : " + bef_img);
 				if(!bef_img.equals("") && !bef_img.equals("default.jpg")){
 					String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "member" + File.separator;
 					String img = filePath + bef_img;
@@ -368,10 +341,6 @@ public class BandAction {
 		if(confirm.equals("yes")){ // 밴드리더가 가입승인
 			sqlMap.update("band_join_confirm", memberdto);
 			banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
-			System.out.println("band_id : " + band_id);
-			System.out.println("banddto.getBand_name() : " + banddto.getBand_name());
-			System.out.println("banddto.getBand_img() : " + banddto.getBand_img());
-			System.out.println("memberdto.getBand_member_id() : " + memberdto.getBand_member_id());
 			bandlistdto.setBand_id(band_id);
 			bandlistdto.setBand_name(banddto.getBand_name());
 			bandlistdto.setBand_img(banddto.getBand_img());
@@ -395,10 +364,8 @@ public class BandAction {
 	
 	@RequestMapping("/band/b_leave.trip")
 	public String b_leave(HttpServletRequest request, int band_id, memberDTO memberdto, trip.member.BandListDTO bandlistdto){
-		System.out.println("band_id : " + memberdto.getBand_id() + ", band_member_id : " + memberdto.getBand_member_id());
 		bandlistdto.setBand_id(band_id);
 		bandlistdto.setMember_id(memberdto.getBand_member_id());
-		System.out.println("band_id : " + bandlistdto.getBand_id() + ", member_id : " + bandlistdto.getMember_id());
 		
 		String member_img = (String)sqlMap.queryForObject("band_member_get", memberdto);
 		String band_leader = (String)sqlMap.queryForObject("band_leader_get", memberdto);
@@ -407,14 +374,11 @@ public class BandAction {
 			String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "member" + File.separator;
 			String img = filePath + member_img;
 			File imgfile = new File(img);
-			System.out.println("imgfile.exists : " +imgfile.exists());
 			if(imgfile.exists()){
 				imgfile.delete();
 			}
 		}
 		if(band_leader.equals(memberdto.getBand_member_id())){
-			System.out.println("leader delete start");
-			System.out.println("band_leader : " + band_leader + ", " + "memberdto.getBand_member_id() : " + memberdto.getBand_member_id());
 			sqlMap.delete("band_leader_delete", band_id);
 			sqlMap.update("band_new_leader_auto", band_id);
 			sqlMap.update("band_leader_update", band_id);
@@ -422,7 +386,6 @@ public class BandAction {
 			sqlMap.delete("band_member_delete", memberdto);			
 		}
 		sqlMap.delete("member_band_delete", bandlistdto);
-		System.out.println("탈퇴가 완료되었습니다");
 		return "redirect:/band/b_list.trip";
 	}
 	
@@ -430,63 +393,44 @@ public class BandAction {
 	public String b_drop(HttpServletRequest request, int band_id, imgDTO imgdto, memberDTO memberdto, trip.member.BandListDTO bandlistdto){
 		String band_img = (String)sqlMap.queryForObject("band_img_get", band_id); // 밴드 대표 이미지 삭제
 		if(!band_img.equals("default.jpg")){
-			System.out.println("밴드 대표이미지 삭제 시작");
-			System.out.println("band_img : " + band_img);
 			String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 			String img = filePath + band_img;
 			File imgfile = new File(img);
-			System.out.println(img);
-			System.out.println("밴드 이미지 존재여부 : " +imgfile.exists());
 			if(imgfile.exists()){
 				imgfile.delete();
 			}
 		}
-		System.out.println(" ------------------------------------------------------------------- ");
 		List board_imgs = sqlMap.queryForList("band_board_img_get", band_id); // 밴드 게시판 이미지 삭제
-		System.out.println("밴드 게시판 이미지 삭제 시작");
 		for(int i = 0; i < board_imgs.size(); i++){
 			imgdto = (imgDTO)board_imgs.get(i);
-			System.out.println("imgdto.getBoard_img() : " + imgdto.getBoard_img());
 			String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 			String img = filePath + imgdto.getBoard_img();
 			File imgfile = new File(img);
-			System.out.println(img);
-			System.out.println("밴드 게시판 이미지 존재 여부 : " + imgfile.exists());
 			if(imgfile.exists()){
 				imgfile.delete();
 			}
 		}
-		System.out.println(" ------------------------------------------------------------------- ");
 		List member_imgs = sqlMap.queryForList("band_member_img_get", band_id); // 밴드 가입후 수정한 프로필 사진 삭제
-		System.out.println("밴드 멤버 프로필 이미지 삭제 시작");
 		for(int i = 0; i < member_imgs.size(); i++){
 			memberdto = (memberDTO)member_imgs.get(i);
-			System.out.println("memberdto.getBand_member_img() : " + memberdto.getBand_member_img());
 			String imgName = memberdto.getBand_member_img();
-			System.out.println("img : " + imgName);
 			if(imgName.contains("bM_")){
 				String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "member" + File.separator;
 				String img = filePath + memberdto.getBand_member_img();
 				File imgfile = new File(img);
-				System.out.println(img);
-				System.out.println("밴드 게시판 이미지 존재 여부 : " + imgfile.exists());
 				if(imgfile.exists()){
 					imgfile.delete();
 				}
 			}
 		}
-		System.out.println(" ------------------------------------------------------------------- ");
 		List member_list = sqlMap.queryForList("band_member_list_get", band_id); // 개인 테이블마다 있는 밴드 리스트 중 삭제된 밴드만 삭제
-		System.out.println("사용자 마다 가지고 있는 테이블 중 밴드 리스트 테이블 안에 있는 밴드 삭제");
 		for(int i = 0; i < member_list.size(); i++){
 			memberdto = (memberDTO)member_list.get(i);
-			System.out.println("memberdto.getBand_member_id() : " + memberdto.getBand_member_id() + ", band_id : " + band_id);
 			bandlistdto.setBand_id(band_id);
 			bandlistdto.setMember_id(memberdto.getBand_member_id());
 			sqlMap.delete("member_band_delete", bandlistdto);
 		}
-		System.out.println(" ------------------------------------------------------------------- ");
-		System.out.println("컬럼 1개, 테이블 4개, 시퀀스 2개 삭제 시작");
+		// 밴드목록에서 삭제 및 4개의 테이블과 2개의 시퀀스 제거
 		sqlMap.delete("band_delete", band_id);
 		sqlMap.delete("band_delete_table_board", band_id);
 		sqlMap.delete("band_delete_sequence_board", band_id);
@@ -494,7 +438,6 @@ public class BandAction {
 		sqlMap.delete("band_delete_table_member", band_id);
 		sqlMap.delete("band_delete_sequence_member", band_id);
 		sqlMap.delete("band_delete_table_board_imgs", band_id);
-		System.out.println(" ===== 밴드 삭제 완료 ===== ");
 		return "redirect:/band/b_list.trip";
 	}
 }
