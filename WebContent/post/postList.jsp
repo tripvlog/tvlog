@@ -91,6 +91,11 @@
 	#search3{
 	float: left;
 	}
+	#postwrite{
+	width:700px;
+	margin:auto;
+	}
+
 
 </style>
 
@@ -184,7 +189,7 @@
 	    		<button type="button" onClick="javascript:location.href='/tvlog/post/friendOnly.trip'" class="btn btn-success">친구포스트</button>
 	  	  		<button type="button" onClick="javascript:location.href='/tvlog/post/mypost.trip'" class="btn btn-success">내 포스트</button>
 	  	  		<button type="button" onClick="javascript:OpenWindow('friendManage.trip?','600','650')" class="btn btn-success">친구 관리</button>
-	  	  		<button type="button" onClick="javascript:OpenWindow('bandManage.trip?','600','400')" class="btn btn-success">밴드 관리</button>
+	  	  	<!-- <button type="button" onClick="javascript:OpenWindow('bandManage.trip?','600','400')" class="btn btn-success">밴드 관리</button> -->	
 	  			</div>
 	  			</div>
 	  		</c:if>
@@ -407,9 +412,13 @@
              <tr align="right">
           		<td colspan="5">
 					<c:if test="${sessionScope.memId !=null }">           
-               		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+   				<div id="postwrite">
+   					<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal" width="300" height="200">
 				 	 포스트 작성
 					</button>
+				</div>
+					<br/>
+					<br/>
        				</c:if>
       			</td>
               </tr>
