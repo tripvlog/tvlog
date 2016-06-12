@@ -35,6 +35,17 @@
 		});
 
 	});
+	
+	function hiddenbox(num){
+		box = document.getElementById("hidden_box_"+num);
+		if(box.style.display != 'none'){
+			box.style.display = "none";	
+		}else{
+			box.style.display = "block";
+		}
+		
+	}
+	
 	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -56,7 +67,7 @@
 	<div id="savecontainer">
 		<c:if test="${sessionScope.memId == dto.s_writer}">
 			<button type="button"  id="scheduleSave"  onclick="window.location='/tvlog/schedule/schedule-detailUpdate.trip?s_num=${dto.s_num}'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>일정 수정</button>
-			<button type="button" id="scheduleSave" data-toggle="modal" data-target="#range">
+			<button type="button" id="scheduleSave" >
 			<c:if test="${dto.s_range ==1}">
 				<i class="fa fa-unlock" aria-hidden="true"></i>전체
 			</c:if>
@@ -190,31 +201,21 @@
 					${dto.s_info}
          		</div>
          		<div class="row" id="row2">
-         			<br />${dto.s_content}
+         			${dto.s_content}
 				</div>
 				&nbsp;
+				
 				<div class="row" id="startschedule">
-					<div class="col-md-2" id="tripstart"><b>여행시작</b></div>
-					<div class="col-md-1"><b>일</b></div>
-					<div class="col-md-1"><b>명</b></div>
-					<div class="col-md-2"><b>여행단계</b></div>
-					<div class="col-md-6"><b>여행테마</b></div>
-					<div class="col-md-1"></div>
-					<div class="col-md-1"></div>
-					<div class="col-md-1"></div>
-					<div class="col-md-1"></div>
-				</div>
-				<div class="row" id="startschedule">
-					<div class="col-md-2" id="tripstart">
-						${dto.s_startday}
+					<div class="col-md-3" id="tripstart">
+						여행시작일 : ${dto.s_startday} |
 					</div>
-					<div class="col-md-1">${dto.s_endday}일 </div>
-					<div class="col-md-1">${dto.s_membercount} 명</div>
+					<div class="col-md-1">${dto.s_endday}일 |</div>
+					<div class="col-md-1">${dto.s_membercount}명 |</div>
 					<div class="col-md-2">
-						<c:if test="${dto.s_step == 0}">여행전</c:if>
-						<c:if test="${dto.s_step == 1}">여행후</c:if>
+						<c:if test="${dto.s_step == 0}">여행전 |</c:if>
+						<c:if test="${dto.s_step == 1}">여행후 |</c:if>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-4" style="text-align:left;">
 						${dto.s_theme}
 					</div>
 				</div>
@@ -232,22 +233,31 @@
 		<div id="myTabContent" class="tab-content">
 			<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
 	    		<div id="schedule">
+	    			<fmt:parseDate value="${dto.s_startday}" pattern="yyyy-mm-dd" var="day" />
 	    			<c:forEach var="i" begin="1" end="${dto.s_endday}" step="1" varStatus="k">
-	    				DAY - ${i} <br />
+	    				<br />
+	    				<!-- 글자 배경색 primary , success , info , warning, danger -->
+	    				<fmt:formatDate value="${day}" pattern="yyyy-mm" var="day2" type="date"/>
+	    				<fmt:formatDate value="${day}" pattern="dd" var="day0" type="date"/>
+	    				<p class="bg-success" id="scheduleday">DAY - ${i} (${day2}-${day0+(i-1)})  </p>
+	    				
 		    			<c:forEach items="${detaillist}" var="detailDTO" >
 		    				<c:if test="${(fn:substring(detailDTO.sd_tdid, 0, 1)) == i}">
-		    					<c:if test="${detailDTO.sd_status==0}">
-			    					<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
-			    					<label style="background-color:#fffff;">${detailDTO.sd_startpoint}</label>
-			    					<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-									${detailDTO.sd_endpoint} 
-									<br />
-								</c:if> 
-								<c:if test="${detailDTO.sd_status==1}">
-									<i class="fa fa-map-marker" aria-hidden="true"></i>
-									${detailDTO.sd_startpoint}
-									<br />
-								</c:if>
+		    					<div class="schedule_box" onclick="hiddenbox('${detailDTO.sd_num}')">
+			    					<c:if test="${detailDTO.sd_status==0}">
+				    					<i id="btn1" class="${detailDTO.sd_transport}" aria-hidden="true"></i>
+				    					<label style="background-color:#fffff;">${detailDTO.sd_startpoint}</label>
+				    					<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+										<label style="background-color:#fffff;">${detailDTO.sd_endpoint} </label>
+									</c:if> 
+									<c:if test="${detailDTO.sd_status==1}">
+										&nbsp;&nbsp;<i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+										<label style="background-color:#fffff;">${detailDTO.sd_startpoint}</label>
+									</c:if>
+								</div>
+								<div id="hidden_box_${detailDTO.sd_num}" class="hidden_box" style="display:none;">
+									<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
+								</div>
 		    				</c:if> 
 		    			</c:forEach>
 		    		</c:forEach>
@@ -264,7 +274,7 @@
 			    <div class="tableContainer">
 					<form method=post action="">
 						<p></p>
-						<table id='stock_table' class="table table-bordered" border="2">
+						<table id='stock_table' class="table table-striped" border="2">
 							<tr>
 								<td width="100" >ALL</td><td>1 Day</td>
 								<c:forEach var="i" begin="2" end="${dto.s_endday}" step="1" varStatus="k">
@@ -299,6 +309,9 @@
 																<div class="modal-content" >
 																	<div class="modal-header" >
 																		<div class="panel panel-success" >
+																			<div class="panel-heading">
+																				<h4>${detailDTO.sd_startpoint}</h4>
+																			</div>
 																			<div class="panel-body" >
 																				<c:if test="${detailDTO.sd_status == 0}">
 																					출발 : ${detailDTO.sd_startpoint} 	
@@ -308,12 +321,15 @@
 											    									비용 : ${detailDTO.sd_budget}
 										    									</c:if>
 										    									<c:if test="${detailDTO.sd_status == 1}">
-											    									<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
-																					<div>
-																						<img src="/tvlog/img/schedule/${detailDTO.sd_orgfile}" /> <br />
-																						위치 : ${detailDTO.sd_startpoint} <br />
-																						메모 : ${detailDTO.sd_memo}
-																					</div>											    									
+											    									<c:if test="${detailDTO.sd_orgfile == null}">
+										    											<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
+										    										</c:if>	
+																    				<c:if test="${detailDTO.sd_orgfile != null}">						
+																						<div style="text-align: left; font-size:20px">
+																							${detailDTO.sd_memo} <br />
+																							<img src="/tvlog/img/schedule/${detailDTO.sd_orgfile}" width="100%" /> <br />
+																						</div>
+																					</c:if>								    									
 											    								</c:if>
 											    								<c:if test="${detailDTO.sd_status == 2}">
 											    									메모 : ${detailDTO.sd_memo}
@@ -361,6 +377,9 @@
 																<div class="modal-content" >
 																	<div class="modal-header" >
 																		<div class="panel panel-success" >
+																			<div class="panel-heading">
+																				<h4>${detailDTO.sd_startpoint}</h4>
+																			</div>
 																			<div class="panel-body" >
 																				<c:if test="${detailDTO.sd_status == 0}">
 																					출발 : ${detailDTO.sd_startpoint} 	
@@ -370,12 +389,16 @@
 												    								비용 : ${detailDTO.sd_budget}
 											    								</c:if>
 										    									<c:if test="${detailDTO.sd_status == 1}">
-										    										<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
-																					<div>
-																						<img src="/tvlog/img/schedule/${detailDTO.sd_orgfile}" /> <br />
-																						위치 : ${detailDTO.sd_startpoint} <br />
-																						메모 : ${detailDTO.sd_memo}
-																					</div>
+										    										<c:if test="${detailDTO.sd_orgfile == null}">
+										    											<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
+										    										</c:if>	
+																    				<c:if test="${detailDTO.sd_orgfile != null}">						
+																						<div style="text-align: left; font-size:15px">
+																							위치 : <b>${detailDTO.sd_startpoint}</b> <br />
+																							<img src="/tvlog/img/schedule/${detailDTO.sd_orgfile}" width="100%" /> <br />
+																							${detailDTO.sd_memo}
+																						</div>
+																					</c:if>
 										    									</c:if>
 										    									<c:if test="${detailDTO.sd_status == 2}">
 										    										메모 : ${detailDTO.sd_memo}

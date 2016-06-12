@@ -13,8 +13,8 @@
         padding: 0;
       }
       #map {
-        width: 566px;
-        height: 400px;
+        width: 100%;
+        height:  400px;
       }
 .controls {
   margin-top: 10px;
@@ -77,7 +77,7 @@
 function initAutocomplete() {
 	var a = '<%=s%>';
 	var bb = a.split(':');
-  var map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: parseFloat(bb[0]), lng: parseFloat(bb[1])},
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP

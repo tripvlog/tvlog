@@ -62,14 +62,21 @@
 	
 	 
     #row1{    /* 일정에 대한 간단한 설명 */
-    	font-size : 20px;
+    
+    	font-size : 25px;
     	font-weight:bold;
+    	margin:0px;
+    	padding:10px 0px;
+    }
+    #row2{    /* 일정에 대한 자세한 설명  */
+    	font-size : 20px;
     	margin:0px;
     	padding:0px 0px;
     }
-    #row2{    /* 일정에 대한 자세한 설명  */
-    	margin:0px;
-    	padding:0px 0px;
+    #startschedule{
+    	font-size : 20px;
+    	font-weight:bold;
+    	color : #858585;
     }
     
     #btn-group{    /* ??? */
@@ -121,15 +128,13 @@
 	}
 	#stock_table{
 		padding: 10px;
-		border-style : solid;
-		border-width : 10px;
-		border-color: #000000;
+		border-width : 3px;
 	}
 	#stock_table tr{
-	border : 3px solid #000000;
+	
 	}
 	#stock_table td{
-	border : 3px solid #000000;
+	
 	}
 	#transportUl{ 
   	  overflow: auto; 
@@ -168,7 +173,7 @@
 	font-weight: bold;
 	color: #FFFFFF;
 	position:absolute;
-	width:200px; left:0; right:0; margin-left:auto; margin-right:auto;
+	width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
 	height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto;
 }
 
@@ -181,6 +186,52 @@
 	margin-top: 50px;
 	background-color: #EAEAEA;
 	border-color: #EAEAEA;
+}
+
+#scheduleday{
+	font-size: 25px;
+}
+.schedule_box {
+	position: relative;
+	margin-left : 30px ;
+	margin-bottom : 10px;
+	padding-left : 20px;
+	background: #ffffff;
+	border: 1px solid #f5bc4a;
+	font-size: 25px;
+}
+.schedule_box:after, .schedule_box:before {
+	right: 100%;
+	top: 30%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.schedule_box:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #ffffff;
+	border-width: 5px;
+	margin-top: -5px;
+}
+.schedule_box:before {
+	border-color: rgba(245, 47, 172, 0);
+	border-right-color: #f5bc4a;
+	border-width: 8px;
+	margin-top: -8px;
+}
+
+.hidden_box{
+	position: relative;
+	margin-left : 30px ;
+	margin-bottom : 10px;
+	padding-left : 20px;
+	background: #ffffff;
+	border: 1px solid #f5bc4a;
+	font-size: 25px;
 }
 
 

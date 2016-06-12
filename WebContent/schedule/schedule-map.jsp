@@ -99,7 +99,7 @@
 		  		fp(flightPlanCoordinates ,'#FF0000' );
 		  	}
 		  	if(flightPlanCoordinates2.length > 0){
-		  		fp(flightPlanCoordinates2 ,'#FF5E00' );
+		  		fp(flightPlanCoordinates2 ,'#2453b3' );
 		  	}
 		  	
 		}
