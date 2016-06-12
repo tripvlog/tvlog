@@ -8,7 +8,9 @@
 <head>
    <title>포스트 게시판</title>	
 	<link rel="stylesheet" href="/projcet/postboard/common/css/css.css" type="text/css">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+	
+	
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
@@ -168,7 +170,6 @@
   <body>
   <jsp:include page="/main/header.jsp" />
 
-
   	<div id="contain">
      <table border="0" cellspacing="0" cellpadding="2">
         <tr>
@@ -188,9 +189,6 @@
 	  			</div>
 	  		</c:if>
         	</td>
-        <c:if test="${sessionScope.memId== null }">	
-        <input type="button" value="로그인 " onClick="javascript:location.href='/tvlog/member/loginForm.trip'"/>
-        </c:if>
         <tr>
            <td height="20"></td>
         </tr>
@@ -388,7 +386,7 @@
           <select name="select" class="form-control">
          	 <option selected value="writer">글쓴이</option>
          	 <option selected value="subject">제목</option>
-          	 
+          	 <option selected value="no">번호</option>
           </select> 
           </div>
           <div id="search2">
@@ -409,7 +407,7 @@
              <tr align="right">
           		<td colspan="5">
 					<c:if test="${sessionScope.memId !=null }">           
-               		<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal" width="300" height="200">
+               		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
 				 	 포스트 작성
 					</button>
        				</c:if>

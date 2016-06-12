@@ -52,7 +52,7 @@
 	</insert>
 	
 	<insert id="member_create_band_list" parameterClass="trip.member.LoginDTO">
-		create table t_member_band_$id$(band_no number, band_id number primary key, band_name varchar2(300), band_img varchar2(300) default 'default.jpg', band_reg date default sysdate)
+		create table t_member_band_$id$(band_no number, band_id number primary key, band_name varchar2(300), band_img varchar2(300) default 'default.jpg', band_state number, band_reg date default sysdate)
 	</insert><!-- 회원가입시 자동생성되는 밴드 목록 -->
 	
 	<insert id="member_create_band_seq" parameterClass="trip.member.LoginDTO">
@@ -155,7 +155,7 @@
 	</select>
 	
 	<select id="myScheduleList" resultClass="trip.schedule.ScheduleDTO" parameterClass="String">
-		select * from t_schedule where s_writer=#s_writer#
+		select * from t_schedule where s_writer=#s_writer# order by s_num desc
 	</select>
 	
 	<select id="myScheduleListCount" resultClass="int" parameterClass="String">
@@ -167,15 +167,15 @@
 	</select>
 	
 	<select id="myPostList" resultClass="trip.post.boardVO" parameterClass="String">
-		select * from t_post where id=#id#
+		select * from t_post where id=#id# order by no desc 
 	</select>
 	
 	<select id="myDiaryListCount" resultClass="int" parameterClass="String">
-		select count(*) from t_diary where diary_writer=#diary_writer#
+		select count(*) from t_diary where diary_writer=#diary_writer# 
 	</select>
 	
 	<select id="myDiaryList" resultClass="trip.diary.ImgVO" parameterClass="String">
-		select * from t_diary where diary_writer=#diary_writer#
+		select * from t_diary where diary_writer=#diary_writer# order by diary_num desc
 	</select>
 	
 	

@@ -44,8 +44,8 @@
 		}
 	}
 	
-	function error_login(session){
-		var id = session;
+	function error_login(sess){
+		var id = sess;
 		var content = document.getElementById("board_content").value;
 		if(id == null){
 			alert("로그인이 필요합니다");
@@ -56,6 +56,19 @@
 			document.getElementById("board_content").focus();
 			return false;
 		}
+	}
+	function call(sess, bandid){
+		var id = sess;
+		var band_id = bandid;
+		alert(id + ", " + band_id);
+		var check = confirm("가입신청하시겠습니까?");
+		if(check == true){
+			alert("가입신청이 되었습니다");
+			location.href="/tvlog/band/b_join.trip?band_id=" + band_id;
+		}else{
+			alert("취소되었습니다");
+		}
+		return false;
 	}
 </script>
 <body>
@@ -69,14 +82,15 @@
 			<div class="col-xs-12 col-sm-9">
 				<!-- 밴드에 게시글 작성 -->
 				<c:if test="${modify != true}">
-				<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data" onsubmit="return error_login('${sessionScope.memId}')">
-					<input type="hidden" name="modify" value="false">
-					<input type="hidden" name="band_id" value="${band.band_id}">
-					<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content" id="board_content"></textarea><br />
-					<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
-					
-				</form>
-				
+					<c:if test="${guest == 'member'}"><!-- 밴드 멤버만 글 작성 가능 -->
+						<form action="/tvlog/band/bb_write.trip" method="post" enctype="multipart/form-data" onsubmit="return error_login('${sessionScope.memId}')">
+							<input type="hidden" name="modify" value="false">
+							<input type="hidden" name="band_id" value="${band.band_id}">
+							<textarea rows="5" cols="75" placeholder="소식을 남겨주세요!" name="band_board_content" id="board_content"></textarea><br />
+							<input type="file" name="upload_img" multiple><input type="submit" value="저장"> <input type="reset" value="취소">
+							
+						</form>
+					</c:if>
 					<hr style="color:red">
 					<c:forEach var="v" items="${b_board_contents}">
 
@@ -134,16 +148,18 @@
 						${band.band_intro}<br />
 						<c:if test="${sessionScope.memId != null}">
 						<hr><!-- 밴드에 가입한 회원일경우 개인정보 수정(단, 리더는 밴드내용까지 수정이 가능함) -->
-							<c:forEach var="memberlist" items="${memberrlist}">
-								<c:if test="${sessionScope.memId == memberlist.band_member_id}">
-									<a href="/tvlog/band/b_modify.trip?band_id=${band_id}">
-									<span class="glyphicon glyphicon-cog" aria-hidden="true">설정</span>
-									</a>
-								</c:if>
-								<c:if test="${sessionScope.memId != memberlist.band_member_id}">
-								멤버 가입 요청
-								</c:if>
-							</c:forEach>
+							<c:if test="${guest == 'member'}">
+								<a href="/tvlog/band/b_modify.trip?band_id=${band_id}">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true">설정</span>
+								</a>
+							</c:if>
+							<c:if test="${guest == 'guest'}">
+								<button onclick="call('${sessionScope.memId}', '${band_id}')">가입신청 하기</button>
+							</c:if>
+							<c:if test="${guest == 'wait'}">
+								가입승인 대기중입니다~^^
+							</c:if>
+							
 						</c:if>
 						<c:if test="${sessionScope.memId == null}">
 						<hr>

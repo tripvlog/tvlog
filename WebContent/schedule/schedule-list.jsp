@@ -40,7 +40,7 @@
 	color: #FFFFFF;
 	position:absolute;
 	width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
-	height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto;
+	height:60px; top: 0; bottom:0; margin-top:70px; margin-bottom:auto;
 	}
 	#mainImg #p2{
 	font-size : 20px;	
@@ -56,31 +56,43 @@
 		margin-bottom: :20px;
 		border-bottom : 2px solid #BDBDBD;
 	}
+	#del{
+		position:inherit;
+		float: right;
+		margin-right: 10px;
+	}
 </style>
+<script type="text/javascript">
+	function delView(idNum){
+		icon = document.getElementById("delIcon"+idNum);
+		icon.style.visibility = "visible";		
+	}
+	function delHide(idNum){
+		icon = document.getElementById("delIcon"+idNum);
+		icon.style.visibility = "hidden";		
+	}
+	function del(s_num){
+		if (confirm("정말 삭제하시겠습니까??") == true){ 
+			window.location="/tvlog/schedule/schedule-del.trip?s_num="+s_num;
+		}else{
+		    return;
+		}
+		
+	}
+</script>
 <body id="mainBody">
 	<jsp:include page="/main/header.jsp" />
 	<div class="container" id="container">	
 		<!-- 여행 이지미  제목 들어갈 곳 -->
 		<div id="mainImg">
-			<p id="p1">
-				여행 일정 찾기
-			</p>
-			<div class="row" id="p2">
-				<div class="col-sm-6">
-	   				<div class="input-group">
-				    	<span class="input-group-addon">
-							<i class="fa fa-search" aria-hidden="true"></i>
-						</span>
-						<input type="text" class="form-control">
-					</div><!-- /input-group -->
-				</div><!-- /.col-sm-6 -->
+			<div id="p1">
+				<p><img src="/tvlog/img/member/${member.path}" width="130" height="130" style="align:center;Border-radius:40px;">
+				<br /><font size="5">${member.name}</font></p>
 			</div>
 		</div>
 		
 		<div id="main2">
-			
-			<h3>공개된 일정 : 100개</h3>
-
+			<h3>여행 일정 : ${scheduleCount}개</h3>
 		</div>
 		
 		<div>
@@ -93,7 +105,10 @@
 					    <c:forEach begin="0" end="2" var="col">
 					        <c:set var="scheduleDTO" value="${scheduleList[row * 3 + col]}"/>
 					        <c:if test="${not empty scheduleDTO}">
-					        	<td>
+					        	<td onmouseover="delView('${scheduleDTO.s_num}')" onmouseout="delHide('${scheduleDTO.s_num}')">
+					        		<div id="del">
+					        			<i class="fa fa-times-circle fa-2x" id="delIcon${scheduleDTO.s_num}" style="visibility:hidden;" aria-hidden="true" onclick="del('${scheduleDTO.s_num}')"></i>
+					        		</div>
 					        		<div class="schedule-content" style="background-image:url('/tvlog/img/schedule/${scheduleDTO.s_mainimg}');" onclick="window.location='/tvlog/schedule/schedule-content.trip?s_num=${scheduleDTO.s_num}'">
 						        		${scheduleDTO.s_title}	    
 					        		</div>

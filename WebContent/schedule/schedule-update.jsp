@@ -21,6 +21,13 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="/tvlog/schedule/schedule.js"></script>
+<script src="/tvlog/schedule/jquery.form.js"></script>
+<style>
+		#masthead{
+			background-size : 1140px 600px;
+			background-image : url('/tvlog/img/schedule/${dto.s_mainimg}');
+		}
+</style>
 <script type="text/javascript">
 	var objTd;
 	function korea(id,icon){
@@ -41,7 +48,7 @@
 		        	sd_memo  : $('#memo_0').val(),
 		        	sd_budget  : $('#money').val(),
 		        	sd_budgetselect : $('#budgetselect').val(),
-		        	sd_transport : $('#selectTransport').val()
+		        	sd_transport : $('#selectTransport').val(),
 		        },
 	 	        success: success,	// 페이지요청 성공시 실행 함수
 	 	        error: whenError	//페이지요청 실패시 실행함수
@@ -58,6 +65,29 @@
     
     function detailMapSave(){
     	tdid = objTd.getAttribute('id');
+      	var form = $('placeForm')[0];
+      	var formData = new FormData(form);
+      	formData.append("placeImg",$("input[name=placeImg]")[0].files[0]);
+      	formData.append("s_num",$('#s_num').val());
+      	formData.append("sd_tdid",tdid);
+      	formData.append("sd_startpoint",$('#placename').val());
+      	formData.append("sd_status",$('#sd_status1').val());
+      	formData.append("sd_map",$('#latlng').val());
+      	formData.append("sd_memo",$('#map_sd_memo').val());
+      	$.ajax({
+   	        type: "post",
+   	        url : "/tvlog/schedule/schedule-detail-Map.trip",
+   	     	processData : false,
+   	     	contentType : false,
+   	        data: formData,
+   	        success: success,	// 페이지요청 성공시 실행 함수
+   	        error: whenError	//페이지요청 실패시 실행함수
+        });
+    }
+    
+    /*
+    function asdfadsfafe222(){
+    	tdid = objTd.getAttribute('id');
 		 $.ajax({
 	 	        type: "post",
 	 	        url : "/tvlog/schedule/schedule-detail-Map.trip",
@@ -71,9 +101,29 @@
 	 	        success: success,	// 페이지요청 성공시 실행 함수
 	 	        error: whenError	//페이지요청 실패시 실행함수
 	      	});	
+      }
+    */
+    
+    
+    
+    function rangeChange(rc){
+    	document.getElementById("s_range").value = rc;
+    	var ih;
+    	if(rc == 1){
+    		ih="<i class='fa fa-unlock' aria-hidden='true'></i>전체";
+    	}else if(rc ==2){
+    		ih="<i class='fa fa-user' aria-hidden='true'></i>친구";
+    	}else if(rc ==3){
+    		ih="<i class='fa fa-users' aria-hidden='true'></i>밴드";
+    	}else if(rc ==4){
+    		ih="<i class='fa fa-users' aria-hidden='true'></i>친구 & 밴드";
+    	}else if(rc ==5){
+    		ih="<i class='fa fa-lock' aria-hidden='true'></i>비공개";
+    	}
+    	document.getElementById("rangeCh").innerHTML=ih;
     }
     
-    
+  
     function detailpopup(sd_num){
     	 url = "/tvlog/schedule/schedule-detail-updatepopup.trip?sd_num="+sd_num;
          // 새로운 윈도우를 엽니다.
@@ -106,50 +156,95 @@
 <div class="container" id="container">
 	<!-- 여행 일정 제목 들어갈 곳 -->
 	<div id="masthead">
-		<p>${dto.s_title}</p>
+		<p id="p1">${dto.s_title}</p>
 	</div>
 	
 	<div id="savecontainer">
 		<button type="button" id="scheduleSave" onclick="scheduleSave()"><i class="fa fa-floppy-o" aria-hidden="true"></i>저장하기</button>
-		<button type="button" id="scheduleSave">
+		<button type="button" id="rangeCh"  data-toggle="modal" data-target="#range">
 			<c:if test="${dto.s_range ==1}">
 				<i class="fa fa-unlock" aria-hidden="true"></i>전체
 			</c:if>
 			<c:if test="${dto.s_range ==2}">
-				<i class="fa fa-user" aria-hidden="true"></i>밴드
+				<i class="fa fa-user" aria-hidden="true"></i>친구
 			</c:if>
 			<c:if test="${dto.s_range ==3}">
-				<i class="fa fa-users" aria-hidden="true"></i>친구
+				<i class="fa fa-users" aria-hidden="true"></i>밴드
 			</c:if>
 			<c:if test="${dto.s_range ==4}">
+				<i class="fa fa-users" aria-hidden="true"></i>친구 & 밴드
+			</c:if>
+			<c:if test="${dto.s_range ==5}">
 				<i class="fa fa-lock" aria-hidden="true"></i> 비공개
 			</c:if>	
 		</button>
-		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#famousplace"><i class="fa fa-map-marker" aria-hidden="true"></i> 방문명소</button>
+		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#famousplace"><i class="fa fa-map-marker" aria-hidden="true"></i> 커버변경</button>
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#budget"><i class="fa fa-krw" aria-hidden="true"></i> 여행가계부</button>
 		<button type="button" id="scheduleSave" data-toggle="modal" data-target="#checklist"><i class="fa fa-check-square-o" aria-hidden="true"></i> 체크리스트</button>
 	</div>
+	<!-- 공개설정 Modal -->
+	<div class="modal fade" id="range"  tabindex="-1" role="dialog" aria-labelledby="rangeModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        	<h4 class="modal-title" id="checklistModalLabel">공개 범위 변경</h4>
+				</div>
+				<div class="modal-body">
+					<button type="button" class="range" onclick="rangeChange('1')" data-dismiss="modal"><i class="fa fa-unlock" aria-hidden="true"></i>전 체</button>
+					<button type="button" class="range" onclick="rangeChange('2')" data-dismiss="modal"><i class="fa fa-user" aria-hidden="true"></i>친 구</button>
+					<button type="button" class="range" onclick="rangeChange('3')" data-dismiss="modal"><i class="fa fa-users" aria-hidden="true"></i>밴 드</button>
+					<button type="button" class="range" onclick="rangeChange('4')" data-dismiss="modal"><i class="fa fa-users" aria-hidden="true"></i>친구 & 밴드</button>
+					<button type="button" class="range" onclick="rangeChange('5')" data-dismiss="modal"><i class="fa fa-lock" aria-hidden="true"></i> 비공개</button>
+			    </div>
+			    <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div> 
 
-
-	<!-- 방문명소 Modal -->
+	<!-- 커버변경 Modal -->
 	<div class="modal fade" id="famousplace" tabindex="-1" role="dialog" aria-labelledby="famousplaceModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="famousplaceModalLabel">방문 명소</h4>
+	        <h4 class="modal-title" id="famousplaceModalLabel">커버 이미지 변경</h4>
 	      </div>
+	      
+	      <form action="/schedule/schedule-imgCh.trip" id="imgChange" method="post" enctype="multipart/form-data" class="form-inline" role="form">
+	      	<script>
+	      	 function imgChange(){
+	          	var form = $('imgChange')[0];
+	          	var formData = new FormData(form);
+	          	formData.append("scheduleImg",$("input[name=scheduleImg]")[0].files[0]);
+	          	formData.append("s_num",$("input[name=s_num]").val());
+	          	formData.append("s_mainimg",$("input[name=s_mainimg]").val());
+	          	$.ajax({
+	       	        type: "post",
+	       	        url : "/tvlog/schedule/schedule-imgCh.trip",
+	       	     	processData : false,
+	       	     	contentType : false,
+	       	        data: formData,
+	       	        success: function(result){
+	       	        	window.location.reload();
+	       	        },	// 페이지요청 성공시 실행 함수
+	       	        error: whenError	//페이지요청 실패시 실행함수
+	            	});	
+	          }
+	      	</script>
 	      <div class="modal-body">
 	       <!-- 모달내용 -->
-	       
-	      <!-- 탭시작 -->
-	       <jsp:include page="leftGroup/famousplace.jsp" />
-	       <!-- 탭 끝 --> 
+	      		<input type="hidden" name="s_num" value="${dto.s_num}" />
+	      		<input type="hidden" name="s_mainimg" value="${dto.s_mainimg}" />
+	      		<input type="file" name="scheduleImg" class="form-control" />
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imgChange()">Save changes</button>
 	      </div>
+	      </form>
 	    </div>
 	  </div>
 	</div>
@@ -207,6 +302,7 @@
 		<!-- 여행 소개 -->
 			<form action="/tvlog/schedule/schedule-update.trip" method="post" class="plan-intro" align="left" name="scheduleUpdate" > 
 				<input type="hidden" name="s_num" value="${dto.s_num}" />
+				<input type="hidden" name="s_range" id="s_range" value="${dto.s_range}" />
 				<div class="container-fluid" id="container-fluid">
 					<div class="row" id="row1">
 						<input type="text" id="planMessage" name="s_info" class="form-control plan-brief" placeholder="일정에 대한 간단한 설명" maxlength="300" value="${dto.s_info}" />
@@ -283,7 +379,7 @@
 				<div role="tabpanel" class="tab-pane fade active in" id="profile" aria-labelledby="profile-tab"> 
 					<!-- 지도 시작 -->
 					<br />
-					<iframe src="/tvlog/schedule/schedule-map.jsp" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="/tvlog/schedule/schedule-map.trip?s_num=${dto.s_num}" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 					<br />
 				</div>
 				<!-- 지도 끝 -->
@@ -461,7 +557,7 @@
 
 								<!-- 장소 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
-									<form action="" method="post">	<br />
+									<form action="" id="placeForm" method="post">	<br />
 										<iframe src="/tvlog/schedule/schedule-detail-select-map.jsp" name="map" width="570" height="405" ALLOWTRANSPARENCY="false"></iframe>
 										<input type="hidden" id="sd_status1" name="sd_status" value="1" /> 
 										<div id="mylocation"></div>

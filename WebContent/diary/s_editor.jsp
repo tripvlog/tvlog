@@ -5,7 +5,7 @@
 <script type="text/javascript" src="/tvlog/diary/diary_editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <body>
-<jsp:include page="/main/header.jsp" /><br />
+
 <form action="/tvlog/diary/submit.trip" method="post" enctype="multipart/form-data" id="frm">
 <input type="text" name="diary_title" placeholder="제목">
 <input type="hidden" name="diary_writer" value="${sessionScope.memId}" placeholder="작성자" />
