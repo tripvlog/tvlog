@@ -18,12 +18,12 @@
 </head>
 <body>
 <jsp:include page="/main/header.jsp" /> 
-	<div id="totalDiv" style="margin-left: 9%;">
+	<div id="totalDiv" style="margin-left: 8%;">
 	<c:if test="${postAllCount != 0}">
 	<!-- 포스트 검색 -->
-	<h4>모든 포스트 검색 (${postAllCount} 개)</h4>
-	<table width="1000" border="1" cellspacing="0" cellpadding="2">
-		<tr align="center">
+	<h3>포스트 관리 (${postAllCount} 개)</h3>
+	<table style="width:1140px"  cellspacing="0" cellpadding="2" class="table">
+		<tr align="center" class="active">
 			<td>포스트 번호</td>
 			<td>작성자</td>
 			<td>포스트 제목</td>

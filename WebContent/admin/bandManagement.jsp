@@ -4,6 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <title>트래블로그</title>
 <script>
 	function deleteThis(band_id){
@@ -18,12 +21,12 @@
 </head>
 <body>
 <jsp:include page="/main/header.jsp" /> 
-	<div id="totalDiv" style="margin-left: 9%;">
+	<div id="totalDiv" style="margin-left: 8.2%;">
 		<c:if test="${bandAllCount != 0}">
 		<!-- 밴드 검색 -->
-		<h4>모든 밴드 검색 (${bandAllCount} 개)</h4>
-		<table width="800" border="1" cellspacing="0" cellpadding="2">
-			<tr align="center">
+		<h3>밴드 관리 (${bandAllCount} 개)</h3>
+		<table style="width:1140px" cellspacing="0" cellpadding="2" class="table">
+			<tr align="center" class="active"> 
 				<td>밴드 ID</td>
 				<td>밴드 이름</td>
 				<td>밴드장</td>
@@ -34,7 +37,7 @@
 				<td>삭제</td>
 			</tr>
 			<c:forEach var="list" items="${list}">
-			<tr align="center">
+			<tr align="center" width="800">
 				<td>${list.band_id}</td>
 				<td>${list.band_name}</td>
 				<td>${list.band_leader}</td>

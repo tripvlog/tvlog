@@ -11,9 +11,9 @@
 	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${postDayCount != 0}">
 	<!-- 오늘 올라온 포스트 검색 -->
-	<h4>오늘 올라온 포스트 검색 (${postDayCount} 개)</h4>
-	<table width="1000" border="1" cellspacing="0" cellpadding="2">
-		<tr align="center">
+	<h3>오늘 올라온 포스트 (${postDayCount} 개)</h3>
+	<table class="table" style="width:1140px"  cellspacing="0" cellpadding="2">
+		<tr align="center" class="active">
 			<td>포스트 번호</td>
 			<td>작성자</td>
 			<td>포스트 제목</td>
@@ -35,7 +35,7 @@
 	<!-- 오늘 올라온 포스트 검색 끝 -->
 	</c:if>
 	<c:if test="${postDayCount == 0}">
-		<h4>오늘 올라온 포스트 검색 (${postDayCount} 개)</h4>
+		<h3>오늘 올라온 포스트 (${postDayCount} 개)</h3>
 		오늘 올라온 포스트가 없습니다.
 	</c:if>
 </div>

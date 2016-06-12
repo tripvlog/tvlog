@@ -18,15 +18,15 @@
 	#mainImg {
 		width: 1140px;
 		min-height: 270px;
-		background-size : 1140px 400px;
-		background-image : url('/tvlog/img/myDiary/diaryDefault.png');
+		background-size : 1140px 300px;
+		background-image : url('/tvlog/img/myPage/mydiary.jpg');
 		text-align: center;
 		position:relative; 
 	}
 	#mainImg #p1{
 		font-size : 50px;	
 		font-weight: bold;
-		color: #000000;
+		color: #FFFFFF;
 		position:absolute;
 		width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
 		height:60px; top: 0; bottom:0; margin-top:70px; margin-bottom:auto;
@@ -94,7 +94,7 @@
 		</div>
 	
 		<div id="main2">
-			<h3>내가 작성한 일기 : (${myDiaryListCount} 개)</h3>
+			<h3>내가 작성한 일기 : ${myDiaryListCount} 개</h3>
 		</div>
 		
 		<div> <br/>

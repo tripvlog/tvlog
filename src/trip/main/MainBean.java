@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import trip.post.boardVO;
+import trip.post.pagingAction;
+
 @Controller
 public class MainBean {
 
@@ -48,15 +51,38 @@ public class MainBean {
 	
 	// Ä¿¹Â´ÏÆ¼
 	@RequestMapping("/main/community.trip")
-	public ModelAndView community(){
-		List list = new ArrayList();
-		list = sqlMap.queryForList("communityPostList", null);
+	public ModelAndView community(HttpServletRequest request, boardVO dto, HttpSession session){
+		String id = (String)session.getAttribute("memId");
+		List<boardVO> list = null;   
+		List<boardVO> ldto = null;
+		int blockCount = 10;   
+	    int blockPage = 5;    
+	    int currentPage = 1;
+	    if(request.getParameter("currentPage")!=null){
+	    	currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	    } 
+	    if(id==null){
+	    	list = sqlMap.queryForList("post.All",null); 
+	    }else if(id!=null){
+	    	list =sqlMap.queryForList("post.sessionList", id);
+	    }
+	    int totalCount = list.size(); 
+	    pagingAction page = new pagingAction(currentPage, totalCount, blockCount, blockPage); 
+	    String pagingHtml = page.getPagingHtml().toString();
+	    int lastCount = totalCount;
+	    if (page.getEndCount() < totalCount){
+	         lastCount = page.getEndCount() + 1;
+		}
+	    list = list.subList(page.getStartCount(), lastCount);	
+		
 		List diary_select_1range = new ArrayList(); 
 		diary_select_1range = sqlMap.queryForList("diary_select_1range", null);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("list", list);
 		mv.addObject("diary_select_1range", diary_select_1range);
+		mv.addObject("list", list);
+		mv.addObject("currentPage", currentPage);
+	    mv.addObject("PagingHtml", pagingHtml);
 		mv.setViewName("/main/community.jsp");
 		return mv;
 	}	

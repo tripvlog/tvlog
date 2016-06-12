@@ -12,15 +12,15 @@
 	#mainImg {
 		width: 1140px;
 		min-height: 270px;
-		background-size : 1140px 400px;
-		background-image : url('/tvlog/img/myBand/bandDefault.png');
+		background-size : 1140px 360px;
+		background-image : url('/tvlog/img/myPage/myband.PNG');
 		text-align: center;
 		position:relative; 
 	}
 	#mainImg #p1{
 		font-size : 50px;	
 		font-weight: bold;
-		color: #000000;
+		color: #FFFFFF;
 		position:absolute;
 		width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
 		height:60px; top: 0; bottom:0; margin-top:70px; margin-bottom:auto;
@@ -68,7 +68,7 @@
 	}
 	function del(band_id){
 		if (confirm("정말 삭제하시겠습니까??") == true){ 
-			window.location="/tvlog/diary/myDiaryDelete.trip?band_id="+band_id;
+			window.location="/tvlog/diary/////////////.trip?band_id="+band_id;
 		}else{
 		    return;
 		}
@@ -88,7 +88,7 @@
 		</div>
 	
 		<div id="main2">
-			<h3>내가 가입한 밴드 : (${myBandListCount} 개)</h3>
+			<h3>내가 가입한 밴드 : ${myBandListCount} 개</h3>
 		</div>
 		
 		<div> <br/>
@@ -104,7 +104,7 @@
 						        		<div id="del">
 						        			<i class="fa fa-times-circle fa-2x" id="delIcon${bandDTO.band_id}" style="visibility:hidden;" aria-hidden="true" onclick="del('${bandDTO.band_id}')"></i>
 						        		</div>
-						        		<div class="diary-content" style="background-image:url('/tvlog/img/band/default.jpg');" onclick="window.location='/tvlog////////////////////.trip?band_id=${bandDTO.band_id}'">
+						        		<div class="diary-content" style="background-image:url('/tvlog/img/band/default.jpg');" onclick="window.location='/tvlog/band/b_view.trip?band_id=${bandDTO.band_id}'">
 							        		${bandDTO.band_intro}	    
 						        		</div>
 						        	</td>
@@ -116,84 +116,9 @@
 			</div>
 			</c:if>
 			<c:if test="${myBandListCount == 0}">
-				<h2>등록된 일기가 없습니다.</h2>
+				<h2>가입한 밴드가 없습니다.</h2>
 			</c:if>
 		</div>
-	</div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-<html>
-<head>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-<title>트래블로그</title>
-</head>
-<body>
-<jsp:include page="/main/header.jsp" />
-	<div id="totalDiv" style="margin-left: 9%;">
-	  				<h4>밴드로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/band/b_list.trip'"></h4>
-					<c:if test="${myBandListCount != 0}">
-						<h4>내가 가입한 밴드 (${myBandListCount} 개)</h4>
-							<table >
-								<c:forEach begin="0" end="${(fn:length(band) + 3) / 4 - 1}" var="row">
-									<tr>
-					    				<c:forEach begin="0" end="3" var="col">
-											<c:set var="bandDTO" value="${band[row * 4 + col]}"/>
-											<c:if test="${not empty bandDTO}">
-					        					<td>
-					        						<div id="band-list" onclick="window.location=''">
-						        						<img src="/tvlog/img/band/${bandDTO.band_img}" width="100" height="100" style="align:center;border-radius:30px; ">
-						        						<br />
-						        						${bandDTO.band_name}<br />					    
-					        							${bandDTO.band_leader}<br />
-					        							${bandDTO.band_intro}
-					        						</div>
-					        					</td>
-					        				</c:if>
-					    				</c:forEach>
-									</tr>
-								</c:forEach>
-							</table>
-					</c:if>
-					<c:if test="${myBandListCount == 0}">
-						등록된 밴드가 없습니다.
-					</c:if>
 	</div>
 </body>
 </html>

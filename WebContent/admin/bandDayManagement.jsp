@@ -11,9 +11,9 @@
 	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${bandDayCount != 0}">
 	<!-- 오늘 올라온 밴드 검색 -->
-	<h4>오늘 올라온 밴드 검색 (${bandDayCount} 개)</h4>
-	<table width="800" border="1" cellspacing="0" cellpadding="2">
-		<tr align="center">
+	<h3>오늘 올라온 밴드 (${bandDayCount} 개)</h3>
+	<table class="table" style="width:1140px" cellspacing="0" cellpadding="2">
+		<tr align="center" class="active">
 			<td>밴드 ID</td>
 			<td>밴드 이름</td>
 			<td>밴드장</td>
@@ -36,7 +36,7 @@
 	</table>
 	</c:if>
 	<c:if test="${bandDayCount == 0}">
-		<h4>오늘 올라온 밴드 검색 (${bandDayCount} 개)</h4>
+		<h3>오늘 올라온 밴드 (${bandDayCount} 개)</h3>
 		오늘 올라온 밴드가 없습니다.
 	</c:if>
 </div>

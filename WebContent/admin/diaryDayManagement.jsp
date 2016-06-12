@@ -11,9 +11,9 @@
 	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${diaryDayCount != 0}">
 	<!-- 오늘 올라온 일기 검색 -->
-	<h4>오늘 올라온 일기 검색 (${diaryDayCount} 개)</h4>
-	<table width="900" border="1" cellspacing="0" cellpadding="2" >
-		<tr align="center">
+	<h3>오늘 올라온 일기 (${diaryDayCount} 개)</h3>
+	<table class="table" style="width:1140px" cellspacing="0" cellpadding="2" >
+		<tr align="center" class="active">
 			<td>일기 번호</td>
 			<td>일기 작성자</td>
 			<td>일기 제목</td>
@@ -33,7 +33,7 @@
 	<!-- 오늘 올라온 일기 검색 끝 -->
 	</c:if>
 	<c:if test="${diaryDayCount == 0}">
-		<h4>오늘 올라온 일기 검색 (${diaryDayCount} 개)</h4>
+		<h3>오늘 올라온 일기 (${diaryDayCount} 개)</h3>
 		오늘 올라온 일기가 없습니다.
 	</c:if>
 </div>

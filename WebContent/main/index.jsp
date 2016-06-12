@@ -301,7 +301,7 @@
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/diaryManagement.trip">일기 관리</a></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/bandManagement.trip">밴드 관리</a></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/postManagement.trip">포스트 관리</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/checklist.trip">체크리스트 관리</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/admin/checklistCategory.trip">체크리스트 관리</a></li>
 					<li class="divider"></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="/tvlog/member/logout.trip" onclick="logout()">로그아웃</a></li>
 				</ul>

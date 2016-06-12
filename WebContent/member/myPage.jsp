@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
@@ -43,13 +43,6 @@
 		width:200px; left:0; right:0; margin-left:auto; margin-right:auto;
 		height:120px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; 
 	}
-	#logo{
-		width: 80px;
-		height:50px;
-		padding: 0;
-		margin: 0;
-	}
-	
 	#friend-list{
 		text-align: center; 
 	}
@@ -98,22 +91,39 @@
 		<div id="myTabContent" class="tab-content"> 
 	  		<!-- 알림 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade active in" id="alarm" aria-labelledby="alarm-tab" >
-	 			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />111<br /><br /><br />111<br /><br /><br /><br /><br /><br />11111<br /><br /><br /><br /><br />5555<br /><br /><br /><br /><br />1111<br /><br /><br /><br /><br /><br /><br /><br /><br />33333333333
+	  			<div id="totalDiv" style="margin-left: 15px">
+		 			<c:if test="${count != 0}">
+			 			<h3 style="border-bottom:2px solid #BDBDBD; margin-bottom:20px;margin-top: :20px;">받은 친구 신청 (${count } 개)</h3>
+			 			<c:forEach var="list" items="${list}">
+							<form action="okFriend.trip" method="post">			 			
+								아이디 : ${list.friend_id }&nbsp;&nbsp;
+						 		날짜 : <fmt:formatDate value="${list.friend_reg}" type="both"/>&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="hidden" name="friend_id" value="${list.friend_id }">
+						 		<input type="submit" class="btn btn-warning" value="수락" >
+						 		<input type="button" class="btn btn-default" value="거절" onClick="javascript:location.href='/tvlog/post/noFriend.trip?friend_id=${list.friend_id}&id=${sessionScope.memId}'">
+							</form>
+						</c:forEach>
+					</c:if>
+					<c:if test="${count == 0}">
+						<h3>등록된 알림이 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;"/>
+					</c:if>
+				</div>
 	 		</div>
 	 		<!-- 친구 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="friend" aria-labelledby="friend-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
 	  				<h4><button type="button" onClick="javascript:OpenWindow('/tvlog/post/friendManage.trip?','600','650')" class="btn btn-success">친구관리</button></h4>
 					<c:if test="${myFriendListCount != 0}">
-						<h4>내 친구 목록 (${myFriendListCount} 개)</h4>
-						<table >
+						<h3 style=" margin-bottom:20px;margin-top: :20px;">내 친구 목록 (${myFriendListCount} 개)</h3>
+						<table class="table" >
 							<c:forEach begin="0" end="${(fn:length(friend) + 3) / 4 - 1}" var="row">
 								<tr>
 				    				<c:forEach begin="0" end="3" var="col">
 										<c:set var="friendDTO" value="${friend[row * 4 + col]}"/>
 										<c:if test="${not empty friendDTO}">
 				        					<td>
-				        						<div id="friend-list" onclick="window.location=''">
+				        						<div id="friend-list">
 					        						<img src="/tvlog/img/member/${friendDTO.path}" width="100" height="100" style="align:center;border-radius:30px; ">
 					        						<br />
 					        						${friendDTO.name}					    
@@ -126,7 +136,8 @@
 						</table>
 					</c:if>
 					<c:if test="${myFriendListCount == 0}">
-						등록된 친구가 없습니다.
+						<h3>등록된 친구가 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;" />
 					</c:if>
 				</div>
 	  		</div>
@@ -134,10 +145,9 @@
 	  		<!-- 밴드 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="band" aria-labelledby="band-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
-	  				<h4>밴드로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/band/b_list.trip'"></h4>
 					<c:if test="${myBandListCount != 0}">
-						<h4>모든 밴드 검색 (${myBandListCount} 개)</h4>
-							<table >
+						<h3 style="margin-bottom:20px;margin-top: :20px;">내가 가입한 밴드 (${myBandListCount} 개)</h3>
+							<table class="table">
 								<c:forEach begin="0" end="${(fn:length(band) + 3) / 4 - 1}" var="row">
 									<tr>
 					    				<c:forEach begin="0" end="3" var="col">
@@ -159,7 +169,8 @@
 							</table>
 					</c:if>
 					<c:if test="${myBandListCount == 0}">
-						등록된 밴드가 없습니다.
+						<h3>등록된 밴드가 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;" />
 					</c:if>
 				</div>
 	  		</div>
@@ -168,26 +179,27 @@
 	  		<div role="tabpanel" class="tab-pane fade" id="schedule" aria-labelledby="schedule-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
 					<c:if test="${myScheduleListCount != 0}">
-					<h4>모든 일정 검색 (${myScheduleListCount} 개)</h4>
-					<table width="1000" border="1" cellspacing="0" cellpadding="2">
-						<tr align="center">
-							<td>일정 작성자</td>
-							<td>여행 제목</td>
-							<td>여행 시작일</td>
-							<td>여행 끝난일</td>
-						</tr>
-						<c:forEach var="schedule" items="${schedule}">
-						<tr align="center">
-							<td>${schedule.s_writer}</td>
-							<td>${schedule.s_title}</td>
-							<td>${schedule.s_startday}</td>
-							<td>${schedule.s_endday}</td>
-						</tr>
-						</c:forEach>
-					</table>
+						<h3 style=" margin-bottom:20px;margin-top: :20px;">내가 만든 일정 (${myScheduleListCount} 개)</h3>
+						<table width="1000" cellspacing="0" cellpadding="2" class="table">
+							<tr align="center"  class="active">
+								<td>일정 작성자</td>
+								<td>여행 제목</td>
+								<td>여행 시작일</td>
+								<td>여행 끝난일</td>
+							</tr>
+							<c:forEach var="schedule" items="${schedule}">
+							<tr align="center">
+								<td>${schedule.s_writer}</td>
+								<td>${schedule.s_title}</td>
+								<td>${schedule.s_startday}</td>
+								<td>${schedule.s_endday}</td>
+							</tr>
+							</c:forEach>
+						</table>
 					</c:if>
 					<c:if test="${myScheduleListCount == 0}">
-						등록된 일정이 없습니다.
+						<h3>등록된 일정이 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;"/>
 					</c:if>
 				</div>
 	  		</div>
@@ -195,30 +207,28 @@
 	  		<!-- 여행일기 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="diary" aria-labelledby="diary-tab">
 	  			<div id="totalDiv" style="margin-left: 15px" >
-	  				<h4>일기로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/diary/list.trip'"></h4>
 					<c:if test="${myDiaryListCount != 0}">
-					<!-- 일기 검색 -->
-					<h4>모든 일기 검색 (${myDiaryListCount} 개)</h4>
-					<table width="900" border="1" cellspacing="0" cellpadding="2" >
-						<tr align="center">
-							<td>일기 번호</td>
-							<td>일기 작성자</td>
-							<td>일기 제목</td>
-							<td>일기 등록 날짜</td>
-						</tr>
-						<c:forEach var="diary" items="${diary}">
-						<tr align="center">
-							<td>${diary.diary_num}</td>
-							<td>${diary.diary_writer}</td>
-							<td>${diary.diary_title}</td>
-							<td>${diary.diary_reg}</td>
-						</tr>
-						</c:forEach>
-					</table>
-					<!-- 일기 검색 끝 -->
+						<h3 style="margin-bottom:20px;margin-top: :20px;">내가 쓴 일기 (${myDiaryListCount} 개)</h3>
+						<table width="900" class="table" cellspacing="0" cellpadding="2" >
+							<tr align="center"  class="active">
+								<td>일기 번호</td>
+								<td>일기 작성자</td>
+								<td>일기 제목</td>
+								<td>일기 등록 날짜</td>
+							</tr>
+							<c:forEach var="diary" items="${diary}">
+							<tr align="center">
+								<td>${diary.diary_num}</td>
+								<td>${diary.diary_writer}</td>
+								<td>${diary.diary_title}</td>
+								<td>${diary.diary_reg}</td>
+							</tr>
+							</c:forEach>
+						</table>
 					</c:if>
 					<c:if test="${myDiaryListCount == 0}">
-						등록된 일기가 없습니다.
+						<h3>등록된 일기가 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;"/>
 					</c:if>
 				</div>
 	  		</div>
@@ -226,11 +236,10 @@
 	  		<!-- 포스트 탭 내용 -->
 	  		<div role="tabpanel" class="tab-pane fade" id="post" aria-labelledby="post-tab">
 	  			<div id="totalDiv" style="margin-left: 15px">
-	  				<h4>포스트로 이동 <i class="fa fa-hand-o-right" aria-hidden="true"></i> <input type="button" value="이동" onClick="javascript:window.location='/tvlog/post/postList.trip'"></h4>
 					<c:if test="${myPostListCount != 0}">
-						<h4>내가 쓴 포스트 (${myPostListCount} 개)</h4>
-						<table width="1000" border="1" cellspacing="0" cellpadding="2">
-							<tr align="center">
+						<h3 style="margin-bottom:20px;margin-top: :20px;">내가 쓴 포스트 (${myPostListCount} 개)</h3>
+						<table width="1000" class="table" cellspacing="0" cellpadding="2">
+							<tr align="center"  class="active">
 								<td>작성자</td>
 								<td>포스트 제목</td>
 								<td>포스트 등록 날짜</td>
@@ -247,7 +256,8 @@
 						</table>
 					</c:if>
 					<c:if test="${myPostListCount == 0}">
-						등록한 포스트가 없습니다.
+						<h3>등록한 포스트가 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;"/>
 					</c:if>
 				</div>
 			</div>
@@ -262,9 +272,9 @@
 				<div class="col-sm-10">
 					<div id="myTabContent6" class="tab-content">
 						<div role="tabpanel" class="tab-pane fade active in" id="home6" aria-labelledby="home-tab6">
-								<center><h1>회원 정보 수정</h1></center>								
+								<center><h1>회원 정보 수정</h1></center><br/>							
 								<form enctype="multipart/form-data" method="post" action="/tvlog/member/modifyPro.trip" name="userinput" onsubmit="return checkIt()">
-									<table align="center" border="2" width="750">
+									<table class="table" style="align:center; width:750px">
 										<tr>
 											<td>아이디</td>
 											<td>${dto.id}</td>
@@ -280,7 +290,7 @@
 										<tr>
 											<td width="200">도메인</td>
 											<td width="400"><input type="text" name="domain" size="15" maxlength="12" value="${dto.domain}">&nbsp;&nbsp;
-												<input type="button" value="중복확인" onClick="confirmDomainClick(this.form)" />&nbsp&nbsp
+												<input type="button" value="중복확인" onClick="confirmDomainClick(this.form)" />
 												<font color="blue"> * 중복확인 버튼을 클릭</font> </td>
 										</tr>
 										<tr>
@@ -288,7 +298,7 @@
 											<td width="400"><input type="file" name="path" value="${dto.path}"></td>
 										</tr>
 										<tr>
-											<td colspan="2" align="center">
+											<td colspan="2">
 												<input type="submit"name="modify" value="수   정"> 
 											</td>
 										</tr>
@@ -296,15 +306,15 @@
 								</form>
 							</div>
 						<div role="tabpanel" class="tab-pane fade" id="profile6" aria-labelledby="profile-tab6">
-							<center><h1>회원 정보 수정</h1></center>	
+							<center><h1>회원 정보 수정</h1></center><br/>	
 							<form name="myform" action="/tvlog/member/deletePro.trip" method="post">
-								<TABLE cellSpacing=1 cellPadding=1 width="260" border=1 align="center">
+								<TABLE cellSpacing=1 cellPadding=1 width="260" class="table" align="center">
 									<TR height="30">
 										<TD width="110" align=center>비밀번호</TD>
 										<TD width="150" align=center><INPUT type=password name="pw" size="15" maxlength="12"></TD>
 									</TR>
 									<TR height="30">
-										<TD colspan="2" align="center"><INPUT type=submit value="회원탈퇴"></TD>
+										<TD colspan="2"><INPUT type=submit value="회원탈퇴" style="align:center"></TD>
 									</TR>
 								</TABLE>
 							</form>

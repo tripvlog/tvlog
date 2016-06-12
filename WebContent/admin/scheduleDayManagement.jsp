@@ -11,9 +11,9 @@
 	<div id="totalDiv" style="margin-left: 9%;">
 	<c:if test="${scheduleDayCount != 0}">
 	<!-- 오늘 올라온 일정 검색 -->
-	<h4>오늘 올라온 일정 검색 (${scheduleDayCount} 개)</h4>
-	<table width="1000" border="1" cellspacing="0" cellpadding="2">
-		<tr align="center">
+	<h3>오늘 올라온 일정 검색 (${scheduleDayCount} 개)</h3>
+	<table class="table" style="width:1140px"  cellspacing="0" cellpadding="2">
+		<tr align="center" class="active">
 			<td>일정 번호</td>
 			<td>일정 작성자</td>
 			<td>여행 제목</td>
@@ -35,7 +35,7 @@
 	<!-- 오늘 올라온 일정 검색 끝 -->
 	</c:if>
 	<c:if test="${scheduleDayCount == 0}">
-		<h4>오늘 올라온 일정 검색 (${scheduleDayCount} 개)</h4>
+		<h3>오늘 올라온 일정 검색 (${scheduleDayCount} 개)</h3>
 		오늘 올라온 일정이 없습니다.
 	</c:if>
 </div>

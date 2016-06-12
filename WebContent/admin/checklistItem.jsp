@@ -5,31 +5,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"  ></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <script>
 	function itemDellocation(ci_name, cl_num) {
 		window.location="/tvlog/admin/checklistItem.trip?cl_num="+cl_num;
 	}
 </script>
-<style>
-	#totalDiv{
-		padding:20px;
-	}
-</style>
 </head>
 <body>
-<div id="totalDiv">
+<jsp:include page="/main/header.jsp" />
+<div id="totalDiv"  style="margin-left: 8.2%;">
 	<!-- 항목 검색 -->
-	<h4>카테고리 안에 있는 항목</h4>
-	<table width="600" border="1" cellspacing="0" cellpadding="2">
-		<tr>
+	<h3>카테고리 안에 있는 항목</h3>
+	<table class="table" style="width:600px" cellspacing="0" cellpadding="2">
+		<tr class="active">
 			<td>항목 번호</td>
 			<td>항목 이름</td>
 		</tr>
@@ -46,7 +37,7 @@
 	<br />
 	
 	<!-- 항목 추가 -->
-	<h4>항목 추가</h4>
+	<h3>항목 추가</h3>
 	<form action="/tvlog/admin/checklistItemAdd.trip" method="post">
 		추가할 항목 이름 : <input type="text" name="ci_name">
 		<input type="hidden" name="cl_num" value="${cl_num }">
@@ -58,7 +49,7 @@
 	<br />
 	
 	<!-- 항목 삭제 -->
-	<h4>항목 삭제</h4>
+	<h3>항목 삭제</h3>
 	<form action="/tvlog/admin/checklistItemDel.trip" method="post">
 		삭제할 항목 이름 : 
 		<select name="ci_num">

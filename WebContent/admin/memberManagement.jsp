@@ -18,12 +18,12 @@
 </head>
 <body>
 <jsp:include page="/main/header.jsp" /> 
-	<div id="totalDiv" style="margin-left: 9%;">
+	<div id="totalDiv" style="margin-left: 7.9%;">
 	<c:if test="${memberAllCount != 0}">
 	<!-- 회원 검색 -->
-	<h4>모든 회원 검색 (${memberAllCount} 개) </h4>
-	<table width="600" border="1" cellspacing="0" cellpadding="2" >
-		<tr align="center">
+	<h3>회원 관리 (${memberAllCount} 명) </h3>
+	<table class="table" style="width:1140px" cellspacing="0" cellpadding="2" >
+		<tr align="center"  class="active">
 			<td>프로필 사진</td>
 			<td>ID</td>
 			<td>닉네임</td>

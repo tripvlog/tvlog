@@ -19,12 +19,12 @@
 </head>
 <body>
 <jsp:include page="/main/header.jsp" /> 
-	<div id="totalDiv" style="margin-left: 9%;">
+	<div id="totalDiv" style="margin-left:8%;">
 	<c:if test="${scheduleAllCount != 0}">
 	<!-- 스케줄 검색 -->
-	<h4>모든 스케줄 검색 (${scheduleAllCount} 개)</h4>
-	<table width="1000" border="1" cellspacing="0" cellpadding="2">
-		<tr align="center">
+	<h3>스케줄 관리 (${scheduleAllCount} 개)</h3>
+	<table class="table" style="width:1140px" cellspacing="0" cellpadding="2">
+		<tr align="center" class="active">
 			<td>일정 번호</td>
 			<td>일정 작성자</td>
 			<td>여행 제목</td>

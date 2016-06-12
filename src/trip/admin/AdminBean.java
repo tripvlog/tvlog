@@ -48,13 +48,6 @@ public class AdminBean {
 	
 
 	/* ******* 체크리스트 관리자 페이지 시작 ******* */
-	/* 체크리스트 관리자 페이지 */
-	@RequestMapping("/admin/checklist.trip")
-	public String checklist() {
-			
-		return "/admin/checklist.jsp";
-	}
-	
 	/* 체크리스트 카테고리 관리 */
 	@RequestMapping("/admin/checklistCategory.trip")
 	public ModelAndView checklistCategory() {

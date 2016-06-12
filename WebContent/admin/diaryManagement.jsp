@@ -18,12 +18,12 @@
 </head>
 <body>
 <jsp:include page="/main/header.jsp" /> 
-	<div id="totalDiv" style="margin-left: 9%;">
+	<div id="totalDiv" style="margin-left:8%;">
 	<c:if test="${diaryAllCount != 0}">
 	<!-- 일기 검색 -->
-	<h4>모든 일기 검색 (${diaryAllCount} 개)</h4>
-	<table width="900" border="1" cellspacing="0" cellpadding="2" >
-		<tr align="center">
+	<h3>일기 관리 (${diaryAllCount} 개)</h3>
+	<table class="table" style="width:1140px" cellspacing="0" cellpadding="2" >
+		<tr align="center" class="active">
 			<td>일기 번호</td>
 			<td>일기 작성자</td>
 			<td>일기 제목</td>

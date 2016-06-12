@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import trip.post.boardVO;
+
 	@Controller
 	public class LoginController {
 		
@@ -218,6 +220,11 @@ import org.springframework.web.servlet.ModelAndView;
 			List band = new ArrayList();
 			band = sqlmap.queryForList("myBandList", id);
 			
+			List<boardVO> list = null;
+			//받은 친구 신청(1번) 리스트에 담기
+			list=sqlmap.queryForList("member_selectFriend1", id);
+	    	int count = (Integer)sqlmap.queryForObject("member_selectFriendcount1", id);
+			
 			ModelAndView mv = new ModelAndView();
 			mv.addObject("myPostListCount",myPostListCount);
 			mv.addObject("post", post);
@@ -229,6 +236,8 @@ import org.springframework.web.servlet.ModelAndView;
 			mv.addObject("diary", diary);
 			mv.addObject("myBandListCount", myBandListCount);
 			mv.addObject("band", band);
+			mv.addObject("list", list);
+			mv.addObject("count", count);
 			mv.setViewName("/member/myPage.jsp");
 			
 			return mv;
@@ -243,19 +252,24 @@ import org.springframework.web.servlet.ModelAndView;
 		}
 		
 		@RequestMapping("/member/myPost.trip")
-		public ModelAndView myPost(HttpSession session){
+		public ModelAndView myPost(HttpSession session,String friend_id, HttpServletRequest request, boardVO dto){
 			String id = (String)session.getAttribute("memId");
-			
+			LoginDTO Logindto = (LoginDTO)sqlmap.queryForObject("modify", id);
 			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
-			List post = new ArrayList();
-			post = sqlmap.queryForList("myPostList", id);
-			
+			List list = new ArrayList();
+			list =sqlmap.queryForList("post.mypost", id);
 			ModelAndView mv = new ModelAndView();
 			mv.addObject("myPostListCount",myPostListCount);
-			mv.addObject("post", post);
+			mv.addObject("list", list);
+			mv.addObject("member", Logindto);
 			mv.setViewName("/member/myPost.jsp");
 			return mv;
 		}
+		@RequestMapping("/member/deleteComment.trip")
+	      public String deleteComment(boardVO dto){
+			sqlmap.delete("post.deleteComment", dto);
+	    	  return "redirect:/member/myPost.trip";
+	      }
 		
 		@RequestMapping("/member/myBand.trip")
 		public ModelAndView myBand(HttpSession session, HttpServletRequest request){
