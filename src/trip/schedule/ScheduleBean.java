@@ -52,12 +52,29 @@ public class ScheduleBean {
 	}
 	//----- 상세일정 등록 부분 ( 위치)	
 	@RequestMapping("/schedule/schedule-detail-Map.trip")
-	public String map(HttpServletRequest request,ScheduleDetailDTO dto){
+	public String map(MultipartHttpServletRequest request,ScheduleDetailDTO dto)throws Exception{
 		sqlMap.insert("schedule.scheduleDetailInsert", dto);
+		
+		MultipartFile mf = request.getFile("placeImg");
+		int sd_num=0;
+		if(mf != null){
+			sd_num = (Integer)sqlMap.queryForObject("schedule.scheduleDetailMax",null);
+			String orgName = mf.getOriginalFilename();
+			String ext = orgName.substring(orgName.lastIndexOf(".")+1);
+			String path = request.getRealPath("//img//schedule//");
+			String saveName = "place"+sd_num+"."+ext;
+			dto.setSd_orgfile(saveName);
+			dto.setSd_num(sd_num);
+			File save = new File(path+"//"+saveName);		
+			mf.transferTo(save);
+			
+			sqlMap.update("schedule.scheduleDetailPlaceImg", dto);
+		}
 		
 		request.setAttribute("dto",dto);
 		return "/schedule/schedule-detail-transport.jsp";
 	}
+	
 	
 	
 	

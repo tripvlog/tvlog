@@ -26,7 +26,9 @@
     <script>
     	var count = parseInt('${count}');
     	var dayMap = new Array(new Array(count),new Array(2));
+    	var dayMap2 = new Array(new Array(1),new Array(2));
     	var point1 = new Array();
+    	var point2 = new Array();
     </script>
     
     <c:forEach items="${detaillist}" var="detailDTO" varStatus="i">
@@ -39,12 +41,22 @@
     			dayMap[j-1] = s;
 			</script>
     	</c:if>
+    	<c:if test="${(fn:substring(detailDTO.sd_tdid, 0, 1)) == 2}">
+    		<script>
+    			var str2 = '${detailDTO.sd_map}';
+    			var s2 = str2.split(':');
+    			var j2 = parseInt('${i.count}');
+    			point2[point2.length] = '${detailDTO.sd_startpoint}';
+    			dayMap2[point2.length-1] = s2;
+			</script>
+    	</c:if>
     </c:forEach>
     <script>
 		var map;
 		var markers = [];
 		var infowindow = null;
 		var po = point1;
+		var po2	 = point2;
 		function initMap() {
 			
 			map = new google.maps.Map(document.getElementById('schedule-map'), {
@@ -54,13 +66,18 @@
 			});
 			
 		  	var flightPlanCoordinates = new Array() ;
+		  	var flightPlanCoordinates2 = new Array() ;
 		  	var mks =  dayMap;
-		  	
+		  	var mks2 = dayMap2;
 		  	for(var i = 0 ; i < dayMap.length ; i++){
 		  		var mkk = mks[i];
 		  		flightPlanCoordinates[flightPlanCoordinates.length] = {lat: parseFloat(mkk[0]) , lng:parseFloat(mkk[1])}; 
 		  	}
 		  	
+		  	for(var a = 0 ; a < dayMap2.length ; a++){
+		  		var mkk2 = mks2[a];
+		  		flightPlanCoordinates2[flightPlanCoordinates2.length] = {lat: parseFloat(mkk2[0]) , lng:parseFloat(mkk2[1])}; 
+		  	}
 		  
 		  	for(var i = 0 ; i < flightPlanCoordinates.length ; i++){
 				var mk = mks[i];
@@ -70,13 +87,30 @@
 		
 			}
 		  	
+		  	for(var i = 0 ; i < flightPlanCoordinates2.length ; i++){
+				var mk2 = mks2[i];
+				var poi2 = po2[i];
+				
+				addMap(mk2 , poi2);
+		
+			}
+		  
+		  	if(flightPlanCoordinates.length > 0){
+		  		fp(flightPlanCoordinates ,'#FF0000' );
+		  	}
+		  	if(flightPlanCoordinates2.length > 0){
+		  		fp(flightPlanCoordinates2 ,'#FF5E00' );
+		  	}
+		  	
+		}
+		function fp(fpc , color){
 			var flightPath = new google.maps.Polyline({
-		        path: flightPlanCoordinates,
-		        strokeColor: '#FF0000',
+		        path: fpc,
+		        strokeColor: color,
 		        strokeOpacity: 1.0,
-		        strokeWeight: 2,
+		        strokeWeight: 4,
 			});
-			 flightPath.setMap(map);	 
+			 flightPath.setMap(map);
 		}
 		
 		function addMap(mk,poi){

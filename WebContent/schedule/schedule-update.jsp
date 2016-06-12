@@ -65,6 +65,29 @@
     
     function detailMapSave(){
     	tdid = objTd.getAttribute('id');
+      	var form = $('placeForm')[0];
+      	var formData = new FormData(form);
+      	formData.append("placeImg",$("input[name=placeImg]")[0].files[0]);
+      	formData.append("s_num",$('#s_num').val());
+      	formData.append("sd_tdid",tdid);
+      	formData.append("sd_startpoint",$('#placename').val());
+      	formData.append("sd_status",$('#sd_status1').val());
+      	formData.append("sd_map",$('#latlng').val());
+      	formData.append("sd_memo",$('#map_sd_memo').val());
+      	$.ajax({
+   	        type: "post",
+   	        url : "/tvlog/schedule/schedule-detail-Map.trip",
+   	     	processData : false,
+   	     	contentType : false,
+   	        data: formData,
+   	        success: success,	// 페이지요청 성공시 실행 함수
+   	        error: whenError	//페이지요청 실패시 실행함수
+        });
+    }
+    
+    /*
+    function asdfadsfafe222(){
+    	tdid = objTd.getAttribute('id');
 		 $.ajax({
 	 	        type: "post",
 	 	        url : "/tvlog/schedule/schedule-detail-Map.trip",
@@ -78,7 +101,10 @@
 	 	        success: success,	// 페이지요청 성공시 실행 함수
 	 	        error: whenError	//페이지요청 실패시 실행함수
 	      	});	
-    }
+      }
+    */
+    
+    
     
     function rangeChange(rc){
     	document.getElementById("s_range").value = rc;
@@ -178,7 +204,7 @@
 		</div>
 	</div> 
 
-	<!-- 방문명소 Modal -->
+	<!-- 커버변경 Modal -->
 	<div class="modal fade" id="famousplace" tabindex="-1" role="dialog" aria-labelledby="famousplaceModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -353,7 +379,7 @@
 				<div role="tabpanel" class="tab-pane fade active in" id="profile" aria-labelledby="profile-tab"> 
 					<!-- 지도 시작 -->
 					<br />
-					<iframe src="/tvlog/schedule/schedule-map.jsp" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="/tvlog/schedule/schedule-map.trip?s_num=${dto.s_num}" name="map" width="100%" height="410" ALLOWTRANSPARENCY="false"frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 					<br />
 				</div>
 				<!-- 지도 끝 -->
@@ -531,7 +557,7 @@
 
 								<!-- 장소 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
-									<form action="" method="post">	<br />
+									<form action="" id="placeForm" method="post">	<br />
 										<iframe src="/tvlog/schedule/schedule-detail-select-map.jsp" name="map" width="570" height="405" ALLOWTRANSPARENCY="false"></iframe>
 										<input type="hidden" id="sd_status1" name="sd_status" value="1" /> 
 										<div id="mylocation"></div>

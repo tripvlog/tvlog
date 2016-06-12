@@ -295,8 +295,8 @@
 											    			</c:if>
 										    			</div>
 										    			<div class="modal fade" id="detailview${status.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		    												<div class="modal-dialog" >
-																<div class="modal-content" id="modalSize">
+		    												<div class="modal-dialog modal-lg" >
+																<div class="modal-content" >
 																	<div class="modal-header" >
 																		<div class="panel panel-success" >
 																			<div class="panel-body" >
@@ -308,7 +308,12 @@
 											    									비용 : ${detailDTO.sd_budget}
 										    									</c:if>
 										    									<c:if test="${detailDTO.sd_status == 1}">
-											    									<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="370" height="205" ALLOWTRANSPARENCY="false"></iframe>
+											    									<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
+																					<div>
+																						<img src="/tvlog/img/schedule/${detailDTO.sd_orgfile}" /> <br />
+																						위치 : ${detailDTO.sd_startpoint} <br />
+																						메모 : ${detailDTO.sd_memo}
+																					</div>											    									
 											    								</c:if>
 											    								<c:if test="${detailDTO.sd_status == 2}">
 											    									메모 : ${detailDTO.sd_memo}
@@ -334,7 +339,7 @@
 				   						<td id="${j}_${i}_30" onmouseover="aa(${j},${i}${i});" onmouseout="bb(${j},${i}${i});">
 				   							<c:set var="tdid" value="${j}_${i}_30" />
 				   							<c:set var="doneLoop" value="false" />
-											<c:forEach items="${detaillist}" var="detailDTO">
+											<c:forEach items="${detaillist}" var="detailDTO" varStatus="status">
 												<c:if test="${not doneLoop}"> 
 													<c:if  test="${detailDTO.sd_tdid ==  tdid}">
 														<div id="#detail-content" data-toggle="modal" data-target="#detailview${status.count}">
@@ -352,8 +357,8 @@
 												    		</c:if>
 											    		</div>
 										    			<div class="modal fade" id="detailview${status.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		    												<div class="modal-dialog" >
-																<div class="modal-content" id="modalSize">
+		    												<div class="modal-dialog modal-lg" >
+																<div class="modal-content" >
 																	<div class="modal-header" >
 																		<div class="panel panel-success" >
 																			<div class="panel-body" >
@@ -365,7 +370,12 @@
 												    								비용 : ${detailDTO.sd_budget}
 											    								</c:if>
 										    									<c:if test="${detailDTO.sd_status == 1}">
-										    										<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="370" height="205" ALLOWTRANSPARENCY="false"></iframe>
+										    										<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${detailDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
+																					<div>
+																						<img src="/tvlog/img/schedule/${detailDTO.sd_orgfile}" /> <br />
+																						위치 : ${detailDTO.sd_startpoint} <br />
+																						메모 : ${detailDTO.sd_memo}
+																					</div>
 										    									</c:if>
 										    									<c:if test="${detailDTO.sd_status == 2}">
 										    										메모 : ${detailDTO.sd_memo}
@@ -381,7 +391,6 @@
 												</c:if>
 											</c:forEach>
 											<c:if  test="${not doneLoop}">
-												
 												<c:set var="doneLoop" value="false"/> 
 											</c:if>
 				   						</td>
@@ -396,116 +405,7 @@
 	</div>
 	<!-- 오른쪽 그룹 끝 -->
 </div>
-
-
-	<!-- 세부일정 등록  -->
-	<!-- 모달 팝업 -->
-	<div class="modal fade" id="detail-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-					</button>
-					<h6 class="modal-title" id="myModalLabel">Modal title</h6>
-				</div>
-				<!-- 모달 내용 -->
-				<div class="modal-body">
-					<!-- 탭 시작 -->
-					<div class="container2">
-						<ul id="myTab" class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a data-target="#transport" id="transport-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">교통</a></li>
-							<li role="presentation" class=""><a data-target="#place" role="tab" id="place-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">장소</a></li>
-							<li role="presentation" class=""><a data-target="#memo" role="tab" id="memo-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">메모</a></li>
-						</ul>
-						<div id="myTabContent" class="tab-content">
-							<!-- 교통 탭 시작 -->
-							<div role="tabpanel" class="tab-pane fade active in" id="transport" aria-labelledby="transport-tab">
-								<form action="" method="post">
-								<br />
-									<div id="row22">
-										<div class="col-md-20" >
-											<ul id="transportUl">
-												<li id="transportLi"><button id="btn1" onclick="btnicon1()"><i class="fa fa-plane fa-2x" aria-hidden="true"></i><br/>비행기</button></li>
-												<li id="transportLi"><button id="btn2" onclick="btnicon2()"><i class="fa fa-train fa-2x" aria-hidden="true"></i><br/>기  차</button></li>
-												<li id="transportLi"><button id="btn3" onclick="btnicon3()"><i class="fa fa-subway fa-2x" aria-hidden="true"></i><br/>지하철</button></li>
-												<li id="transportLi"><button id="btn4" onclick="btnicon4()"><i class="fa fa-bus fa-2x" aria-hidden="true"></i><br/>버  스</button></li>
-												<li id="transportLi"><button id="btn5" onclick="btnicon5()"><i class="fa fa-road fa-2x" aria-hidden="true"></i><br/>도  보</button></li>
-												<li id="transportLi"><button id="btn6" onclick="btnicon6()"><i class="fa fa-taxi fa-2x" aria-hidden="true"></i><br/>택  시</button></li>
-												<li id="transportLi"><button id="btn7" onclick="btnicon7()"><i class="fa fa-ship fa-2x" aria-hidden="true"></i><br/> 배 </button></li>
-												<li id="transportLi"><button id="btn8" onclick="btnicon8()"><i class="fa fa-car fa-2x" aria-hidden="true"></i><br/>자가용</button></li>
-												<li id="transportLi"><button id="btn9" onclick="btnicon9()"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i><br/>기  타</button></li>
-											</ul>
-										</div>
-										<div id="row33">
-											<div class="col-md-20">
-												<div class="trf-fields">
-													<fieldset id="transport-fieldset-0">
-														<div class="trf-detail">
-															<table width="550" height="200" align="center">
-																<tr>
-																	<td id="btnicon"></td>
-																	<td>출발지 <input type="text" id="from_0" class="form-control transport-from-input" value="" style="width: 95%;"></td>
-																	<td>도착지 <input type="text" id="to_0" class="form-control transport-to-input" value=""style="width: 95%;"></td>
-																</tr>
-																<tr>
-																	<td>메모</td>
-																	<td colspan="2"><input type="text" id="memo_0" class="form-control transport-memo-input" value="" style="width:98%;"></td>
-																</tr>
-																<tr>
-																	<td>비용</td>
-																	<td><input type="text" id="budget" class="form-control transport-cost-input" value="0" maxlength="13" style="text-align:right;width:95%"></td>
-																	<td><select class="currency-select transport-currency-select form-control" style="width:95%">
-																			<option value="2">USD(미국)</option>
-																			<option value="1" selected="selected">KRW(한국)</option>
-																			<option value="0">EUR(유럽연합)</option>
-																			<option value="3">JPY(일본)</option>
-																			<option value="4">CNY(중국)</option>
-																		</select>
-																	</td>
-																</tr>
-															</table>
-														</div>
-													</fieldset>
-												</div>
-											</div>
-										</div>
-									</div>
-									<br />
-									<input type="submit" class="btn btn-success" value="저장">
-								</form>	
-							</div>
-							<!-- 교통 탭 끝 -->
-							<!-- 장소 탭 시작 -->
-							<div role="tabpanel" class="tab-pane fade" id="place" aria-labelledby="place-tab">
-								<form action="" method="post">	<br />
-									<iframe src="/tvlog/schedule/schedule-detail-select-map.jsp" name="map" width="570" height="405" ALLOWTRANSPARENCY="false"></iframe> 
-									<div id="mylocation"></div>
-									<br />
-									<input type="submit" class="btn btn-success" value="저장">
-								</form>
-							</div>
-							<!-- 장소 탭 끝 -->
-							<!-- 메모 탭 시작 -->
-							<div role="tabpanel" class="tab-pane fade" id="memo" aria-labelledby="memo-tab">
-								<form action="" method="post">	
-								<br />
-									<div class="row" id="row2">
-         								<textarea class="form-control"  id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
-         								<br />
-									</div>
-									<input type="submit" class="btn btn-success" value="저장">
-								</form>
-							</div>
-							<!-- 메모 탭 끝 -->
-						</div>
-						<!-- 탭 끝 -->
-					</div>
-					<!-- 모달 내용 끝 -->
-				</div>
-			</div>
-		</div>
-	</div>
+		
 	<!-- 모달 끝 -->
 </body>
 </html>

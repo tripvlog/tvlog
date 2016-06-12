@@ -39,6 +39,15 @@
 					#sd_tdid#
 					)
 	</insert>
+	
+	<select id="scheduleDetailMax" resultClass="int">
+		select max(sd_num) from t_schedule_detail
+	</select>
+	
+	<update id="scheduleDetailPlaceImg" parameterClass="scheduleDetail">
+		update t_schedule_detail set sd_orgfile=#sd_orgfile# where sd_num=#sd_num#
+	</update>
+	
 	<select id="scheduleDetailList" resultClass="scheduleDetail" parameterClass="int">
 		select * from t_schedule_detail where s_num=#s_num#
 	</select>
