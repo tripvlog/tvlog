@@ -94,8 +94,6 @@ public class BandAction {
 	public String bandView(HttpServletRequest request, HttpSession session, int band_id, BandDTO banddto, boardDTO boarddto, memberDTO memdto, trip.member.BandListDTO bandlistdto){
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
-		List board_comment = sqlMap.queryForList("band_comment", band_id);
-		request.setAttribute("b_board_comments", board_comment);
 		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
 		
 		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
@@ -151,7 +149,7 @@ public class BandAction {
 		request.setAttribute("band", banddto);
 		return "/band/view_band.jsp";
 	}
-	
+
 	@RequestMapping("/band/bb_write.trip")
 	public String b_boardWrite(MultipartHttpServletRequest request, HttpSession session, boardDTO boarddto, imgDTO imgdto){
 
@@ -225,7 +223,17 @@ public class BandAction {
 		comdto.setBand_board_comment_comment(comment);
 		sqlMap.insert("band_comment_insert", comdto);
 		
+			List board_comment = sqlMap.queryForList("band_comment", band_id);
+			request.setAttribute("b_board_comments", board_comment);
+		
 		return "redirect:/band/b_view.trip?band_id=" + band_id;
+	}
+	
+	@RequestMapping("/band/bb_commentView.trip") // 댓글 출력
+	public String bb_commentView(HttpServletRequest request, int band_id){
+	    List board_comment = sqlMap.queryForList("band_comment", band_id);
+	    request.setAttribute("b_board_comments", board_comment);
+	    return "/band/commentview_band.jsp";
 	}
 	@RequestMapping("/band/bb_delete.trip")
 	public String b_boardDelete(imgDTO imgdto, HttpSession session, HttpServletRequest request){

@@ -70,6 +70,25 @@
 		}
 		return false;
 	}
+	
+	function commentAjax(num){
+		b = num;
+		$.ajax({
+        	type: "post",
+            url : "/tvlog/band/bb_commentView.trip",
+        	data:{ no:num },
+        	success: comment,   // 페이지요청 성공시 실행 함수
+            error: whenError   //페이지요청 실패시 실행함수
+		}); 
+	}
+	function comment(aaa){
+		$("#2good"+b).html(aaa);
+	}
+	function whenError(){
+		alert("내용을 입력하세요");
+	}
+	
+	
 </script>
 <body>
 	<jsp:include page="/main/header.jsp" /><br />
@@ -92,8 +111,14 @@
 						</form>
 					</c:if>
 					<hr style="color:red">
-					<c:forEach var="v" items="${b_board_contents}">
-
+					<c:forEach var="v" items="${b_board_contents}"><!-- 작성된 글을 db에서 가져와 뿌려줌 -->
+					<script>
+					window.onload = function(){
+						alert("view_band.jsp 페이지");
+						alert("band_id " + '${band_id}');
+						alert("v.band_board_num : " + '${v.band_board_num}');
+					}
+					</script>
 					<div><!-- 작성자랑 현재 로그인한 세션 값 비교하여 일치하면 수정 및 삭제 기능 추가 -->
 						<c:if test="${sessionScope.memId == v.band_board_writer}">
 							<div class="dropdown" id="mydropdown">
@@ -120,14 +145,6 @@
 							${v.band_board_content} : band_board_content<br />
 							${v.band_board_readcount} : band_board_readcount<br />
 							${v.band_board_reg} : band_board_reg<br /><br />
-							 
-							<c:forEach var="comment" items="${b_board_comments}">
-								${comment.BAND_BOARD_COMMENT_BNO}<br />
-								${comment.BAND_BOARD_COMMENT_CNO}<br />
-								${comment.BAND_BOARD_COMMENT_WRITER}<br />
-								${comment.BAND_BOARD_COMMENT_COMMENT}<br />
-								${comment.BAND_BOARD_COMMENT_REG}<br />
-							</c:forEach>
 							
 							<c:if test="${guest == 'member'}">
 								<form action="/tvlog/band/bb_comment.trip" method="post">
