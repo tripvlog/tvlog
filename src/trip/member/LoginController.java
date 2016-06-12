@@ -163,19 +163,19 @@ import org.springframework.web.servlet.ModelAndView;
 				String dbpath = (String)sqlmap.queryForObject("member_get_img", id);
 				if(dbpath.equals("default.jpg")){
 					String rp = request.getRealPath("//img//member//");
-					String orgName = mf.getOriginalFilename();  // �뜝�룞�삕�뜝�룞�삕 �뜝�떛紐뚯삕
-					String ext = orgName.substring(orgName.lastIndexOf("."));   // .�솗�뜝�룞�삕�뜝�룞�삕
-					String savName = dto.getId()+ext;   //�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떛紐뚯삕 : �뜝�룞�삕�뜝�떛�벝�삕+�솗�뜝�룞�삕�뜝�룞�삕
-					File sf = new File(rp+"//"+savName);  //rp�뜝�룞�삕�걹�뜝占� �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떛紐뚯삕 �뜝�뙇怨ㅼ삕 sf�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
-					mf.transferTo(sf);   //mf�뜝�룞�삕 sf�뜝�룞�삕 �뜝�뙐�먯삕�뜝�룞�삕
+					String orgName = mf.getOriginalFilename();  // 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈뼓筌뤿슣�굲
+					String ext = orgName.substring(orgName.lastIndexOf("."));   // .占쎌넇占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
+					String savName = dto.getId()+ext;   //占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈뼓筌뤿슣�굲 : 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈뼓占쎈쿈占쎌굲+占쎌넇占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
+					File sf = new File(rp+"//"+savName);  //rp占쎈쐻占쎈짗占쎌굲占쎄국占쎈쐻�뜝占� 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈뼓筌뤿슣�굲 占쎈쐻占쎈솂�ⓦ끉�굲 sf占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
+					mf.transferTo(sf);   //mf占쎈쐻占쎈짗占쎌굲 sf占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈솏占쎈Ŋ�굲占쎈쐻占쎈짗占쎌굲
 					dto.setPath(savName);
 					sqlmap.update("modifyUpdate", dto);
 				}
 				else{
 					String rp = request.getRealPath("//img//member//");
 					File deleteFile = new File(rp + dbpath);
-					deleteFile.delete();  //�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
-					// �뜝�뙐�룞�삕 �뜝�룞�삕�뜝�떥�슱�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
+					deleteFile.delete();  //占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
+					// 占쎈쐻占쎈솏占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈뼢占쎌뒻占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
 					String orgName = mf.getOriginalFilename();
 					String ext = orgName.substring(orgName.lastIndexOf("."));
 					String savName = dto.getId()+ext;
@@ -194,26 +194,26 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping("/member/myPage.trip")
 		public ModelAndView myPage(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
-			// �젙蹂댁닔�젙
+			// 占쎌젟癰귣똻�땾占쎌젟
 			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify",id);    
 			request.setAttribute("dto",dto);
-			// �룷�뒪�듃
+			// 占쎈７占쎈뮞占쎈뱜
 			int myPostListCount = (Integer)sqlmap.queryForObject("myPostListCount", id);			
 			List post = new ArrayList();
 			post = sqlmap.queryForList("myPostList", id);
-			// �씪�젙
+			// 占쎌뵬占쎌젟
 			int myScheduleListCount = (Integer)sqlmap.queryForObject("myScheduleListCount", id);
 			List schedule = new ArrayList();
 			schedule = sqlmap.queryForList("myScheduleList", id);
-			// 移쒓뎄
+			// 燁살뮄�럡
 			int myFriendListCount = (Integer)sqlmap.queryForObject("myFriendListCount", id);
 			List friend = new ArrayList();
 			friend = sqlmap.queryForList("myFriendList", id);
-			// �씪湲�
+			// 占쎌뵬疫뀐옙
 			int myDiaryListCount = (Integer)sqlmap.queryForObject("myDiaryListCount", id);
 			List diary = new ArrayList();
 			diary = sqlmap.queryForList("myDiaryList", id);
-			// 諛대뱶
+			// 獄쏅�諭�
 			int myBandListCount = (Integer)sqlmap.queryForObject("myBandListCount", id);
 			List band = new ArrayList();
 			band = sqlmap.queryForList("myBandList", id);
@@ -260,12 +260,14 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping("/member/myBand.trip")
 		public ModelAndView myBand(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
+			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify", id);
 			ModelAndView mv = new ModelAndView();
 			int myBandListCount = (Integer)sqlmap.queryForObject("myBandListCount", id);
 			List band = new ArrayList();
 			band = sqlmap.queryForList("myBandList", id);
 			mv.addObject("myBandListCount", myBandListCount);
 			mv.addObject("band", band);
+			mv.addObject("member", dto);
 			mv.setViewName("/member/myBand.jsp");
 			return mv;
 		}
@@ -273,12 +275,14 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping("/member/myDiary.trip")
 		public ModelAndView myDiary(HttpSession session, HttpServletRequest request){
 			String id = (String)session.getAttribute("memId");
+			LoginDTO dto = (LoginDTO)sqlmap.queryForObject("modify", id);
 			ModelAndView mv = new ModelAndView();
 			int myDiaryListCount = (Integer)sqlmap.queryForObject("myDiaryListCount", id);
 			List diary = new ArrayList();
 			diary = sqlmap.queryForList("myDiaryList", id);
 			mv.addObject("myDiaryListCount", myDiaryListCount);
 			mv.addObject("diary", diary);
+			mv.addObject("member", dto);
 			mv.setViewName("/member/myDiary.jsp");
 			return mv;
 		}

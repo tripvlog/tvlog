@@ -53,17 +53,37 @@
 	<select id="band_board_member_get" resultClass="trip.band.memberDTO" parameterClass="int">
 		select * from t_band_member_$band_id$ where band_member_level > 0
 	</select>
-
+	
+	<select id="band_member_guest" resultClass="trip.band.memberDTO" parameterClass="int">
+		select * from t_band_member_$band_id$ where band_member_level = 0
+	</select>
+	
 	<select id="band_img_get" resultClass="String" parameterClass="int">
 		select band_img from t_band where band_id = #band_id#
 	</select>
 	
-	<select id="band_member_img_get" resultClass="String" parameterClass="trip.band.memberDTO">
+	<select id="band_member_img" resultClass="String" parameterClass="trip.band.memberDTO">
 		select band_member_img from t_band_member_$band_id$ where band_member_id = #band_member_id#
 	</select>
 	
-	<select id="band_member_guest" resultClass="trip.band.memberDTO" parameterClass="int">
-		select * from t_band_member_$band_id$ where band_member_level = 0
+	<select id="band_member_get" resultClass="String" parameterClass="trip.band.memberDTO">
+		select band_member_img from t_band_member_$band_id$ where band_member_id = #band_member_id#
+	</select>
+	
+	<select id="band_leader_get" resultClass="String" parameterClass="trip.band.memberDTO">
+		select band_member_id from t_band_member_$band_id$ where band_member_level = 2
+	</select>
+	
+	<select id="band_board_img_get" resultClass="trip.band.imgDTO" parameterClass="int">
+		select board_img from t_band_board_imgs_$band_id$
+	</select>
+	
+	<select id="band_member_img_get" resultClass="trip.band.memberDTO" parameterClass="int">
+		select band_member_img from t_band_member_$band_id$
+	</select>
+	
+	<select id="band_member_list_get" resultClass="trip.band.memberDTO" parameterClass="int">
+		select band_member_id from t_band_member_$band_id$
 	</select>
 	
 <!-- =============================================================================== -->
@@ -103,6 +123,14 @@
 	<update id="band_join_confirm" parameterClass="trip.band.memberDTO">
 		update t_band_member_$band_id$ set band_member_level = 1, band_member_reg = sysdate where band_member_id = #band_member_id#
 	</update>
+	
+	<update id="band_new_leader_auto" parameterClass="int">
+		update t_band_member_$band_id$ set band_member_level = 2 where band_member_id = (select band_member_id from (select * from t_band_member_$band_id$ where band_member_level > 0 order by band_member_reg asc) where rownum = 1)
+	</update>
+	
+	<update id="band_leader_update" parameterClass="int">
+		update t_band set band_leader = (select band_member_id from t_band_member_$band_id$ where band_member_level = 2) where band_id = #band_id#
+	</update>
 <!-- =============================================================================== -->
 
 	<delete id="band_board_imgs_del" parameterClass="trip.band.imgDTO">
@@ -112,7 +140,47 @@
 	<delete id="band_board_del" parameterClass="trip.band.imgDTO">
 		delete t_band_board_$band_id$ where band_board_num = #board_num#
 	</delete>
+	
+	<delete id="band_member_delete" parameterClass="trip.band.memberDTO">
+		delete t_band_member_$band_id$ where band_member_id = #band_member_id#
+	</delete>
 
+	<delete id="band_leader_delete" parameterClass="int">
+		delete t_band_member_$band_id$ where band_member_level = 2
+	</delete>
+	
+	<delete id="member_band_delete" parameterClass="trip.member.BandListDTO">
+		delete t_member_band_$member_id$ where band_id = #band_id#
+	</delete>
+	
+	<delete id="band_delete" parameterClass="int">
+		delete t_band where band_id = #band_id#
+	</delete>
+	
+	<delete id="band_delete_table_board" parameterClass="int">
+		drop table t_band_board_$band_id$
+	</delete>
+	
+	<delete id="band_delete_sequence_board" parameterClass="int">
+		drop sequence t_band_board_$band_id$_seq
+	</delete>
+	
+	<delete id="band_delete_table_comment" parameterClass="int">
+		drop table t_band_board_comment_$band_id$
+	</delete>
+	
+	<delete id="band_delete_table_member" parameterClass="int">
+		drop table t_band_member_$band_id$
+	</delete>
+	
+	<delete id="band_delete_sequence_member" parameterClass="int">
+		drop sequence t_band_member_$band_id$_seq
+	</delete>
+	
+	<delete id="band_delete_table_board_imgs" parameterClass="int">
+		drop table t_band_board_imgs_$band_id$
+	</delete>
+	
 <!-- =============================================================================== -->
 	<insert id="band_create" parameterClass="trip.band.BandDTO">
 		insert into t_band(band_id, band_name, band_leader, band_intro, band_range, band_reg) values(t_band_seq.NEXTVAL, #band_name#, #band_leader#, #band_intro#, #band_range#, sysdate)
@@ -155,7 +223,7 @@
 	</insert>
 	
 	<insert id="band_insert_my_list" parameterClass="trip.member.BandListDTO">
-		insert into t_member_band_$member_id$ values(t_member_band_$member_id$_seq.NEXTVAL, #band_id#, #band_name#, #band_img#, sysdate)
+		insert into t_member_band_$member_id$ values(t_member_band_$member_id$_seq.NEXTVAL, #band_id#, #band_name#, #band_img#, 1, sysdate)
 	</insert>
 	
 	<insert id="band_join" parameterClass="java.util.Map">
