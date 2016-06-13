@@ -22,8 +22,8 @@
 		select * from (select * from t_band_board_$band_id$ a, t_member b where b.id = a.band_board_writer) order by band_board_reg desc
 	</select>
 	
-	<select id="band_comment" resultClass="trip.band.commentDTO" parameterClass="int">
-		select * from t_band_board_comment_$band_id$ order by BAND_BOARD_COMMENT_REG desc
+	<select id="band_comment" resultClass="trip.band.commentDTO" parameterClass="trip.band.commentDTO">
+		select * from t_band_board_comment_$band_id$ where band_board_comment_bno = #band_board_comment_bno# order by BAND_BOARD_COMMENT_REG asc
 	</select>
 	
 	<select id="main_band" resultClass="trip.band.BandDTO">
@@ -163,6 +163,10 @@
 	
 	<delete id="band_delete" parameterClass="int">
 		delete t_band where band_id = #band_id#
+	</delete>
+	
+	<delete id="band_comment_delete" parameterClass="trip.band.commentDTO">
+		delete t_band_board_comment_$band_id$ where band_board_comment_cno = #band_board_comment_cno#
 	</delete>
 	
 	<delete id="band_delete_table_board" parameterClass="int">

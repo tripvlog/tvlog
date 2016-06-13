@@ -230,10 +230,24 @@ public class BandAction {
 	}
 	
 	@RequestMapping("/band/bb_commentView.trip") // 댓글 출력
-	public String bb_commentView(HttpServletRequest request, int band_id){
-	    List board_comment = sqlMap.queryForList("band_comment", band_id);
+	public String bb_commentView(HttpServletRequest request, int band_id, int board_num, commentDTO commentdto){
+		System.out.println("bb_commentView.trip 호출");
+		System.out.println("band_id : " + band_id + ", board_num : " + board_num);
+		commentdto.setBand_board_comment_bno(board_num);
+		commentdto.setBand_id(band_id);
+	    List board_comment = sqlMap.queryForList("band_comment", commentdto);
+	    request.setAttribute("band_id", band_id);
 	    request.setAttribute("b_board_comments", board_comment);
 	    return "/band/commentview_band.jsp";
+	}
+	
+	@RequestMapping("band/bb_commentDel.trip")
+	public String bb_commentDel(HttpServletRequest request, int band_id, int comment_num, commentDTO commentdto){
+		System.out.println("band_id : " + band_id + ", comment_num : " + comment_num);
+		commentdto.setBand_id(band_id);
+		commentdto.setBand_board_comment_cno(comment_num);
+		sqlMap.delete("band_comment_delete", commentdto);
+		return "redirect:/band/b_view.trip?band_id=" + band_id;
 	}
 	@RequestMapping("/band/bb_delete.trip")
 	public String b_boardDelete(imgDTO imgdto, HttpSession session, HttpServletRequest request){
