@@ -32,7 +32,7 @@ select * from t_post where p_public < 2) order by regdate desc]]>
 </select>
 
 <select id="friendOnly" parameterClass="String" resultClass="dto">
-<![CDATA[ select * from(select a.* from (select * from t_post where p_public < 5) a, (select * from t_member_friend_$id$) b 
+<![CDATA[ select * from(select a.* from (select * from t_post where p_public < 5) a, (select * from t_member_friend_$id$ where friend_state=2) b 
 where a.id = b.friend_id) order by no desc]]>
 </select>
 
