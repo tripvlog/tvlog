@@ -82,37 +82,7 @@
 </style>
 <!-- 네이버 스마트 에디터 사용 부분 -->
 	<script type="text/javascript">
-	
-		var oEditors = [];
-		var oEditors2 = [];
-		$(document).ready(function() {
-			nhn.husky.EZCreator.createInIFrame({
-		    	oAppRef: oEditors2,
-	    		elPlaceHolder: "contentMain",
-	    		sSkinURI: "/tvlog/diary/diary_editor/SmartEditor2Skin.html",
-	    		fCreator: "createSEditor2"
-			});
-			
-			$("#savebutton").click(function(){
-				oEditors2.getById["contentMain"].exec("UPDATE_CONTENTS_FIELD", []);
-				$("#frm").submit();
-    			alert("작성이 완료되었습니다"); 
-			});
-		});
-		function editTest(idNum) {
-			nhn.husky.EZCreator.createInIFrame({
-	    		oAppRef: oEditors,
-	    		elPlaceHolder: idNum,
-	    		sSkinURI: "/tvlog/diary/diary_editor/SmartEditor2Skin.html",
-	    		fCreator: "createSEditor2"
-			});
-			$("#savebutton2").click(function(){
-	    		oEditors.getById[idNum].exec("UPDATE_CONTENTS_FIELD", []);
-				$("#form").submit();
-    			alert("내용 전송"); 
-    		});
-			
-		}
+
 		
 		function OpenWindow(url,intWidth,intHeight) { 
 		      window.open(url, "_blank", "width="+intWidth+",height="+intHeight+",resizable=1,scrollbars=1") ; 
@@ -127,31 +97,28 @@
 	       <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">일기</a></li>
 	  	</ul>
 	  	<div id="myTabContent" class="tab-content">
+	  		<!-- 포스트 탭 -->
 	    	<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
-	     		
-	     		
-	     		
-	     		
-	     		<!-- 확인할부분 -->
+	     		<br />
 	     		<div id="contain">
 				     <table border="0" cellspacing="0" cellpadding="2">
-				        <tr>
-				           <td align="center"><h2>포스트 게시판</h2></td>
-				        </tr>
+				        <tr>				        
 				        	<td>
 				        	<c:if test="${sessionScope.memId !=null }">
 				        		<div class="container" align="right">
-				        		<div class="btn-toobar" role="toolbar" aria-label="Toolbar with button groups">
-								<div class="btn-group" role="group" aria-label="First group">
-					    		<button type="button" onClick="javascript:location.href='/tvlog/post/postList.trip'" class="btn btn-success">전체포스트</button>
-					    		<button type="button" onClick="javascript:location.href='/tvlog/post/friendOnly.trip'" class="btn btn-success">친구포스트</button>
-					  	  		<button type="button" onClick="javascript:location.href='/tvlog/post/mypost.trip'" class="btn btn-success">내 포스트</button>
-					  	  		<button type="button" onClick="javascript:OpenWindow('friendManage.trip?','600','650')" class="btn btn-success">친구 관리</button>
-					  	  	<!-- <button type="button" onClick="javascript:OpenWindow('bandManage.trip?','600','400')" class="btn btn-success">밴드 관리</button> -->	
-					  			</div>
-					  			</div>
+					        		<div class="btn-toobar" role="toolbar" aria-label="Toolbar with button groups">
+										<div class="btn-group" role="group" aria-label="First group" style="margin-right: 15px;">
+								    		<button type="button" onClick="javascript:location.href='/tvlog/post/postList.trip'" class="btn btn-success">전체포스트</button>
+								    		<button type="button" onClick="javascript:location.href='/tvlog/post/friendOnly.trip'" class="btn btn-success">친구포스트</button>
+								  	  		<button type="button" onClick="javascript:location.href='/tvlog/post/mypost.trip'" class="btn btn-success">내 포스트</button>
+								  	  		<button type="button" onClick="javascript:OpenWindow('friendManage.trip?','600','650')" class="btn btn-success">친구 관리</button>
+								  	  	<!-- <button type="button" onClick="javascript:OpenWindow('bandManage.trip?','600','400')" class="btn btn-success">밴드 관리</button> -->	
+							  			</div>
+						  			</div>
+						  		</div>
 					  		</c:if>
 				        	</td>
+				        </tr>
 				        <tr>
 				           <td height="20"></td>
 				        </tr>
@@ -386,7 +353,7 @@
 				        
 				        
 				        <!-- 포스트 작성 모달 팝업 -->
-				   <form action="postWritePro.trip" method="post" enctype="multipart/form-data" id="frm">
+				   <form action="/tvlog/post/postWritePro.trip" method="post" enctype="multipart/form-data" id="frm">
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 					  <div class="modal-dialog" > <!-- 폼 폭 크게는 modal-lg를 오른쪽에 붙인다 -->
 					    <div class="modal-content">
@@ -410,7 +377,7 @@
 							</div>
 							
 							<div>
-							 <textarea name="content" id="contentMain" rows="10" cols="100"></textarea>
+							 <textarea name="content" id="content" rows="10" cols="100"></textarea>
 					      </div>
 					      	<select class="form-control" name="p_public">
 				         		 <option selected value="5">비공개</option>
@@ -434,35 +401,38 @@
 				   </table>
 				   </div>
 				   </div>
-	     		
-	     		
-	     		
-	     		
-	     		
+	
 	     		
 	     		
 	     		
 	     		
 	    	</div>
+	    	<!-- 일기 탭 -->
 	    	<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-	     		<table  width="1140px">
-					<c:forEach begin="0" end="${(fn:length(diary_select_1range) + 2) / 3 - 1}" var="row">
-						<tr>
-						    <c:forEach begin="0" end="2" var="col">
-						        <c:set var="vo" value="${diary_select_1range[row * 3 + col]}"/>
-						        <c:if test="${not empty vo}">
-						        <td  width="380px">
-						        	<div class="diary_select-content" style="background-image:url('/tvlog/img/myPage/myPageDefault.png');" onclick="window.location='/tvlog/diary/view.trip?num=${vo.diary_num}'">
-						        		${vo.diary_writer}<br />
-										${vo.diary_title}<br />			
-						        	</div>
-						        	<br />
-						        </td>
-						        </c:if>
-						    </c:forEach>
-						</tr>
-					</c:forEach>
-				</table>
+				<br />
+				<div id="totalDiv" style="margin-left: 15px">
+					<c:if test="${myDiaryListCount != 0}">
+						<h3>공개된 일기</h3>
+						<table width="1000" cellspacing="0" cellpadding="2" class="table">
+							<tr align="center"  class="active">
+								<td>일기 작성자</td>
+								<td>일기 제목</td>
+								<td>일기 보러가기</td>
+							</tr>
+							<c:forEach var="diaryDTO" items="${diary_select_1range}">
+							<tr align="center">
+								<td>${diaryDTO.diary_writer}</td>
+								<td>${diaryDTO.diary_title}</td>
+								<td><input type="button" value="이동" onclick="window.location='/tvlog/diary/view.trip?num=${diaryDTO.diary_num}'"></td>
+							</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+					<c:if test="${myScheduleListCount == 0}">
+						<h3>등록된 일정이 없습니다.</h3>
+						<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;"/>
+					</c:if>
+				</div>	
 	   		</div>
 		</div>
 	</div>
