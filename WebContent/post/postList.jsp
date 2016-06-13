@@ -15,39 +15,23 @@
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
 	<script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
 	<script type="text/javascript" src="/tvlog/diary/diary_editor/js/HuskyEZCreator.js" charset="utf-8"></script>
-	
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<!-- 네이버 스마트 에디터 사용 부분 -->
 	<script type="text/javascript">
 	
-		var oEditors = [];
-		var oEditors2 = [];
-		$(document).ready(function() {
-			nhn.husky.EZCreator.createInIFrame({
-		    	oAppRef: oEditors2,
-	    		elPlaceHolder: "contentMain",
-	    		sSkinURI: "/tvlog/diary/diary_editor/SmartEditor2Skin.html",
-	    		fCreator: "createSEditor2"
-			});
-			
-			$("#savebutton").click(function(){
-				oEditors2.getById["contentMain"].exec("UPDATE_CONTENTS_FIELD", []);
-				$("#frm").submit();
-    			alert("작성이 완료되었습니다"); 
-			});
-		});
-		function editTest(idNum) {
-			nhn.husky.EZCreator.createInIFrame({
-	    		oAppRef: oEditors,
-	    		elPlaceHolder: idNum,
-	    		sSkinURI: "/tvlog/diary/diary_editor/SmartEditor2Skin.html",
-	    		fCreator: "createSEditor2"
-			});
-			$("#savebutton2").click(function(){
-	    		oEditors.getById[idNum].exec("UPDATE_CONTENTS_FIELD", []);
-				$("#form").submit();
-    			alert("내용 전송"); 
-    		});
-			
+	
+		function error_login(sess){
+			var id = sess;
+			var content = document.getElementById("board_content").value;
+			if(id == null){
+				alert("로그인이 필요합니다");
+				return false;
+				}
+			if(content == ""){
+				alert("내용을 입력해주세요");
+				document.getElementById("board_content").focus();
+				return false;
+				}
 		}
 </script>
 
@@ -269,11 +253,11 @@
 	      			<div class="modal-authtor">
 	    				<left><a href="javascript:ccallAjax(${dto.no });"><img src="/tvlog/post/good.png" width="25"></a><span id="ggood${dto.no }">${dto.good}</span></left>  
 	      			</div>
-	    			<form action="comment.trip" method="post">
+	    			<form action="comment.trip" method="post" onsubmit="return error_login('${sessionScope.memId}')">
 	      				<input type="hidden" name="id" value="${sessionScpoe.memId }"/>
 	      				<input type="hidden" name="no" value="${dto.no }"/>
 	      				<div id="test33">
-	      					<input class="form-control" type="text" placeholder="코멘트를 입력하세요" name="content" />
+	      					<input class="form-control" type="text" placeholder="코멘트를 입력하세요" name="content" id="board_content"/>
 	       	 			</div>
 	      	 			<div id="test44">
 	      					<c:if test="${sessionScope.memId !=null }">
@@ -452,7 +436,7 @@
 			</div>
 			
 			<div>
-			 <textarea name="content" id="contentMain" rows="10" cols="100"></textarea>
+			 <textarea name="content" id="content" rows="10" cols="100"></textarea>
 	      </div>
 	      	<select class="form-control" name="p_public">
          		 <option selected value="5">비공개</option>

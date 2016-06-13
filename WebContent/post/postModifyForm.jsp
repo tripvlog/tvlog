@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <!DOCTYPE html>
     <link rel="stylesheet" href="/projcet/postboard/common/css/css.css" type="text/css">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -25,6 +26,7 @@
 
 </style>
 
+  <jsp:include page="/main/header.jsp" />
 <div class="container">
 <div class="well well-lg">
 <center>
@@ -59,23 +61,3 @@
 
 </center>
 </div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	var oEditors = [];
-	nhn.husky.EZCreator.createInIFrame({
-	    oAppRef: oEditors,
-	    elPlaceHolder: "content",
-	    sSkinURI: "/tvlog/diary/diary_editor/SmartEditor2Skin.html",
-	    fCreator: "createSEditor2"
-	});
-	
-	$("#savebutton").click(function(){
-	    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-	    $("#frm").submit();
-	    alert("수정, 로맨틱, 성공적");
-		})
-	
-})
-
-</script>

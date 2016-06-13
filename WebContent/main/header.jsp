@@ -29,6 +29,20 @@
 	</style>
 	<script type='text/javascript'> 
 		$(document).ready(function() {
+			var oEditors = [];
+			nhn.husky.EZCreator.createInIFrame({
+			    oAppRef: oEditors,
+			    elPlaceHolder: "content",
+			    sSkinURI: "/tvlog/diary/diary_editor/SmartEditor2Skin.html",
+			    fCreator: "createSEditor2"
+			});
+			
+			$("#savebutton").click(function(){
+			    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+			    $("#frm").submit();
+			   
+				})
+				
 			var $body = $(document.body);
 			var navHeight = $('.navbar').outerHeight(true) + 10;
 			$body.scrollspy({
