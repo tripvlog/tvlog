@@ -34,10 +34,10 @@
 
 	window.fbAsyncInit = function() {
 		FB.init({
-			appId : '276172122723346',
+			appId : '205692086490634',
 			cookie : true, // 쿠키가 세션을 참조할 수 있도록 허용
 			xfbml : true, // 소셜 플러그인이 있으면 처리
-			version : 'v2.4' // 버전
+			version : 'v2.6' // 버전
 		});
 
 	};
@@ -45,6 +45,7 @@
 		FB.login(function(response) {
 			if (response.authResponse) {
 				FB.api('/me',function(response) {
+					alert(response.name);
 					document.getElementById('status').innerHTML = 'Thanks for logging in, '+ response.name+ '!'+ response.id+ '!!!'+ response.picture;
 					window.location = "/tvlog/member/loginfbPro.trip?id="+ response.id;
 				});
