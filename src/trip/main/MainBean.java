@@ -45,7 +45,10 @@ public class MainBean {
 	
 	// 명소 찾기
 	@RequestMapping("/main/findPlace.trip")
-	public String findPlace(){
+	public String findPlace(HttpServletRequest request){
+		List scheduleList = sqlMap.queryForList("schedule.schedulePlace",null);
+		request.setAttribute("scheduleList", scheduleList);
+		request.setAttribute("count", scheduleList.size());
 		return "/main/findPlace.jsp";
 	}
 	

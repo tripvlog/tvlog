@@ -13,7 +13,7 @@
 			<i class="fa fa-map-marker" aria-hidden="true"></i> ${dto.sd_startpoint}
 		</c:if>
 		<c:if test="${dto.sd_status == 2}">
-			메모 : ${dto.sd_memo}
+			<i class="fa fa-map-marker" aria-hidden="true"></i>명소 :  ${dto.sd_startpoint}
 		</c:if>
 	</div>
     	

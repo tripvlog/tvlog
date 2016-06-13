@@ -7,78 +7,37 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link rel="stylesheet" href="/projcet/postboard/common/css/css.css" type="text/css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>트래블로그</title>
 <style>
 	.schedule-content{
-		width : 370px; 
-		height: 150px; 
-		padding-top : 100px;
+		width : 200px; 
+		height: 100px; 
+		padding-top : 50px;
 		border-radius:10px; 
 		margin-bottom:10px;  
 		opacity: 1;
-		font-size: 25px; 
+		font-size: 20px; 
 		font-weight: bold;
 		text-align: center; 
 		color: #ffffff;
 	}
-	#mainImg {
-	width: 1140px;
-	min-height: 270px;
-	background-size : 1140px;
-	background-image : url('/tvlog/img/findPlace/place.jpg');
-	text-align: center;
-	position:relative; 
-	}
-	#mainImg #p1{
-	font-size : 50px;	
-	font-weight: bold;
-	color: #FFFFFF;
-	position:absolute;
-	width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
-	height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto;
-	}
-	#mainImg #p2{
-	font-size : 20px;	
-	font-weight: bold;
-	position:absolute;
-	width:600px; left:0; right:0; margin-left:420px; margin-right:auto;
-	height:30px; top: 0; bottom:0; margin-top:180px; margin-bottom:auto;
-	}
-	
-	#main2{
-		font-size : 15px;
-		margin-top: :20px;
-		margin-bottom: :20px;
-		border-bottom : 2px solid #BDBDBD;
-	}
+
 </style>
+
 </head>
-<body id="mainBody">
-<jsp:include page="/main/header.jsp"></jsp:include>
+<body>
 <div class="container" id="container">
-		<div id="mainImg">
-			<p id="p1">
-				추천 명소
-			</p>
-		</div>
-		
-		<div id="main2">
-			<h3>등록된 명소 : ${count}개</h3>
-		</div>
-		
 		<div>
-		<br />
-		<c:if test="${count > 0 }">
+		<c:if test="${placeCount > 0 }">
 			<div id="post">
-			<table width="1140px">
-				<c:forEach begin="0" end="${(fn:length(scheduleList) + 2) / 3 - 1}" var="row">
+			<table width="400px">
+				<c:forEach begin="0" end="${(fn:length(place) + 2) / 3 - 1}" var="row">
 					<tr>
 					    <c:forEach begin="0" end="2" var="col">
-					        <c:set var="scheduleDTO" value="${scheduleList[row * 3 + col]}"/>
+					        <c:set var="scheduleDTO" value="${place[row * 3 + col]}"/>
 					        <c:if test="${not empty scheduleDTO}">
 					        	<td>
 					        		<div class="schedule-content"  data-toggle="modal" data-target="#scheduleModal${scheduleDTO.sd_num}"  style="background-image:url('/tvlog/img/schedule/${scheduleDTO.sd_orgfile}'); background-size: 100% 100%" >
@@ -101,8 +60,21 @@
 															<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${scheduleDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
 														</c:if>
 													</div>
-													<div class="panel-body">
-														<input type="button" value="close" class="btn btn-warning" data-dismiss="modal" />
+													<div class="panel-body"> 
+														<input type="hidden" id="1cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_num}" />
+														<input type="hidden" id="2cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.s_num}" />
+														<input type="hidden" id="3cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_startpoint}" />
+														<input type="hidden" id="4cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_endpoint}" />
+														<input type="hidden" id="5cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_memo}" />
+														<input type="hidden" id="6cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_transport}" />
+														<input type="hidden" id="7cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_orgfile}" />
+														<input type="hidden" id="8cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_savfile}" />
+														<input type="hidden" id="9cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_budget}" />
+														<input type="hidden" id="10cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_map}" />
+														<input type="hidden" id="11cho${scheduleDTO.sd_num}" name="sd_num" value="${scheduleDTO.sd_range}" />
+														<input type="hidden" id="12cho${scheduleDTO.sd_num}" name="sd_num" value="2" />
+														
+														<input type="button" value="등 록" class="btn btn-warning" data-dismiss="modal" onclick="placeSave('${scheduleDTO.sd_num}')" />
 													</div>
 												</div>
 											</div>
@@ -117,7 +89,7 @@
 			</table>
 			</div>
 		</c:if>
-		<c:if test="${scheduleCount == 0 }">
+		<c:if test="${placeCount == 0 }">
 			<h2>등록된 일정이 없습니다..!!</h2>
 		</c:if>
 		</div>

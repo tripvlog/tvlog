@@ -74,6 +74,7 @@
       	formData.append("sd_status",$('#sd_status1').val());
       	formData.append("sd_map",$('#latlng').val());
       	formData.append("sd_memo",$('#map_sd_memo').val());
+      	formData.append("sd_savfile",$('#address').val());
       	$.ajax({
    	        type: "post",
    	        url : "/tvlog/schedule/schedule-detail-Map.trip",
@@ -84,28 +85,28 @@
    	        error: whenError	//페이지요청 실패시 실행함수
         });
     }
-    
-    /*
-    function asdfadsfafe222(){
-    	tdid = objTd.getAttribute('id');
+
+	function placeSave(num){
+		tdid = objTd.getAttribute('id');
 		 $.ajax({
-	 	        type: "post",
-	 	        url : "/tvlog/schedule/schedule-detail-Map.trip",
-	 	        data: {	// url 페이지도 전달할 파라미터
-	 	    	    sd_tdid : tdid, 
-	 	    	    s_num : $('#s_num').val(),
-	 	    	   	sd_startpoint : $('#placename').val(),
-	 	    	    sd_status : $('#sd_status1').val(),
-		        	sd_map : $('#latlng').val()
+		        type: "post",
+		        url : "/tvlog/schedule/schedule-detail-transport.trip",
+		        data: {	// url 페이지도 전달할 파라미터
+		    	    sd_tdid : tdid,
+		    	    sd_num : $('#1cho'+num).val(),
+		    	    s_num : $('#2cho'+num).val(),
+		    	    sd_startpoint : $('#3cho'+num).val(),
+		    	    sd_memo : $('#5cho'+num).val(),
+		    	    sd_savfile : $('#8cho'+num).val(),
+		    	    sd_map : $('#10cho'+num).val(),
+		        	sd_status : $('#12cho'+num).val(),
+		        	
 		        },
-	 	        success: success,	// 페이지요청 성공시 실행 함수
-	 	        error: whenError	//페이지요청 실패시 실행함수
-	      	});	
-      }
-    */
-    
-    
-    
+		        success: success,	// 페이지요청 성공시 실행 함수
+		        error: whenError	//페이지요청 실패시 실행함수
+	   	});	
+	}
+
     function rangeChange(rc){
     	document.getElementById("s_range").value = rc;
     	var ih;
@@ -482,7 +483,7 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 						</button>
-						<h class="modal-title" id="myModalLabel">Modal title</h6>
+						<h class="modal-title" id="myModalLabel">스케줄 등록</h6>
 					</div>
 					<!-- 모달 내용 -->
 					<div class="modal-body">
@@ -491,7 +492,7 @@
 							<ul id="myTab" class="nav nav-tabs" role="tablist">
 								<li role="presentation" class="active"><a data-target="#transport" id="transport-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">교통</a></li>
 								<li role="presentation" class=""><a data-target="#place" role="tab" id="place-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">장소</a></li>
-								<li role="presentation" class=""><a data-target="#memo" role="tab" id="memo-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">메모</a></li>
+								<li role="presentation" class=""><a data-target="#memo" role="tab" id="memo-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">명소</a></li>
 							</ul>
 							
 							<div id="myTabContent" class="tab-content">
@@ -567,18 +568,48 @@
 								</div>
 								<!-- 장소 탭 끝 -->
 
-								<!-- 메모 탭 시작 -->
+								<!-- 명소 탭 시작 -->
 								<div role="tabpanel" class="tab-pane fade" id="memo" aria-labelledby="memo-tab">
 								<form action="" method="post">	
 									<br />
-									<div class="row" id="row2">
-         								<textarea class="form-control" name="sd_memo" id="memo" placeholder="메모를 입력하세요"  maxlength="20000"></textarea>
-         								<br />
+									<script>
+									function goSearch2(){
+										var keyword = document.getElementById("search").value;
+										if(keyword == ""){
+											alert("키워드를 입력하세요");
+										}else{
+											$.ajax({
+									 	        type: "post",
+									 	        url : "/tvlog/schedule/place-search.trip?keyword="+keyword,
+									 	        success: success2,	// 페이지요청 성공시 실행 함수
+									 	        error: whenError2	//페이지요청 실패시 실행함수
+									      	});	
+										}
+									}
+									function success2(aaa){	// 요청성공한 페이지정보가 aaa 변수로 콜백된다. 
+										document.getElementById("searchList").innerHTML=aaa;
+								        
+								    }
+								    function whenError2(){
+								        alert("Error");
+								    }
+									</script>
+									<div class="row" id="p2">
+										<div class="col-sm-6">
+							   				<div class="input-group">
+										    	<span class="input-group-addon">
+													<i class="fa fa-search" aria-hidden="true"></i>
+												</span>
+												<input type="text" id="search" class="form-control">
+											</div><!-- /input-group -->
+											<input type="button" class="btn btn-success" value="검색" onclick="goSearch2()">
+										</div><!-- /.col-sm-6 -->
 									</div>
-									<input type="submit" class="btn btn-success" value="저장">
+									<div id="searchList" style="float:none;"></div>
+									<input type="button" class="btn btn-success" value="저장">
 								</form>
 								</div>
-								<!-- 메모 탭 끝 -->
+								<!-- 명소 탭 끝 -->
 							</div>
 							<!-- 탭 끝 -->
 						</div>

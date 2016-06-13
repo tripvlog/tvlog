@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<link rel="stylesheet" href="/projcet/postboard/common/css/css.css" type="text/css">
+<link rel="stylesheet" href="/tvlog/css/default.css" type="text/css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
@@ -85,6 +85,9 @@
 	#diaryContent img{
 		width: 700px;
 	}
+	#diaryContent{
+		text-align: left;
+	} 
 	#btn{
 		float: right;
 	}
@@ -93,7 +96,7 @@
 	width: 1140px;
 	min-height: 270px;
 	background-size : 1140px;
-	background-image : url('/tvlog/img/diary/test6.jpg');
+	background-image : url('/tvlog/img/diary/diaryimage.jpg');
 	text-align: center;
 	position:relative; 
 	}
@@ -127,7 +130,7 @@
 		} 
 </script>
 </head>
-<body>
+<body id="mainBody">
 	<jsp:include page="/main/header.jsp"></jsp:include>
 	<div class="container" id="container">
 		<div id="mainImg">
@@ -138,7 +141,7 @@
 		
 		<div id="main2">
 			
-			<h3>공개된 일정 : 10개</h3>
+			<h3>공개된 일기 : ${myDiaryListCount}개</h3>
 
 		</div>
 		
@@ -155,8 +158,10 @@
 					<c:forEach var="diaryDTO" items="${diary_select_1range}">
 						<tr align="center">
 							<td width="30%">${diaryDTO.diary_writer}</td>
-							<td data-toggle="modal" data-target="#diaryModal${diaryDTO.diary_num}">
+							<td>
+								<div data-toggle="modal" data-target="#diaryModal${diaryDTO.diary_num}">
 								${diaryDTO.diary_title}
+								</div>
 								<div class="modal fade" id="diaryModal${diaryDTO.diary_num}"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							    	<div class="modal-dialog modal-lg" >
 							    		<div class="modal-content" >
@@ -165,12 +170,11 @@
 													<div class="panel-heading">
 														<h3>${diaryDTO.diary_writer}님 일기</h3>
 													</div>
-													<div class="panel-body" >
+													<div class="panel-body" id="diaryContent">
 														${diaryDTO.diary_content}
 													</div>
 													<div class="panel-body">
-								
-														<input type="button" value="취소" class="btn btn-warning" data-dismiss="modal" />
+														<input type="button" value="close" class="btn btn-warning" data-dismiss="modal" />
 													</div>
 												</div>
 											</div>

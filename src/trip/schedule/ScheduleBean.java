@@ -194,6 +194,18 @@ public class ScheduleBean {
 		return "/main/findSchedule.jsp";
 	}
 	
+	@RequestMapping("/schedule/place-search.trip")
+	public String placesearch(HttpServletRequest request,String keyword){
+		List place = null;
+		
+		place = sqlMap.queryForList("schedule.placeSearch", keyword);
+		
+		request.setAttribute("place", place);
+		request.setAttribute("placeCount", place.size());
+		System.out.println(place.size());
+		return "/schedule/placeSearch.jsp";
+	}
+	
 	@RequestMapping("/schedule/schedule-del.trip")
 	public String scheduleDel(HttpServletRequest request, int s_num){
 		sqlMap.delete("schedule.scheduleDelete",s_num);

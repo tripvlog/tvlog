@@ -21,6 +21,10 @@
 		select * from t_schedule where s_title like '%'||#keyword#||'%'
 	</select>
 	
+	<select id="placeSearch" resultClass="scheduleDetail" parameterClass="String">
+		select * from t_schedule_detail where sd_savfile like '%'||#keyword#||'%'
+	</select>
+	
 	
 	<insert id="scheduleDetailInsert" parameterClass="scheduleDetail">
 		insert into t_schedule_detail  
@@ -99,4 +103,7 @@
 		update t_schedule set s_mainimg=#s_mainimg# where s_num=#s_num#
 	</update>
 	
+	<select id="schedulePlace" resultClass="scheduleDetail">
+		select * from t_schedule_detail where sd_map is not null
+	</select>
 </sqlMap>

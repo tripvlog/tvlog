@@ -147,8 +147,10 @@ function initAutocomplete() {
       //alert(address+"--"+place.geometry.location.lng());  //검색위치의 위도, 경도 구하는 거
       var latlng = place.geometry.location.lat() + ":"+place.geometry.location.lng();  
       var loc = parent.document.getElementById('mylocation');
+     	
       loc.innerHTML="<i class='fa fa-hand-o-right' aria-hidden='true'></i> 지명 : "+place.name+" <br />"+
      			    "<i class='fa fa-hand-o-right' aria-hidden='true'></i> 주소 : "+address+" <br />"+
+     			    "<input type='hidden' id='address' value='"+address+"'>"+
      			    "<input type='hidden' id='latlng' value='"+latlng+"'><input type='hidden' id='placename' value='"+place.name+"'>"+
      			    "<input type='file' name='placeImg'> <br />"+
      			    "<input type='text' name='sd_memo' id='map_sd_memo' placeholder='장소 메모를 남겨보세요' > ";
@@ -165,6 +167,7 @@ function initAutocomplete() {
     var bounds = map.getBounds();
     searchBox.setBounds(bounds);
   });
+  
 }
  
 //페이지 로드시 initialize()호출
