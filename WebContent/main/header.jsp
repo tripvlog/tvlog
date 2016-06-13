@@ -83,7 +83,8 @@
     				<li class="#about"><a href="/tvlog/main/findSchedule.trip" id="navlink">여행일정 찾기</a></li>
     				<li class="#about"><a href="/tvlog/main/findPlace.trip" id="navlink">명소 찾기</a></li>
     				<li class="#about"><a href="/tvlog/band/b_list.trip" id="navlink">밴드</a></li>
-    				<li class="#about"><a href="/tvlog/main/community.trip" id="navlink">커뮤니티</a></li>
+    				<li class="#about"><a href="/tvlog/post/postList.trip" id="navlink">포스트</a></li>
+    				<li class="#about"><a href="/tvlog/main/community.trip" id="navlink">다이어리</a></li>
     				<li class="#about"><a href="#" id="navlink"  data-toggle="modal" data-target="#scheduleModal" data-whatever="@mdo">일정 만들기</a></li>  						
     				<!-- 관리자 로그인 -->
     				<c:if test="${sessionScope.memId == 'tripvlog05'}">

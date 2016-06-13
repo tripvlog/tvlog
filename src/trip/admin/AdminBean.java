@@ -288,12 +288,15 @@ public class AdminBean {
 	@RequestMapping("/admin/bandDeleteManagement.trip")
 	public String bandDeleteManagement(int band_id) {
 		sqlMap.delete("admin.bandDeleteList", band_id);
-		sqlMap.delete("admin.delete_band", band_id);
-		sqlMap.delete("admin.delete_band_seq", band_id);
-		sqlMap.delete("admin.delete_band_comment", band_id);
-		sqlMap.delete("admin.delete_band_member", band_id);
-		sqlMap.delete("admin.delete_band_member_seq", band_id);
-		sqlMap.delete("admin.delete_band_imgs", band_id);
+		
+		sqlMap.delete("band_delete", band_id);
+		sqlMap.delete("band_delete_table_board", band_id);
+		sqlMap.delete("band_delete_sequence_board", band_id);
+		sqlMap.delete("band_delete_table_comment", band_id);
+		sqlMap.delete("band_delete_sequence_comment", band_id);
+		sqlMap.delete("band_delete_table_member", band_id);
+		sqlMap.delete("band_delete_sequence_member", band_id);
+		sqlMap.delete("band_delete_table_board_imgs", band_id);
 		return "redirect:/admin/bandManagement.trip";
 	}
 	/* *******밴드 관리자 페이지 끝******* */
