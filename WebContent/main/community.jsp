@@ -93,8 +93,10 @@
 	<jsp:include page="/main/header.jsp"></jsp:include>
 	<div class="container" id="container">
 		<div id="totalDiv" style="margin-left: 15px">
-			<c:if test="${myDiaryListCount != 0}">
-				<h3>다이어리</h3> <button type="button" onclick="javascript:location.href='/tvlog/diary/editor.trip'">일기 쓰기</button>
+				<h3>다이어리</h3> 
+				<c:if test="${sessionScope.memId != null}">
+					<button type="button" onclick="javascript:location.href='/tvlog/diary/editor.trip'">일기 쓰기</button>
+				</c:if>
 				<table width="1000" cellspacing="0" cellpadding="2" class="table">
 					<tr align="center"  class="active">
 						<td>일기 작성자</td>
@@ -109,11 +111,6 @@
 						</tr>
 					</c:forEach>
 				</table>
-			</c:if>
-			<c:if test="${myScheduleListCount == 0}">
-				<h3>등록된 일정이 없습니다.</h3>
-				<img src="/tvlog/img/myPage/nocontent.PNG" style="width:120px;height:150px;"/>
-			</c:if>
 		</div>	
 	</div>
 </body>
