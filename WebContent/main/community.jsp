@@ -9,6 +9,9 @@
 <head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="/projcet/postboard/common/css/css.css" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
 <script src="http://googledrive.com/host/0B-QKv6rUoIcGREtrRTljTlQ3OTg"></script><!-- ie10-viewport-bug-workaround.js -->
 <script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js -->
 <script type="text/javascript" src="/tvlog/diary/diary_editor/js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -79,11 +82,46 @@
 	width:700px;
 	margin:auto;
 	}
+	#diaryContent img{
+		width: 700px;
+	}
+	#btn{
+		float: right;
+	}
+	
+	#mainImg {
+	width: 1140px;
+	min-height: 270px;
+	background-size : 1140px;
+	background-image : url('/tvlog/img/diary/test6.jpg');
+	text-align: center;
+	position:relative; 
+	}
+	#mainImg #p1{
+	font-size : 50px;	
+	font-weight: bold;
+	color: #FFFFFF;
+	position:absolute;
+	width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
+	height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto;
+	}
+	#mainImg #p2{
+	font-size : 20px;	
+	font-weight: bold;
+	position:absolute;
+	width:600px; left:0; right:0; margin-left:420px; margin-right:auto;
+	height:30px; top: 0; bottom:0; margin-top:180px; margin-bottom:auto;
+	}
+	
+	#main2{
+		font-size : 15px;
+		margin-top: :20px;
+		margin-bottom: :20px;
+		border-bottom : 2px solid #BDBDBD;
+	}
 </style>
 <!-- 네이버 스마트 에디터 사용 부분 -->
 	<script type="text/javascript">
-
-		
 		function OpenWindow(url,intWidth,intHeight) { 
 		      window.open(url, "_blank", "width="+intWidth+",height="+intHeight+",resizable=1,scrollbars=1") ; 
 		} 
@@ -92,22 +130,56 @@
 <body>
 	<jsp:include page="/main/header.jsp"></jsp:include>
 	<div class="container" id="container">
+		<div id="mainImg">
+			<p id="p1">
+				다이어리
+			</p>
+		</div>
+		
+		<div id="main2">
+			
+			<h3>공개된 일정 : 10개</h3>
+
+		</div>
+		
 		<div id="totalDiv" style="margin-left: 15px">
 				<h3>다이어리</h3> 
 				<c:if test="${sessionScope.memId != null}">
-					<button type="button" onclick="javascript:location.href='/tvlog/diary/editor.trip'">일기 쓰기</button>
+					<button id="btn" type="button" class="btn btn-success" onclick="javascript:location.href='/tvlog/diary/editor.trip'">일기 쓰기</button>
 				</c:if>
 				<table width="1000" cellspacing="0" cellpadding="2" class="table">
 					<tr align="center"  class="active">
 						<td>일기 작성자</td>
 						<td>일기 제목</td>
-						<td>일기 보러가기</td>
 					</tr>
 					<c:forEach var="diaryDTO" items="${diary_select_1range}">
 						<tr align="center">
-							<td>${diaryDTO.diary_writer}</td>
-							<td>${diaryDTO.diary_title}</td>
-							<td><input type="button" value="이동" onclick="window.location='/tvlog/diary/view.trip?num=${diaryDTO.diary_num}'"></td>
+							<td width="30%">${diaryDTO.diary_writer}</td>
+							<td data-toggle="modal" data-target="#diaryModal${diaryDTO.diary_num}">
+								${diaryDTO.diary_title}
+								<div class="modal fade" id="diaryModal${diaryDTO.diary_num}"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							    	<div class="modal-dialog modal-lg" >
+							    		<div class="modal-content" >
+							      			<div class="modal-header" >
+												<div class="panel panel-success" >
+													<div class="panel-heading">
+														<h3>${diaryDTO.diary_writer}님 일기</h3>
+													</div>
+													<div class="panel-body" >
+														${diaryDTO.diary_content}
+													</div>
+													<div class="panel-body">
+								
+														<input type="button" value="취소" class="btn btn-warning" data-dismiss="modal" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+												
+							</td>
+							
 						</tr>
 					</c:forEach>
 				</table>
