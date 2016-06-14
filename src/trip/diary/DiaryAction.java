@@ -28,7 +28,7 @@ public class DiaryAction {
 	public String submit(HttpServletRequest request, HttpSession session, ImgVO vo){
 		vo.setDiary_writer((String)session.getAttribute("memId"));
 		sqlMap.insert("diary_insert", vo);
-		return "redirect:/main/community.jsp";
+		return "redirect:/main/community.trip";
 	}
 	@RequestMapping("/diary/diaryPro.trip")
 	public String diaryPro(HttpServletRequest req, MultipartHttpServletRequest mtreq) throws Exception{

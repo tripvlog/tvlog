@@ -84,7 +84,7 @@
 	width: 1140px;
 	min-height: 270px;
 	background-size : 1140px;
-	background-image : url('/tvlog/img/post/postimage.jpg');
+	background-image : url('/tvlog/img/post/place.jpg');
 	text-align: center;
 	position:relative; 
 	}
