@@ -9,77 +9,90 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>트래블로그</title>
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="/tvlog/admin/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="/tvlog/admin/style2.css" />
+		<style>
+			.content-list{
+				width : 370px; 
+				height: 150px; 
+				padding-top : 30px;
+				border-radius:10px; 
+				margin-top:10px;
+				margin-bottom:10px; 
+				margin-right:10px;
+				opacity: 1;
+				font-size: 25px; 
+				font-weight: bold;
+				text-align: center; 
+				color: #ffffff;
+				background-color: #BCE55C;
+			}
+		</style>
 	</head>
 	<body>
+		<jsp:include page="/main/header.jsp" /><br />
 		<div class="container">
 			<div id="theGrid" class="main">
-					<a class="grid__item" href="/tvlog/admin/postManagement.trip">
+				<div class="content-list" onclick="window.location='/tvlog/admin/postManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Post All Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${postAllCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/postDayManagement.trip">
+				</div>
+				
+				<div class="content-list" onclick="window.location='/tvlog/admin/postDayManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Post Day Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${postDayCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/scheduleManagement.trip">
+					
+				</div>
+				<div class="content-list" onclick="window.location='/tvlog/admin/scheduleManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Schedule All Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${scheduleAllCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/scheduleDayManagement.trip">
+				</div>
+				
+				<div class="content-list" onclick="window.location='/tvlog/admin/scheduleDayManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Schedule Day Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${scheduleDayCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/bandManagement.trip">
+				</div>
+				
+				<div class="content-list" onclick="window.location='/tvlog/admin/bandManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Band All Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${bandAllCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/bandDayManagement.trip">
+				</div>
+						
+				<div class="content-list" onclick="window.location='/tvlog/admin/bandDayManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Band Day Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${bandDayCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/memberManagement.trip">
+				</div>
+				
+				<div class="content-list" onclick="window.location='/tvlog/admin/memberManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Member Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${memberAllCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/diaryManagement.trip">
+				</div>
+				
+				<div class="content-list" onclick="window.location='/tvlog/admin/diaryManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Diary All Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${diaryAllCount} </span>
 						</div>
-					</a>
-					<a class="grid__item" href="/tvlog/admin/diaryDayManagement.trip">
+				</div>
+				
+				<div class="content-list" onclick="window.location='/tvlog/admin/diaryManagement.trip'" style="float: left;">
 						<h2 class="title title--preview"> Diary Day Count</h2>
-						<div class="loader"></div>
 						<div class="meta meta--preview">
 							<span class="meta__avatar"> ${diaryDayCount} </span>
 						</div>
-					</a>
-				</section>
+				</div>
 			</div>
 		</div>
 	</body>
