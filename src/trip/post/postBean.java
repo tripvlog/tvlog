@@ -406,7 +406,6 @@ public class postBean {
       mv.addObject("currentPage", currentPage);
       mv.addObject("PagingHtml", pagingHtml);
       mv.addObject("find",find);
-      System.out.println(find);
       
       mv.setViewName("/post/postList.jsp");
       
@@ -832,6 +831,7 @@ public class postBean {
    public String bandSearch(String bandname, BandDTO dto, HttpServletRequest request){
 	   List<BandDTO> list =null;
 	   list = sqlMapClientTemplate.queryForList("post.bandSearch",bandname);   
+	   request.setAttribute("count", list.size());
 	   request.setAttribute("b_list", list);
 	   
 	   return "/band/list_band.jsp";

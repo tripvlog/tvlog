@@ -36,13 +36,13 @@ public class BandAction {
 		banddto.setBand_leader((String)session.getAttribute("memId"));
 		sqlMap.insert("band_create", banddto);
 		banddto.setBand_id((int)sqlMap.queryForObject("band_selectLastId", null));
-		sqlMap.insert("band_create_table_board", banddto.getBand_id());	// 밴드마다 게시판 테이블 생성
-		sqlMap.insert("band_create_sequence_board",banddto.getBand_id()); // 게시판 시퀀스 생성
-		sqlMap.insert("band_create_table_comment", banddto.getBand_id()); // 댓글 테이블 생성
-		sqlMap.insert("band_create_sequence_comment", banddto.getBand_id()); // 댓글 시퀀스 생성
-		sqlMap.insert("band_create_table_member", banddto.getBand_id()); // 멤버 테이블 생성
-		sqlMap.insert("band_create_sequence_member", banddto.getBand_id()); // 멤버 시퀀스 생성
-		sqlMap.insert("band_create_table_board_imgs", banddto.getBand_id()); // 밴드 게시물에 올라오는 이미지를 기록할 테이블 생성
+		sqlMap.insert("band_create_table_board", banddto.getBand_id());	// 諛대뱶留덈떎 寃뚯떆�뙋 �뀒�씠釉� �깮�꽦
+		sqlMap.insert("band_create_sequence_board",banddto.getBand_id()); // 寃뚯떆�뙋 �떆���뒪 �깮�꽦
+		sqlMap.insert("band_create_table_comment", banddto.getBand_id()); // �뙎湲� �뀒�씠釉� �깮�꽦
+		sqlMap.insert("band_create_sequence_comment", banddto.getBand_id()); // �뙎湲� �떆���뒪 �깮�꽦
+		sqlMap.insert("band_create_table_member", banddto.getBand_id()); // 硫ㅻ쾭 �뀒�씠釉� �깮�꽦
+		sqlMap.insert("band_create_sequence_member", banddto.getBand_id()); // 硫ㅻ쾭 �떆���뒪 �깮�꽦
+		sqlMap.insert("band_create_table_board_imgs", banddto.getBand_id()); // 諛대뱶 寃뚯떆臾쇱뿉 �삱�씪�삤�뒗 �씠誘몄�瑜� 湲곕줉�븷 �뀒�씠釉� �깮�꽦
 		
 		String leader_name = (String)sqlMap.queryForObject("member_get_name", banddto.getBand_leader());
 		Map map = new HashMap();
@@ -51,7 +51,7 @@ public class BandAction {
 		map.put("leader_name", leader_name);
 		String memberImg = (String)sqlMap.queryForObject("member_get_img", banddto.getBand_leader());
 		map.put("band_member_img", memberImg);
-		sqlMap.insert("band_insert_leader", map); // 밴드 멤버안에 리더 추가
+		sqlMap.insert("band_insert_leader", map); // 諛대뱶 硫ㅻ쾭�븞�뿉 由щ뜑 異붽�
 		
 		listdto.setBand_id(banddto.getBand_id());
 		listdto.setBand_name(banddto.getBand_name());
@@ -87,6 +87,7 @@ public class BandAction {
 	public String bandList(HttpServletRequest request, HttpSession session, BandDTO banddto, memberDTO memberdto){
 		List list = sqlMap.queryForList("band_select", null);
 		request.setAttribute("b_list", list);
+		request.setAttribute("count", list.size());
 		return "/band/list_band.jsp";
 	}
 	
@@ -94,9 +95,9 @@ public class BandAction {
 	public String bandView(HttpServletRequest request, HttpSession session, int band_id, BandDTO banddto, boardDTO boarddto, memberDTO memdto, trip.member.BandListDTO bandlistdto){
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 		List band_board = sqlMap.queryForList("band_content", banddto.getBand_id());
-		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
+		List bandlist = sqlMap.queryForList("main_band", null); // �궗�슜�옄�뿉寃� �떎瑜� 諛대뱶 異붿쿇 
 		
-		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
+		if(session.getAttribute("memId") != null){	// 濡쒓렇�씤�씠 �릺�뼱�엳�떎硫� 濡쒓렇�씤�븳 �쉶�썝�뿉 諛대뱶 媛��엯 紐⑸줉�쓣 媛��졇�샂
 			bandlistdto.setMember_id((String)session.getAttribute("memId"));
 			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
 			System.out.println(band_list.size());
@@ -165,9 +166,9 @@ public class BandAction {
 		imgdto.setBoard_num(boarddto.getBand_board_num());
 		imgdto.setBand_id(Integer.parseInt(request.getParameter("band_id")));
 		
-		if(request.getParameter("modify").equals("complete")){ // 내용수정일 경우 동작
+		if(request.getParameter("modify").equals("complete")){ // �궡�슜�닔�젙�씪 寃쎌슦 �룞�옉
 			sqlMap.update("band_modify_content", boarddto);
-			for(MultipartFile multi : band_board_img){ // 새로 업로드 되는 이미지가 있다면 기존 이미지는 삭제
+			for(MultipartFile multi : band_board_img){ // �깉濡� �뾽濡쒕뱶 �릺�뒗 �씠誘몄�媛� �엳�떎硫� 湲곗〈 �씠誘몄��뒗 �궘�젣
 				if(!multi.getOriginalFilename().equals("")){
 					List board_img = sqlMap.queryForList("band_board_img_select", imgdto);
 					if(!board_img.toString().equals("[]")){
@@ -181,11 +182,11 @@ public class BandAction {
 						}
 					}
 				}
-				sqlMap.delete("band_board_imgs_del", imgdto); // db에 저장된 이미지 목록 제거
+				sqlMap.delete("band_board_imgs_del", imgdto); // db�뿉 ���옣�맂 �씠誘몄� 紐⑸줉 �젣嫄�
 				board_maxnum = boarddto.getBand_board_num();
 			}
 		}else{
-			sqlMap.insert("band_board_write", boarddto); // 내용 작성
+			sqlMap.insert("band_board_write", boarddto); // �궡�슜 �옉�꽦
 			board_maxnum = (int) sqlMap.queryForObject("band_board_maxnum", imgdto.getBand_id());
 		}
 		imgdto.setBoard_num(board_maxnum);
@@ -230,9 +231,9 @@ public class BandAction {
 		return "redirect:/band/b_view.trip?band_id=" + band_id;
 	}
 	
-	@RequestMapping("/band/bb_commentView.trip") // 댓글 출력
+	@RequestMapping("/band/bb_commentView.trip") // �뙎湲� 異쒕젰
 	public String bb_commentView(HttpServletRequest request, int band_id, int board_num, commentDTO commentdto){
-		System.out.println("bb_commentView.trip 호출");
+		System.out.println("bb_commentView.trip �샇異�");
 		System.out.println("band_id : " + band_id + ", board_num : " + board_num);
 		commentdto.setBand_board_comment_bno(board_num);
 		commentdto.setBand_id(band_id);
@@ -270,9 +271,9 @@ public class BandAction {
 
 	@RequestMapping("/band/b_modify.trip")
 	public String b_modify(HttpServletRequest request, HttpSession session, BandDTO banddto, memberDTO memberdto, trip.member.BandListDTO bandlistdto, int band_id){
-		List bandlist = sqlMap.queryForList("main_band", null); // 사용자에게 다른 밴드 추천 
+		List bandlist = sqlMap.queryForList("main_band", null); // �궗�슜�옄�뿉寃� �떎瑜� 諛대뱶 異붿쿇 
 		banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
-		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
+		if(session.getAttribute("memId") != null){	// 濡쒓렇�씤�씠 �릺�뼱�엳�떎硫� 濡쒓렇�씤�븳 �쉶�썝�뿉 諛대뱶 媛��엯 紐⑸줉�쓣 媛��졇�샂
 			bandlistdto.setMember_id((String)session.getAttribute("memId"));
 			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
 			request.setAttribute("band_list", band_list);
@@ -306,7 +307,7 @@ public class BandAction {
 			if(!band_img.equals("")){
 				String bef_img = (String)sqlMap.queryForObject("band_img_get", band_id);
 				System.out.println("bef_img : " + bef_img);
-				if(!bef_img.equals("") && !bef_img.equals("default.jpg")){ // db에 기존 이미지가 있을 경우 삭제
+				if(!bef_img.equals("") && !bef_img.equals("default.jpg")){ // db�뿉 湲곗〈 �씠誘몄�媛� �엳�쓣 寃쎌슦 �궘�젣
 					String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 					String img = filePath + bef_img;
 					File imgfile = new File(img);
@@ -374,7 +375,7 @@ public class BandAction {
 		}else{
 			confirm = request.getParameter("confirm");
 		}
-		if(confirm.equals("yes")){ // 밴드리더가 가입승인
+		if(confirm.equals("yes")){ // 諛대뱶由щ뜑媛� 媛��엯�듅�씤
 			sqlMap.update("band_join_confirm", memberdto);
 			banddto = (BandDTO)sqlMap.queryForObject("band_view", band_id);
 			bandlistdto.setBand_id(band_id);
@@ -382,10 +383,10 @@ public class BandAction {
 			bandlistdto.setBand_img(banddto.getBand_img());
 			bandlistdto.setMember_id(memberdto.getBand_member_id());
 			
-			// 승인된 id db에 있는 밴드목록에 해당 밴드 추가해야함
+			// �듅�씤�맂 id db�뿉 �엳�뒗 諛대뱶紐⑸줉�뿉 �빐�떦 諛대뱶 異붽��빐�빞�븿
 			sqlMap.insert("band_insert_my_list", bandlistdto);
 			return "redirect:/band/b_modify.trip?band_id=" + band_id;
-		}else{	// 밴드 가입 신청
+		}else{	// 諛대뱶 媛��엯 �떊泥�
 		logindto.setId((String)session.getAttribute("memId"));
 		logindto = (LoginDTO)sqlMap.queryForObject("modify", logindto.getId());
 		Map dto = new HashMap();
@@ -433,7 +434,7 @@ public class BandAction {
 	
 	@RequestMapping("/band/b_drop.trip")
 	public String b_drop(HttpServletRequest request, int band_id, imgDTO imgdto, memberDTO memberdto, trip.member.BandListDTO bandlistdto){
-		String band_img = (String)sqlMap.queryForObject("band_img_get", band_id); // 밴드 대표 이미지 삭제
+		String band_img = (String)sqlMap.queryForObject("band_img_get", band_id); // 諛대뱶 ���몴 �씠誘몄� �궘�젣
 		if(!band_img.equals("default.jpg")){
 			String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
 			String img = filePath + band_img;
@@ -442,7 +443,7 @@ public class BandAction {
 				imgfile.delete();
 			}
 		}
-		List board_imgs = sqlMap.queryForList("band_board_img_get", band_id); // 밴드 게시판 이미지 삭제
+		List board_imgs = sqlMap.queryForList("band_board_img_get", band_id); // 諛대뱶 寃뚯떆�뙋 �씠誘몄� �궘�젣
 		for(int i = 0; i < board_imgs.size(); i++){
 			imgdto = (imgDTO)board_imgs.get(i);
 			String filePath = request.getSession().getServletContext().getRealPath("/") + "img" + File.separator + "band" + File.separator;
@@ -452,7 +453,7 @@ public class BandAction {
 				imgfile.delete();
 			}
 		}
-		List member_imgs = sqlMap.queryForList("band_member_img_get", band_id); // 밴드 가입후 수정한 프로필 사진 삭제
+		List member_imgs = sqlMap.queryForList("band_member_img_get", band_id); // 諛대뱶 媛��엯�썑 �닔�젙�븳 �봽濡쒗븘 �궗吏� �궘�젣
 		for(int i = 0; i < member_imgs.size(); i++){
 			memberdto = (memberDTO)member_imgs.get(i);
 			String imgName = memberdto.getBand_member_img();
@@ -465,14 +466,14 @@ public class BandAction {
 				}
 			}
 		}
-		List member_list = sqlMap.queryForList("band_member_list_get", band_id); // 개인 테이블마다 있는 밴드 리스트 중 삭제된 밴드만 삭제
+		List member_list = sqlMap.queryForList("band_member_list_get", band_id); // 媛쒖씤 �뀒�씠釉붾쭏�떎 �엳�뒗 諛대뱶 由ъ뒪�듃 以� �궘�젣�맂 諛대뱶留� �궘�젣
 		for(int i = 0; i < member_list.size(); i++){
 			memberdto = (memberDTO)member_list.get(i);
 			bandlistdto.setBand_id(band_id);
 			bandlistdto.setMember_id(memberdto.getBand_member_id());
 			sqlMap.delete("member_band_delete", bandlistdto);
 		}
-		// 밴드목록에서 삭제 및 4개의 테이블과 3개의 시퀀스 제거
+		// 諛대뱶紐⑸줉�뿉�꽌 �궘�젣 諛� 4媛쒖쓽 �뀒�씠釉붽낵 3媛쒖쓽 �떆���뒪 �젣嫄�
 		sqlMap.delete("band_delete", band_id);
 		sqlMap.delete("band_delete_table_board", band_id);
 		sqlMap.delete("band_delete_sequence_board", band_id);
