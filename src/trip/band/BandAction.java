@@ -422,6 +422,12 @@ public class BandAction {
 			sqlMap.delete("band_member_delete", memberdto);			
 		}
 		sqlMap.delete("member_band_delete", bandlistdto);
+		List check = sqlMap.queryForList("band_member_list_get", band_id);
+		
+		if(check.size() == 0){
+			System.out.println("check.size : " + check.size());
+			b_drop(request, band_id, null, null, null);
+		}
 		return "redirect:/band/b_list.trip";
 	}
 	
