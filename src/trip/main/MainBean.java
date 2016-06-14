@@ -62,7 +62,7 @@ public class MainBean {
 		int myDiaryListCount = (Integer)sqlMap.queryForObject("myDiaryListCount", id);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("myDiaryListCount", myDiaryListCount);
+		mv.addObject("myDiaryListCount", diary_select_1range.size());
 		mv.addObject("diary_select_1range", diary_select_1range);
 		mv.setViewName("/main/community.jsp");
 		return mv;
