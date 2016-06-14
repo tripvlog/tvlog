@@ -69,6 +69,7 @@ public class postBean {
       
       request.setAttribute("dto", dto);
        mv.addObject("list", list);
+       mv.addObject("count", list.size());
       mv.addObject("currentPage", currentPage);
       mv.addObject("PagingHtml", pagingHtml);
    

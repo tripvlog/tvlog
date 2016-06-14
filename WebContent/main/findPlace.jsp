@@ -93,6 +93,8 @@
 														<h3>${scheduleDTO.sd_startpoint}</h3>
 													</div>
 													<div class="panel-body" id="scheduleContent">
+														${scheduleDTO.sd_memo}
+														<br />
 														<c:if test="${scheduleDTO.sd_orgfile =='schedule-img.png'}">
 															<iframe src="/tvlog/schedule/schedule-detail-select-updateMap.jsp?latlng=${scheduleDTO.sd_map}" name="map" width="100%" height="400" ALLOWTRANSPARENCY="false"></iframe>
 														</c:if>

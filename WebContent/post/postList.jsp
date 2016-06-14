@@ -79,6 +79,37 @@
 	width:700px;
 	margin:auto;
 	}
+	
+	#mainImg {
+	width: 1140px;
+	min-height: 270px;
+	background-size : 1140px;
+	background-image : url('/tvlog/img/post/postimage.jpg');
+	text-align: center;
+	position:relative; 
+	}
+	#mainImg #p1{
+	font-size : 50px;	
+	font-weight: bold;
+	color: #FFFFFF;
+	position:absolute;
+	width:600px; left:0; right:0; margin-left:auto; margin-right:auto;
+	height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto;
+	}
+	#mainImg #p2{
+	font-size : 20px;	
+	font-weight: bold;
+	position:absolute;
+	width:600px; left:0; right:0; margin-left:420px; margin-right:auto;
+	height:30px; top: 0; bottom:0; margin-top:180px; margin-bottom:auto;
+	}
+	
+	#main2{
+		font-size : 15px;
+		margin-top: :20px;
+		margin-bottom: :20px;
+		border-bottom : 2px solid #BDBDBD;
+	}
 </style>
 <!-- 네이버 스마트 에디터 사용 부분 -->
 	<script type="text/javascript">
@@ -194,18 +225,23 @@
       
 </script>
 </head>
-<body>
+<body id="mainBody">
 	<jsp:include page="/main/header.jsp"></jsp:include>
 	<div class="container" id="container">
-	 
-	     		
-	     		
+		<div id="mainImg">
+			<p id="p1">
+				포스트
+			</p>
+		</div>
+		
+		<div id="main2">
+			<h3>등록된 포스트 : ${count}개</h3>
+		</div>
+		
 	     		<!-- 확인할부분 -->
 	     		<div id="contain">
 				     <table border="0" cellspacing="0" cellpadding="2">
-				        <tr>
-				           <td align="center"><h2>포스트 게시판</h2></td>
-				        </tr>
+				        
 				        	<td>
 				        	<c:if test="${sessionScope.memId !=null }">
 				        		<div class="container" align="right">
