@@ -147,7 +147,7 @@
 	</select>
 	
 	<select id="myBandList" resultClass="trip.band.BandDTO" parameterClass="String">
-		select mb.band_name, b.band_img, b.band_leader, b.band_intro  from  t_band b, t_member_band_$id$ mb where b.band_id = mb.band_id
+		select mb.band_id, mb.band_name, b.band_img, b.band_leader, b.band_intro  from  t_band b, t_member_band_$id$ mb where b.band_id = mb.band_id
 	</select>
 	
 	<select id="myBandListCount" resultClass="int" parameterClass="String">
