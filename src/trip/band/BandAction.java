@@ -99,7 +99,12 @@ public class BandAction {
 		if(session.getAttribute("memId") != null){	// 로그인이 되어있다면 로그인한 회원에 밴드 가입 목록을 가져옴
 			bandlistdto.setMember_id((String)session.getAttribute("memId"));
 			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
-			request.setAttribute("band_list", band_list);
+			System.out.println(band_list.size());
+			if(band_list.size() == 0){
+				request.setAttribute("band_list", "null");
+			}else{
+				request.setAttribute("band_list", band_list);
+			}
 		}
 		String modify = "";
 		if(request.getParameter("modify") == null){
@@ -222,10 +227,6 @@ public class BandAction {
 		comdto.setBand_board_comment_writer(member_id);
 		comdto.setBand_board_comment_comment(comment);
 		sqlMap.insert("band_comment_insert", comdto);
-		
-			List board_comment = sqlMap.queryForList("band_comment", band_id);
-			request.setAttribute("b_board_comments", board_comment);
-		
 		return "redirect:/band/b_view.trip?band_id=" + band_id;
 	}
 	

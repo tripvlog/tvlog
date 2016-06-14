@@ -200,11 +200,16 @@
 					</div>
 					<c:if test="${sessionScope.memId != null}"><!-- 로그인이 되어있으면 내가 가입한 밴드를 보여줌 -->
 							내 밴드<br />
+						<c:if test="${band_list == null}">
+						가입된 밴드가 없습니다
+						</c:if>
+						<c:if test="${band_list != null}">
 						<c:forEach var="band_list" items="${band_list}">
 							<a href="/tvlog/band/b_view.trip?band_id=${band_list.band_id}">
 							<img src="/tvlog/img/band/${band_list.band_img}" width="50" height="50">&nbsp;${band_list.band_name}<br />
 							</a>
 						</c:forEach>
+						</c:if>
 					<hr>
 					</c:if><!-- 생성된 순서대로 밴드 추천 -->
 					이런 밴드는 어떠세요?<br />
