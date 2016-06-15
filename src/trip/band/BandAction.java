@@ -101,11 +101,7 @@ public class BandAction {
 			bandlistdto.setMember_id((String)session.getAttribute("memId"));
 			List band_list = sqlMap.queryForList("band_my_list", bandlistdto);
 			System.out.println(band_list.size());
-			if(band_list.size() == 0){
-				request.setAttribute("band_list", "null");
-			}else{
-				request.setAttribute("band_list", band_list);
-			}
+			request.setAttribute("band_list", band_list);
 		}
 		String modify = "";
 		if(request.getParameter("modify") == null){

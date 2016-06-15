@@ -200,8 +200,8 @@
 					</div>
 					<c:if test="${sessionScope.memId != null}"><!-- 로그인이 되어있으면 내가 가입한 밴드를 보여줌 -->
 							내 밴드<br />
-						<c:if test="${band_list == null}">
-						가입된 밴드가 없습니다
+						<c:if test="${band_list.size() == 0}">
+						가입된 밴드가 없습니다. 가입신청을 눌러보세요!
 						</c:if>
 						<c:if test="${band_list != null}">
 						<c:forEach var="band_list" items="${band_list}">
